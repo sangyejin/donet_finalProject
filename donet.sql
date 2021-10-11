@@ -1,3 +1,4 @@
+--기부금 사용계획서 테이블
 CREATE TABLE SUPPORT_USE_PLAN(
     UP_NO VARCHAR2(30) PRIMARY KEY,
     UP_CONTENT VARCHAR2(1000) NOT NULL,
@@ -11,6 +12,7 @@ COMMENT ON COLUMN SUPPORT_USE_PLAN.UP_AMOUNT IS '사용금액';
 
 --------------------------------
 
+--후원자 테이블
 CREATE TABLE BENEFICIARY(
     BE_NO VARCHAR2(30) PRIMARY KEY,
     BE_NAME VARCHAR2(100) NOT NULL,
@@ -31,6 +33,7 @@ COMMENT ON COLUMN BENEFICIARY.BE_REGISTRATION IS '등록일';
 
 --------------------------------------
 
+--후원후기 테이블
 CREATE TABLE REVIEW(
     RE_NO VARCHAR2(30) PRIMARY KEY,
     USER_ID VARCHAR2(30) NOT NULL,
@@ -50,6 +53,7 @@ COMMENT ON COLUMN REVIEW.RE_DATE IS '작성일';
 
 --------------------------------------------
 
+--후원프로젝트 첨부파일 테이블
 CREATE TABLE SUPPORT_IMAGE(
     SU_NO VARCHAR2(30) NOT NULL,
     IMG_ID VARCHAR2(30) NOT NULL,
@@ -64,6 +68,7 @@ COMMENT ON COLUMN SUPPORT_IMAGE.IMG_ID IS '첨부파일 번호';
 
 ----------------------------------------------
 
+--후원후기 첨부파일 테이블
 CREATE TABLE REVIEW_IMAGE(
     RE_NO VARCHAR2(30) NOT NULL,
     IMG_ID VARCHAR2(30) NOT NULL,
@@ -78,6 +83,7 @@ COMMENT ON COLUMN REVIEW_IMAGE.IMG_ID IS '첨부파일 번호';
 
 -------------------------------------
 
+--후원인 목록 테이블
 CREATE TABLE SPONSOR(
     USER_ID VARCHAR2(30) NOT NULL,
     SU_NO VARCHAR2(30) NOT NULL,
@@ -97,6 +103,7 @@ COMMENT ON COLUMN SPONSOR.PAY_AMOUNT IS '후원금액';
 
 ---------------------------------------
 
+--후원카테고리 테이블
 CREATE TABLE SUPPORT_CATEGORY(
     SU_CATEGORY_NO VARCHAR2(30) PRIMARY KEY,
     SU_CATEGORY_NAME VARCHAR2(100) NOT NULL
@@ -109,6 +116,7 @@ COMMENT ON COLUMN SUPPORT_CATEGORY.SU_CATEGORY_NAME IS '후원카테고리명';
 
 -----------------------------------------
 
+--후원프로젝트 
 CREATE TABLE SUPPORT(
     SU_NO VARCHAR2(30) PRIMARY KEY,
     SU_TITLE VARCHAR2(100) NOT NULL,
