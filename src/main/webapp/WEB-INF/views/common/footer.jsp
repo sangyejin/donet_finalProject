@@ -10,90 +10,78 @@
 
 <style>
     *{
-       /* margin: 0;
-	    padding: 0;*/
-       
         font-family: 'Nanum Gothic Coding', monospace;
         font-size: 12px;
-        /*font-weight: bold;*/
-        
     }
     
-    span >*{
-            color: rgb(53, 73, 93);
-    }
+    #whole > *{ color : gray }
+     
     div{
         margin-top: 1%;
-        margin-left: 3%;
         margin-right: 3%;
     }
 
-    a{
-      text-decoration: none;
-    }
+    a{ text-decoration: none; }
 
     #snstap{
         height: 30px;
         margin-top: 1%;
     }
 
-    #workinghour{
-        font-size: smaller;
-    }
+    #workinghour{ font-size: smaller; }
 
     #toright, #toleft{
        float: left;
-       margin-left: 9%;
+       margin-left: 13%;
        margin-top: 0;
+       margin-bottom : 9%;
 
     }
 
-    #toright{
-        margin-left: 14%;
-    }
+    #toright{ margin-left: 14%; }
 
-    #toright>p{
-        text-align: left;
-    }
+    #toright>p{ text-align: left; }
 
     #toleft>a, #home, h4{
+    	text-decoration : none;
         font-weight: bolder;
+        color : gray;
     }
 
-    h4{
-        margin-bottom: 3%;
-    }
+    h4{ margin-bottom: 3%; }
 
-    #tel, #fax{
-        text-align: left;
-
-    }
+    #tel, #fax{ text-align: left; }
 
     #leftdiv{
         margin-left: 0;
         margin-top: 0;
         margin-bottom: 5%;
     }
-    #topmargin{
-        margin-top: 7%;
-    }
+    
+    #topmargin{ margin-top: 7%; }
     
     #line{
-        margin: 0;
+   		float : left;
+        margin-left: 0;
+       /* margin-right:9%;*/
 	    padding: 0;
         margin-top: 10%;
+        margin-bottom: 1%;
         border: solid 1px rgb(244, 244, 244);
-        margin-bottom: 0;
+    	width : 100%;
     }
 
     #toleft> a:hover, #home:hover{ text-decoration: underline; }
 
     #readyimg{ display: none;}
+    
+    #whole{   width: 100%;   }
 
 </style>
 </head>
 <body>
-    <div id="line"></div>
+<div id="whole">
+    <div id="line" align="left"></div>
 	<div id="footer">
         <span id="toleft" align="left">
             <a href="#">회사소개</a> | 
@@ -128,6 +116,7 @@
             </div>
             <p>Copyright © 2021 donet.com non-profit company. All Right Reserved</p>
         </span>
+    </div>
     </div>
 
     <!--sns 바 선택하면 어쩔지 고민중

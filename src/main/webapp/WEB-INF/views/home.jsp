@@ -8,6 +8,7 @@
 </head>
 <body>
 <jsp:include page="common/menubar.jsp"/>
+<jsp:include page="customerSupport/notice.jsp"/>
 
 <!-- <h1>
 	Hello world!  
