@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!--
+	 <bean id="loggerAspect1" class="com.kh.spring.common.aop.LoggerAspect"/>
+	  
+	 <aop:config>
+	 	<aop:aspect id="loggerAspect" ref="loggerAspect1">
+	 		<aop:pointcut expression="execution(* com.kh.spring.member..*(..))" id="pcForAll"/>
+			<aop:around method="loggerAdvice" pointcut-ref="pcForAll"/>
+	 	</aop:aspect>
+	 </aop:config>
+	  -->
+	 <aop:aspectj-autoproxy />
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+</beans>
