@@ -16,8 +16,11 @@
         font-family: 'Nanum Gothic Coding', monospace;
         font-size: 12px;
         /*font-weight: bold;*/
-        color: rgb(53, 73, 93);
         
+    }
+    
+    span >*{
+            color: rgb(53, 73, 93);
     }
     div{
         margin-top: 1%;
@@ -106,7 +109,7 @@
             <span id="phonenumber">010-3371-5190 </span>
             <span id="workinghour">(24시 운영 00:00-24:00)</span>
             <br><br>
-            <img id="snstap" src="/resources/imgs/snsbar.png">
+            <img id="snstap" src="/Users/wangsubin/donet_finalProject/src/main/resources/imgs/snsbar.png">
         </span>
 
        <!--  <img id="readyimg" src="/Users/wangsubin/FRONTEND/source_final/3EFFFBC2-CEAA-4568-A74D-89005E3F5570_1_105_c.jpeg" > -->
@@ -135,6 +138,7 @@
             })
         })
     </script> -->
+ 
 
 </body>
 </html>

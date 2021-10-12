@@ -31,6 +31,7 @@ body{
     width: 100%;
     height: 115px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
+    margin-bottom : 5%;
 
 }
 
