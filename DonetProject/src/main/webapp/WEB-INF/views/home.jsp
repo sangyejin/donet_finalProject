@@ -5,10 +5,12 @@
 	<title>Home</title>
 </head>
 <body>
+<jsp:include page="common/menubar.jsp"/>
 <h1>
 	Hello world!  
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
