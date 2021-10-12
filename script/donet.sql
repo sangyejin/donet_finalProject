@@ -1,4 +1,5 @@
 -- DROP문 -----------------------------------------
+
 DROP TABLE BENEFICIARY;
 DROP TABLE REVIEW;
 DROP TABLE REVIEW;
@@ -72,7 +73,7 @@ DROP SEQUENCE SEQ_BENEFICIARY;
 DROP SEQUENCE SEQ_SUPPORT_USE_PLAN;
 DROP SEQUENCE SEQ_REVIEW_IMAGE;
 DROP SEQUENCE SEQ_SUPPORT_IMAGE;
---------------------------------------------
+
 
 --------------     MEMBER 테이블	   ---------------
 CREATE TABLE MEMBER(
