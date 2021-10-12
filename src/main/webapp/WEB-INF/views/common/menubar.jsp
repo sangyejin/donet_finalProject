@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@ body{
 *{
    /* font-family: 'Gugi', cursive;*/
    /*font-family: 'Song Myung', serif;*/
-    font-family: 'Nanum Gothic Coding', monospace;
+     font-family: 'Nanum Gothic Coding', monospace;
     font-size: 14px;
 
     margin: 0;
@@ -31,9 +31,7 @@ body{
     width: 100%;
     height: 115px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
-    margin-bottom : 5%;
-    margin-left : 0;
-
+    margin-bottom: 5%;
 }
 
 #logo{
@@ -82,9 +80,10 @@ a:hover{ text-decoration: underline; }
     display: block;
 }
 
-#toright > a{
-	text-decoration : none;
+.arrow_box{
+position : absolute;
 }
+
 </style>
 </head>
 <body>
@@ -134,7 +133,6 @@ a:hover{ text-decoration: underline; }
                 </li>
                 <li class="greenfont" id="6"><a>커뮤니티</a>
                     <ul class="arrow_box"> 
-                        <li><a>?</a></li>
                         <li><a>?</a></li>
                         <li><a>?</a></li>
                     </ul> 
