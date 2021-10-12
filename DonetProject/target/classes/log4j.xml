@@ -10,9 +10,27 @@
 		</layout>
 	</appender>
 	
+	<appender name="sqlLogger" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %m%n" />
+		</layout>
+	</appender>
+	<appender name="fileLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/logs/system.log"/>
+		<param name="Append" value="true"/>
+
+		<param name="encoding" value="UTF-8"/>
+		
+		<param name="DatePattern" value="'.'yyyyMMdd"/>
+		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yy-MM-dd HH:mm:ss} [%-5p] %c{1}.%M{%L} - %m%n"/>
+		</layout>
+	</appender>
+	
 	<!-- Application Loggers -->
-	<logger name="com.pongsung.donet">
-		<level value="info" />
+	<logger name="com.kh.spring">
+		<level value="trace" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -32,10 +50,23 @@
 		<level value="info" />
 	</logger>
 
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="sqlLogger"/>
+	</logger>
+	
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="debug"/>
+		<appender-ref ref="sqlLogger"/>
+	</logger>
+	
+	
+
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
+		<appender-ref ref="fileLogger" />
 	</root>
 	
 </log4j:configuration>
