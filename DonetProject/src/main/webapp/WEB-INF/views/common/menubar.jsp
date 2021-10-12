@@ -19,7 +19,7 @@ body{
 *{
    /* font-family: 'Gugi', cursive;*/
    /*font-family: 'Song Myung', serif;*/
-     font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Nanum Gothic Coding', monospace;
     font-size: 14px;
 
     margin: 0;
@@ -84,7 +84,7 @@ a:hover{ text-decoration: underline; }
 <body>
     <div id="outline" align="center">
         <ul>
-            <li id = "right" rowspan="8"><img id="logo" src="/resources/imgs/logo1.png" alt=""></li>
+            <li id = "right" rowspan="8"><img id="logo" src="resources/imgs/logo1.png" alt=""></li>
         </ul>
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
