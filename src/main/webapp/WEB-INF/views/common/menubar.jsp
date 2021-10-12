@@ -32,6 +32,7 @@ body{
     height: 115px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom : 5%;
+    margin-left : 0;
 
 }
 
@@ -80,12 +81,16 @@ a:hover{ text-decoration: underline; }
 .greenfont:hover > ul > li {
     display: block;
 }
+
+#toright > a{
+	text-decoration : none;
+}
 </style>
 </head>
 <body>
     <div id="outline" align="center">
         <ul>
-            <li id = "right" rowspan="8"><img id="logo" src="resources/imgs/logo1.png" alt=""></li>
+            <li id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></li>
         </ul>
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>

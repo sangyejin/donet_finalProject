@@ -33,7 +33,6 @@
     }
 
     #snstap{
-        width: 335px;
         height: 30px;
         margin-top: 1%;
     }
@@ -109,7 +108,8 @@
             <span id="phonenumber">010-3371-5190 </span>
             <span id="workinghour">(24시 운영 00:00-24:00)</span>
             <br><br>
-            <img id="snstap" src="/Users/wangsubin/donet_finalProject/src/main/resources/imgs/snsbar.png">
+            <img  id="snstap" src="${ pageContext.servletContext.contextPath }/resources/imgs/snsbar.png" width="335px">
+            
         </span>
 
        <!--  <img id="readyimg" src="/Users/wangsubin/FRONTEND/source_final/3EFFFBC2-CEAA-4568-A74D-89005E3F5570_1_105_c.jpeg" > -->
