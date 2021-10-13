@@ -7,15 +7,12 @@
 	</settings>
 
 	<typeAliases>
-	<!-- 
-		<typeAlias type="com." alias=""/>
- -->
+		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice"/>
+ 
 	</typeAliases>
 
 	<mappers>
-	<!-- 
-		<mapper resource="/mappers/"/> 
-		  -->
+		<mapper resource="/mappers/notice-mapper.xml"/> 
 	</mappers>
 
 
