@@ -23,7 +23,7 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
 
-    <title>Document</title>
+    <title>도넷닷컴</title>
     <style>
         .div-top {
             margin-bottom: 50px;
@@ -68,34 +68,9 @@
         .one {
             grid-column: 1;
             grid-row: 1;
-            /* background-color: rosybrown; */
             overflow: hidden;
             position: relative;
             /* box-shadow: 2px 2px 2px 2px rgba(199, 199, 199); */
-        }
-
-        .two {
-            grid-column: 2;
-            grid-row: 1;
-            background-color: rgb(80, 162, 255);
-        }
-
-        .three {
-            grid-column: 1;
-            grid-row: 2;
-            background-color: rgb(86, 175, 116);
-        }
-
-        .four {
-            grid-column: 3;
-            grid-row: 1;
-            background-color: rgb(86, 175, 116);
-        }
-
-        .five {
-            grid-column: 4;
-            grid-row: 1;
-            background-color: rgb(86, 175, 116);
         }
 
         .image {
@@ -170,6 +145,13 @@
             text-align: right;
             margin-right: 40px;
         }
+
+        .search-bar {
+            text-align: right;
+            display: inline-block;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -184,6 +166,12 @@
                 </div>
             </div>
             <div class="div-filter">
+            	<div class="mx-auto mt-5 search-bar input-group mb-3">
+                    <input name="q" type="text" class="form-control rounded-pill" placeholder="검색"
+                        aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                    </div>
+                </div>
                 <select name="filter2" id="filter2">
                     <option value="1">전체</option>
                     <option value="2">진행중</option>
@@ -204,27 +192,21 @@
                     <div class="div-card-info">
                         <div class="div-card-info-top">
                             <a href="">
-                                <div><strong>"사지마세요 입양하세요"</strong></div>
+                                <div><strong><span id="title"></span></strong></div>
                             </a>
-                            <div><span>동물</span>|<span>동물 자유연대</span> </div>
-                            <p class="d-day">D-<span>30</span></p>
-                            <p><span>4,000,000</span>원 / 목표 <span>10,000,000</span>원</p>
+                            <div><span id="cateogry"></span>|<span id="hostName"></span> </div>
+                            <p class="d-day">D-<span id="deadline"></span></p>
+                            <p><span id="currentPrice">4,000,000</span>원 / 목표 <span id="goalPrice">10,000,000</span>원</p>
                         </div>
                         <div class="progress">
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
                                 aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                <span class="sr-only">40% Complete (success)</span>
                             </div>
                         </div>
                         <div class="div-goalPersent"><span>40</span>%</div>
                     </div>
-
                 </div>
-                <div class="two"></div>
-                <div class="three"></div>
-                <div class="four"></div>
 
-                <div class="five"></div>
             </div>
         </div>
     </div>

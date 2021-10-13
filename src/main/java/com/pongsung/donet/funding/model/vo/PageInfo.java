@@ -1,4 +1,4 @@
-package com.pongsung.donet.notice.model.vo;
+package com.pongsung.donet.funding.model.vo;
 
 public class PageInfo {
 	private int currentPage;
