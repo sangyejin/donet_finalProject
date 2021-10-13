@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -53,6 +53,8 @@ ul>li{ list-style-type: none; }
     margin-left: 27px;
     line-height: 25px;
 }
+
+a{ text-decoration : none;}
 
 a:hover{ text-decoration: underline; }
 
@@ -126,7 +128,7 @@ position : absolute;
                 </li>
                 <li class="greenfont" id="5"><a>고객지원</a>
                     <ul class="arrow_box">
-                        <li><a>공지사항</a></li>
+                        <li><a href="list.no">공지사항</a></li>
                         <li><a>자주 묻는 질문</a></li>
                         <li><a>1:1 문의</a></li>
                     </ul> 
