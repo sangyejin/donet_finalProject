@@ -20,7 +20,7 @@ public class Notice {
 	private Date noticeDate;
 	private String noticeWriter;
 	private int noticeCount;
-	private char noticeSave; //임시 저장 여부
-	private char noticeStatus; //관리자 상태 관리 컬럼
+	private String noticeSave; //임시 저장 여부
+	private String noticeStatus; //관리자 상태 관리 컬럼
 
 }

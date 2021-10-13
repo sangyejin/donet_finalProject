@@ -35,6 +35,7 @@
        margin-left: 13%;
        margin-top: 0;
        margin-bottom : 9%;
+       position : inline;
 
     }
 
@@ -99,7 +100,6 @@
             <img  id="snstap" src="${ pageContext.servletContext.contextPath }/resources/imgs/snsbar.png" width="335px">
             
         </span>
-         </div>
 
        <!--  <img id="readyimg" src="/Users/wangsubin/FRONTEND/source_final/3EFFFBC2-CEAA-4568-A74D-89005E3F5570_1_105_c.jpeg" > -->
 
@@ -117,7 +117,7 @@
             </div>
             <p>Copyright © 2021 donet.com non-profit company. All Right Reserved</p>
         </span>
-   
+    </div>
     </div>
 
     <!--sns 바 선택하면 어쩔지 고민중

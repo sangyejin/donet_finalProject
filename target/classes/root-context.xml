@@ -62,7 +62,7 @@
 
 	<aop:config proxy-target-class="false">
 		<aop:pointcut
-			expression="execution(* com.kh.spring..*ServiceImpl.*(..))"
+			expression="execution(* com.pongsung.donet..*ServiceImpl.*(..))"
 			id="serviceMethod" />
 		<aop:advisor id="transactionAdvisor"
 			pointcut-ref="serviceMethod" advice-ref="txAdvice" />

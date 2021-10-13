@@ -32,6 +32,7 @@ body{
     height: 115px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
+   	position : inline;
 }
 
 #logo{
@@ -52,11 +53,13 @@ ul>li{ list-style-type: none; }
     color : rgb(30, 154, 40);
     margin-left: 27px;
     line-height: 25px;
+    position : block; 
 }
 
-a{ text-decoration : none;}
+li > a{  color : rgb(30, 154, 40); text-decoration : none;}
 
-a:hover{ text-decoration: underline; }
+a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
+
 
 #right{ margin-right: 50px; }
 

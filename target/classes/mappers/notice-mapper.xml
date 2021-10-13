@@ -5,26 +5,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="noticeMapper">
 
 	<resultMap id="noticeResultMap" type="Notice">
-		<id column="no_no" property="noticeNo" />
-		<result column="no_title" property="noticeTitle" />
-		<result column="no_content" property="noticeContent" />
-		<result column="no_date" property="noticeDate" />
-		<result column="no_writer" property="noticeWriter" />
-		<result column="no_count" property="noticeCount" />
-		<result column="no_save" property="noticeSave" />
-		<result column="no_status" property="noticeStatus" />
+		<id column="NO_NO" property="noticeNo" />
+		<result column="NO_TITLE" property="noticeTitle" />
+		<result column="NO_CONTENT" property="noticeContent" />
+		<result column="NO_DATE" property="noticeDate" />
+		<result column="NO_WRITER" property="noticeWriter" />
+		<result column="NO_COUNT" property="noticeCount" />
+		<result column="NO_SAVE" property="noticeSave" />
+		<result column="NO_STATUS" property="noticeStatus" />
 	</resultMap>
 
 	<select id="selectNoticeListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM NOTICE
-		<!-- WHERE NOTICESAVE='N' -->
+		WHERE NO_SAVE='N'
 	</select>
 
 	<select id="selectNoticeList" resultMap="noticeResultMap">
 		SELECT *
 		FROM NOTICE
-		<!-- WHERE NOTICESAVE='N' ORDER BY NO_NO DESC -->
+		WHERE NO_SAVE='N' 
+		ORDER BY NO_NO DESC
 	</select>
 
 </mapper>
