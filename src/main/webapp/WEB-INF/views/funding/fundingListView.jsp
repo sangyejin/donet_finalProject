@@ -32,6 +32,10 @@
 
 <title>도넷닷컴</title>
 <style>
+* {
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-size: 12px;
+}
 .div-top {
 	margin: auto;
 	width: 1050px;
