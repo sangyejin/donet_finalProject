@@ -19,26 +19,19 @@ body{
 *{
    /* font-family: 'Gugi', cursive;*/
    /*font-family: 'Song Myung', serif;*/
-     font-family: 'Nanum Gothic Coding', monospace;
-    font-size: 14px;
-
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-size: 12px;
     margin: 0;
 	padding: 0;
 
 }
 
 #outline{
-    width: 100%;
-    height: 115px;
+    width: 1300px;
+    height: 110px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
    	position : inline;
-}
-
-#logo{
-    margin-left: 50px;
-    width : 160px;
-    height: 70px;
 }
 
 ul>li{ list-style-type: none; }
@@ -47,11 +40,11 @@ ul>li{ list-style-type: none; }
     margin-top: 13px;
     float: left;
     font-size: 14px;
-    width : 12%;
+    width : 180px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
-    margin-left: 27px;
+    margin-left: 30px;
     line-height: 25px;
     position : block; 
 }
@@ -60,15 +53,14 @@ li > a{  color : rgb(30, 154, 40); text-decoration : none;}
 
 a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
-
 #right{ margin-right: 50px; }
 
 .greenfont > ul > li {
     /*background-color: rgb(244, 244, 244);*/
-    margin-top: 20px;
+    margin-top: 18px;
     float: left;
     font-size: 12px;
-    width : 150px;
+    width : 100px;
     height : max-content;
    /*margin-left: 6px;*/
     text-align: center;
@@ -76,26 +68,38 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 }
 
-.greenfont > ul > li {
-    display: none;
+.greenfont > ul > li { display: none; }
 
+.greenfont:hover > ul > li {  display: inline; }
+
+.arrow_box{  position : absolute; }
+
+#outline > #logoLine > li{  float : left; }
+
+#logo{
+    margin-left: 25px;
+    width : 160px;
+    height: 70px;
+    margin-top : -5px;
 }
 
-.greenfont:hover > ul > li {
-    display: block;
+#userinfo{
+ 	margin-left: 1060px;
+ 	margin-top : -39px;
 }
 
-.arrow_box{
-position : absolute;
-}
+#secondLine{  margin-top : -7px; }
+
+.thisuser{ font-size : 10px; }
 
 </style>
 </head>
 <body>
     <div id="outline" align="center">
-        <ul>
-            <li id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></li>
-        </ul>
+            <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
+       		<div class="greenfont" id="userinfo"><a class="thisuser">OOO님</a> | <a class="thisuser">로그아웃</a></div>
+        <br>
+        <div id="secondLine"> 
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
                     <ul class="arrow_box">
@@ -105,7 +109,7 @@ position : absolute;
                     </ul> 
                 </li>
 
-                <li class="greenfont" id="2"><a>후원</a>
+                <li class="greenfont" id="2"><a>후원 프로젝트</a>
                     <ul class="arrow_box">
                         <li><a>출판</a></li>
                         <li><a>게임/취미</a></li>
@@ -123,10 +127,13 @@ position : absolute;
                         <li><a>후원 굿즈</a></li>
                     </ul> 
                 </li>
-                <li class="greenfont" id="4"><a>마이페이지</a>
-                    <ul class="arrow_box">
-                        <li><a>선행활동</a></li>
-                        <li><a>후원후기</a></li>
+                <li class="greenfont" id="4"><a>펀딩 프로젝트</a>
+                  <ul class="arrow_box">
+                        <li><a>출판</a></li>
+                        <li><a>게임/취미</a></li>
+                        <li><a>뷰티</a></li>
+                        <li><a>패션/잡화</a></li>
+                        <li><a>소셜/컨설팅</a></li>
                     </ul> 
                 </li>
                 <li class="greenfont" id="5"><a>고객지원</a>
@@ -142,8 +149,8 @@ position : absolute;
                         <li><a>?</a></li>
                     </ul> 
                 </li>
-                <li class="greenfont" id="userinfo"><a>OOO님</a> | <a>로그아웃</a></li>
             </ul>
+            </div>
     </div>
     <!--
     맨 위로 돌아가기 아이디어
