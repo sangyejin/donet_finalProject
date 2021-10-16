@@ -17,29 +17,28 @@
     #whole > *{ color : gray }
      
     div{
-        margin-top: 1%;
-        margin-right: 3%;
+        margin-top: 10px;
+        margin-right: 30px;
     }
 
     a{ text-decoration: none; }
 
     #snstap{
         height: 30px;
-        margin-top: 1%;
+        margin-top: 5px;
     }
 
     #workinghour{ font-size: smaller; }
 
     #toright, #toleft{
        float: left;
-       margin-left: 13%;
+       margin-left: 160px;
        margin-top: 0;
-       margin-bottom : 9%;
        position : inline;
 
     }
 
-    #toright{ margin-left: 14%; }
+    #toright{ margin-left: 180px; }
 
     #toright>p{ text-align: left; }
 
@@ -49,14 +48,17 @@
         color : gray;
     }
 
-    h4{ margin-bottom: 3%; }
+    h4{ 
+    	margin-top : 10px;
+    	margin-bottom: 5px; 
+    }
 
     #tel, #fax{ text-align: left; }
 
     #leftdiv{
         margin-left: 0;
         margin-top: 0;
-        margin-bottom: 5%;
+        margin-bottom: 30px;
     }
     
     #topmargin{ margin-top: 7%; }
@@ -64,10 +66,9 @@
     #line{
    		float : left;
         margin-left: 0;
-       /* margin-right:9%;*/
 	    padding: 0;
-        margin-top: 10%;
-        margin-bottom: 1%;
+        margin-top: 150px;
+        margin-bottom: 10px;
         border: solid 1px rgb(244, 244, 244);
     	width : 100%;
     }
@@ -76,7 +77,10 @@
 
     #readyimg{ display: none;}
     
-    #whole{   width: 100%;   }
+    #whole{   
+   	 	width:1300px; 
+   	 	margin-bottom : -100px;
+   	 }
 
 </style>
 </head>
