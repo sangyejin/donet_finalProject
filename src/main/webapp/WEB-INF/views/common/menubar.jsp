@@ -116,8 +116,35 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 	</c:if>
     <div id="outline" align="center">
             <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
-       		<div class="greenfont" id="userinfo"><a class="thisuser">OOO님</a> | <a class="thisuser">로그아웃</a></div>
+            
+            <!-- 로그인 전 -->
+            <c:if test="${ empty sessionScope.loginUser }">
+       		<div class="greenfont" id="userinfo"><a href="enrollForm.me" >회원가입</a> | <a href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		</c:if>
+       		
+       		<!-- 로그인 후  -->
+       		<c:if test="${ !empty sessionScope.loginUser }">
+       		<div class="greenfont" id="userinfo"><label>${ sessionScope.loginUser.userName }님</label> |  <a href="myPage.me">마이페이지</a>  |  <a href="logout.me">로그아웃</a> </div>
+            </c:if>
         <br>
+        
+       <%--  <!-- 로그인 전 -->
+                                
+                <c:if test="${ empty sessionScope.loginUser }"> 
+                <li class="greenfont" id="7">             
+	                <a href="enrollForm.me" >회원가입</a>  | 	            
+	                <a href="" data-toggle="modal" data-target="#loginModal">로그인</a> </li>
+                </c:if>
+                
+         <!-- 로그인 후  -->
+                 
+                <c:if test="${ !empty sessionScope.loginUser }">
+                <li class="greenfont" id="7">	
+	                <label>${ sessionScope.loginUser.userName }님</label> |
+	                <a href="myPage.me">마이페이지</a>  |
+	                <a href="logout.me">로그아웃</a> </li>
+                </c:if> --%>
+        
         <div id="secondLine"> 
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
@@ -169,22 +196,6 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
                     </ul> 
                 </li>                
                 
-                <!-- 로그인 전 -->
-                                
-                <c:if test="${ empty sessionScope.loginUser }"> 
-                <li class="greenfont" id="7">             
-	                <a href="enrollForm.me" >회원가입</a>  | 	            
-	                <a href="" data-toggle="modal" data-target="#loginModal">로그인</a> </li>
-                </c:if>
-                
-                 <!-- 로그인 후  -->
-                 
-                <c:if test="${ !empty sessionScope.loginUser }">
-                <li class="greenfont" id="7">	
-	                <label>${ sessionScope.loginUser.userName }님</label> |
-	                <a href="myPage.me">마이페이지</a>  |
-	                <a href="logout.me">로그아웃</a> </li>
-                </c:if>
                 
 
 			</ul>
