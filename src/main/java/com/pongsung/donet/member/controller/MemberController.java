@@ -45,6 +45,7 @@ public class MemberController {
 			
 		}
 		
+		// 로그아웃
 		@RequestMapping("logout.me")
 		public String logoutMember(SessionStatus status) {
 			
