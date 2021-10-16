@@ -5,11 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<!--
-	 <bean id="loggerAspect1" class="com.kh.spring.common.aop.LoggerAspect"/>
+	 <bean id="loggerAspect1" class="com.pongsung.donet.common.aop.LoggerAspect"/>
 	  
 	 <aop:config>
 	 	<aop:aspect id="loggerAspect" ref="loggerAspect1">
-	 		<aop:pointcut expression="execution(* com.kh.spring.member..*(..))" id="pcForAll"/>
+	 		<aop:pointcut expression="execution(* com.pongsung.donet.member..*(..))" id="pcForAll"/>
 			<aop:around method="loggerAdvice" pointcut-ref="pcForAll"/>
 	 	</aop:aspect>
 	 </aop:config>

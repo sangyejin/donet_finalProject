@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	    
 <style>
 /*
 body{
@@ -92,13 +103,48 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 .thisuser{ font-size : 10px; }
 
+
+
 </style>
 </head>
 <body>
+	<c:if test="${ !empty msg }">
+		<script>
+			alert("${msg}");
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
     <div id="outline" align="center">
             <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
-       		<div class="greenfont" id="userinfo"><a class="thisuser">OOO님</a> | <a class="thisuser">로그아웃</a></div>
+            
+            <!-- 로그인 전 -->
+            <c:if test="${ empty sessionScope.loginUser }">
+       		<div class="greenfont" id="userinfo"><a href="enrollForm.me" >회원가입</a> | <a href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		</c:if>
+       		
+       		<!-- 로그인 후  -->
+       		<c:if test="${ !empty sessionScope.loginUser }">
+       		<div class="greenfont" id="userinfo"><label>${ sessionScope.loginUser.userName }님</label> |  <a href="myPage.me">마이페이지</a>  |  <a href="logout.me">로그아웃</a> </div>
+            </c:if>
         <br>
+        
+       <%--  <!-- 로그인 전 -->
+                                
+                <c:if test="${ empty sessionScope.loginUser }"> 
+                <li class="greenfont" id="7">             
+	                <a href="enrollForm.me" >회원가입</a>  | 	            
+	                <a href="" data-toggle="modal" data-target="#loginModal">로그인</a> </li>
+                </c:if>
+                
+         <!-- 로그인 후  -->
+                 
+                <c:if test="${ !empty sessionScope.loginUser }">
+                <li class="greenfont" id="7">	
+	                <label>${ sessionScope.loginUser.userName }님</label> |
+	                <a href="myPage.me">마이페이지</a>  |
+	                <a href="logout.me">로그아웃</a> </li>
+                </c:if> --%>
+        
         <div id="secondLine"> 
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
@@ -148,8 +194,11 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
                         <li><a>?</a></li>
                         <li><a>?</a></li>
                     </ul> 
-                </li>
-            </ul>
+                </li>                
+                
+                
+
+			</ul>
             </div>
     </div>
     <!--
@@ -167,5 +216,35 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
         left : 100px;
     }   
     -->
+    
+     <!-- 로그인 클릭 시 뜨는 모달  -->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">로그인하기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+
+            <form action="login.me" method="post">
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <label for="userId" class="mr-sm-2">아이디 :</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="userId"> <br>
+                    <label for="userPwd" class="mr-sm-2">비밀번호:</label>
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="userPwd" name="userPwd">
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success ">로그인</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
