@@ -11,6 +11,9 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
     <style>
+   		body{
+   			width: 100%;
+   		}
         .container{
             width: 80%;
            
@@ -32,7 +35,7 @@
         .active{
             background-color: rgb(142, 211, 173);
         }
-        input{
+        button{
             transition:0.5s;
             cursor:pointer;
             margin-top: 18px;
@@ -44,7 +47,7 @@
             border: none;
             background-color: rgb(241, 241, 241);
         }
-        input:hover{
+        button:hover{
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
@@ -125,11 +128,15 @@
          .icon-searchBox{
              background-color: rgb(142, 211, 173);
          }
+         .form-control{
+         	
+         }
     </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
    <div class="container mt-2 ">
+       <div class="container mt-2 ">
         <!--   <div class="card card-block mb-2">
             <h4 class="card-title">Card 1</h4>
             <p class="card-text">Welcom to bootstrap card styles</p>
@@ -139,8 +146,8 @@
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
             <div class="eventBox">
-                <input type="button" id="evBox1" value="진행중인 이벤트" class="active"></input>
-                <input type="button" id="evBox2" value="지난 이벤트"></input>
+                <button type="button" id="evBox1"  class="active">진행중인 이벤트</button>
+                <button type="button" id="evBox2" >지난 이벤트</button>
             </div> 
             <br>
             <div class="statusBox">
@@ -205,6 +212,45 @@
             </div>
             
         </div>    
+        <!-- ========================= 
+            Paging Area 
+        ========================= --> 
+        <!-- 
+        <div id="pagingArea">
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${ pi.currentPage ne 1 }">
+                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                    </c:otherwise>
+                </c:choose>
+                
+                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                    <c:choose>
+                        <c:when test="${ pi.currentPage ne p }">
+                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                
+                
+                <c:choose>
+                    <c:when test="${ pi.currentPage ne pi.maxPage }">
+                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
+         -->
+        <!-- Footer & Search Area -->
         <div class="container_footer">
             <div class="input-group icons">
                 <form id="searchBoardForm" class="form-inline">
@@ -218,15 +264,9 @@
             </div>
         </div>
     </div>
-    <script>
-    $('input').click(function(){
-        if($(this).hasClass("active")){
-          $(this).removeClass("active");
-        }else{
-          $(this).addClass("active");  
-        }
-      });
-    </script>
+
+
+
     <jsp:include page="../common/footer.jsp" />
 </body>
 </html>

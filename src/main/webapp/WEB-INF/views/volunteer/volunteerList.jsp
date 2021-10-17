@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .container{
+         .container{
             width: 80%;
            
         }
@@ -123,12 +123,20 @@
          .icon-searchBox{
              background-color: rgb(142, 211, 173);
          }
+         hr{
+            margin: 0 auto;
+            width: 50%;
+            color:black;
+            border: 0.5px solid;
+            
+          }
     </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 
   <div class="container mt-2 ">
+     <div class="container mt-2 ">
         <!--   <div class="card card-block mb-2">
             <h4 class="card-title">Card 1</h4>
             <p class="card-text">Welcom to bootstrap card styles</p>
@@ -213,6 +221,47 @@
                     </div>
                 </div>
             </div>
+            <br>
+        <!-- ========================= 
+            Paging Area 
+        ========================= --> 
+        <div id="pagingArea">
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${ pi.currentPage ne 1 }">
+                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                    </c:otherwise>
+                </c:choose>
+                
+                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                    <c:choose>
+                        <c:when test="${ pi.currentPage ne p }">
+                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                
+                
+                <c:choose>
+                    <c:when test="${ pi.currentPage ne pi.maxPage }">
+                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>   
+            <hr>
+            <br>
+
+            <!-- Footer Search Area -->
             <div class="container_footer">
             <div class="input-group icons">
                 <form id="searchBoardForm" class="form-inline">
@@ -225,9 +274,9 @@
                 </form>    
             </div>
         </div>
+       
            
-           
-        </div>    
+         
     </div>
     <script>
     $('input').click(function(){
