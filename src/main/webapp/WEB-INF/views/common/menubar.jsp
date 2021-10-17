@@ -167,10 +167,9 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
                 <li class="greenfont" id="3"><a>이벤트</a>
                     <ul class="arrow_box">
-                        <li><a>식료품</a></li>
-                        <li><a>문구</a></li>
-                        <li><a>의류</a></li>
-                        <li><a>후원 굿즈</a></li>
+                        <li><a href="list.ev">진행중인 이벤트</a></li>
+                        <li><a href="afterList.ev">지난 이벤트</a></li>
+                        
                     </ul> 
                 </li>
                 <li class="greenfont" id="4"><a>펀딩 프로젝트</a>
@@ -191,7 +190,7 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
                 </li>
                 <li class="greenfont" id="6"><a>커뮤니티</a>
                     <ul class="arrow_box"> 
-                        <li><a>?</a></li>
+                        <li><a>선행활동</a></li>
                         <li><a>?</a></li>
                     </ul> 
                 </li>                
