@@ -8,6 +8,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice"/>
+
 		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event"/>
  
 	</typeAliases>
@@ -15,6 +16,7 @@
 	<mappers>
 		<mapper resource="/mappers/notice-mapper.xml"/> 
 		<mapper resource="/mappers/event-mapper.xml"/> 
+
 	</mappers>
 
 
