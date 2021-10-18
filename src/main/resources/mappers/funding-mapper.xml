@@ -3,15 +3,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="fundingMapper">
-
+	<resultMap id="fundingCategoryResultSet" type="FundingCategory">
+		<id property="categoryNo" column="FUNDING_CATEGORY_NO" />
+		<result property="categoryName" column="FUNDING_CATEGORY_NAME" />
+	</resultMap>
+	
 	<resultMap id="fundingResultSet" type="Funding">
 		<id property="fpNo" column="FP_NO" />
 		<result property="fpName" column="FP_NAME" />
-		<result property="hostName" column="HOST_NAME" />
-		<result property="goalPrice" column="GOAL_PRICE" />
+		<result property="hostName" column="USER_NAME" />
+		<result property="goal" column="GOAL" />
+		<result property="raised" column="RAISED" />
+		<result property="hostId" column="HOST_ID" />
 		<result property="startDate" column="START_DATE" />
 		<result property="closeDate" column="CLOSING_DATE" />
-		<result property="contents" column="CONTENTS" />
+		<result property="content" column="CONTENT" />
 		<result property="paymetsDate" column="PAYMENT_DATE" />
 		<result property="categoryName" column="FUNDING_CATEGORY_NAME" />
 		<result property="categoryNo" column="CATEGORY_NO" />
@@ -29,9 +35,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectFundingList" resultMap="fundingResultSet">
-		SELECT FP_NO,FP_NAME,HOST_NAME,GOAL_PRICE,START_DATE,CLOSING_DATE
-		,CATEGORY_NO,HITS, THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME,FUNDING_CATEGORY_NAME
-		from FUNDING_PROJECT
-		JOIN FUNDING_CATEGORY ON CATEGORY_NO =FUNDING_CATEGORY_NO
+	SELECT FP_NO,FP_NAME,B.USER_NAME,GOAL,RAISED,START_DATE,CLOSING_DATE
+    	,A.CATEGORY_NO,HITS,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME,C.FUNDING_CATEGORY_NAME
+	from FUNDING_PROJECT A
+		JOIN MEMBER B ON A.HOST_ID=B.USER_ID
+		JOIN FUNDING_CATEGORY C ON A.CATEGORY_NO = C.FUNDING_CATEGORY_NO
+	WHERE A.STATUS='Y'
+
 	</select>
+		<select id="selectFundingCategoryList" resultMap="fundingCategoryResultSet">
+	SELECT FUNDING_CATEGORY_NO, FUNDING_CATEGORY_NAME
+	FROM FUNDING_CATEGORY
+	</select>
+	
 </mapper>

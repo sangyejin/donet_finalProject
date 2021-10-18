@@ -14,6 +14,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.funding.model.service.FundingService;
 import com.pongsung.donet.funding.model.vo.Funding;
+import com.pongsung.donet.funding.model.vo.FundingCategory;
 
 @Controller
 public class FundingController {
@@ -26,15 +27,19 @@ public class FundingController {
 	@RequestMapping("fundingList")
 	public String seletcFundingList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 		int listCount=fundingService.selectFundingListCount();
-//		int listCount=1;
+		
+		List<FundingCategory> categoryList= fundingService.selectFundingCategoryList();
+		
 		logger.info("fundingListCount::"+listCount);
 		PageInfo pi=Pagination.getPageInfo(listCount, currentPage, 5, 16);
 //		
 		List<Funding> fundingList = fundingService.selectFundingList(pi);
 		logger.info("fundingList::"+fundingList);
 //		
+		model.addAttribute("category",categoryList);
 		model.addAttribute("list", fundingList);
 		model.addAttribute("pi",pi);
+		
 		return "funding/fundingListView";
 	}
 	

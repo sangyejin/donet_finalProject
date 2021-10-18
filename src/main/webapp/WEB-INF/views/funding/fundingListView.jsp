@@ -18,40 +18,20 @@
 	type="image/x-icon">
 
 <!-- CSS here -->
-<link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="../resources/assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="../resources/assets/css/slicknav.css">
-<link rel="stylesheet" href="../resources/assets/css/flaticon.css">
-<link rel="stylesheet"
-	href="../resources/assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="../resources/assets/css/gijgo.css">
-<link rel="stylesheet" href="../resources/assets/css/animate.min.css">
-<link rel="stylesheet"
-	href="../resources/assets/css/animated-headline.css">
-<link rel="stylesheet" href="../resources/assets/css/magnific-popup.css">
-<link rel="stylesheet"
-	href="../resources/assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="../resources/assets/css/themify-icons.css">
-<link rel="stylesheet" href="../resources/assets/css/slick.css">
-<link rel="stylesheet" href="../resources/assets/css/nice-select.css">
-<link rel="stylesheet" href="../resources/assets/css/style.css">
-
-
-
-<!-- Jquery, Popper, Bootstrap -->
-<script src="../resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="../resources/assets/js/popper.min.js"></script>
-<script src="../resources/assets/js/bootstrap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-	crossorigin="anonymous"></script>
-
+<link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/assets/css/slicknav.css">
+<link rel="stylesheet" href="resources/assets/css/flaticon.css">
+<link rel="stylesheet" href="resources/assets/css/progressbar_barfiller.css">
+<link rel="stylesheet" href="resources/assets/css/gijgo.css">
+<link rel="stylesheet" href="resources/assets/css/animate.min.css">
+<link rel="stylesheet" href="resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
+<link rel="stylesheet" href="resources/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="resources/assets/css/themify-icons.css">
+<link rel="stylesheet" href="resources/assets/css/slick.css">
+<link rel="stylesheet" href="resources/assets/css/nice-select.css">
+<link rel="stylesheet" href="resources/assets/css/style.css">
 <title>도넷닷컴</title>
 <style>
 * {
@@ -91,10 +71,6 @@
 	width: 1050px;
 }
 
-.div-card {
-	padding: 30px 0;
-}
-
 .image {
 	display: inline-block;
 	margin-top: 16px auto;
@@ -119,20 +95,8 @@
 	text-align: center;
 }
 
-.progress {
-	border-radius: 0px;
-	height: 4px;
-	margin-bottom: 0;
-}
-
 p {
 	margin: 0;
-}
-
-.div-goalPersent {
-	color: rgb(60, 179, 113);
-	text-align: right;
-	margin-right: 10px;
 }
 
 select {
@@ -173,7 +137,7 @@ select::-ms-expand {
 	margin-top: 10px;
 }
 
-.container {
+.container, .row {
 	width: 1050px;
 }
 
@@ -191,6 +155,7 @@ select::-ms-expand {
 
 .pagination {
 	margin: 0 auto;
+	text-align: center;
 }
 </style>
 </head>
@@ -207,9 +172,9 @@ select::-ms-expand {
 		<div class="div-top">
 			<div>
 				<div class="div-category-menu">
-					<c:forEach var="categoryName" items="${category}">
+					<c:forEach var="cate" items="${category}">
 						<button type="button" class="btn btn-light"
-							id="btn-${categoryName}">${categoryName}</button>
+							id="btn-${cate.categoryNo}">${cate.categoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
@@ -236,40 +201,43 @@ select::-ms-expand {
 
 		<div class="div-content">
 			<div class="container row" style="margin: 100 auto;">
-				<c:forEach var="list" items="${list}">
-					<div class="div-card col-xs-12 col-md-6 col-lg-3"
-						style="margin: 0 auto;">
-						<c:if test="${list.thumbnailChangeName ne null}">
-							<div class="image"
-								style="background-image: url('${list.thumbnailChangeName}'); background-repeat:no-repeat; background-size:240px 200px;">
+
+				<c:forEach var="list" items="${list}" varStatus="status">
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="single-cases mb-40">
+							<div class="cases-img">
+								<img
+									src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
+									alt="${list.fpName}" width="280px" height="200px">
 							</div>
-						</c:if>
-						<div class="div-card-info">
-							<div class="div-card-info-top">
-								<a href="">
-									<div class="title">
-										<strong>${list.fpName}</strong>
-									</div>
-								</a>
+							<div class="cases-caption">
+								<h3>
+									<a href="#">${list.fpName}</a>
+								</h3>
 								<p class="category-hostName">
-									<span>${list.categoryName }</span>|<span>${list.hostName}</span>
+								${status.count}
+									<span>${list.categoryName}</span> | <span>${list.hostName}</span>
 								</p>
-								<p class="d-day">
-									<strong>D-<span id="dDay" name="dDay">${list.closeDate } ${list.startDate}</span></strong>
-								</p>
-								<p>
-									
-									/ 목표 <span id="goalPrice" name="goalPrice">${goalPrice}</span>원
-								</p>
-							</div>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="40"
-									aria-valuemin="0" aria-valuemax="100" style="width:"40%">
+								<!-- Progress Bar -->
+								<div class="single-skill mb-15">
+									<div class="bar-progress">
+										<div id="bar${status.count}" class="barfiller">
+											<div class="tipWrap">
+												<span class="tip"></span>
+											</div>
+											<span class="fill" data-percentage="${list.raised/list.goal*100}"></span>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="div-goalPersent">
-								<strong><span>40</span>%</strong>
+								<!-- / progress -->
+								<div class="prices d-flex justify-content-between">
+									<p>
+										현재:<span> ${list.raised}</span>
+									</p>
+									<p>
+										목표:<span> ${list.goal}</span>원
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -296,7 +264,7 @@ select::-ms-expand {
 						<c:when test="${ pi.currentPage eq i }">
 							<li class="active"><a href="fundingList?currentPage=${i}">${i}</a></li>
 						</c:when>
-						<c:otherwise>	
+						<c:otherwise>
 							<li><a href="fundingList?currentPage=${i}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
@@ -317,6 +285,52 @@ select::-ms-expand {
 		</nav>
 	</div>
 	<jsp:include page="../common/footer.jsp" />
+	<!-- Scroll Up -->
+	<div id="back-top">
+		<a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+	</div>
+
+	<!-- JS here -->
+	<script src="resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="resources/assets/js/popper.min.js"></script>
+	<script src="resources/assets/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="resources/assets/js/owl.carousel.min.js"></script>
+	<script src="resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="resources/assets/js/wow.min.js"></script>
+	<script src="resources/assets/js/animated.headline.js"></script>
+	<script src="resources/assets/js/jquery.magnific-popup.js"></script>
+
+	<!-- Date Picker -->
+	<script src="resources/assets/js/gijgo.min.js"></script>
+	<!-- Nice-select, sticky -->
+	<script src="resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="resources/assets/js/jquery.sticky.js"></script>
+	<!-- Progress -->
+	<script src="resources/assets/js/jquery.barfiller.js"></script>
+
+	<!-- counter , waypoint,Hover Direction -->
+	<script src="resources/assets/js/jquery.counterup.min.js"></script>
+	<script src="resources/assets/js/waypoints.min.js"></script>
+	<script src="resources/assets/js/jquery.countdown.min.js"></script>
+	<script src="resources/assets/js/hover-direction-snake.min.js"></script>
+
+	<!-- contact js -->
+	<script src="resources/assets/js/contact.js"></script>
+	<script src="resources/assets/js/jquery.form.js"></script>
+	<script src="resources/assets/js/jquery.validate.min.js"></script>
+	<script src="resources/assets/js/mail-script.js"></script>
+	<script src="resources/assets/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="resources/assets/js/plugins.js"></script>
+	<script src="resources/assets/js/main.js"></script>
 
 </body>
 
