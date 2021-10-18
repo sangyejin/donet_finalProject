@@ -28,7 +28,14 @@
 		font-weight: 600;
 		font-size: 15px;
 	}
-	
+	.thumbnail{
+		width:350px; 
+		height:350px;
+		border: 1px solid grey;
+		border-radius: 20%;
+		text-align: center;
+	}
+
 
 
 </style>
@@ -38,14 +45,33 @@
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
-		<form>
+		<form method="post" enctype="multipart/form-data">
 			<c>후원 프로젝트 제목</c>
-			<input type="text" placeholder="제목을 입력하세요">
-		
+			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px"></div>
+			<div>
+				<span>
+					<c>대표 사진</c>
+					<div class="thumbnail">
+						<input type="file" id="image" accept="image/*" onchange="setThumbnail(event);"/> <div id="image_container"></div>
+					</div>
+				</span>
+			</div>
 		</form>
 		
 		
 	</div>
+	
+	<script> 
+		function setThumbnail(event) { 
+			var reader = new FileReader(); 
+			reader.onload = function(event) { 
+				var img = document.createElement("img"); 
+				img.setAttribute("src", event.target.result); 
+				document.querySelector("div#image_container").appendChild(img); 
+			}; reader.readAsDataURL(event.target.files[0]); 
+		} 
+	</script>
+
 	<jsp:include page="../common/footer.jsp" />
 	<div style="display:scroll;position:fixed;bottom:10px;right:5px;"><a class="topTotop" href="#pageTop">TOP▲</a></div>
 </body>
