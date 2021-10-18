@@ -17,14 +17,32 @@
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- 부트스트랩 -->
+<!-- CSS here -->
+<link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous">
-	
-</script>
+	href="../resources/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/assets/css/slicknav.css">
+<link rel="stylesheet" href="../resources/assets/css/flaticon.css">
+<link rel="stylesheet"
+	href="../resources/assets/css/progressbar_barfiller.css">
+<link rel="stylesheet" href="../resources/assets/css/gijgo.css">
+<link rel="stylesheet" href="../resources/assets/css/animate.min.css">
+<link rel="stylesheet"
+	href="../resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="../resources/assets/css/magnific-popup.css">
+<link rel="stylesheet"
+	href="../resources/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="../resources/assets/css/themify-icons.css">
+<link rel="stylesheet" href="../resources/assets/css/slick.css">
+<link rel="stylesheet" href="../resources/assets/css/nice-select.css">
+<link rel="stylesheet" href="../resources/assets/css/style.css">
+
+
+
+<!-- Jquery, Popper, Bootstrap -->
+<script src="../resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="../resources/assets/js/popper.min.js"></script>
+<script src="../resources/assets/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
 	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
@@ -221,35 +239,37 @@ select::-ms-expand {
 				<c:forEach var="list" items="${list}">
 					<div class="div-card col-xs-12 col-md-6 col-lg-3"
 						style="margin: 0 auto;">
-						<div class="image"
-							style="background-image: url('${list.thumb}'); background-repeat:no-repeat; background-size:240px 200px;">
-						</div>
+						<c:if test="${list.thumbnailChangeName ne null}">
+							<div class="image"
+								style="background-image: url('${list.thumbnailChangeName}'); background-repeat:no-repeat; background-size:240px 200px;">
+							</div>
+						</c:if>
 						<div class="div-card-info">
 							<div class="div-card-info-top">
 								<a href="">
 									<div class="title">
-										<strong>${list.title}</strong>
+										<strong>${list.fpName}</strong>
 									</div>
 								</a>
 								<p class="category-hostName">
 									<span>${list.categoryName }</span>|<span>${list.hostName}</span>
 								</p>
 								<p class="d-day">
-									<strong>D-<span id="dDay" name="dDay">${list.dDay}</span></strong>
+									<strong>D-<span id="dDay" name="dDay">${list.closeDate } ${list.startDate}</span></strong>
 								</p>
 								<p>
-									<span id="nowAmount" name="nowAmount">${list.nowAmount }</span>원
-									/ 목표 <span id="goalAmount" name="goalAmount">${goalAmount}</span>원
+									
+									/ 목표 <span id="goalPrice" name="goalPrice">${goalPrice}</span>원
 								</p>
 							</div>
 							<div class="progress">
 								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="${list.achieveRate}"
-									aria-valuemin="0" aria-valuemax="100" style="width:"${list.achieveRate}%">
+									role="progressbar" aria-valuenow="40"
+									aria-valuemin="0" aria-valuemax="100" style="width:"40%">
 								</div>
 							</div>
 							<div class="div-goalPersent">
-								<strong><span>${list.achieveRate}</span>%</strong>
+								<strong><span>40</span>%</strong>
 							</div>
 						</div>
 					</div>
@@ -262,33 +282,33 @@ select::-ms-expand {
 				<c:choose>
 					<c:when test="${ pi.currentPage eq 1 }">
 						<li class="disabled"><a
-							href="/fundingList?currentPage=${pi.currentPage-1 }"
+							href="fundingList?currentPage=${pi.currentPage-1 }"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/fundingList?currentPage=${pi.currentPage-1 }"
+						<li><a href="fundingList?currentPage=${pi.currentPage-1 }"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
 					<c:choose>
 						<c:when test="${ pi.currentPage eq i }">
-							<li class="active"><a href="/fundingList?currentPage=${i}">${i}</a></li>
+							<li class="active"><a href="fundingList?currentPage=${i}">${i}</a></li>
 						</c:when>
-						<c:otherwise>
-							<li><a href="/fundingList/?currentPage=${i}">${i}</a></li>
+						<c:otherwise>	
+							<li><a href="fundingList?currentPage=${i}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
 						<li class="disabled"><a
-							href="/fundingList?currentPage=${pi.currentPage+1 }"
+							href="fundingList?currentPage=${pi.currentPage+1 }"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/fundingList?currentPage=${pi.currentPage+1 }"
+						<li><a href="fundingList?currentPage=${pi.currentPage+1 }"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 					</c:otherwise>
 				</c:choose>
@@ -296,7 +316,6 @@ select::-ms-expand {
 			</ul>
 		</nav>
 	</div>
-
 	<jsp:include page="../common/footer.jsp" />
 
 </body>
