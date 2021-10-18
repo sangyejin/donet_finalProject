@@ -1,16 +1,37 @@
 package com.pongsung.donet.funding.model.service;
 
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.funding.model.dao.FundingDao;
+import com.pongsung.donet.funding.model.vo.Funding;
+
 
 @Service
 public class FundingServiceImpl implements FundingService {
 	@Autowired
-	private FundingService fundingService;
+	private SqlSessionTemplate sqlSession;
 	
-	@RequestMapping("fundingList")
-	public String seletFundingList(){
-		return "funding/fundingListView.jsp";
+	@Autowired
+	private FundingDao fundingDao;
+
+	@Override
+	public int selectFundingListCount() {
+		int count= fundingDao.selectFundingListCount(sqlSession);
+		return count;
 	}
+	
+	@Override
+	public List<Funding> selectFundingList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		List<Funding> fundingList= fundingDao.selectFundingList(sqlSession,pi);
+		
+		return fundingList;
+	}
+
+
 }
