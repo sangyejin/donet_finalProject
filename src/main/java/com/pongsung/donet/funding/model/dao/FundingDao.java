@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
+import com.pongsung.donet.funding.model.vo.FundingCategory;
 
 @Repository
 public class FundingDao {
@@ -23,6 +24,11 @@ public class FundingDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return sqlSession.selectList("fundingMapper.selectFundingList",null,rowBounds);
+	}
+
+	public List<FundingCategory> selectFundingCategoryList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("fundingMapper.selectFundingCategoryList");
 	}
 
 }

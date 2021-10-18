@@ -4,12 +4,15 @@ import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
+import com.pongsung.donet.funding.model.vo.FundingCategory;
 
 public interface FundingService {
 
 	int selectFundingListCount();
 
 	List<Funding> selectFundingList(PageInfo pi);
+
+	List<FundingCategory> selectFundingCategoryList();
 
 
 }

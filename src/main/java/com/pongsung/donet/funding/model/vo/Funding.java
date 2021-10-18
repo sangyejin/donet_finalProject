@@ -17,10 +17,11 @@ public class Funding {
 	private int fpNo;
 	private String fpName;
 	private String hostName;
-	private String goalPrice;
+	private String goal;
+	private String raised;
 	private Date startDate;
 	private Date closeDate;
-	private String contents;
+	private String content;
 	private Date paymetsDate;
 	private String categoryName;
 	private int categoryNo;
