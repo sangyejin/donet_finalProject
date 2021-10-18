@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +11,11 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
 	rel="stylesheet">
+
+<!-- favicon -->
+<link rel="icon"
+	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
+	type="image/x-icon">
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
@@ -36,6 +40,7 @@
 	font-family: 'Nanum Gothic Coding', monospace;
 	font-size: 12px;
 }
+
 .div-top {
 	margin: auto;
 	width: 1050px;
@@ -102,12 +107,6 @@
 	margin-bottom: 0;
 }
 
-h1 {
-	text-align: left;
-	margin-left: 70px;
-	font-size: 2em;
-}
-
 p {
 	margin: 0;
 }
@@ -125,7 +124,9 @@ select {
 	/* 네이티브 외형 감추기 */
 	-moz-appearance: none;
 	appearance: none;
-	background: url('${ pageContext.servletContext.contextPath }/resources/imgs/caret-down.png') no-repeat 95% 50%;
+	background:
+		url('${ pageContext.servletContext.contextPath }/resources/imgs/caret-down.png')
+		no-repeat 95% 50%;
 	background-size: 10px;
 	/* 화살표 모양의 이미지 */
 	padding: 4px;
@@ -169,18 +170,28 @@ select::-ms-expand {
 .title {
 	height: 40px;
 }
+
+.pagination {
+	margin: 0 auto;
+}
 </style>
 </head>
 
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 	<div class="main">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">후원</a></li>
+				<li class="breadcrumb-item active" aria-current="page">펀딩 프로젝트</li>
+			</ol>
+		</nav>
 		<div class="div-top">
-			<h1>후원 > 펀딩프로젝트</h1>
 			<div>
 				<div class="div-category-menu">
 					<c:forEach var="categoryName" items="${category}">
-						<button type="button" class="btn btn-light" id="btn-${categoryName}">${categoryName}</button>
+						<button type="button" class="btn btn-light"
+							id="btn-${categoryName}">${categoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
@@ -245,10 +256,49 @@ select::-ms-expand {
 				</c:forEach>
 			</div>
 		</div>
+
+		<nav>
+			<ul class="pagination">
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="disabled"><a
+							href="/fundingList?currentPage=${pi.currentPage-1 }"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/fundingList?currentPage=${pi.currentPage-1 }"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+					<c:choose>
+						<c:when test="${ pi.currentPage eq i }">
+							<li class="active"><a href="/fundingList?currentPage=${i}">${i}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/fundingList/?currentPage=${i}">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="disabled"><a
+							href="/fundingList?currentPage=${pi.currentPage+1 }"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/fundingList?currentPage=${pi.currentPage+1 }"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+					</c:otherwise>
+				</c:choose>
+
+			</ul>
+		</nav>
 	</div>
-	
+
 	<jsp:include page="../common/footer.jsp" />
-	
+
 </body>
 
 </html>
