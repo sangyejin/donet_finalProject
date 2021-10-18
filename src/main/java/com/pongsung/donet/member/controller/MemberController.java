@@ -45,6 +45,7 @@ public class MemberController {
 			
 		}
 		
+		// 로그아웃
 		@RequestMapping("logout.me")
 		public String logoutMember(SessionStatus status) {
 			
@@ -100,6 +101,7 @@ public class MemberController {
 			return "redirect:logout.me";
 		}
 		
+		// 회원정보 수정하기
 		@RequestMapping("update.me")
 		public String updateMember(@ModelAttribute Member m, @RequestParam("post") String post,
 															 @RequestParam("address1") String address1,
@@ -124,7 +126,7 @@ public class MemberController {
 			
 			}
 		
-		
+		// 비밀번호 변경하기
 		@RequestMapping("updatePwd.me")
 		public String updatePwdMember (@ModelAttribute Member m, @RequestParam("userId") String userId,
 																 @RequestParam("newPwd") String newPwd, Model model) {
