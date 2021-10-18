@@ -151,19 +151,17 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
             <ul>
                 <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
                     <ul class="arrow_box">
-                        <li><a>프로젝트 소개</a></li>
-                        <li><a>후원 방법</a></li>
+                        <li><a href="introduce.pr">프로젝트 소개</a></li>
+                        <li><a href="introduce.how">후원 방법</a></li>
                         <li><a>통계 조회</a></li>
                     </ul> 
                 </li>
 
-                <li class="greenfont" id="2"><a>후원 프로젝트</a>
+                <li class="greenfont" id="2"><a>후원</a>
                     <ul class="arrow_box">
-                        <li><a>출판</a></li>
-                        <li><a>게임/취미</a></li>
-                        <li><a>뷰티</a></li>
-                        <li><a>패션/잡화</a></li>
-                        <li><a>소셜/컨설팅</a></li>
+                        <li><a href="list.do">후원 프로젝트</a></li>
+                        <li><a>펀딩 프로젝트</a></li>
+                        <li><a>구호 물품 후원</a></li>
                     </ul> 
                 </li>
 
