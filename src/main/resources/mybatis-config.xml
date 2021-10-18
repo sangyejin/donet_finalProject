@@ -9,13 +9,13 @@
 	<typeAliases>
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice"/>
 
-		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member"/>
  
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mappers/notice-mapper.xml"/> 
-		<mapper resource="/mappers/event-mapper.xml"/> 
+		<mapper resource="/mappers/member-mapper.xml"/> 
 
 	</mappers>
 
