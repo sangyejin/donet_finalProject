@@ -47,3 +47,6 @@ local.properties
 .loadpath
 .recommenders
 target/
+.target/
+*.class
+MANIFEST.MF

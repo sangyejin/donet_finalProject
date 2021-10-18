@@ -48,7 +48,7 @@ body{
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: 13px;
+    margin-top: -5px;
     float: left;
     font-size: 14px;
     width : 180px;
@@ -103,6 +103,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 .thisuser{ font-size : 10px; }
 
+.noDecoration{ color : rgb(30, 154, 40);  text-decoration: none; }
+
 
 
 </style>
@@ -119,12 +121,12 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
             
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><a href="enrollForm.me" >회원가입</a> | <a href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><label>${ sessionScope.loginUser.userName }님</label> |  <a href="myPage.me">마이페이지</a>  |  <a href="logout.me">로그아웃</a> </div>
+       		<div class="greenfont" id="userinfo"><label class="noDecoration" >${ sessionScope.loginUser.userName }님</label> |  <a class="noDecoration"  href="myPage.me">마이페이지</a>  |  <a class="noDecoration"  href="logout.me">로그아웃</a> </div>
             </c:if>
         <br>
         
@@ -167,8 +169,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
                 <li class="greenfont" id="3"><a>이벤트</a>
                     <ul class="arrow_box">
-                        <li><a href="list.ev">진행중인 이벤트</a></li>
-                        <li><a href="afterList.ev">지난 이벤트</a></li>
+                        <li><a href="list.ev">진행중인이벤트</a></li>
+                        <li><a href="afterList.ev">지난이벤트</a></li>
                         
                     </ul> 
                 </li>
