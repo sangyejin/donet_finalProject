@@ -14,18 +14,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Funding {
-	private int fdNo;
+	private int fpNo;
 	private String fpName;
 	private String hostName;
-	private String goalPrice;
+	private String goal;
+	private String raised;
 	private Date startDate;
 	private Date closeDate;
-	private String contents;
+	private String content;
 	private Date paymetsDate;
+	private String categoryName;
 	private int categoryNo;
 	private int hits;
 	private String status;
 	private String thumbnailOriginName;
-	private String thumbnailChangeNamel;
+	private String thumbnailChangeName;
 	private Date fpWriteDate;
 }

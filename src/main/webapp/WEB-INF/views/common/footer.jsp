@@ -9,17 +9,7 @@
 
 
 <style>
-    *{
-        font-family: 'Nanum Gothic Coding', monospace;
-        font-size: 12px;
-    }
-    
-    #whole > *{ color : gray }
-     
-    div{
-        margin-top: 10px;
-        margin-right: 30px;
-    }
+    #realBody > *{ color : gray }
 
     a{ text-decoration: none; }
 
@@ -48,7 +38,7 @@
         color : gray;
     }
 
-    h4{ 
+    #happycustomers{ 
     	margin-top : 10px;
     	margin-bottom: 5px; 
     }
@@ -77,7 +67,7 @@
 
     #readyimg{ display: none;}
     
-    #whole{   
+    #realBody{   
    	 	width:1300px; 
    	 	margin-bottom : -100px;
    	 }
@@ -85,7 +75,7 @@
 </style>
 </head>
 <body>
-<div id="whole">
+<div id="realBody">
     <div id="line" align="left"></div>
 	<div id="footer">
         <span id="toleft" align="left">
@@ -97,7 +87,7 @@
 
             <br><br>
 
-            <h4><b>고객 행복 센터</b></h4>
+            <h4 id="happycustomers"><b>고객 행복 센터</b></h4>
             <span id="phonenumber">010-3371-5190 </span>
             <span id="workinghour">(24시 운영 00:00-24:00)</span>
             <br><br>

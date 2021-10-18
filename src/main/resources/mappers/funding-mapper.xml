@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fundingMapper">
+	<resultMap id="fundingCategoryResultSet" type="FundingCategory">
+		<id property="categoryNo" column="FUNDING_CATEGORY_NO" />
+		<result property="categoryName" column="FUNDING_CATEGORY_NAME" />
+	</resultMap>
+	
+	<resultMap id="fundingResultSet" type="Funding">
+		<id property="fpNo" column="FP_NO" />
+		<result property="fpName" column="FP_NAME" />
+		<result property="hostName" column="USER_NAME" />
+		<result property="goal" column="GOAL" />
+		<result property="raised" column="RAISED" />
+		<result property="hostId" column="HOST_ID" />
+		<result property="startDate" column="START_DATE" />
+		<result property="closeDate" column="CLOSING_DATE" />
+		<result property="content" column="CONTENT" />
+		<result property="paymetsDate" column="PAYMENT_DATE" />
+		<result property="categoryName" column="FUNDING_CATEGORY_NAME" />
+		<result property="categoryNo" column="CATEGORY_NO" />
+		<result property="hits" column="HITS" />
+		<result property="status" column="STATUS" />
+		<result property="thumbnailOriginName" column="THUMBNAIL_ORIGIN_NAME" />
+		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
+		<result property="fpWriteDate" column="FP_WRITE_DATE" />
+	</resultMap>
+
+	<select id="selectFundingListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM FUNDING_PROJECT
+		WHERE STATUS='Y'
+	</select>
+	
+	<select id="selectFundingList" resultMap="fundingResultSet">
+	SELECT FP_NO,FP_NAME,B.USER_NAME,GOAL,RAISED,START_DATE,CLOSING_DATE
+    	,A.CATEGORY_NO,HITS,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME,C.FUNDING_CATEGORY_NAME
+	from FUNDING_PROJECT A
+		JOIN MEMBER B ON A.HOST_ID=B.USER_ID
+		JOIN FUNDING_CATEGORY C ON A.CATEGORY_NO = C.FUNDING_CATEGORY_NO
+	WHERE A.STATUS='Y'
+
+	</select>
+		<select id="selectFundingCategoryList" resultMap="fundingCategoryResultSet">
+	SELECT FUNDING_CATEGORY_NO, FUNDING_CATEGORY_NAME
+	FROM FUNDING_CATEGORY
+	</select>
+	
+</mapper>

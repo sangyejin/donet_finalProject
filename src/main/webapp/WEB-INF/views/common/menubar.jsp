@@ -105,7 +105,7 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 .noDecoration{ color : rgb(30, 154, 40);  text-decoration: none; }
 
-
+a{ color : #000000;  text-decoration: none; }
 
 </style>
 </head>
