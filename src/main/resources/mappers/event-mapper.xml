@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+
+	<resultMap id="eventResultMap" type="Event">
+		<id column="EVENT_NO" property="eventNo" />
+		<result column="EVENT_TITLE" property="eventTitle" />
+		<result column="EVENT_CONTENT" property="eventContent" />
+		<result column="EVENT_START_DATE" property="eventStart" />
+		<result column="EVENT_LAST_DATE" property="eventLast" />
+		<result column="EVENT_STATUS" property="eventStatus" />
+	</resultMap>
+
+	<select id="selectEventListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE EVENT_STATUS = 'Y'
+	</select>
+
+	<select id="selectEventList" resultMap="eventResultMap">
+		SELECT *
+		FROM EVENT
+		WHERE EVENT_STATUS = 'Y' 
+		ORDER BY EVENT_NO DESC
+	</select>
+
+</mapper>

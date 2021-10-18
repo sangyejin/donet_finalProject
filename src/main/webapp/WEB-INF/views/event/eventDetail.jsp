@@ -8,6 +8,14 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
+       *{
+        margin:0 auto;
+      }
+        body{
+          width: 100%;
+          height: 100%;
+          margin: 0 auto;
+        }
         .container{
             width: 80%;
            
@@ -148,7 +156,6 @@
         </section>  
         
     </div>
-    <br>
 
 <jsp:include page="../common/footer.jsp" />
 </body>

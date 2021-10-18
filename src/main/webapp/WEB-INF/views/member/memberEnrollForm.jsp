@@ -9,14 +9,14 @@
 </head>
 <body>
     <jsp:include page="../common/menubar.jsp"/>
-    
+    <div class="col-xs-12" style="width: 30%; float:none; margin:0 auto">
     <div class="content">
         <br><br>
         <div class="innerOuter">
             <h2>회원가입</h2>
             <br>
 
-            <form id="enrollForm" action="insert.me" method="post">
+            <form id="enrollForm" action="insert.me" method="post" >
                 <div class="form-group">
                     <label for="userId">* 아이디 :</label>
                     <input type="text" class="form-control" id="userId" name="userId" placeholder="Please Enter ID" required>
@@ -33,23 +33,24 @@
                     <input type="text" class="form-control" id="userName" name="userName" placeholder="Please Enter Name" required><br>
                     
                     <label for="userNick">* 닉네임 :</label>
-                    <input type="text" class="form-control" id="userId" name="userId" placeholder="Please Enter ID" required>
+                    <input type="text" class="form-control" id="userNick" name="userNick" placeholder="Please Enter ID" required>
                     <div id="checkResult" style="display:none; font-size:0.8em"></div>
                     <br>
                     
                     <label for="email"> &nbsp; 이메일 :</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Please Enter Email"><br>
                     
-                    <label for="age"> &nbsp; 나이 :</label>
+                    <!-- <label for="age"> &nbsp; 나이 :</label>
                     <input type="number" class="form-control" id="age" name="age" placeholder="Please Enter Age"><br>
-                    
+                    --> 
                     <br>
                     
                     <label for="birthday"> &nbsp; 생년월일 :</label> &nbsp;
-                    <select name="yy" id="year"></select>년
-                    <select name="yy" id="month"></select>월
-                    <select name="yy" id="day"></select>일
-                    
+                    <select name="year" id="year"></select>년
+                    <select name="month" id="month"></select>월
+                    <select name="day" id="day"></select>일
+                    <input type="hidden" name="birthdate" id="birthdate" value=""/>
+                    <!-- <input size="20" name="time" id="time" />  -->
                     <br><br>
                     
                     <label for="phone"> &nbsp; 전화번호 :</label>
@@ -73,11 +74,19 @@
 					<label for="role"> &nbsp; 회원유형 :</label> 
 					<select name="userRole" id="userRole">
 						<option value="">--유형을 선택해주세요--</option>
-						<option value="personal">개인</option>
-						<option value="group">단체</option>
-						<option value="enterprise">기업</option>
+						<option value="A">개인</option>
+						<option value="B">단체</option>
+						<option value="C">기업</option>
 					</select>
 				<br><br>	
+				
+				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+				<script>
+					// 검색 단추를 누르면 팝업 레이어가 열리도록 설정한다.
+					$(function(){
+						$("#postcodify_search_button").postcodifyPopUp();
+					});
+				</script>
 				
 				<!-- jQuery와 Postcodify를 로딩한다. -->
 				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
@@ -95,12 +104,14 @@
                     
                 <!-- 생년월일 선택 함수 -->    
                 <script>
-                	
+             
                 	$(document).ready(function(){            
                 	    var now = new Date();
                 	    var year = now.getFullYear();
                 	    var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
-                	    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());           
+                	    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());   
+						
+                	    
                 	    //년도 selectbox만들기               
                 	    for(var i = 1900 ; i <= year ; i++) {
                 	        $('#year').append('<option value="' + i + '">' + i + '</option>');    
@@ -117,25 +128,43 @@
                 	        var dd = i > 9 ? i : "0"+i ;            
                 	        $('#day').append('<option value="' + dd + '">' + dd+ '</option>');    
                 	    }
+                	    // 현재 날짜로 설정해줍니다.
                 	    $("#year  > option[value="+year+"]").attr("selected", "true");        
                 	    $("#month  > option[value="+mon+"]").attr("selected", "true");    
-                	    $("#day  > option[value="+day+"]").attr("selected", "true");       
+                	    $("#day  > option[value="+day+"]").attr("selected", "true");  
+                	    /*
+                	    var yy = $("#year").val();
+                	    var mm = $("#mon").val();
+                	    var dd = $("#day").val();
+                	    var birthdate = "";
+                	    
+                 	    birthdate = addZero(yy)+"-"+addZero(mm)+"-"+addZero(dd);
+                	    console.log(birthdate) 
+                	                   	 
+                	    $("#birthdate").val(birthdate); //선택한 생년월일을 합친 값 */
 
                 	})
-                
+                						
+                	function birthdateInput() {
+                		 $('#time').val($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
+                		 $('#birthdate').val($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
+                	}
+                	$('#day').change(function() {
+                		birthdateInput();
+                	})
                 </script> 
                     
                 </div>
                 <br>
                 <div class="btns" align="center">
-                    <button type="submit" id="enrollBtn" class="btn btn-primary" >회원가입</button><!-- disabled  중복처리하고나서-->
+                    <button type="submit" id="enrollBtn" class="btn btn-success" >회원가입</button><!-- disabled  중복처리하고나서-->
                     <button type="reset" class="btn btn-danger"> 초기화</button>
                 </div>
             </form>
         </div>
         <br><br>
     </div>
-   
+    </div>
     <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

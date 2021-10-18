@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap id="memberResultSet" type="Member">
+		<id property="userId" column="user_ID"/>
+		<result property="userPwd" column="user_PWD"/>
+		<result property="userName" column="user_NAME"/>
+		<result property="userNick" column="user_NICK"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthdate" column="BIRTHDATE"/>
+		<result property="userRole" column="user_ROLE"/>
+		<result property="status" column="STATUS"/>
+		<result property="enrollDate" column="user_CREATE_DATE"/>
+		<result property="modifyDate" column="modify_DATE"/>
+		<result property="point" column="POINT"/>
+	</resultMap>
+
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		<!-- 암호화 전	
+		select * from member
+		where user_id=#{userId} and user_pwd=#{userPwd} and status='Y'
+		-->
+		<!-- 암호화 후 -->
+		select * from member 
+		where user_id=#{userId} and status='Y'
+		
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member
+		values(#{userId}, #{userPwd}, #{userName}, #{userNick}, #{address}, #{email}, #{phone}, #{birthdate}, #{userRole}, default, sysdate, sysdate, #{point})
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		update member
+		set user_Nick=#{userNick} ,address=#{address}, email=#{email}, phone=#{phone}, birthdate=#{birthdate}, user_role=#{userRole}, modify_date=sysdate
+		where user_id=#{userId}
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		update member
+		set status='N'
+		where user_id=#{userId}
+	</delete>
+	
+	<update id="updatePwdMember" parameterType="Member">
+		update member
+		set user_pwd=#{userPwd}
+		where user_id=#{userId}
+	</update>
+	
+</mapper>

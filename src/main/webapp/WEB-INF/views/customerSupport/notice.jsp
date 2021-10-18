@@ -403,20 +403,20 @@ button:hover {
                 <ul class="pagination">
                 	<c:choose>
                 		<c:when test="${ pi.currentPage ne 1 }">
-                			<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a></button>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                			<button class="page-item disabled"><a class="page-link" href=""> < </a></button>
                 		</c:otherwise>
                 	</c:choose>
                 	
                     <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
                     	<c:choose>
 	                		<c:when test="${ pi.currentPage ne p }">
-                    			<li class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></li>
+                    			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></button>
 	                		</c:when>
 	                		<c:otherwise>
-	                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
+	                			<button class="page-item disabled"><a class="page-link" href="">${ p }</a></button>
 	                		</c:otherwise>
 	                	</c:choose>
                     </c:forEach>
@@ -424,10 +424,10 @@ button:hover {
                     
                     <c:choose>
                 		<c:when test="${ pi.currentPage ne pi.maxPage }">
-                			<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a></button>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="page-item disabled"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<button class="page-item disabled"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a></button>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>

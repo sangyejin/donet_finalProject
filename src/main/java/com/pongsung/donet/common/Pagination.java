@@ -1,6 +1,6 @@
 package com.pongsung.donet.common;
 
-import com.pongsung.donet.notice.model.vo.PageInfo;
+import com.pongsung.donet.event.model.vo.PageInfo;
 
 public class Pagination {
 	
