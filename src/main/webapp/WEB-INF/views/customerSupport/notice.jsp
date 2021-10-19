@@ -182,6 +182,8 @@ button:hover {
 #searchmark {
 	width: 30px;
 	height: 25px;
+	margin-top:-1px;
+	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
 	border-bottom-right-radius: 0;
@@ -262,8 +264,8 @@ button:hover {
 				</thead>
 				<tbody>
 					<c:if test="${!empty list}">
-						<c:forEach items="${ list }" var="n"  varStatus="status">
-							<tr>
+						<c:forEach items="${ list }" var="n" varStatus="status">
+							<tr>							
 								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
 								<td class="number"><c:out value="${status.count}"/></td>
 								<td class="title">${ n.noticeTitle }</td>
@@ -276,8 +278,8 @@ button:hover {
 					</c:if>
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="5" readonly>존재하는 공지사항이 없습니다.</td>
-						</tr>
+							<td colspan="5" readonly>존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><mark>여기</mark></a>를 클릭하세요. </td>
+						</tr> 
 					</c:if>
 				</tbody>
 			</table>
@@ -329,24 +331,34 @@ button:hover {
 			</div>
 
 			<div id="grayline"></div>
+			
+			
+			<!-- search part -->
+			<form id="searchForm" method="post" action="search.no">
 			<div id="searchcategory">
-				<label id="rightmargin"><b>검색어</b></label> <input type="radio"
-					name="searchtype" id="thistitle" value="title"> <label
-					for="thistitle">제목</label> <input type="radio" name="searchtype"
-					id="thiswriter" value="writer"> <label for="thiswriter">작성자</label>
-				<input type="radio" name="searchtype" id="thiscontent"
-					value="content"> <label for="thiscontent">내용</label>
-				<!--checkbox 하나만 선택되게 : 스크립트에서 해결
-                radio 하나만 선택되게 : 이름을 같은 걸 주면 된다.-안되면 말고-->
+				<label id="rightmargin"><b>검색어</b></label>
+				 
+				<input type="radio" name="searchtype" id="thistitle" value="title" required> 
+				<label for="thistitle">제목</label> 
+				
+				<input type="radio" name="searchtype" id="thiswriter" value="writer" required> 
+				<label for="thiswriter">작성자</label>
+				
+				<input type="radio" name="searchtype" id="thiscontent" value="content" required> 
+				<label for="thiscontent">내용</label>
+				
 				<div id="searchbox">
-					<button id="searchmark">
-						<img id="magnifier"
-							src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
+					<button type="submit" id="searchmark">
+						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
-					<input id="mInput" type="text" placeholder="검색어를 입력하세요" value="">
+					
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" value="" required>
 				</div>
 			</div>
+			</form>
+			
 			<br>
+			
 			<!--관리자 메뉴 : 사용자가 관리자 일 때만 숨김해제-->
 			<div id="administratorOption" hidden="true">
 				<label id="administratorLabel">관리자</label>
