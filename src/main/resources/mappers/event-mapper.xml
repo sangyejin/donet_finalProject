@@ -26,4 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY EVENT_NO DESC
 	</select>
 
+	<select id="selectBoard" parameterType="_int" resultMap="eventResultMap">
+    	SELECT *
+    	FROM EVENT
+    	WHERE EVENT_NO=#{eno} AND STATUS = 'Y'
+   </select>
+   <insert id="insertEvent" parameterType="Event">
+   		INSERT INTO EVENT
+   		VALUES(SEQ_EV.NEXTVAL, #{eventTitle}, #{eventContent}, #{eventStart}, #{eventLast}, DEFAULT)
+   </insert>
+	
+	
 </mapper>

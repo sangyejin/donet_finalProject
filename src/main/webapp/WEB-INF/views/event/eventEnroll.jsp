@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
     <style>
        *{
         margin:0 auto;
@@ -135,103 +139,46 @@
 <jsp:include page="../common/menubar.jsp" />
 
 	<div class="container mt-2 ">
-        <h1>이벤트</h1>
+        <h1>이벤트 생성하기</h1>
         <br>
-        <section class="event_view_wrap">
-            <header class="statusBox">
-                <p style="text-align:left; margin-left:20px; font-size:30px"> ${ ev.eventTitle } </p>
-                <p style="font-size:15px; float:right; margin-right:20px">Start:<span> ${ ev.eventStart }</span></p>
-                <p style="font-size:15px; float:right; margin-right:20px">Goal:<span> ${ ev.eventLast }</span></p>
-            </header>
-            <br>
-            <br>
-            <article> 
-                <div class="event_view_info">
-                	<p > ${ev.eventContent }</p>
-                    <!-- image -->
-                    <!-- <img src="${ ev.eventImg }" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
-                </div>
-                <!-- <div>
-                	<p> 첨부파일 </p>
-                	
-                </div> -->
-            </article>
-            <br>
-            
-            <table id="replyArea" class="reply" align="center">
-            	<thead>
-            		<tr>
-            			<c:if test="${ !empty loginUser }">
-            				<th>
-            					<textarea class="form-control" id="replyContent" row="2" style="resize:none; width:100%" />
-            				</th>
-            				<th>
-            					<button class="btn btn-secondary" id="addReply">등록하기</button>
-            				</th>
-            			</c:if>
-            			<c:if test="${ empty loginUser }">
-                        	<th colspan="2" style="width:75%">
-	                            <textarea class="form-control" readonly rows="2" style="resize:none; width:100%">로그인한 사용자만 사용가능한 서비스입니다. 로그인 후 이용해주세요.</textarea>
-	                        </th>
-	                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
-                        </c:if>
-                    </tr>
-                    <tr>
-                    	<td colspan="3">댓글 (<span id="rcount">0</span>)</td>
-                    	
-                    </tr>
-            	</thead>
-            	<tbody>
-            	
-            	</tbody>
-            </table>
-            
-         
-            <div class="btn_event_wrap">
-            	<c:if test="${ loginUser.userRole eq 'D' }">
-            		<div>
-            			<button class="btn btn-primary" onclick="postFormBtn(1);">수정하기</button>
-            			<button class="btn btn-danger" onclick="postFormBtn(2);">삭제하기</button>
-            		</div>
-            		<form id="postForm" method="post" action="">
-            			<input type="hidden" name="eno" value="${ ev.eventNo }">
-            			<!-- <input type="hidden" name="fileName" value="${ ev.eventNo }"> -->
-            		</form>
-            	</c:if>
-                <input class="btn_event" type="button" value="목록">
-            </div>
-        </section>  
-        
+       	
+       	<form id="erollForm" method="post" action="insert.ev" enctype="multipart/form-data">
+       		<table align="center">
+       			<tr>
+       				<th><label for="eventTitle">제목</label></th>
+       				<td><input type="text" id="title" class="form-control" name="eventTitle"></td>
+       			</tr>
+       			<tr>
+       				<th><label for="eventStart">이벤트 시작</label>
+       				<td><input type="text" id="datepickerStart" name="eventStart"></td>
+       			</tr>
+       			<tr>
+       				<th><label for="eventLast">이벤트 종료</label>
+       				<td><input type="text" id="datepickerLast" name="eventLast"></td>
+       			</tr>
+       			<tr>
+       				<th colspan="2"><label for="content">내용</label></th>
+       			</tr>
+       			<tr>
+       				<th colspan="2"><textarea rows="10" class="form-control" name="eventContent" id="content" style="resize:none" required></textarea>
+       			</tr>
+       			<tr>
+       				<th><label for="upfile">첨부파일</label></th>
+       				<td><input type="file" id="upfile" class="form-control-file border" name="uploadFile"></td>
+       			</tr>
+       		</table>
+       		<br>
+       		<div class="submitBtn">
+       			<button type="submit" class="btn btn-primary">등록하기</button>
+       			<button type="reset" class="btn btn-danger">취소하기</button>
+       		</div>
+       	</form>
+       
+       
     </div>
-   
    <script>
-   /*
-   		selectReplyList();
-   		
-   		$("#addReply").click(function(){
-   			var eno = ${ev.eventNo};
-   			if($("#replyContent").val().trim().length != 0){
-   				$.ajax({
-   					url:"rinsert.ev"
-   				})
-   			}
-   		})
-   		*/
-   
-   
-   
-   
-   
-   
-   		function postFormBtn(num){
-   			var postForm = ${"#postForm"};
-   			if(num == 1){
-   				postForm.attr("action", "update.ev");
-   			}else {
-   				postForm.attr("action", "delete.ev");
-   			}
-   			postForm.submit();
-   		}
+   		$("#datepickerStart").datepicker();
+   		$("#datepickerLast").datepicker();
    </script>
 
 <jsp:include page="../common/footer.jsp" />

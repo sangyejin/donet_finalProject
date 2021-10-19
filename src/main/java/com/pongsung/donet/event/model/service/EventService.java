@@ -11,4 +11,8 @@ public interface EventService {
 
 	ArrayList<Event> selectEventList(PageInfo pi);
 
+	Event selectEvent(int eno);
+
+	void insertEvent(Event e);
+
 }

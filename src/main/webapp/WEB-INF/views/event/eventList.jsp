@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
         .eventBox{
             height: 80px;
             width: 80%;
-            border: 1px solid black;
+            border: none;
           
         }
         .statusBox{
@@ -64,13 +65,13 @@
           .row{
               display: table;
               text-align: center;
+              min-height: 400px;
           }
           [class*="col-"] {
               
               display: table-cell;
               vertical-align: top;
           }
-
           .card{
             transition:0.5s;
             cursor:pointer;
@@ -142,7 +143,7 @@
             <p class="card-text">Welcom to bootstrap card styles</p>
             <a href="#" class="btn btn-primary">Submit</a>
           </div>   -->
-        <div >
+        <div>
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
             <div class="eventBox">
@@ -152,70 +153,39 @@
             <br>
             <div class="statusBox">
                 <p style="text-align:left; margin-left:20px; font-size:30px">진행중인 이벤트</p>
+                <c:if test="${ !empty loginUser && m.userId == 'admin' }">
+                	<a class="btn btn-secondary" style="float:right" href="enrollForm.ev">글쓰기</a>
+                </c:if>
             </div>  
         </div>
         <br>
+        <!-- ========================= 
+            Main Event Area 
+        ========================= --> 
+        
         <div class="row">
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
+        	<c:forEach items="${ list }" var="ev">
+            <div class="col-lg-4 col-md-6 col-sm-6" id="eventCard">
+            	<p > ${ ev.eventNo } </p>
+                <div class="single-cases mb-40">
+                    <div class="cases-img">
+                    	<img src="${ ev.eventImg }" alt="" style="height:200px; background-color:rgb(241, 241, 241)">
+                    </div>
+                    <div class="cases-caption">
+                    	<h3><a href="#">${ ev.eventTitle }</a></h3>
+                    	<div class="dates d-flex justify-content-between">
+                        	<p>Start:<span> ${ ev.eventStart }</span></p>
+                            <p>Goal:<span> ${ ev.eventLast }</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 col-xl-3">
-                <div class="card ">
-                    <div class="boardCard">
-                        <div style="height: 200px; background-color:rgb(241, 241, 241);"><h2>Image</h2></div> <!-- img area -->
-                        <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p> 
-                    </div>
-                </div>
-            </div>
-            
+            </c:forEach>
         </div>    
         <!-- ========================= 
             Paging Area 
         ========================= --> 
-        <!-- 
+        
         <div id="pagingArea">
             <ul class="pagination">
                 <c:choose>
@@ -249,7 +219,7 @@
                 </c:choose>
             </ul>
         </div>
-         -->
+        
         <!-- Footer & Search Area -->
         <div class="container_footer">
             <div class="input-group icons">
@@ -259,13 +229,28 @@
                             <span id="icon-search" class="glyphicon glyphicon-search" ></span>
                             <input name="findBoard" type="search" class="form-control" placeholder="전체 게시글 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
                         </p>
+                    </div>
+                    <div class="btnArea">
+                    	<!--<c:if test="${ loginUser.userRole eq 'D' }">
+                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
+                    	</c:if>-->
+                    	<c:if test="${ !empty loginUser }">
+                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
+                    	</c:if>
+                    	
                     </div>                    
                 </form>    
             </div>
         </div>
     </div>
 
-
+	<script>
+		$(function() {
+			$(".row #eventCard").click(function(){
+				location.href="detail.ev?eno=" = $(this).children().eq(0).text();
+			});
+		});
+	</script>
 
     <jsp:include page="../common/footer.jsp" />
 </body>
