@@ -23,7 +23,7 @@ public class FundingController {
 	@Autowired
 	private FundingService fundingService;
 	
-	//펀딩 리스트 확인용
+	//펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 		int listCount=fundingService.selectFundingListCount();
@@ -31,7 +31,7 @@ public class FundingController {
 		List<FundingCategory> categoryList= fundingService.selectFundingCategoryList();
 		
 		logger.info("fundingListCount::"+listCount);
-		PageInfo pi=Pagination.getPageInfo(listCount, currentPage, 5, 16);
+		PageInfo pi=Pagination.getPageInfo(listCount, currentPage, 5, 15);
 //		
 		List<Funding> fundingList = fundingService.selectFundingList(pi);
 		logger.info("fundingList::"+fundingList);
@@ -43,9 +43,10 @@ public class FundingController {
 		return "funding/fundingListView";
 	}
 	
-	@RequestMapping("funding/insert")
+	//후원완료창 확인용 
+	@RequestMapping("funding/complete")
 	public String insertFunding() {
-		return "funding/";
+		return "funding/fundingCompleteView";
 	}
 	
 	@RequestMapping("funding/update")
