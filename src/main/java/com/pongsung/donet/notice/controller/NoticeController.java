@@ -26,7 +26,7 @@ public class NoticeController {
 		int listCount = NoService.selectNoticeListCount();
 		System.out.println(listCount);
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 
 		ArrayList<Notice> list = NoService.selectNoticeList(pi);
 		System.out.println("list : " + list);

@@ -16,90 +16,69 @@
 * {
 	/*border: 1px red solid;*/
 	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 /*sidebar*/
-h3 {
-	font-size: 22px;
-}
-
 .sidebar {
 	width: 150px;
 	height: 400px;
-	margin-left: 3%;
+	margin-left: 25px;
 	padding: 0;
 	float: left;
 	margin-top: 0;
 }
 
-a:hover {
-	text-decoration: underline;
-}
+#greenfont1 { margin-right: 45%; text-decoration: none; }
 
-#greenfont1 {
-	margin-right: 45%;
-	text-decoration: none;
-}
+#faq { margin-right: 18%; }
 
-#faq {
-	margin-right: 18%;
-}
+#facetoface { margin-right: 43.5%; }
 
-#facetoface {
-	margin-right: 43.5%;
-}
+#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
-#wrap {
-	margin-bottom: 7%;
-}
+#wrap { margin-bottom: 7%; }
 
-#greenfont1, #faq, #facetoface {
-	font-weight: bolder;
-}
+#greenfont1, #faq, #facetoface { font-weight: bold; }
 
 /*helper*/
 .needhelp {
-	margin-top: 40%;
+	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
 	background-color: rgb(244, 244, 244);
 	width: 140px;
-	height: 45px;
+	height: 40px;
 	border-radius: 10px;
 }
 
 #help {
 	font-weight: bolder;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 	margin-top: 0px;
 	width: 140px;
 	margin-left: 3%;
 }
 
-#gethelp {
-	margin-left: 3%;
-}
+#gethelp { margin-left: 3%; }
+#gethelp:hover{ text-decoration : underline;}
 
-#helparrow {
-	margin-left: 29%;
-	margin-top: 0px;
-}
+#helparrow { margin-left: 29%; margin-top: 0px; }
 
 /* mainbody*/
 #thelist {
 	float: left;
 	margin-left: 5%;
-	margin-top: 2%;
+	margin-top: 0px;
 	width: 800px;
 }
 
 #notice {
-	font-size: 16px;
+	font-size: 13px;
 	font-weight: bolder;
 }
 
 #subnote {
-	font-weight: 12px;
+	font-size: 11px;
 	font-weight: lighter;
 	color: grey
 }
@@ -110,7 +89,7 @@ a:hover {
 
 /*table*/
 #greenline {
-	margin-top: 2%;
+	margin-top: 7px;
 	margin-bottom: 0;
 	width: 800px;
 	height: 1px;
@@ -127,9 +106,7 @@ a:hover {
 	background-color: grey;
 }
 
-table {
-	border-collapse: collapse; /*테두리간 간격 없앰*/
-}
+table { border-collapse: collapse; /*테두리간 간격 없앰*/ }
 
 td {
 	text-align: center;
@@ -143,29 +120,19 @@ tr {
 	margin-bottom: 1%;
 }
 
-.number {
-	width: 120px;
-}
+.number { width: 120px; }
 
-.title {
-	width: 350px;
-}
+.title { width: 350px; }
 
-.writer {
-	width: 120px;
-}
+.writer { width: 120px; }
 
-.date {
-	width: 120px;
-}
+.date { width: 120px; }
 
-.viewed {
-	width: 120px;
-}
+.viewed { width: 120px; }
 
 #whole {
-	width: 1300px;
-	margin-left: 90px;
+	width: 1050px;
+	margin-left: 150px;
 }
 
 button {
@@ -183,17 +150,13 @@ button:hover {
 
 #buttons {
 	margin-top: 2%;
-	margin-left: 31%;
 	margin-bottom: 3%;
+	margin-left : 330px;
 }
 
-#wrap>tr>td {
-	padding-bottom: 3%;
-}
+#wrap>tr>td { padding-bottom: 3%; }
 
-#rightmargin {
-	margin-right: 5%;
-}
+#rightmargin { margin-right: 5%; }
 
 #administratorOption>button {
 	width: 50px;
@@ -225,6 +188,8 @@ button:hover {
 	border-top-right-radius: 0;
 }
 
+#searchmark:hover{ background-color: rgb(232, 240, 214); }
+
 #magnifier {
 	width: 15px;
 	height: 15px;
@@ -244,10 +209,7 @@ button:hover {
 	border-style: none;
 }
 
-#support {
-	color: #000000;
-	font-weight: bolder;
-}
+#support { color: #000000; font-weight: bolder; font-size : 16px;}
 </style>
 
 </head>
@@ -259,7 +221,7 @@ button:hover {
 	<div id="whole">
 
 		<div class="sidebar">
-			<h4 id="support">고객지원</h4>
+			<h5 id="support">고객지원</h5>
 			<div id="wrap">
 				<tr>
 					<td width: 300px;><a id="greenfont1" class="bottomfix">공지사항</a></td>
@@ -277,8 +239,9 @@ button:hover {
             </tr>
 			</div>
 			<div class="needhelp">
-				<span><p id="help">도움이 필요하신가요?</p></span> <span><a
-					id="gethelp">1:1 문의하기</a></span> <span id="helparrow"> > </span>
+				<span><p id="help">도움이 필요하신가요?</p></span> 
+				<span><a id="gethelp">1:1 문의하기</a></span> 
+				<span id="helparrow"> > </span>
 			</div>
 		</div>
 
@@ -299,9 +262,10 @@ button:hover {
 				</thead>
 				<tbody>
 					<c:if test="${!empty list}">
-						<c:forEach items="${ list }" var="n">
+						<c:forEach items="${ list }" var="n"  varStatus="status">
 							<tr>
-								<td class="number">${ n.noticeNo }</td>
+								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
+								<td class="number"><c:out value="${status.count}"/></td>
 								<td class="title">${ n.noticeTitle }</td>
 								<td class="writer">${ n.noticeWriter }</td>
 								<td class="date">${ n.noticeDate }</td>
@@ -323,8 +287,7 @@ button:hover {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
-								<a class="page-link"
-									href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
 							</button>
 						</c:when>
 						<c:otherwise>
@@ -353,14 +316,12 @@ button:hover {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<button class="page-item">
-								<a class="page-link"
-									href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
 							</button>
 						</c:when>
 						<c:otherwise>
 							<button class="page-item disabled">
-								<a class="page-link"
-									href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
 							</button>
 						</c:otherwise>
 					</c:choose>
@@ -378,7 +339,7 @@ button:hover {
 				<!--checkbox 하나만 선택되게 : 스크립트에서 해결
                 radio 하나만 선택되게 : 이름을 같은 걸 주면 된다.-안되면 말고-->
 				<div id="searchbox">
-					<button onclick="" id="searchmark">
+					<button id="searchmark">
 						<img id="magnifier"
 							src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
