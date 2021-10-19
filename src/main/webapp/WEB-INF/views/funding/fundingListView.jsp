@@ -16,18 +16,22 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
-
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- CSS here -->
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
 <link rel="stylesheet" href="resources/assets/css/slicknav.css">
 <link rel="stylesheet" href="resources/assets/css/flaticon.css">
-<link rel="stylesheet" href="resources/assets/css/progressbar_barfiller.css">
+<link rel="stylesheet"
+	href="resources/assets/css/progressbar_barfiller.css">
 <link rel="stylesheet" href="resources/assets/css/gijgo.css">
 <link rel="stylesheet" href="resources/assets/css/animate.min.css">
 <link rel="stylesheet" href="resources/assets/css/animated-headline.css">
 <link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet"
+	href="resources/assets/css/fontawesome-all.min.css">
 <link rel="stylesheet" href="resources/assets/css/themify-icons.css">
 <link rel="stylesheet" href="resources/assets/css/slick.css">
 <link rel="stylesheet" href="resources/assets/css/nice-select.css">
@@ -37,6 +41,16 @@
 * {
 	font-family: 'Nanum Gothic Coding', monospace;
 	font-size: 12px;
+}
+
+.card {
+	margin-right: 0px !important;
+	padding-left: 30px !important;
+}
+
+.cases-caption {
+	text-align: center;
+	width: 278px !important;
 }
 
 .div-top {
@@ -55,11 +69,10 @@
 	width: 1050px;
 }
 
-.btn-light {
-	display: inline-block;
+.btn-insert {
 	background-color: rgba(224, 224, 224);
-	/* padding: 0.5em 1em; */
-	margin-left: 1em;
+	height: 42px;
+	padding: 0 20px 0 20px !important;
 }
 
 .main {
@@ -71,53 +84,12 @@
 	width: 1050px;
 }
 
-.image {
-	display: inline-block;
-	margin-top: 16px auto;
-	width: 240px;
-	height: 200px;
-	background-color: beige;
-}
-
-.div-card-info {
-	margin-top: 10px;
-	background-color: aliceblue;
-	width: 240px;
-	height: 140px;
-	word-break: break-all;
-	overflow: hidden;
-	margin: auto;
-}
-
-.div-card-info-top {
-	overflow: hidden;
-	word-break: break-all;
-	text-align: center;
-}
-
 p {
 	margin: 0;
 }
 
-select {
-	outline: 0;
-	border: 0;
-	-webkit-appearance: none;
-	/* 네이티브 외형 감추기 */
-	-moz-appearance: none;
-	appearance: none;
-	background:
-		url('${ pageContext.servletContext.contextPath }/resources/imgs/caret-down.png')
-		no-repeat 95% 50%;
-	background-size: 10px;
-	/* 화살표 모양의 이미지 */
-	padding: 4px;
-	/* padding-right: 4px; */
-}
-
-option {
-	padding: 4px;
-	/* padding-right: 4px; */
+.progress {
+	width: 278px;
 }
 
 /* IE 10, 11의 네이티브 화살표 숨기기 */
@@ -149,13 +121,25 @@ select::-ms-expand {
 	font-size: 0.8em;
 }
 
-.title {
-	height: 40px;
+.pagination {
+	display: inline-block !important;
 }
 
-.pagination {
+#filter1, #filter2 {
+	display: inline-block;
+}
+
+.nice-select {
+	float: none;
+	display: inline-block;
+}
+
+.category-hostName {
+	display: block;
+}
+
+.case-caption {
 	margin: 0 auto;
-	text-align: center;
 }
 </style>
 </head>
@@ -185,15 +169,17 @@ select::-ms-expand {
 						aria-describedby="button-addon2">
 					<div class="input-group-append"></div>
 				</div>
-				<select name="filter2" id="filter2">
+				<select name="filter1" id="filter2">
 					<option value="1">전체</option>
 					<option value="2">진행중</option>
 					<option value="3">종료</option>
-				</select> <select name="filter1" id="filter1">
+				</select> <select name="filter2" id="filter1">
 					<option value="1">최신순</option>
 					<option value="2">인기순</option>
 					<option value="3">마감임박</option>
 				</select>
+				<button class="button rounded-0 primary-md w-100 btn_1 boxed-btn"
+					type="submit">등록하기</button>
 			</div>
 
 		</div>
@@ -203,33 +189,43 @@ select::-ms-expand {
 			<div class="container row" style="margin: 100 auto;">
 
 				<c:forEach var="list" items="${list}" varStatus="status">
-					<div class="col-lg-4 col-md-6 col-sm-6">
+					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
 								<img
 									src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
-									alt="${list.fpName}" width="280px" height="200px">
+									alt="${list.fpName}" width="278px" height="200px">
 							</div>
 							<div class="cases-caption">
-								<h3>
-									<a href="#">${list.fpName}</a>
-								</h3>
-								<p class="category-hostName">
-								${status.count}
-									<span>${list.categoryName}</span> | <span>${list.hostName}</span>
-								</p>
+								<div class="cases-info">
+									<h3>
+										<a href="#">${list.fpName}</a>
+									</h3>
+									<p class="category-hostName">
+										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
+									</p>
+								</div>
 								<!-- Progress Bar -->
-								<div class="single-skill mb-15">
+								<div class="progress">
+									<div class="progress-bar progress-bar-success"
+										role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100" style="width: 40%">40% Complete
+										(success)</div>
+								</div>
+								<!-- 
+								<div class="single-skill mb-15">	
 									<div class="bar-progress">
 										<div id="bar${status.count}" class="barfiller">
 											<div class="tipWrap">
 												<span class="tip"></span>
 											</div>
-											<span class="fill" data-percentage="${list.raised/list.goal*100}"></span>
+											<span class="fill"
+												data-percentage="${list.raised/list.goal*100}"></span>
 										</div>
 									</div>
+									
 								</div>
-								<!-- / progress -->
+								 -->
 								<div class="prices d-flex justify-content-between">
 									<p>
 										현재:<span> ${list.raised}</span>
@@ -245,42 +241,47 @@ select::-ms-expand {
 			</div>
 		</div>
 
-		<nav>
+		<!-- pagination -->
+		<nav class="blog-pagination justify-content-center d-flex">
 			<ul class="pagination">
 				<c:choose>
 					<c:when test="${ pi.currentPage eq 1 }">
-						<li class="disabled"><a
-							href="fundingList?currentPage=${pi.currentPage-1 }"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						<li class="disabled page-item"><a
+							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
+							aria-label="Previous"> <i class="ti-angle-left"></i>
 						</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="fundingList?currentPage=${pi.currentPage-1 }"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-					<c:choose>
-						<c:when test="${ pi.currentPage eq i }">
-							<li class="active"><a href="fundingList?currentPage=${i}">${i}</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="fundingList?currentPage=${i}">${i}</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-				<c:choose>
-					<c:when test="${ pi.currentPage eq pi.maxPage }">
-						<li class="disabled"><a
-							href="fundingList?currentPage=${pi.currentPage+1 }"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="fundingList?currentPage=${pi.currentPage+1 }"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+						<li class="page-item"><a
+							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
+							aria-label="Previous"> <i class="ti-angle-left"></i>
+						</a></li>
 					</c:otherwise>
 				</c:choose>
 
+				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+					<c:choose>
+						<c:when test="${ pi.currentPage eq i }">
+							<li class="disabled page-item active"><a
+								href="funding?currentPage=${i}" class="page-link">${i}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a href="funding?currentPage=${i}"
+								class="page-link">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="disabled page-item"><a href="funding?currentPage=${pi.currentPage+1 }" class="page-link"
+							aria-label="Next"> <i class="ti-angle-right"></i>
+						</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a href="funding?currentPage=${pi.currentPage+1 }" class="page-link" aria-label="Next"> <i class="ti-angle-right"></i></a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</nav>
 	</div>

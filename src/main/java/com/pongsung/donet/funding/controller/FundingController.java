@@ -24,7 +24,7 @@ public class FundingController {
 	private FundingService fundingService;
 	
 	//펀딩 리스트 확인용
-	@RequestMapping("fundingList")
+	@RequestMapping("funding")
 	public String seletcFundingList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 		int listCount=fundingService.selectFundingListCount();
 		
