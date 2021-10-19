@@ -12,7 +12,6 @@
 (function ($) {
 
     $.fn.barfiller = function (options) {
-
         var defaults = $.extend({
             barColor: '#09CC7F',
             tooltip: true,
@@ -90,7 +89,7 @@
             initializeItems: function() {
             var pctWidth = methods.calculateFill(fillPercentage);
             object.find('.tipWrap').css({ display: 'inline' });
-
+            
             if(transitionSupport)
                 methods.transitionFill(pctWidth);
             else
@@ -124,7 +123,7 @@
             },
 
             getTransition: function(val, time, type) {
-
+            	
                 var CSSObj;
                 if(type === 'width') {
                     CSSObj = { width : val };
@@ -176,5 +175,4 @@
             $.error( 'Method "' +  method + '" does not exist in barfiller plugin!');
         } 
     };
-
 })(jQuery);
