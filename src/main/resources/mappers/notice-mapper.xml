@@ -9,22 +9,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="no_title" property="noticeTitle" />
 		<result column="no_content" property="noticeContent" />
 		<result column="no_date" property="noticeDate" />
-		<result column="no_writer" property="noticeWriter" />
+		<result column="user_name" property="noticeWriter" />
 		<result column="no_count" property="noticeCount" />
 		<result column="no_save" property="noticeSave" />
 		<result column="no_status" property="noticeStatus" />
 	</resultMap>
 
-	<select id="selectNoticeListCount" resultType="_int">
+	<select id="selectNoticeListCount" resultType="_int" parameterType="Search">
 		SELECT COUNT(*)
 		FROM NOTICE
+		JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_SAVE='N'
+			<if test="writer != null">
+			AND USER_NAME LIKE '%' || #{writer} || '%'
+			</if>
+			<if test="title != null">
+			AND NO_TITLE LIKE '%' || #{title} || '%'
+			</if>
+			<if test="content != null">
+			AND NO_CONTENT LIKE '%' || #{content} || '%'
+			</if>
+			
 	</select>
 
-	<select id="selectNoticeList" resultMap="noticeResultMap" resultType="Notice">
-		SELECT NO_NO, NO_TITLE, NO_CONTENT, NO_WRITER, NO_DATE, NO_COUNT
+	<select id="selectNoticeList" resultMap="noticeResultMap" parameterType="Search" resultType="Notice">
+		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT
 		FROM NOTICE
+        JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_SAVE='N' 
+			<if test="writer != null">
+			AND USER_NAME LIKE '%' || #{writer} || '%'
+			</if>
+			<if test="title != null">
+			AND NO_TITLE LIKE '%' || #{title} || '%'
+			</if>
+			<if test="content != null">
+			AND NO_CONTENT LIKE '%' || #{content} || '%'
+			</if>
+			
 		ORDER BY NO_NO DESC
 	</select>
 
