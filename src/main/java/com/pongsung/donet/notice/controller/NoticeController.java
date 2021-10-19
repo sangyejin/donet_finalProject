@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.notice.model.service.NoticeService;
 import com.pongsung.donet.notice.model.vo.Notice;
-import com.pongsung.donet.notice.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 @Controller
 public class NoticeController {
@@ -26,7 +26,7 @@ public class NoticeController {
 		int listCount = NoService.selectNoticeListCount();
 		System.out.println(listCount);
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 
 		ArrayList<Notice> list = NoService.selectNoticeList(pi);
 		System.out.println("list : " + list);

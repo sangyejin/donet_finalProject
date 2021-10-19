@@ -38,20 +38,20 @@ body{
 }
 
 #outline{
-    width: 1300px;
+    width: 1050px;
     height: 110px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
    	position : inline;
+   	margin-left : 150px;
 }
 
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: -5px;
+    margin-top:0px;
     float: left;
-    font-size: 14px;
-    width : 180px;
+    width : 140px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
@@ -67,16 +67,13 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 #right{ margin-right: 50px; }
 
 .greenfont > ul > li {
-    /*background-color: rgb(244, 244, 244);*/
-    margin-top: 18px;
+    margin-top: 15px;
     float: left;
     font-size: 12px;
     width : 100px;
     height : max-content;
-   /*margin-left: 6px;*/
     text-align: center;
     line-height: 10px;
-
 }
 
 .greenfont > ul > li { display: none; }
@@ -95,17 +92,28 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 }
 
 #userinfo{
- 	margin-left: 1060px;
- 	margin-top : -39px;
+ 	margin-left: 700px;
+ 	margin-top : -35px;
 }
 
 #secondLine{  margin-top : -7px; }
 
 .thisuser{ font-size : 10px; }
 
-.noDecoration{ color : rgb(30, 154, 40);  text-decoration: none; }
+.noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }
 
+a{ color : #000000;  text-decoration: none; }
 
+.smallerFonts{
+	color : rgb(30, 154, 40);  
+	text-decoration: none;
+	font-size : 10px;
+}
+.loginDiv{
+color : rgb(30, 154, 40);  
+width : 300px;
+height : 30px;
+}
 
 </style>
 </head>
@@ -121,12 +129,12 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
             
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><label class="noDecoration" >${ sessionScope.loginUser.userName }님</label> |  <a class="noDecoration"  href="myPage.me">마이페이지</a>  |  <a class="noDecoration"  href="logout.me">로그아웃</a> </div>
+       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="logout.me">로그아웃</a> </div>
             </c:if>
         <br>
         

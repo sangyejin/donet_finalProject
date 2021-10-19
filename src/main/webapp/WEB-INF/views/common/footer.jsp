@@ -9,17 +9,10 @@
 
 
 <style>
-    *{
-        font-family: 'Nanum Gothic Coding', monospace;
-        font-size: 12px;
-    }
-    
-    #whole > *{ color : gray }
-     
-    div{
-        margin-top: 10px;
-        margin-right: 30px;
-    }
+    #realBody > *{    	 	
+     margin-left : 250px;
+     color : gray ;
+     }
 
     a{ text-decoration: none; }
 
@@ -32,14 +25,12 @@
 
     #toright, #toleft{
        float: left;
-       margin-left: 160px;
+       margin-left: 0px;
        margin-top: 0;
        position : inline;
 
     }
-
-    #toright{ margin-left: 180px; }
-
+  
     #toright>p{ text-align: left; }
 
     #toleft>a, #home, h4{
@@ -48,44 +39,59 @@
         color : gray;
     }
 
-    h4{ 
+    #happycustomers{ 
     	margin-top : 10px;
     	margin-bottom: 5px; 
     }
 
-    #tel, #fax{ text-align: left; }
-
-    #leftdiv{
-        margin-left: 0;
+/*right part*/
+    #tel{ margin-left:  -118px;  }
+ 
+    #leftdiv{ /*is actually in the right part*/
+        margin-left:  300px; 
         margin-top: 0;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
     
-    #topmargin{ margin-top: 7%; }
+    #copyRight{ margin-left:  180px;  }
+    
+    #toright{
+     margin-top : -140px;
+     margin-left: 250px; 
+     width : 600px;
+     }
+    
+    
+    #address{ 
+     margin-top: 30px;     
+     margin-left: 180px;  
+     }
     
     #line{
    		float : left;
-        margin-left: 0;
+        margin-left: 150px;
 	    padding: 0;
         margin-top: 150px;
         margin-bottom: 10px;
         border: solid 1px rgb(244, 244, 244);
-    	width : 100%;
+    	width : 1050px;
     }
 
     #toleft> a:hover, #home:hover{ text-decoration: underline; }
 
     #readyimg{ display: none;}
     
-    #whole{   
-   	 	width:1300px; 
-   	 	margin-bottom : -100px;
+    #realBody{   
+   	 	width:1050px; 
+   	 	/*padding-bottom: 300px;*/
    	 }
+   	 
+   	 
 
 </style>
 </head>
 <body>
-<div id="whole">
+<div id="realBody">
     <div id="line" align="left"></div>
 	<div id="footer">
         <span id="toleft" align="left">
@@ -97,7 +103,7 @@
 
             <br><br>
 
-            <h4><b>고객 행복 센터</b></h4>
+            <h4 id="happycustomers"><b>고객 행복 센터</b></h4>
             <span id="phonenumber">010-3371-5190 </span>
             <span id="workinghour">(24시 운영 00:00-24:00)</span>
             <br><br>
@@ -107,20 +113,17 @@
 
        <!--  <img id="readyimg" src="/Users/wangsubin/FRONTEND/source_final/3EFFFBC2-CEAA-4568-A74D-89005E3F5570_1_105_c.jpeg" > -->
 
-        <span id="toright" align="right">
-            <a href="#" id="home"><b>도넷닷컴</b></a> | 
-            <a>사업자등록번호 : 123-45-6789 </a> | 
-            <a>서울 강남 제2000-09호</a> | 
-            <a>대표자 : 허은주</a> 
+        <div id="toright" align="right">
+           <span><a>사업자등록번호 : 123-45-6789 </a> | <a>서울 강남 제2000-09호</a> | <a>대표자 : 허은주</a></span> 
            
-            <p id="topmargin">주소 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F,3F,4F,5F,6F</p>
+            <p id="address">주소 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F,3F,4F,5F,6F</p>
            
-            <div id="leftdiv" align="left">
+           <div id="leftdiv" align="left">
             <span id="tel">Tel : 1544-9970</span> |
             <span id="fax">Fax : 02-562-3478</span>
-            </div>
-            <p>Copyright © 2021 donet.com non-profit company. All Right Reserved</p>
-        </span>
+          </div>
+            <p id="copyRight">Copyright © 2021 donet.com non-profit company. All Right Reserved</p>
+        </div>
     </div>
     </div>
 

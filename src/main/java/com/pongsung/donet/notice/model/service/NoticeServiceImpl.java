@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.notice.model.dao.NoticeDao;
 import com.pongsung.donet.notice.model.vo.Notice;
-import com.pongsung.donet.notice.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -21,13 +21,11 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Override
 	public int selectNoticeListCount() {
-		// TODO Auto-generated method stub
 		return NoDao.selectNoticeListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Notice> selectNoticeList(PageInfo pi) {
-		// TODO Auto-generated method stub
 		return NoDao.selectNoticeList(sqlSession, pi);
 	}
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,98 +13,72 @@
 	rel="stylesheet">
 
 <style>
-* { //
-	border: 1px red solid;
+* {
+	/*border: 1px red solid;*/
 	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 /*sidebar*/
-h3 {
-	font-size: 18px;
-}
-
 .sidebar {
 	width: 150px;
 	height: 400px;
-	/*margin-left: 3%;*/
+	margin-left: 25px;
 	padding: 0;
 	float: left;
 	margin-top: 0;
 }
 
-a:hover {
-	text-decoration: underline;
-}
+#greenfont1 { margin-right: 45%; text-decoration: none; }
 
-#greenfont1 {
-	margin-right: 46%;
-	text-decoration: none;
-}
+#faq { margin-right: 18%; }
 
-#faq {
-	margin-right: 18%;
-}
+#facetoface { margin-right: 43.5%; }
 
-#facetoface {
-	margin-right: 44%;
-}
+#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
-#wrap {
-	margin-bottom: 7%;
-}
+#wrap { margin-bottom: 7%; }
 
-#greenfont1, #faq, #facetoface {
-	font-weight: bolder;
-}
-
-.bottomfix {
-	margin-bottom: 3%;
-}
+#greenfont1, #faq, #facetoface { font-weight: bold; }
 
 /*helper*/
 .needhelp {
-	margin-top: 40%;
+	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
 	background-color: rgb(244, 244, 244);
 	width: 140px;
 	height: 40px;
 	border-radius: 10px;
-	margin-left: -3%;
 }
 
 #help {
 	font-weight: bolder;
-	margin-bottom: 5px;
-	margin-top: 4px;
+	margin-bottom: 0px;
+	margin-top: 0px;
 	width: 140px;
 	margin-left: 3%;
 }
 
-#gethelp {
-	margin-left: 3%;
-}
+#gethelp { margin-left: 3%; }
+#gethelp:hover{ text-decoration : underline;}
 
-#helparrow {
-	margin-left: 29%;
-	margin-top: 0px;
-}
+#helparrow { margin-left: 29%; margin-top: 0px; }
 
 /* mainbody*/
 #thelist {
 	float: left;
 	margin-left: 5%;
-	margin-top: 0.3%;
+	margin-top: 0px;
 	width: 800px;
 }
 
 #notice {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: bolder;
 }
 
 #subnote {
-	font-weight: 12px;
+	font-size: 11px;
 	font-weight: lighter;
 	color: grey
 }
@@ -116,7 +89,7 @@ a:hover {
 
 /*table*/
 #greenline {
-	margin-top: 2%;
+	margin-top: 7px;
 	margin-bottom: 0;
 	width: 800px;
 	height: 1px;
@@ -125,7 +98,7 @@ a:hover {
 }
 
 #grayline {
-	margin-top: 3%;
+	margin-top: 5%;
 	margin-bottom: 2%;
 	width: 800px;
 	height: 0.001cm;
@@ -133,9 +106,7 @@ a:hover {
 	background-color: grey;
 }
 
-table {
-	border-collapse: collapse; /*테두리간 간격 없앰*/
-}
+table { border-collapse: collapse; /*테두리간 간격 없앰*/ }
 
 td {
 	text-align: center;
@@ -149,35 +120,25 @@ tr {
 	margin-bottom: 1%;
 }
 
-.number {
-	width: 120px;
-}
+.number { width: 120px; }
 
-.title {
-	width: 350px;
-}
+.title { width: 350px; }
 
-.writer {
-	width: 120px;
-}
+.writer { width: 120px; }
 
-.date {
-	width: 120px;
-}
+.date { width: 120px; }
 
-.viewed {
-	width: 120px;
-}
+.viewed { width: 120px; }
 
-.whole {
-	width: 1210px;
-	margin-left: 10%;
+#whole {
+	width: 1050px;
+	margin-left: 150px;
 }
 
 button {
 	height: 20px;
 	width: 30px;
-	border-radius: 7px;
+	border-radius: 10px;
 	border-style: none;
 	background-color: rgb(244, 244, 244);
 }
@@ -188,18 +149,14 @@ button:hover {
 }
 
 #buttons {
-	margin-top: 3%;
-	margin-left: 31%;
-	margin-bottom: 1%;
+	margin-top: 2%;
+	margin-bottom: 3%;
+	margin-left : 330px;
 }
 
-#wrap>tr>td {
-	padding-bottom: 3%;
-}
+#wrap>tr>td { padding-bottom: 3%; }
 
-#rightmargin {
-	margin-right: 5%;
-}
+#rightmargin { margin-right: 5%; }
 
 #administratorOption>button {
 	width: 50px;
@@ -218,7 +175,7 @@ button:hover {
 	height: 25px;
 	border: 1px solid rgb(219, 217, 217);
 	border-radius: 5px;
-	margin-left: 77.5%;
+	margin-left: 75%;
 	margin-top: -2.5%;
 }
 
@@ -230,6 +187,8 @@ button:hover {
 	border-bottom-right-radius: 0;
 	border-top-right-radius: 0;
 }
+
+#searchmark:hover{ background-color: rgb(232, 240, 214); }
 
 #magnifier {
 	width: 15px;
@@ -249,37 +208,40 @@ button:hover {
 	border-top-right-radius: 4px;
 	border-style: none;
 }
+
+#support { color: #000000; font-weight: bolder; font-size : 16px;}
 </style>
 
 </head>
 <body>
+
 	<jsp:include page="../common/menubar.jsp" />
 
-	<div class="whole">
+
+	<div id="whole">
 
 		<div class="sidebar">
-			<h3>고객지원</h3>
-			<br>
+			<h5 id="support">고객지원</h5>
 			<div id="wrap">
-				<div class="bottomfix">
-					<span width:300px;><a id="greenfont1" class="arrowbottomfix">공지사항</a></span>
-                <span id="greenfont2" class="arrowbottomfix"> > </span>
-           		</div>
-
-				<div class="bottomfix">
-					<span width:300px;><a id="faq" class="arrowbottomfix">자주 묻는 질문</a></span>
-                <span class="arrowbottomfix"> > </span>
-                </div>
-
-				<div class="bottomfix">
-					<span width:300px;><a id="facetoface" class="arrowbottomfix">1:1 문의</a></span>
-               	<span class="arrowbottomfix"> > </span>
-               	</div>
+				<tr>
+					<td width: 300px;><a id="greenfont1" class="bottomfix">공지사항</a></td>
+                <td class="arrow"><span id="greenfont2" class="bottomfix"> > </span></td>
+            </tr>
+				<br>
+				<tr>
+					<td width: 300px;><a id="faq" class="bottomfix">자주 묻는 질문</a></td>
+                <td class="arrow"><span class="bottomfix"> > </span> </td>
+            </tr>
+				<br>
+				<tr>
+					<td width: 300px;><a id="facetoface" class="bottomfix">1:1 문의</a></td>
+                <td class="arrow"><span class="bottomfix"> > </span> </td>
+            </tr>
 			</div>
-
 			<div class="needhelp">
-				<span><p id="help">도움이 필요하신가요?</p></span> <span><a
-					id="gethelp">1:1 문의하기</a></span> <span id="helparrow"> > </span>
+				<span><p id="help">도움이 필요하신가요?</p></span> 
+				<span><a id="gethelp">1:1 문의하기</a></span> 
+				<span id="helparrow"> > </span>
 			</div>
 		</div>
 
@@ -288,7 +250,7 @@ button:hover {
 				한눈에 확인하세요</span>
 			<div id="greenline"></div>
 
-			<table id="noticelist">
+			<table>
 				<thead>
 					<tr>
 						<td class="number">번호</td>
@@ -300,9 +262,10 @@ button:hover {
 				</thead>
 				<tbody>
 					<c:if test="${!empty list}">
-						<c:forEach items="${ list }" var="n">
+						<c:forEach items="${ list }" var="n"  varStatus="status">
 							<tr>
-								<td class="number">${ n.noticeNo }</td>
+								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
+								<td class="number"><c:out value="${status.count}"/></td>
 								<td class="title">${ n.noticeTitle }</td>
 								<td class="writer">${ n.noticeWriter }</td>
 								<td class="date">${ n.noticeDate }</td>
@@ -313,138 +276,57 @@ button:hover {
 					</c:if>
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="5">존재하는 공지사항이 없습니다.</td>
+							<td colspan="5" readonly>존재하는 공지사항이 없습니다.</td>
 						</tr>
 					</c:if>
 				</tbody>
 			</table>
-				
 
-				<!--  <tr>
-                <td class="number">1</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-            
-            <tr>
-                <td class="number">2</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-            
-            <tr>
-                <td class="number">3</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-           
-            <tr>
-                <td class="number">4</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-            
-            <tr>
-                <td class="number">5</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-           
-            <tr>
-                <td class="number">6</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-           
-            <tr>
-                <td class="number">7</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-            
-            <tr>
-                <td class="number">8</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>
-            
-            <tr>
-                <td class="number">9</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed"> 915</td>
-            </tr>
-           
-            <tr>
-                <td class="number">10</td>
-                <td class="title">고종 황제 즉위 기념 커피 쏜다!</td>
-                <td class="writer">관리자</td>
-                <td class="date">1894-10-12</td>
-                <td class="viewed">915</td>
-            </tr>-->
 			<div id="buttons">
-                <ul class="pagination">
-                	<c:choose>
-                		<c:when test="${ pi.currentPage ne 1 }">
-                			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a></button>
-                		</c:when>
-                		<c:otherwise>
-                			<button class="page-item disabled"><a class="page-link" href=""> < </a></button>
-                		</c:otherwise>
-                	</c:choose>
-                	
-                    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-                    	<c:choose>
-	                		<c:when test="${ pi.currentPage ne p }">
-                    			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></button>
-	                		</c:when>
-	                		<c:otherwise>
-	                			<button class="page-item disabled"><a class="page-link" href="">${ p }</a></button>
-	                		</c:otherwise>
-	                	</c:choose>
-                    </c:forEach>
-                    
-                    
-                    <c:choose>
-                		<c:when test="${ pi.currentPage ne pi.maxPage }">
-                			<button class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a></button>
-                		</c:when>
-                		<c:otherwise>
-                			<button class="page-item disabled"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a></button>
-                		</c:otherwise>
-                	</c:choose>
-                </ul>
-            </div>
-            
-				<!-- <button onclick=""> << </button>
-				<button onclick=""> < </button>
+				<ul class="pagination">
+					<c:choose>
+						<c:when test="${ pi.currentPage ne 1 }">
+							<button class="page-item">
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button class="page-item disabled">
+								<a class="page-link" href=""> < </a>
+							</button>
+						</c:otherwise>
+					</c:choose>
 
-				<button onclick="">1</button>
-				<button onclick="">2</button>
-				<button onclick="">3</button>
-				<button onclick="">4</button>
-				<button onclick="">5</button>
+					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+						<c:choose>
+							<c:when test="${ pi.currentPage ne p }">
+								<button class="page-item">
+									<a class="page-link" href="list.no?currentPage=${ p }">${ p }</a>
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button class="page-item disabled">
+									<a class="page-link" href="">${ p }</a>
+								</button>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 
-				<button onclick=""> > </button>
 
-				<button onclick=""> >> </button> -->
+					<c:choose>
+						<c:when test="${ pi.currentPage ne pi.maxPage }">
+							<button class="page-item">
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button class="page-item disabled">
+								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+							</button>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
 
 			<div id="grayline"></div>
 			<div id="searchcategory">
@@ -457,7 +339,7 @@ button:hover {
 				<!--checkbox 하나만 선택되게 : 스크립트에서 해결
                 radio 하나만 선택되게 : 이름을 같은 걸 주면 된다.-안되면 말고-->
 				<div id="searchbox">
-					<button onclick="" id="searchmark">
+					<button id="searchmark">
 						<img id="magnifier"
 							src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
@@ -477,15 +359,6 @@ button:hover {
 		</div>
 
 	</div>
-	<script>
-    	$(function(){
-    		$("#noticelist tbody tr").click(function(){
-    			location.href="detail.no?bno=" + $(this).children().eq(0).text();
-    		});
-    	});
-    </script>
-	
-
 	<jsp:include page="../common/footer.jsp" />
 
 </body>
