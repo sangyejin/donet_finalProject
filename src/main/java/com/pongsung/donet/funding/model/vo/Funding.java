@@ -19,8 +19,8 @@ public class Funding {
 	private String hostName;
 	private String goal;
 	private String raised;
-	private Date startDate;
-	private Date closeDate;
+	private String startDate;
+	private String closeDate;
 	private String content;
 	private Date paymetsDate;
 	private String categoryName;

@@ -160,38 +160,64 @@ select::-ms-expand {
 	color: rgb(60, 179, 113);
 	background-color: white;
 	transition: all 0.5s;
-	border:1px solid rgb(60, 179, 113);
+	border: 1px solid rgb(60, 179, 113);
 }
 
 #btn-insert:hover {
 	width: 200px;
 	height: 40px;
 	border-radius: 5px;
-	border:1px solid rgb(60, 179, 113);
+	border: 1px solid rgb(60, 179, 113);
 	color: white;
 	font-weight: 600;
 	color: white;
 	background-color: rgb(60, 179, 113);
 }
 
-#search{
+#search {
 	border: 1px solid #e8e8e8;
-	height:40px;
-	width:200px;
-	padding-left:20px;
+	height: 40px;
+	width: 200px;
+	padding-left: 20px;
 	transition: all 0.5s;
 }
-#search:hover,#search:focus{
+
+#search:hover, #search:focus {
 	border: 1px solid #e8e8e8;
-	height:40px;
-	width:400px;
-	padding-left:20px;
+	height: 40px;
+	width: 400px;
+	padding-left: 20px;
+}
+
+.img-text {
+	position: absolute;
+	background-color: rgba(60, 179, 113, 0.6);
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 50px;
+	left: 130px;
+	padding-top: 35px;
+}
+
+.img-text>p {
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	font-weight: 700;
+}
+
+.cases-img {
+	position: static;
 }
 </style>
 </head>
 
 <body>
 	<jsp:include page="../common/menubar.jsp" />
+
+
 	<div class="main">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -202,15 +228,16 @@ select::-ms-expand {
 		<div class="div-top">
 			<div>
 				<div class="div-category-menu">
-					<c:forEach var="cate" items="${category}">
+					<c:forEach var="category" items="${category}">
 						<button type="button" class="btn btn-light"
-							id="btn-${cate.categoryNo}">${cate.categoryName}</button>
+							id="btn-${category.categoryNo}">${category.categoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="div-filter">
-				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2">
-				<select name="filter1" id="filter2">
+				<input id="search" name="search" type="text" class="rounded-pill"
+					placeholder="검색" aria-describedby="button-addon2"> <select
+					name="filter1" id="filter2">
 					<option value="1">전체</option>
 					<option value="2">진행중</option>
 					<option value="3">종료</option>
@@ -219,25 +246,39 @@ select::-ms-expand {
 					<option value="2">인기순</option>
 					<option value="3">마감임박</option>
 				</select>
-				<button id="btn-insert">등록하기</button>
+				<c:if
+					test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
+					<button id="btn-insert" onclick="location.href='${pageContext.servletContext.contextPath}/funding/insertForm';">등록하기</button>
+				</c:if>
+
 			</div>
 
 		</div>
 
 
 		<div class="div-content">
-			<div class="container row" style="margin: 100 auto;">
+			<div class="container row" style="margin: 100 auto; width: 1080px;">
 
 				<c:forEach var="list" items="${list}" varStatus="status">
 					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
-								<c:if test="${list.raised/list.goal*100 >=100}">
+								<c:choose>
+									<c:when test="${list.raised/list.goal*100 >=100}">
+										<img
+											src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
+											alt="${list.fpName}" width="278px" height="200px">
+										<div class="img-text">
+											<p>COMPLETE</p>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<img
+											src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
+											alt="${list.fpName}" width="278px" height="200px">
+									</c:otherwise>
+								</c:choose>
 
-								</c:if>
-								<img
-									src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
-									alt="${list.fpName}" width="278px" height="200px">
 							</div>
 							<div class="cases-caption">
 								<div class="cases-info">

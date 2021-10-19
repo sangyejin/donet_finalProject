@@ -1,6 +1,6 @@
 -- 비밀번호 : 1234
 INSERT INTO MEMBER 
-VALUES ('admin12', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG', '관리자', '컨트롤타워', '서울시 강남구 역삼동', 'admin@donet.com', '010-0000-0000', '1989-12-23', 'D', DEFAULT, SYSDATE, SYSDATE, 0);
+VALUES ('admin', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG', '관리자', '컨트롤타워', '서울시 강남구 역삼동', 'admin@donet.com', '010-0000-0000', '1989-12-23', 'D', DEFAULT, SYSDATE, SYSDATE, 0);
 INSERT INTO MEMBER 
 VALUES ('user01', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG', '유저1', '첫회원', '서울시 강남구 역삼동', 'user01@donet.com', '010-1111-1111', '1990-11-21', DEFAULT, DEFAULT, SYSDATE, SYSDATE, 0);
 INSERT INTO MEMBER 
@@ -8,6 +8,7 @@ VALUES ('user02', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG'
 INSERT INTO MEMBER 
 VALUES ('user03', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG', '대한동물협회', '대한동물협회', '서울시 강남구 역삼동', 'user03@donet.com', '010-3333-2121', '1995-12-25', DEFAULT, DEFAULT, SYSDATE, SYSDATE, 0);
 
+select * from member;
 
 insert into funding_category values(0,'기타');
 insert into funding_category values(1,'동물');
@@ -15,17 +16,17 @@ insert into funding_category values(2,'재난');
 insert into funding_category values(3,'고아');
 
 insert into funding_project 
-values (1,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (1,'유기견을 향한 마음','user03',1000000,2400000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
 values (2,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (3,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (3,'유기견을 향한 마음','user03',1000000,1000000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (4,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (4,'유기견을 향한 마음','user03',1000000,1000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (5,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (5,'유기견을 향한 마음','user03',1000000,30000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (6,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (6,'유기견을 향한 마음','user03',4000000,2300000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
 values (7,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
@@ -41,13 +42,13 @@ values (12,'유기견을 향한 마음','user03',1000000,default,to_date('2021-1
 insert into funding_project 
 values (13,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (14,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (14,'유기견을 향한 마음','user03',1000000,3000000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (15,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (15,'유기견을 향한 마음','user03',15000000,200000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (16,'유기견을 향한 마음','user03',1000000,default,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (16,'유기견을 향한 마음','user03',10030000,700000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
-values (17,'유기견을 향한 마음','user03',1000000,300000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
+values (17,'유기견을 향한 마음','user03',12000000,300000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 
 
 SELECT FP_NO,FP_NAME,USER_NAME,GOAL,RAISED,START_DATE,CLOSING_DATE
