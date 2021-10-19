@@ -33,6 +33,15 @@ public class MemberController {
 	@Autowired // target class test(CGLIB 프록시 test)
 	private MemberServiceImpl memberServiceImpl;
 	
+	// 로그인 페이지
+		@RequestMapping("loginForm.me")
+		public String loginForm() {
+			//logger.debug("====== START ========");
+			//logger.info("====== START info ========");
+			return "member/memberLogin";
+		}
+	
+	
 	// 암호화처리 로그인
 		@RequestMapping("login.me")
 		public String loingMember(Member m, Model model) throws Exception{

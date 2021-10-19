@@ -121,7 +121,7 @@ a{ color : #000000;  text-decoration: none; }
             
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a class="noDecoration" href="loginForm.me" >로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
@@ -137,7 +137,7 @@ a{ color : #000000;  text-decoration: none; }
 	                <a href="enrollForm.me" >회원가입</a>  | 	            
 	                <a href="" data-toggle="modal" data-target="#loginModal">로그인</a> </li>
                 </c:if>
-                
+                <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a>
          <!-- 로그인 후  -->
                  
                 <c:if test="${ !empty sessionScope.loginUser }">
