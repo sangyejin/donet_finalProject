@@ -69,7 +69,7 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 .greenfont > ul > li {
     margin-top: 15px;
     float: left;
-    font-size: 12px;
+    font-size: 8px;
     width : 100px;
     height : max-content;
     text-align: center;

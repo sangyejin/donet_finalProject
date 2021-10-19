@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.notice.model.dao.NoticeDao;
 import com.pongsung.donet.notice.model.vo.Notice;
+import com.pongsung.donet.notice.model.vo.Search;
 import com.pongsung.donet.common.PageInfo;
 
 @Service
@@ -18,15 +19,17 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
 	private NoticeDao NoDao;
-	
+
 	@Override
-	public int selectNoticeListCount() {
-		return NoDao.selectNoticeListCount(sqlSession);
+	public int selectNoticeListCount(Search keyword) {
+		return NoDao.selectNoticeListCount(sqlSession, keyword);
 	}
 
 	@Override
-	public ArrayList<Notice> selectNoticeList(PageInfo pi) {
-		return NoDao.selectNoticeList(sqlSession, pi);
+	public ArrayList<Notice> selectNoticeList(PageInfo pi, Search keyword) {
+		return NoDao.selectNoticeList(sqlSession, pi, keyword);
 	}
+
+	
 
 }
