@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.event.model.service.EventService;
 import com.pongsung.donet.event.model.vo.Event;
-import com.pongsung.donet.event.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 @Controller
 public class EventController {

@@ -3,7 +3,7 @@ package com.pongsung.donet.event.model.service;
 import java.util.ArrayList;
 
 import com.pongsung.donet.event.model.vo.Event;
-import com.pongsung.donet.event.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 public interface EventService {
 

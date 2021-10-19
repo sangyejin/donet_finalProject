@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.event.model.dao.EventDao;
 import com.pongsung.donet.event.model.vo.Event;
-import com.pongsung.donet.event.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 @Service
 public class EventServiceImpl implements EventService {

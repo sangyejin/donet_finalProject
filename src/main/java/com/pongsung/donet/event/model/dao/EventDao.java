@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pongsung.donet.event.model.vo.Event;
-import com.pongsung.donet.event.model.vo.PageInfo;
+import com.pongsung.donet.common.PageInfo;
 
 @Repository
 public class EventDao {
