@@ -45,20 +45,21 @@ insert into funding_project
 values (14,'유기견을 향한 마음','user03',1000000,3000000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 insert into funding_project 
 values (15,'유기견을 향한 마음','user03',15000000,200000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
-insert into funding_project 
-values (16,'유기견을 향한 마음','user03',10030000,700000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
-insert into funding_project 
-values (17,'유기견을 향한 마음','user03',12000000,300000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 
 
-SELECT FP_NO,FP_NAME,USER_NAME,GOAL,RAISED,START_DATE,CLOSING_DATE
-    ,CATEGORY_NO,HITS, THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME,FUNDING_CATEGORY_NAME
-from FUNDING_PROJECT
-JOIN MEMBER ON HOST_ID=USER_ID
-JOIN FUNDING_CATEGORY ON CATEGORY_NO =FUNDING_CATEGORY_NO;
+select * from funding_project;
+select * from funding_image;
+--insert into funding_project 
+--values (17,'유기견을 향한 마음','user03',12000000,300000,to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate, 1,default,default,'sample.PNG','sample.PNG',sysdate);
 
 
-SELECT NVL(MAX(FS_NO)+1,1) FROM FUNDIONG_SUPPORTER WHERE FP_NO=1;
+--SELECT FP_NO,FP_NAME,USER_NAME,GOAL,RAISED,START_DATE,CLOSING_DATE
+--    ,CATEGORY_NO,HITS, THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME,FUNDING_CATEGORY_NAME
+--from FUNDING_PROJECT
+--JOIN MEMBER ON HOST_ID=USER_ID
+--JOIN FUNDING_CATEGORY ON CATEGORY_NO =FUNDING_CATEGORY_NO;
+--
+--SELECT NVL(MAX(FS_NO)+1,1) FROM FUNDIONG_SUPPORTER WHERE FP_NO=1;
 
 --INSERT INTO PAYMENT
 --VALUES (1,'USER01','1010212','464','201602','1212121212','이윤정','1');
@@ -66,5 +67,9 @@ SELECT NVL(MAX(FS_NO)+1,1) FROM FUNDIONG_SUPPORTER WHERE FP_NO=1;
 --INSERT INTO FUNDIONG_SUPPORTER
 --VALUES((SELECT NVL(MAX(FS_NO)+1,1) FROM FUNDIONG_SUPPORTER WHERE FP_NO=1),1,'USER01',SYSDATE,100000,1,'김석구','충주시','010-1231-1214','12345','1');
 
+select * from funding_project;
+select * from funding_image;
+delete from funding_project;
+delete from funding_image;
 commit;
 

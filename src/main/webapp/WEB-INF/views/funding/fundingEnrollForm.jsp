@@ -124,7 +124,8 @@ tbody tr td, thead tr th {
 
 .group-img {
 	margin: auto;
-	padding: 0; width : 370px;
+	padding: 0;
+	width: 370px;
 	height: 120px;
 	width: 370px
 }
@@ -181,6 +182,10 @@ tbody tr td, thead tr th {
 							placeholder="0000-00-00" id="startDate" name="startDate">
 						<span style="margin: 0 10px;">~</span> <input type="Date"
 							placeholder="0000-00-00" id="closeDate" name="closeDate">
+					</div>
+					<div class="div-input">
+						<label for="">결제 예정 날짜</label> <input type="Date"
+							placeholder="0000-00-00" id="paymentDate" name="paymentDate">
 					</div>
 					<div class="div-input">
 						<label for="">추가사진</label>
@@ -251,9 +256,6 @@ tbody tr td, thead tr th {
 		</form>
 	</div>
 
-
-
-
 	<script>
         $(function () {
             $("#fileArea").hide();
@@ -311,8 +313,8 @@ tbody tr td, thead tr th {
             const table = document.getElementById('tablePresent');
             const totalRowCnt = table.rows.length;
             const tbody = table.tBodies[0].rows.length + 1;
-            var html = `<tr><td name='presentNo' id='presentNo'  style="vertical-align:middle">`+ tbody + `</td>
-                    <td><input class='input-text' type='text' name='presentName' id='presentName'></td>
+            var html = `<tr><td name='presentNo' id='presentNo'  style="vertical-align:middle">`+ tbody + 
+            		`</td><td><input class='input-text' type='text' name='presentName' id='presentName'></td>
                     <td><input class='input-text' type='text' name='presentPrice' id='presentPrice'></td>
                     <td><input class='input-text' type='text' name='presentContent' id='presentContent'></td>
                     <td><button class="btn btn-default btnDeletePresent btn-delete" data-action="delete">-</button></td>

@@ -1,5 +1,6 @@
 package com.pongsung.donet.funding.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingImage;
 
 @Repository
 public class FundingDao {
@@ -29,6 +31,19 @@ public class FundingDao {
 	public List<FundingCategory> selectFundingCategoryList(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("fundingMapper.selectFundingCategoryList");
+	}
+
+	public int insertFunding(SqlSessionTemplate sqlSession, Funding funding) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("fundingMapper.insertFunding",funding);
+		return Integer.valueOf(String.valueOf(funding.getFpNo()));
+		
+	}
+
+	public int insertFundingImgList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
+		// TODO Auto-generated method stub
+		System.out.println("여긴들어온거지???????");
+		return sqlSession.insert("fundingMapper.insertFundingImgList",imgList);
 	}
 
 }

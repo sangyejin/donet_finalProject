@@ -13,12 +13,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class FundingGoods {
-	private int fpNo;
-	private int fgNo;
-	private String fgName;
-	private String fgContent;
-	private int fgPrice;
-
-	
+public class FundingGoodsList {
+	private List<FundingGoods> fgList;
 }
