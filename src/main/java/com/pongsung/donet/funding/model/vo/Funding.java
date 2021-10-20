@@ -17,12 +17,13 @@ public class Funding {
 	private int fpNo;
 	private String fpName;
 	private String hostName;
+	private String hostId;
 	private String goal;
 	private String raised;
-	private Date startDate;
-	private Date closeDate;
+	private String startDate;
+	private String closeDate;
 	private String content;
-	private Date paymetsDate;
+	private Date paymentDate;
 	private String categoryName;
 	private int categoryNo;
 	private int hits;
@@ -30,4 +31,5 @@ public class Funding {
 	private String thumbnailOriginName;
 	private String thumbnailChangeName;
 	private Date fpWriteDate;
+	
 }
