@@ -8,7 +8,21 @@
 <title>Insert title here</title>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="resources/assets/css/slicknav.css">
+	<link rel="stylesheet" href="resources/assets/css/flaticon.css">
+	<link rel="stylesheet" href="resources/assets/css/progressbar_barfiller.css">
+	<link rel="stylesheet" href="resources/assets/css/gijgo.css">
+	<link rel="stylesheet" href="resources/assets/css/animate.min.css">
+	<link rel="stylesheet" href="resources/assets/css/animated-headline.css">
+	<link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="resources/assets/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="resources/assets/css/themify-icons.css">
+	<link rel="stylesheet" href="resources/assets/css/slick.css">
+	<link rel="stylesheet" href="resources/assets/css/nice-select.css">
+	<link rel="stylesheet" href="resources/assets/css/style.css">
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
     <style>
@@ -247,7 +261,7 @@
 	<script>
 		$(function() {
 			$(".row #eventCard").click(function(){
-				location.href="detail.ev?eno=" = $(this).children().eq(0).text();
+				location.href="detail.ev?eno=" + $(this).children().eq(0).text();
 			});
 		});
 	</script>
