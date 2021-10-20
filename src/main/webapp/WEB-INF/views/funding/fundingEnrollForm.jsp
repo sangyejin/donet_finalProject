@@ -17,9 +17,10 @@
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- 부트스트랩 -->
+<!-- 부트스트랩 	-->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 <style>
 * {
 	font-family: 'Nanum Gothic Coding', monospace;
@@ -223,17 +224,21 @@ tbody tr td, thead tr th {
 					</thead>
 					<tbody>
 						<tr>
-							<td name='presentNo' id='presentNo'
-								style="vertical-align: middle">1</td>
-							<td><input class='input-text' type='text' name='presentName'
-								id='presentName'></td>
-							<td><input class='input-text' type='text'
-								name='presentPrice' id='presentPrice'></td>
-							<td><input class='input-text' type='text'
-								name='presentContent' id='presentContent'></td>
-							<td><button
-									class="btn btn-default btnDeletePresent btn-delete"
-									data-action="delete">-</button></td>
+							<td style="vertical-align: middle">1
+								<input type='hidden' name='fgNo' id='fgNo' value="1">
+							</td>
+							<td>
+							<input class='input-text' type='text' name='fgName'>
+							</td>
+							<td>
+							<input class='input-text' type='text' name='fgPrice' >
+							</td>
+							<td>
+							<input class='input-text' type='text' name='fgContent' >
+							</td>
+							<td>
+							<button class="btn btn-default btnDeletePresent btn-delete" data-action="delete">-</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -279,6 +284,13 @@ tbody tr td, thead tr th {
     			location.href="${pageContext.servletContext.contextPath}/funding";
     		});
     		$("#btn-insert").click(function(){
+    			$("#tablePresent tbody tr").each( function (index) {
+    		        $(this).find("input[name=fpNo]").attr("name", "fundingGoods[" + index + "].fpNo");
+    		        $(this).find("input[name=fgName]").attr("name", "fundingGoods[" + index + "].fgName");
+    		        $(this).find("input[name=fgContent]").attr("name", "fundingGoods[" + index + "].fgContent");
+    		        $(this).find("input[name=fgPrice]").attr("name", "fundingGoods[" + index + "].fgPrice");
+    		        console.log(index);
+    		    });
     			$("#insertForm").submit();
     		});
 
@@ -312,27 +324,35 @@ tbody tr td, thead tr th {
         $('#btnInsertPresent').click(function () {
             const table = document.getElementById('tablePresent');
             const totalRowCnt = table.rows.length;
-            const tbody = table.tBodies[0].rows.length + 1;
-            var html = `<tr><td name='presentNo' id='presentNo'  style="vertical-align:middle">`+ tbody + 
-            		`</td><td><input class='input-text' type='text' name='presentName' id='presentName'></td>
-                    <td><input class='input-text' type='text' name='presentPrice' id='presentPrice'></td>
-                    <td><input class='input-text' type='text' name='presentContent' id='presentContent'></td>
-                    <td><button class="btn btn-default btnDeletePresent btn-delete" data-action="delete">-</button></td>
-                </tr>`;
+            const len = String(table.tBodies[0].rows.length + 1);
+           	
+            var html = `<tr>
+            			<td name='tdFgNo' style='vertical-align:middle'>`+len+`<input class='input-text' type='hidden' name='fgNo' value=`+len+`>
+            			</td><td><input class='input-text' type='text' name='fgName'></td>
+                    	<td><input class='input-text' type='text' name='fgPrice'></td>
+                    	<td><input class='input-text' type='text' name='fgContent'></td>
+                    	<td><button class='btn btn-default btnDeletePresent btn-delete' data-action='delete'>-</button></td>
+                		</tr>`;
+              
             $("#tablePresent tbody").append(html);
+            
         })
 	
         //선물 항목에서 - 버튼 누르면 해당 row 삭제
         $('#tablePresent').on('click', function (event) {
             const totalRowCnt = document.getElementById('tablePresent').rows.length;
-            if (event.target.tagName != 'BUTTON') return; //-버튼누른게 아니면 return
-            if (totalRowCnt <= 2) return; //행이 한줄 이하면 return; 무조건 한줄이상이게 만들기위해서
+            if (event.target.tagName != 'BUTTON') return false; //-버튼누른게 아니면 return
+            if (totalRowCnt <= 2) return false; //행이 한줄 이하면 return; 무조건 한줄이상이게 만들기위해서
+            
             event.target.parentElement.parentElement.remove();
 
             const table = document.getElementById('tablePresent');
-
+            console.log((document.getElementsByName("fgNo")));
             for (let i = 1; i < totalRowCnt - 1; i++) { //순번 재정렬 (삭제로 인한 빠진 순번 정리)
-                table.rows[i].cells[0].innerText = i;
+                table.rows[i].cells[0].innerHTML = i+`<input class='input-text' type='hidden' name='fgNo' value=`+i+`>`;
+				
+                (document.getElementsByName("fgNo"))[i-1]=i;
+ 
             }
 
         });

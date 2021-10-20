@@ -72,12 +72,14 @@ public class FundingController {
 
 	// 펀딩프로젝트 게시글 등록
 	@RequestMapping("funding/insert")
-	public String insertFunding(Funding funding, HttpServletRequest request, MultipartHttpServletRequest multipartRequest, Model model)
+	public String insertFunding(Funding funding, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
+			,@ModelAttribute FundingGoodsList fundingGoods, Model model)
 			throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		funding.setHostId(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
 		System.out.println(funding);
-		System.out.println("presentName"+request.getAttribute("presentName"));
+		System.out.println("::::::::::::::::::::::::::::::::::::"+fundingGoods);
+		
 		
 		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
 		List<FundingImage> imgList = new ArrayList<>(); //추가 img 저장하는 리스트

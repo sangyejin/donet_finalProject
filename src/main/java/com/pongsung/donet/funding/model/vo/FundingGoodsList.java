@@ -14,5 +14,5 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class FundingGoodsList {
-	private List<FundingGoods> fgList;
+	private List<FundingGoods> fundingGoods;
 }
