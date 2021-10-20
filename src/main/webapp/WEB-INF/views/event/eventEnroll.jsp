@@ -6,12 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+
     <style>
        *{
         margin:0 auto;
@@ -42,7 +43,7 @@
         .active{
             background-color: rgb(142, 211, 173);
         }
-        input{
+        /*input{
             transition:0.5s;
             cursor:pointer;
             margin-top: 18px;
@@ -56,7 +57,7 @@
         }
         input:hover{
             transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);*/
         }
         img{
             height:200px;
@@ -134,9 +135,52 @@
               
           }
     </style>
+    <script type="text/javascript">
+    $(document).ready(function () {
+            $.datepicker.setDefaults($.datepicker.regional['ko']); 
+            $( "#datepickerStart" ).datepicker({
+                 changeMonth: true, 
+                 changeYear: true,
+                 nextText: '다음 달',
+                 prevText: '이전 달', 
+                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 dateFormat: "yymmdd",
+                 maxDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+                 onClose: function( selectedDate ) {    
+                      //시작일(startDate) datepicker가 닫힐때
+                      //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                     $("#datepickerLast").datepicker( "option", "minDate", selectedDate );
+                 }    
+ 
+            });
+            $( "#datepickerLast" ).datepicker({
+                 changeMonth: true, 
+                 changeYear: true,
+                 nextText: '다음 달',
+                 prevText: '이전 달', 
+                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 dateFormat: "yymmdd",
+                 maxDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+                 onClose: function( selectedDate ) {    
+                     // 종료일(endDate) datepicker가 닫힐때
+                     // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+                     $("#datepickerStart").datepicker( "option", "maxDate", selectedDate );
+                 }    
+ 
+            });    
+    });
+</script>
+
+
 </head>
 <body>
-<jsp:include page="../common/menubar.jsp" />
+<jsp:include page="../common/menubar.jsp" /> 
 
 	<div class="container mt-2 ">
         <h1>이벤트 생성하기</h1>
@@ -150,11 +194,11 @@
        			</tr>
        			<tr>
        				<th><label for="eventStart">이벤트 시작</label>
-       				<td><input type="text" id="datepickerStart" name="eventStart"></td>
+       				<td><input type="text" id="datepickerStart" name="eventStart" autocomlete="off" readonly="readonly"></td>
        			</tr>
        			<tr>
        				<th><label for="eventLast">이벤트 종료</label>
-       				<td><input type="text" id="datepickerLast" name="eventLast"></td>
+       				<td><input type="text" id="datepickerLast" name="eventLast" autocomlete="off" readonly="readonly"></td>
        			</tr>
        			<tr>
        				<th colspan="2"><label for="content">내용</label></th>
@@ -176,10 +220,7 @@
        
        
     </div>
-   <script>
-   		$("#datepickerStart").datepicker();
-   		$("#datepickerLast").datepicker();
-   </script>
+  
 
 <jsp:include page="../common/footer.jsp" />
 </body>
