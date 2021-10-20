@@ -7,11 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-
+   
 
     <style>
        *{
@@ -136,6 +132,7 @@
           }
     </style>
     <script type="text/javascript">
+    /*
     $(document).ready(function () {
             $.datepicker.setDefaults($.datepicker.regional['ko']); 
             $( "#datepickerStart" ).datepicker({
@@ -174,7 +171,7 @@
                  }    
  
             });    
-    });
+    });*/
 </script>
 
 
@@ -220,7 +217,11 @@
        
        
     </div>
-  
+  <script>
+	  $(function() {
+		  $( "#datepickerStart" ).datepicker();
+		});
+  </script>
 
 <jsp:include page="../common/footer.jsp" />
 </body>

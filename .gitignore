@@ -48,5 +48,6 @@ local.properties
 .recommenders
 target/
 .target/
+/target/
 *.class
 MANIFEST.MF
