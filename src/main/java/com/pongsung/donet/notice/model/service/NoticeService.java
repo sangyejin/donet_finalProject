@@ -12,4 +12,10 @@ public interface NoticeService {
 
 	int selectNoticeListCount(Search keyword);
 
+	Notice selectThisNotice(int noticeNo);
+
+	Notice selectPrevNotice(int noticeNo);
+
+	Notice selectNextNotice(int noticeNo);
+
 }

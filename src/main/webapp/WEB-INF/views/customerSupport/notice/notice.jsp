@@ -8,10 +8,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-
 <style>
 * {
 	/*border: 1px red solid;*/
@@ -60,7 +56,7 @@
 }
 
 #gethelp { margin-left: 3%; }
-#gethelp:hover{ text-decoration : underline;}
+#gethelp:hover{  : underline;}
 
 #helparrow { margin-left: 29%; margin-top: 0px; }
 
@@ -135,25 +131,21 @@ tr {
 	margin-left: 150px;
 }
 
-button {
-	height: 20px;
-	width: 30px;
-	border-radius: 10px;
-	border-style: none;
-	background-color: rgb(244, 244, 244);
-}
-
-button:hover {
-	color: white;
-	background-color: rgb(66, 178, 115);
-}
-
-#buttons {
-	margin-top: 2%;
-	margin-bottom: 3%;
-	margin-left : 330px;
-}
-
+/*button style*/
+       	button{
+            height: 25px;
+            width: 60px;
+            border-radius: 7px;
+            border-style: none;
+            background-color: rgb(244, 244, 244) ;
+        }
+	
+	     #buttons{
+           margin-top: 2%;
+           margin-left : 300px;
+           margin-bottom: 3%;
+        }
+        
 #wrap>tr>td { padding-bottom: 3%; }
 
 #rightmargin { margin-right: 5%; }
@@ -217,7 +209,7 @@ button:hover {
 </head>
 <body>
 
-	<jsp:include page="../common/menubar.jsp" />
+	<jsp:include page="../../common/menubar.jsp" />
 
 
 	<div id="whole">
@@ -252,7 +244,7 @@ button:hover {
 				한눈에 확인하세요</span>
 			<div id="greenline"></div>
 
-			<table>
+			<table id="noticeList">
 				<thead>
 					<tr>
 						<td class="number">번호</td>
@@ -265,9 +257,10 @@ button:hover {
 				<tbody>
 					<c:if test="${!empty list}">
 						<c:forEach items="${ list }" var="n" varStatus="status">
-							<tr>							
+							<tr class="clickable">							
 								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
-								<td class="number"><c:out value="${status.count}"/></td>
+								<!-- <td class="realNumber" hidden="true">${ n.noticeNo }</td> -->
+								<td class="number">${ n.noticeNo }<!--<c:out value="${status.count}"/>--> </td>
 								<td class="title">${ n.noticeTitle }</td>
 								<td class="writer">${ n.noticeWriter }</td>
 								<td class="date">${ n.noticeDate }</td>
@@ -276,15 +269,16 @@ button:hover {
 							</tr>
 						</c:forEach>
 					</c:if>
+				</tbody>
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="5" readonly>존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><mark>여기</mark></a>를 클릭하세요. </td>
+							<td colspan="5">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><b>여기</b></a>를 클릭하세요. </td>
 						</tr> 
 					</c:if>
-				</tbody>
+				
 			</table>
 
-			<div id="buttons">
+			<div id="buttons" align="center">
 				<ul class="pagination">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
@@ -359,19 +353,26 @@ button:hover {
 			
 			<br>
 			
-			<!--관리자 메뉴 : 사용자가 관리자 일 때만 숨김해제-->
-			<div id="administratorOption" hidden="true">
-				<label id="administratorLabel">관리자</label>
-				<button onclick="">추가</button>
-				<button onclick="">수정</button>
-				<button onclick="">삭제</button>
-			</div>
+			<!-- admin menu -->
+			<c:if test="${ sessionScope.loginUser eq 'admin12' }">
+				<div id="administratorOption">
+					<label id="administratorLabel">관리자</label>
+					<button onclick="adminAdd();">추가</button>
+				</div>
+			</c:if>
 
 
 		</div>
-
 	</div>
-	<jsp:include page="../common/footer.jsp" />
+	 <script>
+    	$(function(){
+    		$("#noticeList tbody .clickable").click(function(){
+    			location.href="detail.no?noticeNo=" + $(this).children().eq(0).text();
+    		});
+    	});
+    </script>
+	
+	<jsp:include page="../../common/footer.jsp" />
 
 </body>
 </html>
