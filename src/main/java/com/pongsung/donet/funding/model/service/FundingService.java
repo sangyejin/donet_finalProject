@@ -6,6 +6,7 @@ import java.util.List;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 
 public interface FundingService {
@@ -16,7 +17,7 @@ public interface FundingService {
 
 	List<FundingCategory> selectFundingCategoryList();
 
-	void insertFunding(Funding funding, List<FundingImage> imgList);
+	void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception;
 
 
 }

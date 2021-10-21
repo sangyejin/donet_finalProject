@@ -1,5 +1,7 @@
 package com.pongsung.donet.funding.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +17,6 @@ public class FundingReply {
 	private int replyNo;
 	private String replyWriter;
 	private int refFundingNo;
-	private String peplyContent;
+	private Date createDate;
+	private String replyContent;
 }

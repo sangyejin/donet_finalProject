@@ -2,6 +2,9 @@ package com.pongsung.donet.funding.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +33,7 @@ import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.service.FundingService;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingGoodsList;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.member.model.vo.Member;
@@ -35,11 +42,22 @@ import com.pongsung.donet.member.model.vo.Member;
 @SessionAttributes("loginUser") 
 @Controller
 public class FundingController {
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
 
 	@Autowired
 	private FundingService fundingService;
 
+	
+	@InitBinder
+    protected void initBinder(WebDataBinder binder){
+        DateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,true));
+    }
+
+	
+	
 	// 펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(
@@ -75,11 +93,10 @@ public class FundingController {
 	public String insertFunding(Funding funding, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
 			,@ModelAttribute FundingGoodsList fundingGoods, Model model)
 			throws Exception {
-		multipartRequest.setCharacterEncoding("utf-8");
+		//multipartRequest.setCharacterEncoding("utf-8");
 		funding.setHostId(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
-		System.out.println(funding);
-		System.out.println("::::::::::::::::::::::::::::::::::::"+fundingGoods);
-		
+		List<FundingGoods> fgList=fundingGoods.getFundingGoods();
+		System.out.println("fundingGoods::"+fgList);
 		
 		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
 		List<FundingImage> imgList = new ArrayList<>(); //추가 img 저장하는 리스트
@@ -89,15 +106,15 @@ public class FundingController {
 			
 			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
 			
-			logger.info("현재 태그 name: "+entry.getKey());
+			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
 			
 			//파일을 저장, 파일이름 변경
+			
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
 				if(fileName!="") { 
 					String originName = fileList.get(i).getOriginalFilename();
 					String changeName = saveFile(fileList.get(i),request);
-					
 					if( (entry.getKey()).equals("thumbFile")) { //현재 tag가 대표사진이면 funding에 setting
 						funding.setThumbnailOriginName(originName);
 						funding.setThumbnailChangeName(changeName);
@@ -105,9 +122,10 @@ public class FundingController {
 					else { //아니면 추가사진
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
-						img.setImgOriginName(originName);
-						img.setImgNo(i);
+						img.setImgOriginName(originName); 
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
 						imgList.add(img);
+						System.out.println(i+"::::::::::::"+img);
 					}
 				}
 			}
@@ -115,9 +133,9 @@ public class FundingController {
 		}
 		
 		
-		fundingService.insertFunding(funding,imgList);
+		fundingService.insertFunding(funding,imgList,fgList);
 		
-		return "funding/fundingListView";
+		return "redirect:/funding";
 
 //		return "funding/fundingDetailView";
 	}
@@ -131,14 +149,11 @@ public class FundingController {
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		logger.info("=================== saveFile 진입 ==========================");
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		System.out.println(resources);
 		String savePath = resources+"/funding/upload_files/";
-		System.out.println("savePath" + savePath);
 
 		String originName = file.getOriginalFilename();
 		String ext = originName.substring(originName.lastIndexOf("."));
 		String changeName = savePath + System.currentTimeMillis() + "_" + (int)( Math.random() * 10000000) + ext;
-		System.out.println("최종이름:" + changeName);
 		try {
 			file.transferTo(new File(changeName));
 		} catch (IllegalStateException | IOException e) {

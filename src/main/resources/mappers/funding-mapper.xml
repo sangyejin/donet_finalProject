@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 펀딩 이미지 -->
 	<resultMap id="fundingImageResultSet" type="FundingImage">
-		<id property="fpNo" column="FP_NO" />
-		<id property="imgNo" column="IMG_NO" />
+		<result property="fpNo" column="FP_NO" />
+		<result property="imgNo" column="IMG_NO" />
 		<result property="imgOriginName" column="IMG_ORIGIN_NAME" />
 		<result property="imgChangeName" column="IMG_CHANGE_NAME" />
 	</resultMap>
@@ -43,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from FUNDING_PROJECT
 		where STATUS='Y'
 	</select>
+	
 	
 	<select id="selectFundingList" resultMap="fundingResultSet">
 		select FP_NO, FP_NAME, B.USER_NAME, GOAL,RAISED, START_DATE, CLOSING_DATE
@@ -68,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values
 		(	
 			seq_funding_project.nextval,#{fpName},#{hostId},#{goal}
-			,#{raised},TO_DATE(#{startDate}),TO_DATE(#{closeDate})
+			,default,TO_DATE(#{startDate}),TO_DATE(#{closeDate})
 			,#{content},TO_DATE(#{paymentDate}),#{categoryNo},#{hits}
 			,#{status},#{thumbnailOriginName},#{thumbnailChangeName},SYSDATE
 		)
@@ -82,6 +83,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 	
-
+	<insert id="insertFundingGoodsList" parameterType="java.util.List">
+		insert into FUNDING_GOODS(FP_NO, FG_NO, FG_NAME, FG_CONTENT, FG_PRICE)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.fpNo},#{item.fgNo},#{item.fgName},#{item.fgContent},#{item.fgPrice} from DUAL
+		</foreach>
+	</insert>
 	
 </mapper>
