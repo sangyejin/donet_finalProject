@@ -17,63 +17,65 @@
         }
 
         /*sidebar*/        
-        h3{ font-size: 22px; }
-        .sidebar{
-             width: 150px;
-             height: 400px;
-             margin-left: 3%;
-             padding: 0;
-             float: left;
-             margin-top: 0;
+		.sidebar {
+			width: 150px;
+			height: 400px;
+			margin-left: 25px;
+			padding: 0;
+			float: left;
+			margin-top: 0;
+		}
+		
+		#greenfont1 { margin-right: 45%; text-decoration: none; }
+		
+		#faq { margin-right: 18%; }
+		
+		#facetoface { margin-right: 43.5%; }
+		
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
+		
+		/*helper*/
+		
+		#gethelp:hover{ text-decoration : underline;}
+		
+		.needhelp {
+			margin-top: 50px;
+			border: 1px solid rgb(244, 244, 244);
+			background-color: rgb(244, 244, 244);
+			width: 140px;
+			height: 40px;
+			border-radius: 10px;
+		}
+		
+		#help {
+			font-weight: bolder;
+			margin-bottom: 0px;
+			margin-top: 0px;
+			width: 140px;
+			margin-left: 3%;
+		}
+		
+		#gethelp { margin-left: 3%; }
+		#gethelp:hover{  : underline;}
+		
+		#helparrow { margin-left: 29%; margin-top: 0px; }
 
-        }
-        
-        a:hover{ text-decoration: underline; }
-
-        #greenfont1 {margin-right: 45%; text-decoration: none;}
-        #faq{margin-right: 18%;}
-        #facetoface{margin-right: 43.5%; }
-        #wrap{margin-bottom: 7%;}
-
-        #greenfont1, #faq, #facetoface{ font-weight: bolder; }
-
-        /*helper*/
-        .needhelp{ 
-            margin-top: 40%;
-            border: 1px solid rgb(244, 244, 244);
-            background-color: rgb(244, 244, 244);
-            width: 140px;
-            height: 40px;
-            border-radius: 10px;
-        }
-
-        #help{
-           font-weight: bolder;
-           margin-bottom: 5px;
-           margin-top: 3px; /*need help?*/
-           width: 140px;
-           margin-left: 3%;
-        }
-
-        #gethelp{ margin-left: 3%; }
-
-        #helparrow{
-            margin-left: 29%;
-            margin-top: 0px;
-        }
-
-        /* side bar */
+        /* main main */
         #thelist{
             float: left;
             margin-left: 5%;
-            margin-top: 2%;
+            margin-top: 4px;
             width: 800px;
         }
 
-        #notice{
-            font-size: 16px; 
-            font-weight: bolder;
-        }
+        #notice {
+		font-size: 13px;
+		font-weight: bolder;
+		}
         
         #greenfont1, #greenfont2{ color: rgb(30, 154, 40); }
 
@@ -109,123 +111,100 @@
         }
 
         #whole{
-            width: 1210px;
-            margin-left: 90px;
+            width: 1050px; 
+		 	margin-left: 150px;
         }
 
+
+		/*align style*/
         span > b { margin-left: 52px; }
 
         span > p{ 
             margin-left: 136px;
-            margin-top : -21px;
+            margin-top : -28px;
         }
 
-        span > p > #boldPeriod{ /*margin-top : -9px;*/ margin-left : -3px; font-size: 22px; }
+        span > p > #boldPeriod{ margin-left : -4px; font-size: 22px; }
 
-        span > mark { margin-left: 153px; }
+        span > mark { margin-left: 150px;  }
 
-        #justGetThere{ margin-top: -27px; }
+        #justGetThere{ margin-top: -35px; }
 
-        #headjustify{ margin-top : -5px}
+        #headjustify{ margin-top : -10px}
+        
+        #alignboi{ margin-left: 180px;  margin-top: -18px; }
+
+		#justify{ margin-left: 243.5px;  margin-top: -18px; }
 
         #greenline{
-            margin-top: 2%;
+            margin-top: 4px;
             margin-bottom: 0;
             width: 800px;
             height: 1px;
             border : 1px solid rgb(30, 154, 40);
             background-color: rgb(30, 154, 40);
         }
+        
+        .thisimg{ width: 15px;  height: 15px; }
 
-
-        .thisimg{ 
-            width: 15px;
-            height: 15px;
-        }
-
-        .biggerimg{
-            width: 18px;
-            height: 18px;
-        }
+        .biggerimg{  width: 18px;  height: 18px; }
+        
+        #differ{/*img*/ margin-left: 273px; margin-top: -20px; }
 
         .shabbygrayline{
             margin-top: 1%;
             margin-bottom: 2%;
             margin-left: 8.5%;
-
             width: 700px;
             height: 0.001cm;
             border : 0.3px solid grey;
             background-color: grey;
         }
 
-        #alignboi{
-            margin-left: 180px;
-            margin-top: -14px;
-        }
-        
-        #justify{/*justify*/
-            margin-left: 243.5px;
-            margin-top: -19.5px;
-
-
-        }
-
-        #aLine{ /*span*/
-            margin-left: 265px;
-            margin-top: -17.5px;
-        }
-
-        #differ{/*img*/
-            margin-left: 273px;
-            margin-top: -14px;
-
-        }
+        #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
 
         #contentText{
             margin-top: -15px;
             width: 670px;
             margin-left: 80px;
-            height: 447px;
+            height: 450px;
         }
-        /* .clickable:hover{} 아래에 대화상자뜨게 기능*/
 
-        /*point*/
-
-
-
+        /*footer align adjustment*/
+        #gotoLEFT{ margin-left : -375px;}
         
-
-       
-        button{
+        .goRound{
             height: 25px;
             width: 60px;
             border-radius: 7px;
             border-style: none;
-            background-color: rgb(244, 244, 244) ;
+            background-color: rgb(66, 178, 115);
+			color : #ffffff;
         }
-
-        button:hover{
-            color: white;
-            background-color: rgb(66, 178, 115) ;
-        }
-
+        
+        .goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
+       
         #buttons{
            margin-top: 2%;
-           margin-left: 628px;
+           margin-left: 620px;
            margin-bottom: 3%;
 
         }
+
+	#support { color: #000000; font-weight: bolder; font-size : 16px;}
 
        
     </style>
 
 </head>
 <body>
+
+	<jsp:include page="../../common/menubar.jsp" />
+
 <div id="whole">
 
     <div class="sidebar">
-        <h3>고객지원</h3>
+		<h5 id="support">고객지원</h5>
         <div id="wrap">
             <tr>
                 <td width: 300px;><a id="greenfont1" class="bottomfix">공지사항</a></td>
@@ -271,16 +250,17 @@
 
                 <div id="justGetThere">
                     <span class="clickable"><mark>T</mark></span>
-                    <span> | </span>
+                                    <span> | </span>
+                   
                 </div>
                      <div id="alignboi">
-                        <span class="clickable"><img class="thisimg" src="/Users/wangsubin/FRONTEND/source_final/Left.png"></span>
-                        <span class="clickable"><img class="thisimg" src="/Users/wangsubin/FRONTEND/source_final/Center.png"></span>
-                        <span class="clickable"><img class="thisimg" src="/Users/wangsubin/FRONTEND/source_final/Right.png"></span>
+                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Left.png"></span>
+                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Center.png"></span>
+                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Right.png"></span>
                      </div>  
-                    <div class="clickable" id="justify"><img class="biggerimg" src="/Users/wangsubin/FRONTEND/source_final/Justify.png"></div>
+                    <div class="clickable" id="justify"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Justify.png"></div>
                     <div id="aLine"> | </div>
-                    <div class="clickable" id="differ"><img class="biggerimg" src="/Users/wangsubin/FRONTEND/source_final/imgIcon.png"></div>
+                    <div class="clickable" id="differ"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png"></div>
                     
             </div>
 
@@ -288,24 +268,17 @@
 
         <span>내용</span>
 
-        <input type="text" id="contentText" name="contentText">
+        <input type="text" id="contentText" name="contentText" style="word-wrap:break-word">
 
 
         <div id="buttons">
-             <button onclick="">게시</button>
-             <button onclick="">임시저장</button>
+             <button class="goRound" onclick="">게시</button>
+             <button class="goRound" onclick="">임시저장</button>
         </div>  
 </div>
 
-<!--
-<script>
-    $(function(){
-        $('.clickable').hover(function(){
-            $('.clickable').text("선택")
-        })
-    })
-
-</script>-->
-
+<div id="gotoLEFT">
+	<jsp:include page="../../common/footer.jsp" />
+</div>
 </body>
 </html>
