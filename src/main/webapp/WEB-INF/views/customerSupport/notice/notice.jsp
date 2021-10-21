@@ -38,6 +38,9 @@
 #greenfont1, #faq, #facetoface { font-weight: bold; }
 
 /*helper*/
+#gethelp:hover{ text-decoration : underline;}
+
+
 .needhelp {
 	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
@@ -146,6 +149,20 @@ tr {
            margin-bottom: 3%;
         }
         
+ /*single button style*/
+ #goRound{
+            height: 25px;
+            width: 30px;
+            border-style:none;
+            border-radius: 7px;
+            color: white; 
+            background-color: rgb(66, 178, 115); 
+            
+        }
+        
+ #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
+          
+        
 #wrap>tr>td { padding-bottom: 3%; }
 
 #rightmargin { margin-right: 5%; }
@@ -204,6 +221,10 @@ tr {
 }
 
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
+
+
+     
+        
 </style>
 
 </head>
@@ -354,13 +375,12 @@ tr {
 			<br>
 			
 			<!-- admin menu -->
-			<c:if test="${ sessionScope.loginUser eq 'admin12' }">
+			<c:if test="${ loginUser.userRole eq 'D' }">
 				<div id="administratorOption">
 					<label id="administratorLabel">관리자</label>
-					<button onclick="adminAdd();">추가</button>
+					<button id="goRound" onclick="adminAdd();">추가</button>
 				</div>
 			</c:if>
-
 
 		</div>
 	</div>
@@ -370,6 +390,12 @@ tr {
     			location.href="detail.no?noticeNo=" + $(this).children().eq(0).text();
     		});
     	});
+    </script>
+    
+    <script>
+    	function adminAdd(){
+    		location.href="goAddForm.no";
+    	}
     </script>
 	
 	<jsp:include page="../../common/footer.jsp" />
