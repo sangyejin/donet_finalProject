@@ -156,7 +156,7 @@ tbody tr td, thead tr th {
 			enctype="multipart/form-data">
 			<div class="div-fpName">
 				<label for="fpName" style="display: block;">펀딩 프로젝트 제목</label> <input
-					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName">
+					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
 			</div>
 			<div class="div-content">
 				<div class="div-left col-lg-6 col-xs-12">
@@ -176,17 +176,17 @@ tbody tr td, thead tr th {
 					</div>
 					<div class="div-input">
 						<label for="goal">목표 금액</label> <input type="text"
-							placeholder="0,000,000" id="goal" name="goal"> <span>원</span>
+							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
 					</div>
 					<div class="div-input">
 						<label for="startDate">펀딩 기간</label> <input type="Date"
-							placeholder="0000-00-00" id="startDate" name="startDate">
+							placeholder="0000-00-00" id="startDate" name="startDate" required>
 						<span style="margin: 0 10px;">~</span> <input type="Date"
-							placeholder="0000-00-00" id="closeDate" name="closeDate">
+							placeholder="0000-00-00" id="closeDate" name="closeDate" required>
 					</div>
 					<div class="div-input">
 						<label for="">결제 예정 날짜</label> <input type="Date"
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate">
+							placeholder="0000-00-00" id="paymentDate" name="paymentDate" required>
 					</div>
 					<div class="div-input">
 						<label for="">추가사진</label>
@@ -209,7 +209,7 @@ tbody tr td, thead tr th {
 				style="width: 800px; margin: auto;">
 				<label for="content">내용</label>
 				<textarea name="content" id="content" cols="140" rows="10"
-					style="resize: none;"></textarea>
+					style="resize: none;" required></textarea>
 				<label for="present">선물 <input id="btnInsertPresent"
 					class="btn btn-default" type="button" value="+"></label>
 				<table id="tablePresent" class="table table-hover">
@@ -225,16 +225,16 @@ tbody tr td, thead tr th {
 					<tbody>
 						<tr>
 							<td style="vertical-align: middle">1
-								<input type='hidden' name='fgNo' id='fgNo' value="1">
+								<input type='hidden' name='fgNo' value="1">
 							</td>
 							<td>
-							<input class='input-text' type='text' name='fgName'>
+							<input class='input-text' type='text' name='fgName' required>
 							</td>
 							<td>
-							<input class='input-text' type='text' name='fgPrice' >
+							<input class='input-text' type='text' name='fgPrice' required>
 							</td>
 							<td>
-							<input class='input-text' type='text' name='fgContent' >
+							<input class='input-text' type='text' name='fgContent' required>
 							</td>
 							<td>
 							<button class="btn btn-default btnDeletePresent btn-delete" data-action="delete">-</button>
@@ -285,7 +285,7 @@ tbody tr td, thead tr th {
     		});
     		$("#btn-insert").click(function(){
     			$("#tablePresent tbody tr").each( function (index) {
-    		        $(this).find("input[name=fpNo]").attr("name", "fundingGoods[" + index + "].fpNo");
+    		        $(this).find("input[name=fgNo]").attr("name", "fundingGoods[" + index + "].fgNo");
     		        $(this).find("input[name=fgName]").attr("name", "fundingGoods[" + index + "].fgName");
     		        $(this).find("input[name=fgContent]").attr("name", "fundingGoods[" + index + "].fgContent");
     		        $(this).find("input[name=fgPrice]").attr("name", "fundingGoods[" + index + "].fgPrice");
@@ -328,9 +328,9 @@ tbody tr td, thead tr th {
            	
             var html = `<tr>
             			<td name='tdFgNo' style='vertical-align:middle'>`+len+`<input class='input-text' type='hidden' name='fgNo' value=`+len+`>
-            			</td><td><input class='input-text' type='text' name='fgName'></td>
-                    	<td><input class='input-text' type='text' name='fgPrice'></td>
-                    	<td><input class='input-text' type='text' name='fgContent'></td>
+            			</td><td><input class='input-text' type='text' name='fgName' required></td>
+                    	<td><input class='input-text' type='text' name='fgPrice' required></td>
+                    	<td><input class='input-text' type='text' name='fgContent' required></td>
                     	<td><button class='btn btn-default btnDeletePresent btn-delete' data-action='delete'>-</button></td>
                 		</tr>`;
               
