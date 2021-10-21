@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
@@ -37,7 +38,7 @@ public class NoticeController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
-		return "customerSupport/notice";
+		return "customerSupport/notice/notice";
 	}
 	
 	
@@ -81,7 +82,30 @@ public class NoticeController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
-		return "customerSupport/notice";
+		return "customerSupport/notice/notice";
 		
+	}
+	
+	//detail
+	@RequestMapping("detail.no")
+	public ModelAndView selectThisNotice(int noticeNo, ModelAndView mv) {
+		System.out.println("noticeNo : " + noticeNo );
+		Notice no = NoService.selectThisNotice(noticeNo);
+		
+		/*이전글, 다음글*/
+		Notice prevNote = NoService.selectPrevNotice(noticeNo);
+		Notice nextNote = NoService.selectNextNotice(noticeNo);
+
+		System.out.println("prevNote : " + prevNote );
+		System.out.println("nextNote : " + nextNote );
+
+		
+		mv.addObject("no", no);
+		mv.addObject("prevNote", prevNote);
+		mv.addObject("nextNote", nextNote);
+
+		mv.setViewName("customerSupport/notice/detailNotice");
+		
+		return mv;
 	}
 }
