@@ -157,24 +157,22 @@ height : 30px;
         
         <div id="secondLine"> 
             <ul>
-                <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
+                 <li class="greenfont" id="1"><a href="introduce.pr">도넷 닷컴 소개</a>
                     <ul class="arrow_box">
-                        <li><a>프로젝트 소개</a></li>
-                        <li><a>후원 방법</a></li>
+                        <li><a href="introduce.pr">프로젝트 소개</a></li>
+                        <li><a href="introduce.how">후원 방법</a></li>
                         <li><a>통계 조회</a></li>
                     </ul> 
                 </li>
-
-                <li class="greenfont" id="2"><a>후원 프로젝트</a>
+                <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
                     <ul class="arrow_box">
-                        <li><a>출판</a></li>
-                        <li><a>게임/취미</a></li>
-                        <li><a>뷰티</a></li>
-                        <li><a>패션/잡화</a></li>
-                        <li><a>소셜/컨설팅</a></li>
+                        <li><a href="global">지구촌</a></li>
+                        <li><a href="environment">환경</a></li>
+                        <li><a href="animal">동물</a></li>
+                        <li><a href="child">아동/청소년</a></li>
+                        <li><a href="vulnerable">취약계층</a></li>
                     </ul> 
                 </li>
-
                 <li class="greenfont" id="3"><a>이벤트</a>
                     <ul class="arrow_box">
                         <li><a href="list.ev">진행중인이벤트</a></li>
