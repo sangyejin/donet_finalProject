@@ -8,6 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
     <style>
+    	/*administrator*/
+    	#administratorOption>button {
+			width: 50px;
+			height: 20px;
+			margin-right: 0.5%;
+		}
+		
+		#administratorLabel {
+			font-weight: bold;
+			margin-right: 5%;
+		}
+    
     	/*footer align left*/
     	#gotoLEFT{ margin-left : -150px;}
     
@@ -126,23 +138,24 @@
             background-color: rgb(30, 154, 40);
         }
 
-        #goRound{
-            height: 25px;
-            width: 40px;
-            border-style:none;
-            border-radius: 7px;
-            color: white; 
-            background-color: rgb(66, 178, 115); 
-            
-        }
-
-        #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
-
+        /*single button style*/
+		 #goRound{
+		            height: 25px;
+		            width: 50px;
+		            border-style:none;
+		            border-radius: 7px;
+		            color: white; 
+		            background-color: rgb(66, 178, 115); 
+		            
+		        }
+		        
+		 #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
+		   
+        
         #buttons{
            margin-top: 2%;
-           margin-left: 755px;
+           margin-left: 747px;
            margin-bottom: 3%;
-
         }
 
         table{border-collapse: collapse;}
@@ -162,7 +175,8 @@
        #support { color: #000000; font-weight: bolder; font-size : 16px; margin-top:0px;}
        
        
-       .thisDetail > .head:hover, .thisDetail > .theDetail:hover{ font-weight: bold; }
+       .thisDetail > .head:hover{font-weight : bold;} 
+       .thisDetail > .theDetail:hover{ text-decoration : underline; }
        
     </style>
 
@@ -239,8 +253,27 @@
        <div id="buttons">
             <button id="goRound" onclick="backToList();">목록</button>
         </div>
+        
+        <!-- admin menu -->
+			<c:if test="${ loginUser.userRole eq 'D' }">
+				<div id="administratorOption">
+					<button id="goRound" onclick="adminUpdate();">수정</button>
+					<button id="goRound" onclick="adminDelete();">삭제</button>
+				</div>
+			</c:if>
 
 </div>
+	 <script>
+    	function adminUpdate(){ location.href="goUpdateForm.no?noticeNo=" + ${no.noticeNo}; }
+    </script>
+    
+    <script>
+    	function adminDelete(){ 
+    		confirm(${no.noticeNo} + "번 게시글을 삭제합니다.");
+    		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
+    		}
+    </script>
+
 	<script>
     	$(function(){
     		$("#noteDetail > tbody > .thisDetail ").click(function(){

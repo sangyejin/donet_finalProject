@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="noticeMapper">
 
 	<resultMap id="noticeResultMap" type="Notice">
-		<id column="rownum" property="noticeNo" />
+		<id column="no_no" property="noticeNo" />
 		<result column="no_title" property="noticeTitle" />
 		<result column="no_content" property="noticeContent" />
 		<result column="no_date" property="noticeDate" />
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectNoticeList" resultMap="noticeResultMap" parameterType="Search" resultType="Notice">
-		SELECT ROWNUM, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT
+		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_SAVE='N' 
@@ -49,48 +49,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND NO_CONTENT LIKE '%' || #{content} || '%'
 			</if>
 			
-		ORDER BY ROWNUM DESC
+		ORDER BY NO_NO DESC
 	</select>
 	
 	<update id="getCount" parameterType="_int">
 		UPDATE NOTICE
 		SET NO_COUNT = NO_COUNT+1
-		WHERE ROWNUM = #{noticeNo}
+		WHERE NO_NO = #{noticeNo}
 		AND NO_SAVE='N'
 	</update>
 	
 	<select id="selectThisNotice" parameterType="_int" resultMap="noticeResultMap">
-		SELECT ROWNUM, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT
+		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
-		WHERE ROWNUM = #{noticeNo}
+		WHERE NO_NO = #{noticeNo}
 		AND NO_SAVE='N'
 	</select>
 	
 	<select id="selectPrevNotice" parameterType="_int" resultMap="noticeResultMap">
 		<![CDATA[
-		SELECT ROWNUM, NO_TITLE
+		SELECT NO_NO, NO_TITLE
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
-		WHERE ROWNUM IN(	SELECT MAX(ROWNUM)
+		WHERE NO_NO IN(	SELECT MAX(NO_NO)
 						FROM NOTICE
         				JOIN MEMBER ON NO_WRITER=USER_ID
         				WHERE NO_SAVE='N'
-        				AND ROWNUM < #{noNotice}
+        				AND NO_NO < #{noNotice}
         				)
 		]]>
 	</select>
 	
 	<select id="selectNextNotice" parameterType="_int" resultMap="noticeResultMap">
 		<![CDATA[ 
-		SELECT ROWNUM, NO_TITLE
+		SELECT NO_NO, NO_TITLE
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
-		WHERE ROWNUM IN(	SELECT MIN(ROWNUM)
+		WHERE NO_NO IN(	SELECT MIN(NO_NO)
 						FROM NOTICE
         				JOIN MEMBER ON NO_WRITER=USER_ID
         				WHERE NO_SAVE='N'
-        				AND ROWNUM > #{noNotice}
+        				AND NO_NO > #{noNotice}
         				)
         ]]>
         				

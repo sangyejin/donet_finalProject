@@ -108,4 +108,10 @@ public class NoticeController {
 		
 		return mv;
 	}
+	
+	//insert
+	@RequestMapping("goAddForm.no")
+	public String goAddForm() {
+		return "customerSupport/notice/addNotice";
+	}
 }
