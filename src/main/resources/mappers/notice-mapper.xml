@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						FROM NOTICE
         				JOIN MEMBER ON NO_WRITER=USER_ID
         				WHERE NO_SAVE='N'
-        				AND NO_NO < #{noNotice}
+        				AND NO_NO < #{noticeNo}
         				)
 		]]>
 	</select>
@@ -95,6 +95,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ]]>
         				
 	</select>
+	
+	<update id="deleteGo" parameterType="_int" >
+		UPDATE NOTICE
+		SET NO_SAVE='Y'
+		WHERE NO_NO=#{noticeNo}
+	</update>
 	
 
 </mapper>

@@ -58,6 +58,16 @@ public class NoticeServiceImpl implements NoticeService {
 		return NoDao.selectNextNotice(sqlSession, noticeNo);
 	}
 
+	@Override
+	public void deleteGo(int noticeNo) {
+		int result = NoDao.deleteGo(sqlSession, noticeNo);
+		
+		if(result < 0) {
+			throw new CommException("게시글 삭제 실패");
+		}
+		
+	}
+
 	
 
 }
