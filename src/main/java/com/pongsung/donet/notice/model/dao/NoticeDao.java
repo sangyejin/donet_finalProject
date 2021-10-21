@@ -46,4 +46,9 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectNextNotice", noticeNo);
 	}
 
+	public int deleteGo(SqlSessionTemplate sqlSession, int noticeNo) {
+		return sqlSession.update("noticeMapper.deleteGo", noticeNo);
+
+	}
+
 }

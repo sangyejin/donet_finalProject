@@ -18,4 +18,6 @@ public interface NoticeService {
 
 	Notice selectNextNotice(int noticeNo);
 
+	void deleteGo(int noticeNo);
+
 }

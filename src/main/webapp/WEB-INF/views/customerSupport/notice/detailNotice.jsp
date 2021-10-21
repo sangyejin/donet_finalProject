@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,8 @@
 			width: 50px;
 			height: 20px;
 			margin-right: 0.5%;
+			margin-top : 10px;
+			margin-left : 10px;
 		}
 		
 		#administratorLabel {
@@ -139,8 +142,7 @@
         }
 
         /*single button style*/
-		 #goRound{
-		            height: 25px;
+		 #goRound{ 	height: 20px;
 		            width: 50px;
 		            border-style:none;
 		            border-radius: 7px;
@@ -153,9 +155,11 @@
 		   
         
         #buttons{
-           margin-top: 2%;
+           margin-top: 10px;
            margin-left: 747px;
            margin-bottom: 3%;
+           width : 50px;
+           position : absolute;
         }
 
         table{border-collapse: collapse;}
@@ -250,30 +254,42 @@
 
        </table>
 
-       <div id="buttons">
-            <button id="goRound" onclick="backToList();">목록</button>
-        </div>
-        
-        <!-- admin menu -->
+			 <div id="buttons">
+            	<button id="goRound" onclick="backToList();">목록</button>
+       		 </div>
+       		 
+       		 <!-- admin menu -->
 			<c:if test="${ loginUser.userRole eq 'D' }">
 				<div id="administratorOption">
+					<label id="administratorLabel">관리자</label>
 					<button id="goRound" onclick="adminUpdate();">수정</button>
 					<button id="goRound" onclick="adminDelete();">삭제</button>
 				</div>
 			</c:if>
-
-</div>
+			
+		</div>
+		
+	<!-- 수정 -->	
 	 <script>
     	function adminUpdate(){ location.href="goUpdateForm.no?noticeNo=" + ${no.noticeNo}; }
     </script>
-    
+
+    <!-- 삭제 -->
+    <!-- **삭제 후 인덱스 정렬 필요 -->
     <script>
     	function adminDelete(){ 
-    		confirm(${no.noticeNo} + "번 게시글을 삭제합니다.");
-    		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
+    		if(confirm(${no.noticeNo} + "번 게시글을 삭제합니다.")){
+    			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
+    			alert(${no.noticeNo} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
+        		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
+    		}else{
+    			alert(${no.noticeNo} + "번 게시글을 삭제하지 않습니다.");
     		}
+    			
+    	}
     </script>
 
+	<!-- 이전글, 다음글 -->
 	<script>
     	$(function(){
     		$("#noteDetail > tbody > .thisDetail ").click(function(){
@@ -284,10 +300,9 @@
     	});
     </script>
 
+	<!-- 목록  -->
 	<script>
-		function backToList(){
-			location.href="list.no";
-		}
+		function backToList(){ location.href="list.no"; }
 	</script>
 
 	<div id="gotoLEFT">

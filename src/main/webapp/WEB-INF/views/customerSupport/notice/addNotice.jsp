@@ -186,14 +186,11 @@
        
         #buttons{
            margin-top: 2%;
-           margin-left: 620px;
+           margin-left: 570px;
            margin-bottom: 3%;
-
         }
 
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
-
-       
     </style>
 
 </head>
@@ -270,15 +267,20 @@
 
         <input type="text" id="contentText" name="contentText" style="word-wrap:break-word">
 
-
         <div id="buttons">
              <button class="goRound" onclick="">게시</button>
              <button class="goRound" onclick="">임시저장</button>
+             <button class="goRound" onclick="backToList();">목록</button>
         </div>  
 </div>
 
 <div id="gotoLEFT">
 	<jsp:include page="../../common/footer.jsp" />
 </div>
+
+<script>
+		function backToList(){ location.href="list.no"; }
+	</script>
+
 </body>
 </html>

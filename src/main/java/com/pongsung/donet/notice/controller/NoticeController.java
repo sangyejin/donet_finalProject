@@ -2,6 +2,8 @@ package com.pongsung.donet.notice.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class NoticeController {
 	@Autowired
 	private NoticeService NoService;
 	
+	
+	//main list
 	@RequestMapping("list.no")
 	public String selectNoticeList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
 			Model model) {
@@ -114,4 +118,20 @@ public class NoticeController {
 	public String goAddForm() {
 		return "customerSupport/notice/addNotice";
 	}
+	
+	//update
+	@RequestMapping("goUpdateForm.no")
+	public String updateForm() {
+		return "customerSupport/notice/adjustDeleteNotice";
+	}
+	
+	//delete
+	@RequestMapping("goDelete.no")
+	public String deleteGo(int noticeNo, HttpServletRequest request) {
+		//게시글을 삭제한다=표시상태를 'N'으로 돌린다=언젠가 다시 보이게 하고싶을 수도 있으니 파일은 삭제 안할 심산...
+		NoService.deleteGo(noticeNo);
+		
+		return "redirect:list.no";
+	}
+	
 }
