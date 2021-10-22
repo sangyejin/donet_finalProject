@@ -192,7 +192,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
-		
+
 		<!-- ajax통신을 위한 GSON -->
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
@@ -202,12 +202,13 @@
 		</dependency>
 
 		<!-- 제이쿼리!! -->
-		 		<!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
-		 		<dependency>
-		 		    <groupId>org.webjars.bower</groupId>
-		 		    <artifactId>jquery</artifactId>
-		 		    <version>3.2.1</version>
-		 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
