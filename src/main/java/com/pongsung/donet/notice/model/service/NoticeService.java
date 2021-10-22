@@ -20,4 +20,6 @@ public interface NoticeService {
 
 	void deleteGo(int noticeNo);
 
+	void insertNotice(Notice no);
+
 }

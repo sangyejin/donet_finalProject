@@ -38,7 +38,7 @@ public class NoticeServiceImpl implements NoticeService {
 		int result = NoDao.getCount(sqlSession, noticeNo);
 		
 		if(result > 0) {
-			System.out.println("선택된 게시글 가지러 가는 중");
+			System.out.println("선택된 공지사항 가지러 가는 중");
 			no = NoDao.selectThisNotice(sqlSession, noticeNo);
 		}else {
 			throw new CommException("조회수 오류");
@@ -63,9 +63,18 @@ public class NoticeServiceImpl implements NoticeService {
 		int result = NoDao.deleteGo(sqlSession, noticeNo);
 		
 		if(result < 0) {
-			throw new CommException("게시글 삭제 실패");
+			throw new CommException("공지사항 삭제 실패");
 		}
 		
+	}
+
+	@Override
+	public void insertNotice(Notice no) {
+		int result = NoDao.insertNotice(sqlSession, no);
+
+		if (result < 0) {
+			throw new CommException("공지사항 추가 실패");
+		}
 	}
 
 	

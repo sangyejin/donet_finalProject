@@ -1,6 +1,10 @@
 package com.pongsung.donet.notice.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
+import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.service.NoticeService;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
@@ -117,6 +123,55 @@ public class NoticeController {
 	@RequestMapping("goAddForm.no")
 	public String goAddForm() {
 		return "customerSupport/notice/addNotice";
+	}
+	
+	@RequestMapping("insert.no")
+	public String insertNotice(Notice no,
+								HttpServletRequest request, 
+								Model model, 
+								@RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
+		System.out.println("Notice : " + no);
+		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+
+		//no.setNoticeWriter(noticeWriter);
+		
+		if(!file.getOriginalFilename().equals(""))	{
+			String changeName = uploadFile(file, request);
+			if(changeName != null) {
+				no.setNoticeOrigin(file.getOriginalFilename());
+				no.setNoticeNew(changeName);
+			}
+					
+		}
+		NoService.insertNotice(no);
+				
+		return "redirect:list.no";
+	}
+	
+	//fileUpload
+	private String uploadFile(MultipartFile file, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "//upload_files//";
+
+		System.out.println("savePath : " + savePath);
+
+		String originName = file.getOriginalFilename();
+
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+
+		String ext = originName.substring(originName.lastIndexOf(".")); // . 뒤의 확장자 전부 가져와서 조합
+
+		String changeName = currentTime + ext;
+
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+
+			throw new CommException("file upload error");
+		}
+
+		return changeName;
 	}
 	
 	//update
