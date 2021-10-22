@@ -28,9 +28,8 @@
 		
 		#greenfont1 { margin-right: 45%; text-decoration: none; }
 		
-		#faq { margin-right: 18%; }
-		
-		#facetoface { margin-right: 43.5%; }
+		 #faq { margin-right: 36px; }
+#facetoface { margin-right: 70px; }
 		
 		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 		
@@ -62,7 +61,7 @@
 		#gethelp { margin-left: 3%; }
 		#gethelp:hover{  : underline;}
 		
-		#helparrow { margin-left: 29%; margin-top: 0px; }
+#helparrow { margin-left: 48px; margin-top: 0px; }
 
         /* main main */
         #thelist{
@@ -116,7 +115,7 @@
         }
 
 
-		/*align style*/
+		/*align style
         span > b { margin-left: 52px; }
 
         span > p{ 
@@ -135,7 +134,7 @@
         #alignboi{ margin-left: 180px;  margin-top: -18px; }
 
 		#justify{ margin-left: 243.5px;  margin-top: -18px; }
-
+*/
         #greenline{
             margin-top: 4px;
             margin-bottom: 0;
@@ -145,11 +144,18 @@
             background-color: rgb(30, 154, 40);
         }
         
-        .thisimg{ width: 15px;  height: 15px; }
+         /* .thisimg{ width: 15px;  height: 15px; }*/
 
-        .biggerimg{  width: 18px;  height: 18px; }
+
+/*img*/
+
+		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
+				
+		.clickable{display : flex;}
+		
+        .biggerimg{  width: 20px;  height: 20px; }
         
-        #differ{/*img*/ margin-left: 273px; margin-top: -20px; }
+        #differ{/*img*/ margin-left: 85px; margin-top: -20px; }
 
         .shabbygrayline{
             margin-top: 1%;
@@ -167,7 +173,7 @@
             margin-top: -15px;
             width: 670px;
             margin-left: 80px;
-            height: 450px;
+            height: 435px;
         }
 
         /*footer align adjustment*/
@@ -235,8 +241,9 @@
        <div id= "getInThere">
             <span id="headTitle"><label for="inputTitle">제목</label> <input type="text" id="inputTitle" name="inputTitle"></span>
             <div class="grayline"></div>
-
-            <div id="headjustify">서식
+            
+            <div id="headjustify">사진
+            	<!--  kinda gave up
                 <span class="clickable"><b>B</b></span>
                 <span class="clickable"><i>I</i></span>
                 <span class="clickable"><u>U</u></span>
@@ -254,10 +261,16 @@
                         <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Right.png"></span>
                      </div>  
                     <div class="clickable" id="justify"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Justify.png"></div>
-                    <div id="aLine"> | </div>
-                    <div class="clickable" id="differ"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png"></div>
+                    <div id="aLine"> | </div> -->
+                    <div class="clickable" id="differ">
+                    	<label for="noticeOrigin" id="forThisImage">
+                    		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
+                    		 한 장의 첨부파일을 업로드 할 수 있습니다.
+                   		</label>
+                    </div>
+                    <input type="file" id="noticeOrigin" name="noticeOrigin" onchange="loadFile(this)" hidden="true">
+                    
             </div>
-
         <div class="shabbygrayline"></div>
 
         <span>내용</span>

@@ -8,10 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
-    
+     -->
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -30,7 +31,8 @@ body{
 *{
    /* font-family: 'Gugi', cursive;*/
    /*font-family: 'Song Myung', serif;*/
-    font-family: 'Nanum Gothic Coding', monospace;
+   /* font-family: 'Nanum Gothic Coding', monospace; */
+	font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;

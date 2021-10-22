@@ -27,9 +27,8 @@
 
 #greenfont1 { margin-right: 45%; text-decoration: none; }
 
-#faq { margin-right: 18%; }
-
-#facetoface { margin-right: 43.5%; }
+#faq { margin-right: 36px; }
+#facetoface { margin-right: 70px; }
 
 #faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
@@ -61,7 +60,7 @@
 #gethelp { margin-left: 3%; }
 #gethelp:hover{  : underline;}
 
-#helparrow { margin-left: 29%; margin-top: 0px; }
+#helparrow { margin-left: 48px; margin-top: 0px; }
 
 /* mainbody*/
 #thelist {
