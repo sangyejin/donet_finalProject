@@ -18,8 +18,8 @@ public class Event {
 	private int eventNo;
 	private String eventTitle;
 	private String eventContent;
-	private Date eventStart;
-	private Date eventLast;
+	private String eventStart;
+	private String eventLast;
 	private String eventStatus;
 	private String originName;
 	private String changeName;

@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>선행활동</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+	
     <style>
          .container{
             width: 80%;

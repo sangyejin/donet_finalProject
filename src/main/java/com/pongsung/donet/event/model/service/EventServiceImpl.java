@@ -48,4 +48,22 @@ public class EventServiceImpl implements EventService {
 		}
 	}
 
+	@Override
+	public void deleteEvent(int eno) {
+		// TODO Auto-generated method stub
+		int result = eventDao.deleteEvent(sqlSession, eno);
+		if(result < 0) {
+			throw new CommException("게시글 삭제 실패");
+		}
+	}
+
+	@Override
+	public void updateEvent(Event ev) {
+		// TODO Auto-generated method stub
+		int result = eventDao.updateEvent(sqlSession, ev);
+		if(result < 0) {
+			throw new CommException("수정 실패 ");
+		}
+	}
+
 }

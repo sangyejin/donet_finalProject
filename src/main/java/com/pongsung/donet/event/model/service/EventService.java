@@ -15,4 +15,8 @@ public interface EventService {
 
 	void insertEvent(Event e);
 
+	void deleteEvent(int eno);
+
+	void updateEvent(Event ev);
+
 }
