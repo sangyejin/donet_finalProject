@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingGoods;
+import com.pongsung.donet.funding.model.vo.FundingImage;
 
 @Repository
 public class FundingDao {
@@ -29,6 +31,23 @@ public class FundingDao {
 	public List<FundingCategory> selectFundingCategoryList(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("fundingMapper.selectFundingCategoryList");
+	}
+
+	public int insertFunding(SqlSessionTemplate sqlSession, Funding funding) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("fundingMapper.insertFunding",funding);
+		return Integer.valueOf(String.valueOf(funding.getFpNo()));
+		
+	}
+
+	public int insertFundingImgList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("fundingMapper.insertFundingImgList",imgList);
+	}
+
+	public int insertFundingGoodsList(SqlSessionTemplate sqlSession, List<FundingGoods> fundingGoodsList) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("fundingMapper.insertFundingGoodsList",fundingGoodsList);
 	}
 
 }

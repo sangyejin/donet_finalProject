@@ -841,6 +841,5 @@
     <!-- Jquery Plugins, main Jquery -->	
     <script src="resources/assets/js/plugins.js"></script>
     <script src="resources/assets/js/main.js"></script>
-    
     </body>
 </html>

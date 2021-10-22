@@ -8,10 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
-    
+     -->
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -20,28 +21,6 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-	
-	<!-- bootstrap template -->
-	<link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="resources/assets/css/slicknav.css">
-	<link rel="stylesheet" href="resources/assets/css/flaticon.css">
-	<link rel="stylesheet" href="resources/assets/css/progressbar_barfiller.css">
-	<link rel="stylesheet" href="resources/assets/css/gijgo.css">
-	<link rel="stylesheet" href="resources/assets/css/animate.min.css">
-	<link rel="stylesheet" href="resources/assets/css/animated-headline.css">
-	<link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="resources/assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="resources/assets/css/themify-icons.css">
-	<link rel="stylesheet" href="resources/assets/css/slick.css">
-	<link rel="stylesheet" href="resources/assets/css/nice-select.css">
-	<link rel="stylesheet" href="resources/assets/css/style.css">
-	
-	<!-- datepicker CDN -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-	
 	    
 <style>
 /*
@@ -52,7 +31,8 @@ body{
 *{
    /* font-family: 'Gugi', cursive;*/
    /*font-family: 'Song Myung', serif;*/
-    font-family: 'Nanum Gothic Coding', monospace;
+   /* font-family: 'Nanum Gothic Coding', monospace; */
+	font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;
@@ -60,20 +40,20 @@ body{
 }
 
 #outline{
-    width: 1300px;
+    width: 1050px;
     height: 110px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
    	position : inline;
+   	margin-left : 150px;
 }
 
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: -5px;
+    margin-top:0px;
     float: left;
-    font-size: 14px;
-    width : 180px;
+    width : 140px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
@@ -89,16 +69,13 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 #right{ margin-right: 50px; }
 
 .greenfont > ul > li {
-    /*background-color: rgb(244, 244, 244);*/
-    margin-top: 18px;
+    margin-top: 15px;
     float: left;
     font-size: 12px;
     width : 100px;
     height : max-content;
-   /*margin-left: 6px;*/
     text-align: center;
     line-height: 10px;
-
 }
 
 .greenfont > ul > li { display: none; }
@@ -117,17 +94,28 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 }
 
 #userinfo{
- 	margin-left: 1060px;
- 	margin-top : -39px;
+ 	margin-left: 700px;
+ 	margin-top : -35px;
 }
 
 #secondLine{  margin-top : -7px; }
 
 .thisuser{ font-size : 10px; }
 
-.noDecoration{ color : rgb(30, 154, 40);  text-decoration: none; }
+.noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }
 
 a{ color : #000000;  text-decoration: none; }
+
+.smallerFonts{
+	color : rgb(30, 154, 40);  
+	text-decoration: none;
+	font-size : 10px;
+}
+.loginDiv{
+color : rgb(30, 154, 40);  
+width : 300px;
+height : 30px;
+}
 
 </style>
 </head>
@@ -143,12 +131,12 @@ a{ color : #000000;  text-decoration: none; }
             
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><label class="noDecoration" >${ sessionScope.loginUser.userName }님</label> |  <a class="noDecoration"  href="myPage.me">마이페이지</a>  |  <a class="noDecoration"  href="logout.me">로그아웃</a> </div>
+       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="logout.me">로그아웃</a> </div>
             </c:if>
         <br>
         
@@ -171,24 +159,22 @@ a{ color : #000000;  text-decoration: none; }
         
         <div id="secondLine"> 
             <ul>
-                <li class="greenfont" id="1"><a>도넷 닷컴 소개</a>
+                 <li class="greenfont" id="1"><a href="introduce.pr">도넷 닷컴 소개</a>
                     <ul class="arrow_box">
-                        <li><a>프로젝트 소개</a></li>
-                        <li><a>후원 방법</a></li>
+                        <li><a href="introduce.pr">프로젝트 소개</a></li>
+                        <li><a href="introduce.how">후원 방법</a></li>
                         <li><a>통계 조회</a></li>
                     </ul> 
                 </li>
-
-                <li class="greenfont" id="2"><a>후원 프로젝트</a>
+                <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
                     <ul class="arrow_box">
-                        <li><a>출판</a></li>
-                        <li><a>게임/취미</a></li>
-                        <li><a>뷰티</a></li>
-                        <li><a>패션/잡화</a></li>
-                        <li><a>소셜/컨설팅</a></li>
+                        <li><a href="global">지구촌</a></li>
+                        <li><a href="environment">환경</a></li>
+                        <li><a href="animal">동물</a></li>
+                        <li><a href="child">아동/청소년</a></li>
+                        <li><a href="vulnerable">취약계층</a></li>
                     </ul> 
                 </li>
-
                 <li class="greenfont" id="3"><a>이벤트</a>
                     <ul class="arrow_box">
                         <li><a href="list.ev">진행중인이벤트</a></li>
