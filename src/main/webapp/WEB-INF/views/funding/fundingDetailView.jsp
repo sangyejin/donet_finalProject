@@ -258,7 +258,6 @@
 				</div>
 				<div id="info-right-container" class="col-md-6">
 					<div class="prices d-flex justify-content-between">
-					${closeDate-now }
 						<p> 
 						<c:if
 								test="${funding.raised/funding.goal<1 &&(nowDate < startDate || nowDate > closeDate)}">
