@@ -15,6 +15,7 @@
 		<typeAlias type="com.pongsung.donet.funding.model.vo.Funding" alias="Funding" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingCategory" alias="FundingCategory" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingImage" alias="FundingImage" />
+		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingGoods" alias="FundingGoods" />
 
 	</typeAliases>
 

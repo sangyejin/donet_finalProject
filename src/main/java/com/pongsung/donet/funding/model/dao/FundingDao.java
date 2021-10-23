@@ -50,4 +50,19 @@ public class FundingDao {
 		return sqlSession.insert("fundingMapper.insertFundingGoodsList",fundingGoodsList);
 	}
 
+	public List<FundingGoods> selectFundingGoodsList(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("fundingMapper.selectFundingGoodsList",fpNo);
+	}
+
+	public List<FundingImage> selectFundingImageList(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("fundingMapper.selectFundingImage",fpNo);
+	}
+
+	public Funding selectFunding(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("fundingMapper.selectFunding",fpNo);
+	}
+
 }

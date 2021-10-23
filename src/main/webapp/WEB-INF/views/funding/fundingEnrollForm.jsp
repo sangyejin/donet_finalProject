@@ -22,10 +22,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <style>
-* {
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 12px;
-}
 
 #fpName {
 	width: 800px;
@@ -167,7 +163,7 @@ tbody tr td, thead tr th {
 				</div>
 				<div class="div-right col-lg-6 col-xs-12">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="category"
+						<label for="cateogry">카테고리</label> <select name="categoryNo"
 							id="category">
 							<c:forEach var="category" items="${category}">
 								<option value="${category.categoryNo}">${category.categoryName}</option>

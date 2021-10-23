@@ -19,5 +19,11 @@ public interface FundingService {
 
 	void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception;
 
+	Funding selectFunding(int fpNo);
+
+	List<FundingImage> selectFundingImageList(int fpNo);
+
+	List<FundingGoods> selectFundingGoodsList(int fpNo);
+
 
 }
