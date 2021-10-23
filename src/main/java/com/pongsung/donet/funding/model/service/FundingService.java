@@ -1,6 +1,7 @@
 package com.pongsung.donet.funding.model.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
@@ -8,6 +9,7 @@ import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
+import com.pongsung.donet.funding.model.vo.FundingReply;
 
 public interface FundingService {
 
@@ -24,6 +26,12 @@ public interface FundingService {
 	List<FundingImage> selectFundingImageList(int fpNo);
 
 	List<FundingGoods> selectFundingGoodsList(int fpNo);
+
+	List<FundingReply> selectFundingReplyList(int fpNo);
+
+	int insertFundingReply(FundingReply fundingReply);
+
+	int deleteFundingReply(int replyNo);
 
 
 }

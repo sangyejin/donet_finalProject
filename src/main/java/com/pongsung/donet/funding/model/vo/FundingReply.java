@@ -20,4 +20,5 @@ public class FundingReply {
 	private int refFundingNo;
 	private Date createDate;
 	private String replyContent;
+	private String status;
 }

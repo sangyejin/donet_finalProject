@@ -156,16 +156,31 @@ public class FundingController {
 		return "funding/fundingDetailView";
 	}
 	
-	//펀딩 디테일 댓글
-
+	//펀딩 댓글 리스트
 	@ResponseBody
 	@RequestMapping(value="funding/{fpNo}/reply",produces="application/json;charset=utf-8")
 	public String selectReplyList(@PathVariable("fpNo")int fpNo) {
-		List<FundingReply> list = fundingService.selectFundingReplyList(fpNo);
+		List<FundingReply> fundingReplyList = fundingService.selectFundingReplyList(fpNo);
 		
 		//System.out.println(list.get(0).getCreateDate().toString());
 		
-		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(list);
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(fundingReplyList);
+	}
+	
+	//펀딩 댓글 추가
+	@ResponseBody
+	@RequestMapping(value="funding/{fpNo}/reply/insert")
+	public String insertReply(@PathVariable("fpNo")int fpNo, FundingReply fundingReply) {
+		int result = fundingService.insertFundingReply(fundingReply);
+		return String.valueOf(result);
+	}
+	
+	//펀딩 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="funding/{fpNo}/reply/{replyNo}/delete")
+	public String deleteReply(@PathVariable("fpNo")int fpNo, @PathVariable("replyNo")int replyNo) {
+		int result = fundingService.deleteFundingReply(replyNo);
+		return String.valueOf(result);
 	}
 	
 	

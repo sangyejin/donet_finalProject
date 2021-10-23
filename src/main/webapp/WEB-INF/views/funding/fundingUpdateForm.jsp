@@ -171,18 +171,18 @@ tbody tr td, thead tr th {
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goal">목표 금액</label> <input type="text"
+						<label for="goal">목표 금액</label> <input type="number"
 							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
 					</div>
 					<div class="div-input">
 						<label for="startDate">펀딩 기간</label> <input type="Date"
-							placeholder="0000-00-00" id="startDate" name="startDate" required>
+							placeholder="0000-00-00" id="startDate" name="startDate" disabled>
 						<span style="margin: 0 10px;">~</span> <input type="Date"
-							placeholder="0000-00-00" id="closeDate" name="closeDate" required>
+							placeholder="0000-00-00" id="closeDate" name="closeDate" disabled>
 					</div>
 					<div class="div-input">
 						<label for="">결제 예정 날짜</label> <input type="Date"
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate" required>
+							placeholder="0000-00-00" id="paymentDate" name="paymentDate" disabled>
 					</div>
 					<div class="div-input">
 						<label for="">추가사진</label>
@@ -350,6 +350,7 @@ tbody tr td, thead tr th {
                 (document.getElementsByName("fgNo"))[i-1]=i;
  
             }
+
         });
 
     </script>

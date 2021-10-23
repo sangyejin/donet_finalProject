@@ -29,8 +29,8 @@ LOOP
 insert into funding_project 
 values (SEQ_FUNDING_PROJECT.NEXTVAL,'유기견을 향한 마음','admin',1000000,2400000,
         to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
-        1,default,default,'G:/project/DonetProject/src/main/webapp/resources/upload_files/funding/github.png'
-        ,'G:/project/DonetProject/src/main/webapp/resources/upload_files/funding/github.png',default,sysdate);
+        1,default,default,'github.png'
+        ,'github.png',default,sysdate);
 END LOOP;
 END;
 /
@@ -630,6 +630,6 @@ select * from funding_image;
 select * from funding_project;
 select * from funding_image;
 select * from funding_goods;
--- delete from funding_project;
+delete from funding_project;
 commit;
 
