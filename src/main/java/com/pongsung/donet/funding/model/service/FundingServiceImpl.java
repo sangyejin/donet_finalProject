@@ -1,6 +1,5 @@
 package com.pongsung.donet.funding.model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,14 +39,12 @@ public class FundingServiceImpl implements FundingService {
 
 	@Override
 	public List<FundingCategory> selectFundingCategoryList() {
-		// TODO Auto-generated method stub
 		return fundingDao.selectFundingCategoryList(sqlSession);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
 	@Override
 	public void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception {
-		// TODO Auto-generated method stub
 		int fpNo=fundingDao.insertFunding(sqlSession,funding);
 		if(fpNo>0) { // 펀딩 db insert 성공
 			if(!imgList.isEmpty()) { //추가 사진이 있으면
@@ -92,9 +89,26 @@ public class FundingServiceImpl implements FundingService {
 	}
 
 	@Override
-	public List<FundingReply> selectReplyList(int fpNo) {
+	public List<FundingReply> selectFundingReplyList(int fpNo) {
+		return fundingDao.selectFundingReplyList(sqlSession,fpNo);
+	}
 
-		return  fundingDao.selectFundingGoodsList(sqlSession,fpNo);
+	@Override
+	public int insertFundingReply(FundingReply fundingReply) {
+		int result=fundingDao.insertFundingReply(sqlSession,fundingReply);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteFundingReply(int replyNo) {
+		int result=fundingDao.deleteFundingReply(sqlSession,replyNo);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
 	}
 
 

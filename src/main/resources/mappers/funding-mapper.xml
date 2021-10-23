@@ -48,6 +48,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="fgPrice" column="FG_PRICE" />
 	</resultMap>
 	
+	<!-- 펀딩 댓글 -->
+	<resultMap id="fundingReplyResultSet" type="FundingReply">
+		<id property="replyNo" column="REPLY_NO" />
+		<id property="writerId" column="REPLY_WRITER" />
+		<result property="refFundingNo" column="REF_FUNDING_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="writerNickName" column="USER_NICK" />
+	</resultMap>
+	
+	
 	<select id="selectFundingListCount" resultType="_int">
 		select COUNT(*)
 		from FUNDING_PROJECT
@@ -128,13 +140,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-		<select id="selectFundingReplyList" parameterType="_int" resultMap="fundingReplyResultSet">
-		SELECT FP_NO ,FG_NO,FG_NAME,FG_CONTENT,FG_PRICE
-		FROM FUNDING_GOODS
-		WHERE FP_NO=#{fpNo}
+	<select id="selectFundingReplyList" parameterType="_int" resultMap="fundingReplyResultSet">
+		SELECT A.REPLY_NO,A.REPLY_WRITER,A.REF_FUNDING_NO,A.CREATE_DATE,A.REPLY_CONTENT,USER_NICK
+		FROM FUNDING_REPLY A
+		JOIN MEMBER B ON A.REPLY_WRITER= B.USER_ID
+		WHERE REF_FUNDING_NO=#{fpNo}
+			AND A.STATUS='Y'
 	</select>
 	
 	
+	<insert id="insertFundingReply" parameterType="fundingReply">
+		INSERT INTO FUNDING_REPLY(REPLY_NO, REPLY_WRITER, REF_FUNDING_NO, CREATE_DATE,REPLY_CONTENT,STATUS)
+		VALUES (SEQ_FUNDING_REPLY.NEXTVAL, #{writerId},#{refFundingNo},sysdate,#{replyContent},default)
+	</insert>
 	
-	
+	<update id="deleteFundingReply" parameterType="_int">
+		update FUNDING_REPLY
+		set STATUS='N'
+		where REPLY_NO=#{replyNo}
+	</update>
 </mapper>

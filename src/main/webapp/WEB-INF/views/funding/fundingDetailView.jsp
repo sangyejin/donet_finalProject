@@ -206,12 +206,21 @@
 }
 
 /*댓글*/
+
 #replyArea {
 	padding-top: 100px;
+	padding-bottom:100px;
 }
-
+#replyList{
+	padding-top:20px;
+}
 .btn-insert-reply {
 	height: 36px;
+}
+
+.btn-reply {
+	border: none;
+	background: white;
 }
 </style>
 </head>
@@ -219,14 +228,23 @@
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
-	<fmt:parseDate value="${funding.startDate}" var="startD"
-		pattern="yyyy-MM-dd" />
+	<!-- 오늘 날짜 -->
+	<jsp:useBean id="now" class="java.util.Date" />
+	<fmt:formatDate value="${now}" var="nowDate" pattern="yyyy-MM-dd" />
+	
+	<!-- 펀딩 시작 날짜 -->
+	<fmt:parseDate value="${funding.startDate}" var="startD" pattern="yyyy-MM-dd" />
+	<fmt:formatDate value="${funding.startDate}" var="startDate" pattern="yyyy-MM-dd" />
+	<!-- 펀딩 끝 날짜 -->
+	<fmt:parseDate value="${funding.closeDate }" var="closeD" pattern="yyyy-MM-dd" />
+	<fmt:formatDate value="${funding.closeDate }" var="closeDate" pattern="yyyy-MM-dd" />
+
+	<!-- D-day계산하기위한 수식 -->
 	<fmt:parseNumber value="${startD.time / (1000*60*60*24)}"
 		integerOnly="true" var="strDate" />
-	<fmt:parseDate value="${funding.closeDate }" var="closeD"
-		pattern="yyyy-MM-dd" />
 	<fmt:parseNumber value="${closeD.time / (1000*60*60*24)}"
 		integerOnly="true" var="endDate" />
+
 	<div id="wrap">
 		<div id="div-container">
 			<div id="idx_top">
@@ -240,19 +258,33 @@
 				</div>
 				<div id="info-right-container" class="col-md-6">
 					<div class="prices d-flex justify-content-between">
-						<p>펀딩 완료</p>
+					${closeDate-now }
+						<p> 
+						<c:if
+								test="${funding.raised/funding.goal<1 &&(nowDate < startDate || nowDate > closeDate)}">
+							펀딩 실패
+						</c:if>
+						<c:if
+								test="${funding.raised/funding.goal<1 &&(nowDate<startDate || nowDate > closeDate)}">
+							펀딩 성공
+						</c:if>
+						<c:if test="${nowDate>=startDate && nowDate<=closeDate}">
+							펀딩 진행중
+						</c:if>
+						</p>
+
 						<p>
-							달성률 <span id="goalPersent" name="goalPersent">${funding.raised/funding.goal}</span>%
+							달성률 <span id="goalPersent" name="goalPersent">${funding.raised/funding.goal*100}</span>%
 						</p>
 					</div>
 
 					<div id="info">
 						<div class="progress">
 							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="${funding.raised/funding.goal}" aria-valuemin="0"
-								aria-valuemax="100"
-								style="width: ${funding.raised/funding.goal}%">
-								${funding.raised/funding.goal}</div>
+								aria-valuenow="${funding.raised/funding.goal*100}"
+								aria-valuemin="0" aria-valuemax="100"
+								style="width: ${funding.raised/funding.goal*100}%">
+								${funding.raised/funding.goal*100}</div>
 						</div>
 					</div>
 					<div class="data">
@@ -305,9 +337,14 @@
 					</c:forEach>
 				</div>
 			</div>
-
-			<section id="replyArea" class="reply">
-				<div id="reply-insert">
+			<c:if test="${loginUser.userId == funding.hostId }">
+				<div class="btnArea">
+					<input type="button" id="btn-update" value="수정">
+					<input type="button" id="btn-delete" value="삭제">
+				</div>
+			</c:if>
+			<section id="replyArea" class="reply-container">
+				<div id="reply-insert" class="container">
 					<div id="reply-insert-info">
 						<c:if test="${not empty loginUser}">
 							<textarea type="text" id="replyContent" class="col-md-10"
@@ -319,25 +356,21 @@
 								disabled></textarea>
 						</c:if>
 						<div id="reply-insert-btn">
-							<input type="button" id="addReply" class="btn-insert-reply col-md-offset-1 col-md-1" value="등록">
+							<input type="button" id="addReply"
+								class="btn-insert-reply col-md-offset-1 col-md-1" value="등록">
 						</div>
 					</div>
-
 				</div>
+				
 				<div id="replyList">
-					<div class="reply-group">
-						<div>${reply.writerId }|${reply.createDate }</div>
-						<div>${reply.content}</div>
-						<div class="aArea">
-							<a>수정</a><a>삭제</a>
-						</div>
-					</div>
+				
 				</div>
 			</section>
 		</div>
 	</div>
 	<script>
 		$(function() {
+
 			selectReplyList();
 
 			$("#addReply").click(function() {
@@ -345,12 +378,12 @@
 
 				if ($("#replyContent").val().trim().length != 0) {
 					$.ajax({
-						url : "funding/"+fpNo+"/reply",
+						url : fpNo + "/reply/insert",
 						type : "post",
 						data : {
 							replyContent : $("#replyContent").val(),
 							refFundingNo : fpNo,
-							replyWriterId : "${loginUser.userId}"
+							writerId : "${loginUser.userId}"
 						},
 						success : function(result) {
 							if (result > 0) {
@@ -372,32 +405,59 @@
 
 			});
 		});
+		function deleteReply(fpNo, replyNo) {
+			if (confirm("댓글을 삭제하시겠습니까? 예: 삭제, 아니오:삭제 취소")) {
+				$.ajax({
+					url : fpNo + "/reply/" + replyNo + "/delete",
+					type : "get",
+					success : function() {
+						alert("댓글이 삭제되었습니다.");
+						selectReplyList();
+					},
+					error : function() {
+						console.log("댓글 리스트조회용 ajax 통신 실패");
+					}
+				});
+			} else {
+				alert("댓글 삭제가 취소되었습니다.");
+			}
 
+		}
 		function selectReplyList() {
 			var fpNo = "${funding.fpNo}";
+			var nowLink = document.location.href;
+			console.log(nowLink);
+			$
+					.ajax({
+						url : fpNo + "/reply",
+						type : "get",
+						success : function(fundingReplyList) {
+							$("#rcount").text(fundingReplyList.length);
 
-			$.ajax({
-				url : "funding/"+fpNo+"/reply",
-				,
-				type : "get",
-				success : function(list) {
-					$("#rcount").text(list.length);
-
-					var value = "";
-					$.each(reply, function(i, r) {
-						value +=`<div class="reply-group"><div>(`+ r.writerId+`)|`+r.createDate+`</div><div>`+r.content+`</div></div>`;
-						if ("${loginUser.userId}" == obj.replyWriter) {
-							value += `<div class="aArea">
-										<a>수정</a><a>삭제</a>
-									</div>`;
+							var value = "";
+							$.each(
+										fundingReplyList,
+										function(i, r) {
+											value += `<div class="reply-group">
+														<input type="hidden" name="replyNo">
+														<div>`+r.writerNickName+`(`+ r.writerId+ `)|`+ r.createDate+ `</div>
+														<div>`+ r.replyContent+ `</div>`;
+												if ("${loginUser.userId}" == r.writerId) {
+													value += `<div class="aArea"><button class="btn-reply">수정</button><button class="btn-reply" onclick="deleteReply(`
+															+ fpNo
+															+ `,`
+															+ r.replyNo
+															+ `);">삭제</button></div>`;
+												}
+												value+=`</div>`;
+											});
+							$("#replyList").html(value);
+						},
+						error : function() {
+							console.log("댓글 리스트조회용 ajax 통신 실패");
 						}
 					});
-					$("#replyList").html(value);
-				},
-				error : function() {
-					console.log("댓글 리스트조회용 ajax 통신 실패");
-				}
-			});
+
 		}
 	</script>
 </body>

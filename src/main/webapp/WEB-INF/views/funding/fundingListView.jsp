@@ -296,7 +296,6 @@ select::-ms-expand {
 										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
 									</p>
 									<p class="dDay">
-
 										<span>${endDate-strDate }</span>
 									</p>
 								</div>
