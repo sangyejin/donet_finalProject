@@ -21,7 +21,6 @@ public class Support {
 	private Date suLast; //마감일
 	private Date suDate; //작성일
 	private String content;
-	private int usePlan; //기부금 사용계획표
 	private String target;
 	private Date bStart; //사업시작일
 	private Date bLast; //사업마감일
@@ -29,5 +28,7 @@ public class Support {
 	private String thumbnailChange; //썸네일 변경명 //변경완료//NOTION에 업데이트해야함
 	private int categoryNo;
 	private String status;
+	private int total;
+	private int hits;
 	
 }

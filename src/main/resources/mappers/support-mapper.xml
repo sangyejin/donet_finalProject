@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="supportMapper">
+
+	<resultMap id="supportCategoryResultSet"
+		type="SupportCategory">
+		<id property="suCategoryNo" column="SU_CATEGORY_NO" />
+		<result property="suCategoryName" column="SU_CATEGORY_NAME" />
+	</resultMap>
+
+	<resultMap id="supportResultSet" type="Support">
+		<id property="suNo" column="SU_NO" />
+		<result property="suTitle" column="SU_TITLE" />
+		<result property="suWriter" column="SU_WRITER" />
+		<result property="suStart" column="SU_START" />
+		<result property="suLast" column="SU_LAST" />
+		<result property="suDate" column="SU_DATE" />
+		<result property="content" column="SU_CONTENT" />
+		<result property="target" column="SU_TARGET" />
+		<result property="bStart" column="SU_BSTART" />
+		<result property="bLast" column="SU_BLAST" />
+		<result property="thumbnailOrigin" column="THUMBNAILORIGIN" />
+		<result property="thumbnailChange" column="THUMBNAILCHANGE" />
+		<result property="categoryNo" column="SU_CATEGORY" />
+		<result property="status" column="SU_SATUTS" />
+		<result property="hits" column="HITS" />
+	</resultMap>
+
+	<resultMap id="supportUsePlanResultSet" type="SupportUsePlan">
+		<id property="suNo" column="SU_NO" />
+		<result property="upNo" column="UP_NO" />
+		<result property="content" column="UP_CONTENT" />
+		<result property="amount" column="UP_AMOUNT" />
+		<result property="division" column="UP_DIVISION" />
+	</resultMap>
+
+	<resultMap id="sponsorResultSet" type="Sponsor">
+		<id property="userId" column="USER_ID" />
+		<result property="suNo" column="SU_NO" />
+		<result property="payNo" column="PAY_NO" />
+		<result property="amount" column="PAY_AMOUNT" />
+		<result property="total" column="COUNT" />
+	</resultMap>
+
+		<select id="selectDonationList" resultType="_int">
+			SELECT COUNT(*)
+			FROM
+			SUPPORT
+			WHERE SU_SATUTS='Y'
+		</select>
+
+		<select id="selectDonationParticipationCount" resultType="arrayList">
+			SELECT COUNT(*)
+			FROM SPONSOR
+			GROUP BY SU_NO
+		</select>
+
+
+		<select id="selectDonation" resultMap="supportResultSet">
+			SELECT S.SU_NO,
+			S.SU_TITLE, S.SU_WRITER, S.SU_START, S.SU_LAST, S.SU_DATE,
+			S.SU_CONTENT, S.SU_TARGET, S.SU_BSTART, S.SU_BLAST, S.THUMBNAILORIGIN,
+			S.THUMBNAILCHANGE, C.SU_CATEGORY_NAME, S.SU_SATUTS
+			FROM SUPPORT S
+			JOIN
+			SUPPORT_CATEGORY C ON S.SU_CATEGORY = C.SU_CATEGORY_NO
+			WHERE
+			S.SU_SATUTS='Y'
+			ORDER BY SU_NO DESC
+		</select>
+		
+		<select id="selectSponsorList" resultMap="sponsorResultSet">
+			SELECT SU_NO, COUNT(*) AS COUNT
+			FROM SPONSOR
+			GROUP BY SU_NO
+			ORDER BY SU_NO DESC
+		</select>
+		<update id="increaseCount" parameterType="_int">
+			UPDATE SUPPORT
+			SET HITS = HITS+1
+			WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
+		</update>
+		<select id="selectBoard" parameterType="_int" resultMap="supportResultSet">
+			SELECT *
+			FROM SUPPORT
+			WHERE SU_NO=#{suNo} SU_SATUTS='Y'
+		</select>
+		
+
+</mapper>
