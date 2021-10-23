@@ -1,5 +1,6 @@
 package com.pongsung.donet.funding.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,7 @@ import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
+import com.pongsung.donet.funding.model.vo.FundingReply;
 
 
 @Service
@@ -73,6 +75,29 @@ public class FundingServiceImpl implements FundingService {
 		}
 
 	}
+
+	@Override
+	public Funding selectFunding(int fpNo) {
+		return fundingDao.selectFunding(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingImage> selectFundingImageList(int fpNo) {
+		return fundingDao.selectFundingImageList(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingGoods> selectFundingGoodsList(int fpNo) {
+		return fundingDao.selectFundingGoodsList(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingReply> selectReplyList(int fpNo) {
+
+		return  fundingDao.selectFundingGoodsList(sqlSession,fpNo);
+	}
+
+
 
 }
 

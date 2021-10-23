@@ -15,7 +15,8 @@ import lombok.ToString;
 @ToString
 public class FundingReply {
 	private int replyNo;
-	private String replyWriter;
+	private String writerId;
+	private String writerNickName;
 	private int refFundingNo;
 	private Date createDate;
 	private String replyContent;
