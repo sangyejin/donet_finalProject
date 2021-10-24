@@ -21,5 +21,7 @@ public class Event {
 	private Date eventStart;
 	private Date eventLast;
 	private String eventStatus;
+	private String originName;
+	private String changeName;
 	
 }

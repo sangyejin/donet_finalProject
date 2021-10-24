@@ -48,5 +48,7 @@ local.properties
 .recommenders
 target/
 .target/
+/target/
 *.class
 MANIFEST.MF
+/upload_files/funding/*

@@ -21,6 +21,9 @@ public class Notice {
 	private String noticeWriter;
 	private int noticeCount;
 	private String noticeSave; //임시 저장 여부
-	private String noticeStatus; //관리자 상태 관리 컬럼
+	//private String noticeStatus; //관리자 상태 관리 컬럼
+	private String noticeOrigin; //첨부파일 본 이름
+	private String noticeNew; //첨부파일 새 이름
+
 
 }

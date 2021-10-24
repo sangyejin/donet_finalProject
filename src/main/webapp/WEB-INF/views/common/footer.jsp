@@ -86,6 +86,10 @@
    	 	/*padding-bottom: 300px;*/
    	 }
    	 
+   	/* 추가 레이아웃 설정 */
+   	#listen{
+   		margin-left : 180px;
+   	}
    	 
 
 </style>
@@ -111,10 +115,8 @@
             
         </span>
 
-       <!--  <img id="readyimg" src="/Users/wangsubin/FRONTEND/source_final/3EFFFBC2-CEAA-4568-A74D-89005E3F5570_1_105_c.jpeg" > -->
-
-        <div id="toright" align="right">
-           <span><a>사업자등록번호 : 123-45-6789 </a> | <a>서울 강남 제2000-09호</a> | <a>대표자 : 허은주</a></span> 
+        <div id="toright" >
+           <div id="listen"><span><a>사업자등록번호 : 123-45-6789 </a> | <a>서울 강남 제2000-09호</a> | <a>대표자 : 허은주</a></span> </div>
            
             <p id="address">주소 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F,3F,4F,5F,6F</p>
            
