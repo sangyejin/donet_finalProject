@@ -38,20 +38,20 @@ body{
 }
 
 #outline{
-    width: 1300px;
+    width: 1050px;
     height: 110px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
    	position : inline;
+   	margin-left : 150px;
 }
 
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: -5px;
+    margin-top:0px;
     float: left;
-    font-size: 14px;
-    width : 180px;
+    width : 140px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
@@ -67,16 +67,13 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 #right{ margin-right: 50px; }
 
 .greenfont > ul > li {
-    /*background-color: rgb(244, 244, 244);*/
-    margin-top: 18px;
+    margin-top: 15px;
     float: left;
     font-size: 12px;
     width : 100px;
     height : max-content;
-   /*margin-left: 6px;*/
     text-align: center;
     line-height: 10px;
-
 }
 
 .greenfont > ul > li { display: none; }
@@ -95,17 +92,28 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 }
 
 #userinfo{
- 	margin-left: 1060px;
- 	margin-top : -39px;
+ 	margin-left: 700px;
+ 	margin-top : -35px;
 }
 
 #secondLine{  margin-top : -7px; }
 
 .thisuser{ font-size : 10px; }
 
-.noDecoration{ color : rgb(30, 154, 40);  text-decoration: none; }
+.noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }
 
 a{ color : #000000;  text-decoration: none; }
+
+.smallerFonts{
+	color : rgb(30, 154, 40);  
+	text-decoration: none;
+	font-size : 10px;
+}
+.loginDiv{
+color : rgb(30, 154, 40);  
+width : 300px;
+height : 30px;
+}
 
 </style>
 </head>
@@ -118,15 +126,15 @@ a{ color : #000000;  text-decoration: none; }
 	</c:if>
     <div id="outline" align="center">
             <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
-            
+               
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a class="noDecoration" href="loginForm.me" >로그인</a></div>
+       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a class="noDecoration" href="loginForm.me" >로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="greenfont" id="userinfo"><label class="noDecoration" >${ sessionScope.loginUser.userName }님</label> |  <a class="noDecoration"  href="myPage.me">마이페이지</a>  |  <a class="noDecoration"  href="logout.me">로그아웃</a> </div>
+       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="logout.me">로그아웃</a> </div>
             </c:if>
         <br>
         
@@ -219,17 +227,17 @@ a{ color : #000000;  text-decoration: none; }
     -->
     
      <!-- 로그인 클릭 시 뜨는 모달  -->
-    <div class="modal fade" id="loginModal">
+    <!-- <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-            <!-- Modal Header -->
+            Modal Header
             <div class="modal-header">
                 <h4 class="modal-title">로그인하기</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button> 
             </div>
 
             <form action="login.me" method="post">
-                <!-- Modal Body -->
+                Modal Body
                 <div class="modal-body">
                     <label for="userId" class="mr-sm-2">아이디 :</label>
                     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="userId"> <br>
@@ -237,7 +245,7 @@ a{ color : #000000;  text-decoration: none; }
                     <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="userPwd" name="userPwd">
                 </div>
                 
-                <!-- Modal footer -->
+                Modal footer
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success ">로그인</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -245,7 +253,7 @@ a{ color : #000000;  text-decoration: none; }
             </form>
             </div>
         </div>
-    </div>
+    </div> -->
     
 </body>
 </html>

@@ -24,6 +24,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member loginUser = memberDao.loginMember(sqlSession, m);
 		
+		System.out.println("로그인 유저 값 : " + loginUser);
+		
 		if (loginUser == null) {
 			throw new CommException("loginUser확인");
 		}
@@ -88,6 +90,35 @@ public class MemberServiceImpl implements MemberService {
 			Member loginUser = memberDao.loginMember(sqlSession, m);
 			return loginUser;
 		}
+	}
+
+
+	@Override
+	public Member findUserIdMember(Member m) {
+		
+		Member userInfo = memberDao.findUserIdMember(sqlSession, m);
+		System.out.println("서비스 임플 result의 값 : " + userInfo);
+		
+		if(userInfo == null) {
+			throw new CommException("아이디를 찾지 못하였습니다. 다시 시도해주세요.");
+		}
+		
+		return userInfo;
+	}
+
+
+	@Override
+	public Member findUserPwdMember(BCryptPasswordEncoder bCryptPasswordEncoder, Member m) {
+		
+		Member userInfo = memberDao.findUserPwdMember(sqlSession, m);
+		
+		System.out.println("비밀번호 값 : " + userInfo);
+		
+		if(userInfo == null) {
+			throw new CommException("비밀번호를 찾지 못하였습니다. 다시 시도해주세요.");
+		}
+		
+		return userInfo;
 	}
 
 }
