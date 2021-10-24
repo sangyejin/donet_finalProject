@@ -74,8 +74,8 @@
 	
 	<script src="bootstrap-modal-wrapper-factory.min.js"></script>	
 	<!-- 아이디 찾기 모달 -->
-	<div class="modal fade" id="findUserIdModal">
-        <div class="modal-dialog modal-sm">
+	<div class="modal fade" id="findUserIdModal" >
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
@@ -103,7 +103,7 @@
     
     <!-- 비밀번호 찾기 모달 -->
     <div class="modal fade" id="findUserPwdModal">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
