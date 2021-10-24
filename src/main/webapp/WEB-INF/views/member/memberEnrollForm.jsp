@@ -46,10 +46,12 @@
                     <br>
                     
                     <label for="birthday"> &nbsp; 생년월일 :</label> &nbsp;
+                    <div id="bitrhdaySelect">
                     <select name="year" id="year"></select>년
                     <select name="month" id="month"></select>월
                     <select name="day" id="day"></select>일
                     <input type="hidden" name="birthdate" id="birthdate" value=""/>
+                    </div>
                     <!-- <input size="20" name="time" id="time" />  -->
                     <br><br>
                     
@@ -149,7 +151,7 @@
                 		 $('#time').val($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
                 		 $('#birthdate').val($('#year').val()+"-"+$('#month').val()+"-"+$('#day').val());
                 	}
-                	$('#day').change(function() {
+                	$('#year').change(function() {
                 		birthdateInput();
                 	})
                 </script> 

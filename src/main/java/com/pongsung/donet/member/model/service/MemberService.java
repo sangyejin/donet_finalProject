@@ -16,4 +16,8 @@ public interface MemberService {
 
 	Member updatePwdMember(Member m);
 
+	Member findUserIdMember(Member m);
+
+	Member findUserPwdMember(BCryptPasswordEncoder bCryptPasswordEncoder, Member m);
+
 }

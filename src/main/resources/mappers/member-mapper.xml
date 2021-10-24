@@ -54,4 +54,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{userId}
 	</update>
 	
+	<select id="findUserIdMember" parameterType="Member" resultMap="memberResultSet">
+		select user_id from member
+		where email=#{email} and phone=#{phone} and status='Y'
+	</select>
+	
+	<select id="findUserPwdMember" parameterType="Member" resultMap="memberResultSet">
+		select * from member
+		where user_id=#{userId} and user_name=#{userName} and email=#{email} and status='Y'
+	</select>
+	
 </mapper>
