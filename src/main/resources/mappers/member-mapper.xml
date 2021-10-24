@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="status" column="STATUS"/>
 		<result property="enrollDate" column="user_CREATE_DATE"/>
 		<result property="modifyDate" column="modify_DATE"/>
-		<result property="point" column="POINT"/>
+		<result property="point" column="POINT"/>		
 	</resultMap>
 
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
