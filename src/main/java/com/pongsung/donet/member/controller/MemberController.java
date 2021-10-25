@@ -1,5 +1,6 @@
 package com.pongsung.donet.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -33,11 +34,20 @@ public class MemberController {
 	@Autowired // target class test(CGLIB 프록시 test)
 	private MemberServiceImpl memberServiceImpl;
 	
+	// 로그인 페이지
+		@RequestMapping("loginForm.me")
+		public String loginForm() {
+			//logger.debug("====== START ========");
+			//logger.info("====== START info ========");
+			return "member/memberLogin";
+		}
+	
+	
 	// 암호화처리 로그인
 		@RequestMapping("login.me")
 		public String loingMember(Member m, Model model) throws Exception{
 			
-			
+				
 				Member loginUser = memberService.loginMember(bCryptPasswordEncoder, m);
 				System.out.println("MemberController에서 loginUser 값 : " + loginUser);
 				model.addAttribute("loginUser", loginUser);
@@ -50,7 +60,7 @@ public class MemberController {
 		public String logoutMember(SessionStatus status) {
 			
 			status.isComplete(); // 현재 컨트롤러에  @SessionAttributes에 의해 저장된 오브젝트를 제거합니다.
-			
+						
 			return "redirect:/";
 		} 
 		
@@ -129,7 +139,7 @@ public class MemberController {
 		// 비밀번호 변경하기
 		@RequestMapping("updatePwd.me")
 		public String updatePwdMember (@ModelAttribute Member m, @RequestParam("userId") String userId,
-																 @RequestParam("newPwd") String newPwd, Model model) {
+																 @RequestParam("newPwd") String newPwd, Model model, SessionStatus status) {
 			
 			String encPwd = bCryptPasswordEncoder.encode(newPwd);
 			System.out.println("encPwd의 값 : " + encPwd);
@@ -141,17 +151,67 @@ public class MemberController {
 			
 			Member userInfo = memberService.updatePwdMember(m);
 			System.out.println("userInfo의 값 : " + userInfo);
+						
 			
 			if(userInfo != null) {
 				model.addAttribute("msg", "비밀번호가 변경되었습니다.");
 				model.addAttribute("loginUser", userInfo);
-				return "member/myPage";
+				status.isComplete(); 
+				return "member/memberLogin";
 			}else {
 				model.addAttribute("msg", "비밀번호 변경에 실패했습니다.");
 				 return "common/errorPage";
+			}	
+		}
+		
+//		public String findUserIdMember(@ModelAttribute Member m ,@RequestParam("email") String email,
+//				 @RequestParam("phone") String phone, Model model) {
+//		
+		
+		@RequestMapping("findUserId.me")
+		public String findUserIdMember(@ModelAttribute Member m, Model model) {
+			
+			
+			System.out.println("아이디 찾는 유저 : " + model);
+			
+			Member userInfo = memberService.findUserIdMember(m);
+			System.out.println("아이디 찾기 userInfo의 값 : " + userInfo);
+			
+			
+			if(userInfo != null) {
+				model.addAttribute("msg", "아이디 : " + userInfo.getUserId());
+				System.out.println("userInfo : " + userInfo.getUserId());
+				model.addAttribute("userInfo", userInfo);
+				return "member/memberLogin";
+			}else {
+				model.addAttribute("msg", "아이디 찾지 못하였습니다.");
+				return "common/errorPage";
 			}
-			 	
 			
 		}
-	
+		
+		
+		@RequestMapping("findUserPwd.me")
+		public String findUserPwdMember(@ModelAttribute Member m, Model model) {
+			
+			
+			System.out.println("비밀번호 찾는 유저 : " + model);
+			
+			Member userInfo = memberService.findUserPwdMember(bCryptPasswordEncoder, m);
+			System.out.println("비밀번호 찾기 userInfo의 값 : " + userInfo);
+			
+			
+			if(userInfo != null) {
+				model.addAttribute("msg", "새로운 비밀번호를 만들어주세요. ");
+				System.out.println("userInfo : " + userInfo.getUserPwd());
+				model.addAttribute("userInfo", userInfo);
+				return "member/findPwdChange";
+			}else {
+				model.addAttribute("msg", "비밀전호를 찾지 못하였습니다.");
+				return "common/errorPage";
+			}
+			
+		}
+		
+		
 }

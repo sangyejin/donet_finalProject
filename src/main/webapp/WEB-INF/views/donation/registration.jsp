@@ -133,6 +133,7 @@
 						<div>
 						    <input id="imageFile" type="file">
 						</div>
+						<%=request.getRealPath("/") %>
 						<div>
 						    <input type="button" value="Resize Image" onclick="ResizeImage()"/>
 `						</div>

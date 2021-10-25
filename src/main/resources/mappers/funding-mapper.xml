@@ -28,15 +28,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="thumbnailOriginName" column="THUMBNAIL_ORIGIN_NAME" />
 		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
 		<result property="fpWriteDate" column="FP_WRITE_DATE" />
+		<result property="numberSupporter" column="NUMBER_SUPPORTER" />
 	</resultMap>
 	
 	<!-- 펀딩 이미지 -->
 	<resultMap id="fundingImageResultSet" type="FundingImage">
-		<result property="fpNo" column="FP_NO" />
-		<result property="imgNo" column="IMG_NO" />
+		<id property="fpNo" column="FP_NO" />
+		<id property="imgNo" column="IMG_NO" />
 		<result property="imgOriginName" column="IMG_ORIGIN_NAME" />
 		<result property="imgChangeName" column="IMG_CHANGE_NAME" />
 	</resultMap>
+
+	<!-- 펀딩 굿즈  -->
+	<resultMap id="fundingGoodsResultSet" type="FundingGoods">
+		<id property="fpNo" column="FP_NO" />
+		<id property="fgNo" column="FG_NO" />
+		<result property="fgName" column="FG_NAME" />
+		<result property="fgContent" column="FG_CONTENT" />
+		<result property="fgPrice" column="FG_PRICE" />
+	</resultMap>
+	
+	<!-- 펀딩 댓글 -->
+	<resultMap id="fundingReplyResultSet" type="FundingReply">
+		<id property="replyNo" column="REPLY_NO" />
+		<id property="writerId" column="REPLY_WRITER" />
+		<result property="refFundingNo" column="REF_FUNDING_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="writerNickName" column="USER_NICK" />
+	</resultMap>
+	
 	
 	<select id="selectFundingListCount" resultType="_int">
 		select COUNT(*)
@@ -63,15 +85,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertFunding" parameterType="Funding">
 		<selectKey keyProperty="fpNo" resultType="int" order="AFTER">
 			select seq_funding_project.currval from dual
+			
 		</selectKey>
-		
-		insert into FUNDING_PROJECT
+		insert into FUNDING_PROJECT(
+				FP_NO, FP_NAME, HOST_ID, GOAL
+				,RAISED, START_DATE, CLOSING_DATE
+				,CONTENT,PAYMENT_DATE,CATEGORY_NO,HITS
+				,STATUS,THUMBNAIL_ORIGIN_NAME,THUMBNAIL_CHANGE_NAME,NUMBER_SUPPORTER,FP_WRITE_DATE)
 		values
 		(	
-			seq_funding_project.nextval,#{fpName},#{hostId},#{goal}
-			,default,TO_DATE(#{startDate}),TO_DATE(#{closeDate})
-			,#{content},TO_DATE(#{paymentDate}),#{categoryNo},#{hits}
-			,#{status},#{thumbnailOriginName},#{thumbnailChangeName},SYSDATE
+			seq_funding_project.nextval, #{fpName}, #{hostId}, #{goal}
+			, default, TO_DATE(#{startDate}), TO_DATE(#{closeDate})
+			, #{content}, TO_DATE(#{paymentDate}), #{categoryNo}, DEFAULT
+			,DEFAULT ,#{thumbnailOriginName}, #{thumbnailChangeName}, DEFAULT, SYSDATE
 		)
 
 	</insert>
@@ -90,4 +116,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 	
+	<select id="selectFunding" parameterType="_int" resultMap="fundingResultSet">
+		SELECT FP_NO,FP_NAME,HOST_ID,GOAL,RAISED,START_DATE,CLOSING_DATE,
+			CONTENT,PAYMENT_DATE,C.FUNDING_CATEGORY_NAME,HITS,
+			THUMBNAIL_ORIGIN_NAME,THUMBNAIL_CHANGE_NAME,NUMBER_SUPPORTER,FP_WRITE_DATE
+		FROM FUNDING_PROJECT A
+		JOIN MEMBER B ON USER_ID=HOST_ID
+		JOIN FUNDING_CATEGORY C ON A.CATEGORY_NO=C.FUNDING_CATEGORY_NO
+		WHERE A.STATUS='Y'
+		AND A.FP_NO=#{fpNo}
+	</select>
+	
+	<select id="selectFundingImage" parameterType="_int" resultMap="fundingImageResultSet">
+		SELECT FP_NO, IMG_NO, IMG_ORIGIN_NAME, IMG_CHANGE_NAME
+		FROM FUNDING_IMAGE
+		WHERE FP_NO=#{fpNo}
+	</select>
+	
+	<select id="selectFundingGoodsList" parameterType="_int" resultMap="fundingGoodsResultSet">
+		SELECT FP_NO ,FG_NO,FG_NAME,FG_CONTENT,FG_PRICE
+		FROM FUNDING_GOODS
+		WHERE FP_NO=#{fpNo}
+	</select>
+	
+	
+	<select id="selectFundingReplyList" parameterType="_int" resultMap="fundingReplyResultSet">
+		SELECT A.REPLY_NO,A.REPLY_WRITER,A.REF_FUNDING_NO,A.CREATE_DATE,A.REPLY_CONTENT,USER_NICK
+		FROM FUNDING_REPLY A
+		JOIN MEMBER B ON A.REPLY_WRITER= B.USER_ID
+		WHERE REF_FUNDING_NO=#{fpNo}
+			AND A.STATUS='Y'
+	</select>
+	
+	
+	<insert id="insertFundingReply" parameterType="fundingReply">
+		INSERT INTO FUNDING_REPLY(REPLY_NO, REPLY_WRITER, REF_FUNDING_NO, CREATE_DATE,REPLY_CONTENT,STATUS)
+		VALUES (SEQ_FUNDING_REPLY.NEXTVAL, #{writerId},#{refFundingNo},sysdate,#{replyContent},default)
+	</insert>
+	
+	<update id="deleteFundingReply" parameterType="_int">
+		update FUNDING_REPLY
+		set STATUS='N'
+		where REPLY_NO=#{replyNo}
+	</update>
 </mapper>

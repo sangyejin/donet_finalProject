@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="status" column="STATUS"/>
 		<result property="enrollDate" column="user_CREATE_DATE"/>
 		<result property="modifyDate" column="modify_DATE"/>
-		<result property="point" column="POINT"/>
+		<result property="point" column="POINT"/>		
 	</resultMap>
 
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -53,5 +53,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set user_pwd=#{userPwd}
 		where user_id=#{userId}
 	</update>
+	
+	<select id="findUserIdMember" parameterType="Member" resultMap="memberResultSet">
+		select user_id from member
+		where email=#{email} and phone=#{phone} and status='Y'
+	</select>
+	
+	<select id="findUserPwdMember" parameterType="Member" resultMap="memberResultSet">
+		select * from member
+		where user_id=#{userId} and user_name=#{userName} and email=#{email} and status='Y'
+	</select>
 	
 </mapper>

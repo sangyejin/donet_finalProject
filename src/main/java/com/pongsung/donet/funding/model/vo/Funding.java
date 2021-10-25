@@ -30,6 +30,7 @@ public class Funding {
 	private String status;
 	private String thumbnailOriginName;
 	private String thumbnailChangeName;
+	private int numberSupporter;
 	private Date fpWriteDate;
 	
 }

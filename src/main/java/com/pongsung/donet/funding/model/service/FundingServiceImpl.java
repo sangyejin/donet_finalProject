@@ -15,6 +15,7 @@ import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
+import com.pongsung.donet.funding.model.vo.FundingReply;
 
 
 @Service
@@ -38,14 +39,12 @@ public class FundingServiceImpl implements FundingService {
 
 	@Override
 	public List<FundingCategory> selectFundingCategoryList() {
-		// TODO Auto-generated method stub
 		return fundingDao.selectFundingCategoryList(sqlSession);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
 	@Override
 	public void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception {
-		// TODO Auto-generated method stub
 		int fpNo=fundingDao.insertFunding(sqlSession,funding);
 		if(fpNo>0) { // 펀딩 db insert 성공
 			if(!imgList.isEmpty()) { //추가 사진이 있으면
@@ -73,6 +72,46 @@ public class FundingServiceImpl implements FundingService {
 		}
 
 	}
+
+	@Override
+	public Funding selectFunding(int fpNo) {
+		return fundingDao.selectFunding(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingImage> selectFundingImageList(int fpNo) {
+		return fundingDao.selectFundingImageList(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingGoods> selectFundingGoodsList(int fpNo) {
+		return fundingDao.selectFundingGoodsList(sqlSession,fpNo);
+	}
+
+	@Override
+	public List<FundingReply> selectFundingReplyList(int fpNo) {
+		return fundingDao.selectFundingReplyList(sqlSession,fpNo);
+	}
+
+	@Override
+	public int insertFundingReply(FundingReply fundingReply) {
+		int result=fundingDao.insertFundingReply(sqlSession,fundingReply);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteFundingReply(int replyNo) {
+		int result=fundingDao.deleteFundingReply(sqlSession,replyNo);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
+	}
+
+
 
 }
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -215,8 +216,8 @@ select::-ms-expand {
 </head>
 
 <body>
-	<jsp:include page="../common/menubar.jsp" />
 
+	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
 		<nav aria-label="breadcrumb">
@@ -248,7 +249,8 @@ select::-ms-expand {
 				</select>
 				<c:if
 					test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
-					<button id="btn-insert" onclick="location.href='${pageContext.servletContext.contextPath}/funding/insertForm';">등록하기</button>
+					<button id="btn-insert"
+						onclick="location.href='${pageContext.servletContext.contextPath}/funding/insertForm';">등록하기</button>
 				</c:if>
 
 			</div>
@@ -260,22 +262,27 @@ select::-ms-expand {
 			<div class="container row" style="margin: 100 auto; width: 1080px;">
 
 				<c:forEach var="list" items="${list}" varStatus="status">
+					<fmt:parseDate value="${list.startDate}" var="startDate"
+						pattern="yyyy-MM-dd" />
+					<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}"
+						integerOnly="true" var="strDate" />
+					<fmt:parseDate value="${list.closeDate }" var="closeDate"
+						pattern="yyyy-MM-dd" />
+					<fmt:parseNumber value="${closeDate.time / (1000*60*60*24)}"
+						integerOnly="true" var="endDate" />
 					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
+								<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${list.thumbnailChangeName}" alt="${list.fpName}"
+											width="278px" height="200px">
 								<c:choose>
 									<c:when test="${list.raised/list.goal*100 >=100}">
-										<img
-											src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
-											alt="${list.fpName}" width="278px" height="200px">
 										<div class="img-text">
 											<p>COMPLETE</p>
 										</div>
 									</c:when>
 									<c:otherwise>
-										<img
-											src="${pageContext.servletContext.contextPath}/resources/funding/thumbnail/${list.thumbnailChangeName}"
-											alt="${list.fpName}" width="278px" height="200px">
+										
 									</c:otherwise>
 								</c:choose>
 
@@ -287,6 +294,9 @@ select::-ms-expand {
 									</div>
 									<p class="category-hostName">
 										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
+									</p>
+									<p class="dDay">
+										<span>${endDate-strDate }</span>
 									</p>
 								</div>
 								<!-- Progress Bar -->

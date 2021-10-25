@@ -134,10 +134,10 @@ height : 30px;
 	</c:if>
     <div id="outline" align="center">
             <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
-            
+               
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a></div>
+       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a class="noDecoration" href="loginForm.me" >로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
@@ -153,7 +153,7 @@ height : 30px;
 	                <a href="enrollForm.me" >회원가입</a>  | 	            
 	                <a href="" data-toggle="modal" data-target="#loginModal">로그인</a> </li>
                 </c:if>
-                
+                <a  class="noDecoration" href="" data-toggle="modal" data-target="#loginModal">로그인</a>
          <!-- 로그인 후  -->
                  
                 <c:if test="${ !empty sessionScope.loginUser }">
@@ -233,17 +233,17 @@ height : 30px;
     -->
     
      <!-- 로그인 클릭 시 뜨는 모달  -->
-    <div class="modal fade" id="loginModal">
+    <!-- <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-            <!-- Modal Header -->
+            Modal Header
             <div class="modal-header">
                 <h4 class="modal-title">로그인하기</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button> 
             </div>
 
             <form action="login.me" method="post">
-                <!-- Modal Body -->
+                Modal Body
                 <div class="modal-body">
                     <label for="userId" class="mr-sm-2">아이디 :</label>
                     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="userId"> <br>
@@ -251,7 +251,7 @@ height : 30px;
                     <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="userPwd" name="userPwd">
                 </div>
                 
-                <!-- Modal footer -->
+                Modal footer
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success ">로그인</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -259,7 +259,7 @@ height : 30px;
             </form>
             </div>
         </div>
-    </div>
+    </div> -->
     
 </body>
 </html>
