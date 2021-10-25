@@ -182,6 +182,9 @@
        .thisDetail > .head:hover{font-weight : bold;} 
        .thisDetail > .theDetail:hover{ text-decoration : underline; }
        
+       /*사진 불러오는 영역*/
+            #imgArea{ border-radius : 7px; border : none;  margin-left: 25px; margin-bottom: 15px; }
+       
     </style>
 
 </head>
@@ -233,7 +236,12 @@
                 <td class="value"> ${ no.noticeCount }회</td>
             </tr>
             <tr>
-            <td colspan="4"><br><p id="yourContent">${ no.noticeContent } </p><br></td>
+            <td colspan="4"><br>
+            	<c:if test="${ ! empty no.noticeNew  }">
+            		<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/upload_files/${no.noticeNew}" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+            	</c:if>
+
+            	<p id="yourContent">${ no.noticeContent } </p><br></td>
 
             </tr>
             <tbody>
@@ -280,7 +288,7 @@
     	function adminDelete(){ 
     		if(confirm(${no.noticeNo} + "번 게시글을 삭제합니다.")){
     			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
-    			alert(${no.noticeNo} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
+    			alert (${no.noticeNo} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
         		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
     		}else{
     			alert(${no.noticeNo} + "번 게시글을 삭제하지 않습니다.");
@@ -304,6 +312,13 @@
 	<script>
 		function backToList(){ location.href="list.no"; }
 	</script>
+	
+	<!--이미지 에러 시 사진 미노출-->
+	<script>
+	function imgAreaError(){
+		$('#imgArea').css({ 'display' : 'none' });
+	}
+	</script> 
 
 	<div id="gotoLEFT">
 	<jsp:include page="../../common/footer.jsp" />

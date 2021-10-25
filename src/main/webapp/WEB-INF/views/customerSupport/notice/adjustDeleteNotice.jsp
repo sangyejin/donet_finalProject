@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +95,7 @@
             margin-left: 35px;
         }
 
-        #inputTitle{
+        #noticeTitle{
             width: 670px;
             margin-left: 50px;
         }
@@ -144,7 +146,7 @@
             background-color: rgb(30, 154, 40);
         }
         
-         /* .thisimg{ width: 15px;  height: 15px; }*/
+       /* .thisimg{ width: 15px;  height: 15px; }*/
 
 
 /*img*/
@@ -169,12 +171,6 @@
 
         #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
 
-        #contentText{
-            margin-top: -15px;
-            width: 670px;
-            margin-left: 80px;
-            height: 435px;
-        }
 
         /*footer align adjustment*/
         #gotoLEFT{ margin-left : -375px;}
@@ -186,17 +182,43 @@
             border-style: none;
             background-color: rgb(66, 178, 115);
 			color : #ffffff;
+			margin-right : 7px;
         }
         
         .goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
-      
-       #buttons{
+       
+        #buttons{
            margin-top: 2%;
-           margin-left: 570px;
+           margin-left: 550px;
            margin-bottom: 3%;
         }
+        
+        #buttonSecondPart{
+           margin-top: -48px;
+           margin-left: 620px;
+           
+        
+        }
+
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
- </style>
+    
+    /* img sneak*/
+    
+     #noticeContent{ margin-top : 2px; border : none;  height: 230px; }
+    
+    #imgViewArea{ 
+    		margin-top: -15px;
+            width: 670px;
+            margin-left: 80px;
+            height: 435px;
+            border : 1px solid rgb(206,212,218);
+            border-radius : 7px;
+     }
+     
+     #imgArea{ border-radius : 7px; border : none; }
+    
+    </style>
+
 </head>
 <body>
 
@@ -238,59 +260,101 @@
        <div id="greenline"></div>
 
        <div id="sideGreenbar"></div>
-       <div id= "getInThere">
-            <span id="headTitle"><label for="inputTitle">제목</label> <input type="text" id="inputTitle" name="inputTitle"></span>
-            <div class="grayline"></div>
+       
+     	  <div id= "getInThere">
+           <form id="UpdateGo" method="post" action="update.no" enctype="multipart/form-data">
+       
+            <span id="headTitle"><label for="noticeTitle" maxlength="100">제목</label> 
+            <input type="text" id="noticeNo" name="noticeNo"  value="${ no.noticeNo }" hidden="true"></span>
+             <input type="text" id="noticeWriter"  name="noticeWriter" value="${ loginUser.userId }" hidden="true">
             
-            <div id="headjustify">사진
-            	<!--  kinda gave up
-                <span class="clickable"><b>B</b></span>
-                <span class="clickable"><i>I</i></span>
-                <span class="clickable"><u>U</u></span>
-                <span class="clickable"><del>T</del></span>
-                <span class="clickable"><p>T<b id="boldPeriod">.</b></p></span>
+            <input type="text" id="noticeTitle" name="noticeTitle"  value="${ no.noticeTitle }" required></span>
+           
+            <div class="grayline"></div>
 
-                <div id="justGetThere">
-                    <span class="clickable"><mark>T</mark></span>
-                                    <span> | </span>
-                   
-                </div>
-                     <div id="alignboi">
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Left.png"></span>
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Center.png"></span>
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Right.png"></span>
-                     </div>  
-                    <div class="clickable" id="justify"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Justify.png"></div>
-                    <div id="aLine"> | </div> -->
+            <div id="headjustify">사진
                     <div class="clickable" id="differ">
                     	<label for="noticeOrigin" id="forThisImage">
                     		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-                    		 한 장의 첨부파일을 업로드 할 수 있습니다.
+                    		 수정된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
                    		</label>
                     </div>
-                    <input type="file" id="noticeOrigin" name="noticeOrigin" onchange="loadFile(this)" hidden="true">
+                    <input type="file" id="noticeOrigin" name="noticeOrigin" hidden="true" accept="image/*">
                     
             </div>
+
         <div class="shabbygrayline"></div>
 
-        <span>내용</span>
-
-        <input type="text" id="contentText" name="contentText" style="word-wrap:break-word">
-
+		
+        <span>내용</span> 
+        <div id="imgViewArea">
+        	<c:if test="${ ! empty no.noticeNew  }">
+            		<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/upload_files/${no.noticeNew}" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+            </c:if>
+            <c:if test="${  empty no.noticeNew  }">
+        			<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+            </c:if>
+            
+	        
+	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent" rows="10" style="resize:none;" maxlength="2000">
+	       		${ no.noticeContent }
+	        </textarea>	
+		</div>
 
         <div id="buttons">
-             <button class="goRound" onclick="">수정</button>
-             <button class="goRound" onclick="">임시저장</button>
-             <button class="goRound" onclick="backToList();">목록</button>
+             <button class="goRound" type="submit">수정</button>
         </div>  
+        </form>
+        
+        
+       <div id="buttonSecondPart">
+	        <!-- <button class="goRound" onclick="dontUploadYet();">임시저장</button> -->
+	        <button class="goRound" onclick="backToList();">목록</button>
+		</div>
 </div>
+
+
 <div id="gotoLEFT">
 	<jsp:include page="../../common/footer.jsp" />
 </div>
 
-	<script>
+	<!-- 목록 -->
+	<script>	
 		function backToList(){ location.href="list.no"; }
 	</script>
+	
+	
+	<!-- 임시저장 
+	<script>
+		function dontUploadYet(){ location.href="updateSave.no"}
+	</script> -->
+	
+	
+	<!-- 파일 첨부 여부 스타일 -->
+	<script type="text/javascript">
+	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#imgArea').attr('src', e.target.result); 
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 
+	$(":input[name='noticeOrigin']").change(function() {
+		if( $(":input[name='noticeOrigin']").val() == '' ) {
+			$('#imgArea').attr('src' , '');  
+		}
+		$('#noticeContent').css({ 'display' : '' });
+		readURL(this);
+	});
+
+	// 이미지 에러 시 미리보기영역 미노출
+	function imgAreaError(){
+		$('#noticeContent').css({ 'display' : 'none' });
+	}
+	</script>
 </body>
 </html>
