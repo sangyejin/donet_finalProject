@@ -77,6 +77,27 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 	}
 
+	/*
+	@Override
+	public void insertSaveNotice(Notice no) {
+		int result = NoDao.insertSaveNotice(sqlSession, no);
+
+		if (result < 0) {
+			throw new CommException("공지사항 추가 실패");
+		}
+		
+	}*/
+
+	@Override
+	public void updateNotice(Notice no) {
+		int result = NoDao.updateNotice(sqlSession, no);
+		
+		if(result < 0) {
+			throw new CommException("공지사항 업데이트 실패");
+		}
+		
+	}
+
 	
 
 }

@@ -22,4 +22,8 @@ public interface NoticeService {
 
 	void insertNotice(Notice no);
 
+	//void insertSaveNotice(Notice no);
+
+	void updateNotice(Notice no);
+
 }

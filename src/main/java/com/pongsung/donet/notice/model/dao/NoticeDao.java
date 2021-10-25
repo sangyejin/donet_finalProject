@@ -56,4 +56,14 @@ public class NoticeDao {
 
 	}
 
+	/*
+	public int insertSaveNotice(SqlSessionTemplate sqlSession, Notice no) {
+		return sqlSession.insert("noticeMapper.insertSaveNotice", no);
+
+	}*/
+
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice no) {
+		return sqlSession.update("noticeMapper.updateNotice", no);
+	}
+
 }
