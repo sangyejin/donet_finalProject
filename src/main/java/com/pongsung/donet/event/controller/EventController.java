@@ -34,7 +34,7 @@ public class EventController {
 		int listCount = eventService.selectEventListCount();
 		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10 , 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
 		
 		ArrayList<Event> list = eventService.selectEventList(pi);
 		System.out.println("list check : "+list); //리스트 확인 
@@ -43,6 +43,23 @@ public class EventController {
 		model.addAttribute("pi", pi);
 		
 		return "event/eventList";
+	}
+	
+	@RequestMapping("afterList.ev")
+	public String afterList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = eventService.afterListCount();
+		System.out.println("After List Count check : "+listCount); //페이지 카운트확인하기 
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		
+		ArrayList<Event> list = eventService.afterList(pi);
+		System.out.println("list check : "+list); //리스트 확인 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "event/afterEventList";
 	}
 	
 	@RequestMapping("detail.ev")
@@ -80,11 +97,13 @@ public class EventController {
 
 	@RequestMapping("delete.ev")
 	public String deleteEvent(int eno, String fileName, HttpServletRequest request) {
+		System.out.println("delete check : " + eno );
 		eventService.deleteEvent(eno);
-		
-		if(!fileName.contentEquals("")) {
+		/*
+		if(!fileName.equals("")) {
 			deleteFile(fileName, request);
-		}
+		}*/
+		
 		return "redirect:list.ev";
 	}
 	
@@ -98,7 +117,7 @@ public class EventController {
 	@RequestMapping("update.ev")
 	public ModelAndView updateEvent(Event ev, ModelAndView mv, HttpServletRequest request,
 			@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
-		
+		/*
 		if(!file.getOriginalFilename().equals("")) {
 			if(ev.getChangeName() != null) {
 				deleteFile(ev.getChangeName(), request);
@@ -107,17 +126,12 @@ public class EventController {
 			
 			ev.setOriginName(file.getOriginalFilename());
 			ev.setChangeName(changeName);
-		}
+		}*/
 		System.out.println("update 중 event 객체확인중 : "+ev);
 		eventService.updateEvent(ev);
 		mv.addObject("eno", ev.getEventNo()).setViewName("redirect:detail.ev");
 		return mv;
 	}
-	
-	
-	
-	
-	
 	
 	
 	private void deleteFile(String fileName, HttpServletRequest request) {

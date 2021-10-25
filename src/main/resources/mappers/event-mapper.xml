@@ -19,10 +19,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EVENT_STATUS = 'Y'
 	</select>
 
+	<select id="afterListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE EVENT_STATUS = 'D'
+	</select>
+
 	<select id="selectEventList" resultMap="eventResultMap">
 		SELECT *
 		FROM EVENT
 		WHERE EVENT_STATUS = 'Y' 
+		ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="afterList" resultMap="eventResultMap">
+		SELECT *
+		FROM EVENT
+		WHERE EVENT_STATUS = 'D' 
 		ORDER BY EVENT_NO DESC
 	</select>
 
@@ -45,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateEvent" parameterType="Event">
 		UPDATE EVENT
 		SET EVENT_TITLE=#{eventTitle}, EVENT_CONTENT=#{eventContent}, 
-			EVENT_START=#{eventStart}, EVENT_LAST=#{eventLast}
+			EVENT_START_DATE=#{eventStart}, EVENT_LAST_DATE=#{eventLast}
 		WHERE EVENT_NO=#{eventNo}
 	</update>
 	

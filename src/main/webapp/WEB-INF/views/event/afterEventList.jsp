@@ -151,12 +151,15 @@
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
             <div class="eventBox">
-                <button type="button" id="evBox1" class="active" onclick="location.href='list.ev'">진행중인 이벤트</button>
-                <button type="button" id="evBox2" onclick="location.href='afterList.ev'">지난 이벤트</button>
+                <button type="button" id="evBox1" onclick="location.href='list.ev'">진행중인 이벤트</button>
+                <button type="button" id="evBox2" class="active" onclick="location.href='afterList.ev'">지난 이벤트</button>
             </div> 
             <br>
             <div class="statusBox">
                 <p style="text-align:left; margin-left:20px; font-size:30px">진행중인 이벤트</p>
+                <c:if test="${ !empty loginUser && m.userId == 'admin' }">
+                	<a class="btn btn-secondary" style="float:right" href="enrollForm.ev">글쓰기</a>
+                </c:if>
             </div>  
         </div>
         <br>

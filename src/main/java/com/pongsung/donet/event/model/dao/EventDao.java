@@ -42,4 +42,16 @@ public class EventDao {
 		return sqlSession.update("eventMapper.updateEvent", ev);
 	}
 
+	public int afterListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("eventMapper.afterListCount");
+	}
+
+	public ArrayList<Event> afterList(SqlSessionTemplate sqlSession, PageInfo pi) {
+int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("eventMapper.afterList", null, rowBounds);
+	}
+
 }

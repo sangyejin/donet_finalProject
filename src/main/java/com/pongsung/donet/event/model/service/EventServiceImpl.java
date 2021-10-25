@@ -66,4 +66,16 @@ public class EventServiceImpl implements EventService {
 		}
 	}
 
+	@Override
+	public ArrayList<Event> afterList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return eventDao.afterList(sqlSession, pi);
+	}
+
+	@Override
+	public int afterListCount() {
+		// TODO Auto-generated method stub
+		return eventDao.afterListCount(sqlSession);
+	}
+
 }
