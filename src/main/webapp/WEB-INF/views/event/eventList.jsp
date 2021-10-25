@@ -1,30 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    
-    <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="resources/assets/css/slicknav.css">
-	<link rel="stylesheet" href="resources/assets/css/flaticon.css">
-	<link rel="stylesheet" href="resources/assets/css/progressbar_barfiller.css">
-	<link rel="stylesheet" href="resources/assets/css/gijgo.css">
-	<link rel="stylesheet" href="resources/assets/css/animate.min.css">
-	<link rel="stylesheet" href="resources/assets/css/animated-headline.css">
-	<link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="resources/assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="resources/assets/css/themify-icons.css">
-	<link rel="stylesheet" href="resources/assets/css/slick.css">
-	<link rel="stylesheet" href="resources/assets/css/nice-select.css">
-	<link rel="stylesheet" href="resources/assets/css/style.css">
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+	
     <style>
    		body{
    			width: 100%;
@@ -50,7 +34,7 @@
         .active{
             background-color: rgb(142, 211, 173);
         }
-        button{
+        button, enrollBtn{
             transition:0.5s;
             cursor:pointer;
             margin-top: 18px;
@@ -62,7 +46,7 @@
             border: none;
             background-color: rgb(241, 241, 241);
         }
-        button:hover{
+        button:hover , enrollBtn:hover {
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
@@ -133,19 +117,25 @@
               margin-right:220px;
               float:right;
               min-height:100px;
-             
           }
          #icon-search{
              float:left;
              margin:10px ;
-             
          }
-         .icon-searchBox{
-             background-color: rgb(142, 211, 173);
+         .enrollBtn{
+         	max-width:100px;
+         	background-color: rgb(142, 211, 173);
          }
-         .form-control{
-         	
-         }
+        #eventCard{
+        	transition:0.5s;
+            cursor:pointer;
+        	background-color: rgb(142, 211, 173);
+        }
+        #eventCard:hover {
+        	transform: scale(1.05);
+            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+        }
+         
     </style>
 </head>
 <body>
@@ -161,15 +151,12 @@
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
             <div class="eventBox">
-                <button type="button" id="evBox1"  class="active">진행중인 이벤트</button>
-                <button type="button" id="evBox2" >지난 이벤트</button>
+                <button type="button" id="evBox1" class="active" onclick="location.href='list.ev'">진행중인 이벤트</button>
+                <button type="button" id="evBox2" onclick="location.href='afterList.ev'">지난 이벤트</button>
             </div> 
             <br>
             <div class="statusBox">
                 <p style="text-align:left; margin-left:20px; font-size:30px">진행중인 이벤트</p>
-                <c:if test="${ !empty loginUser && m.userId == 'admin' }">
-                	<a class="btn btn-secondary" style="float:right" href="enrollForm.ev">글쓰기</a>
-                </c:if>
             </div>  
         </div>
         <br>
@@ -180,16 +167,16 @@
         <div class="row">
         	<c:forEach items="${ list }" var="ev">
             <div class="col-lg-4 col-md-6 col-sm-6" id="eventCard">
-            	<p > ${ ev.eventNo } </p>
+            	<p style="display:none" > ${ ev.eventNo } </p>
                 <div class="single-cases mb-40">
                     <div class="cases-img">
-                    	<img src="${ ev.eventImg }" alt="" style="height:200px; background-color:rgb(241, 241, 241)">
+                    	<!-- <img src="" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
                     </div>
                     <div class="cases-caption">
-                    	<h3><a href="#">${ ev.eventTitle }</a></h3>
+                    	<h2>${ ev.eventTitle }</h2>
                     	<div class="dates d-flex justify-content-between">
-                        	<p>Start:<span> ${ ev.eventStart }</span></p>
-                            <p>Goal:<span> ${ ev.eventLast }</span></p>
+                        	<p>Start:<span> ${ fn:substring(ev.eventStart, 0,10) }</span></p>
+                            <p>Goal:<span> ${ fn:substring(ev.eventLast, 0,10) }</span></p>
                         </div>
                     </div>
                 </div>
@@ -200,7 +187,7 @@
             Paging Area 
         ========================= --> 
         
-        <div id="pagingArea">
+        <div id="pagingArea" style="align:center">
             <ul class="pagination">
                 <c:choose>
                     <c:when test="${ pi.currentPage ne 1 }">
@@ -237,22 +224,31 @@
         <!-- Footer & Search Area -->
         <div class="container_footer">
             <div class="input-group icons">
+            
                 <form id="searchBoardForm" class="form-inline">
                     <div class="input-group text-center mb-3">
                         <p class="icon-searchBox">
                             <span id="icon-search" class="glyphicon glyphicon-search" ></span>
-                            <input name="findBoard" type="search" class="form-control" placeholder="전체 게시글 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
+                            <input name="findBoard" type="search" class="form-control" placeholder="이벤트 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
                         </p>
                     </div>
-                    <div class="btnArea">
+                    <br>
+                    
+                    <div >
                     	<!--<c:if test="${ loginUser.userRole eq 'D' }">
                     		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>-->
+                    	<br>
+                    	<br>
+                    	<br>
+                    	<br>
+                    	
                     	<c:if test="${ !empty loginUser }">
-                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
+                    		<a class="btn" href="enroll.ev">이벤트 생성</a>
                     	</c:if>
                     	
-                    </div>                    
+                    </div>  
+                                   
                 </form>    
             </div>
         </div>
