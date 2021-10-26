@@ -20,6 +20,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.service.NoticeService;
+import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -188,7 +189,7 @@ public class NoticeController {
 	//fileUpload
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "//upload_files//";
+		String savePath = resources + "//notice_uploadFiles//";
 
 		System.out.println("savePath : " + savePath);
 
@@ -272,5 +273,70 @@ public class NoticeController {
 		
 		return "redirect:list.no";
 	}
+	
+	/******************************************************************************************************************/
+	//FAQ List
+	@RequestMapping("list.faq")
+	public String selectFaqList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+
+		int listCount = NoService.selectFaqListCount(null);
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+		ArrayList<Notice> list = NoService.selectFaqList(pi, null);
+		System.out.println("list : " + list);
+		System.out.println("listCount : " + listCount);
+
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "customerSupport/faq/faqList";
+	}
+	
+		//FAQ search
+		@RequestMapping("search.faq")
+		public String selectOfFaq( Model model,@RequestParam(value = "currentPage", required = false, defaultValue = "1")  int currentPage,
+										@RequestParam(name = "searchtype", required = false) String searchtype,
+										@RequestParam(name = "mInput", required = false) String mInput ) {
+			
+			System.out.println("searchtype : " + searchtype);
+			System.out.println("mInput : " + mInput);
+			
+			Category ctgry = new Category();
+			
+			switch(searchtype) {
+			case "userQuery":
+				ctgry.setUserQuery(searchtype);
+				break;
+
+			case "payRefund":
+				ctgry.setPayRefund(searchtype);
+				break;
+
+			case "etc":
+				ctgry.setEtc(searchtype);
+				break;
+			}
+			
+			
+			int listCount = NoService.selectFaqListCount(ctgry);
+			System.out.println(listCount);
+
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+			ArrayList<Notice> list = NoService.selectFaqList(pi, ctgry);
+			System.out.println("list : " + list);
+			System.out.println("listCount : " + listCount);
+
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			return "customerSupport/notice/notice";
+			
+		}
 	
 }

@@ -243,18 +243,18 @@ tr {
             </tr>
 				<br>
 				<tr>
-					<td width: 300px;><a id="faq" class="bottomfix">자주 묻는 질문</a></td>
+					<td width: 300px;><a id="faq" class="bottomfix" href="list.faq">자주 묻는 질문</a></td>
                 <td class="arrow"><span class="bottomfix"> > </span> </td>
             </tr>
 				<br>
 				<tr>
-					<td width: 300px;><a id="facetoface" class="bottomfix">1:1 문의</a></td>
+					<td width: 300px;><a id="facetoface" class="bottomfix"  href="list.one">1:1 문의</a></td>
                 <td class="arrow"><span class="bottomfix"> > </span> </td>
             </tr>
 			</div>
 			<div class="needhelp">
 				<span><p id="help">도움이 필요하신가요?</p></span> 
-				<span><a id="gethelp">1:1 문의하기</a></span> 
+				<span><a id="gethelp"  href="list.one">1:1 문의하기</a></span> 
 				<span id="helparrow"> > </span>
 			</div>
 		</div>
@@ -279,8 +279,8 @@ tr {
 						<c:forEach items="${ list }" var="n" varStatus="status">
 							<tr class="clickable">							
 								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
-								<!-- <td class="realNumber" hidden="true">${ n.noticeNo }</td> -->
-								<td class="number">${ n.noticeNo }<!--<c:out value="${status.count}"/>--> </td>
+								<td class="realNumber" hidden="true">${ n.noticeNo }</td>	
+								<td class="number">${ n.rowNum }<!--<c:out value="${status.count}"/>--> </td>
 								<td class="title">${ n.noticeTitle }</td>
 								<td class="writer">${ n.noticeWriter }</td>
 								<td class="date">${ n.noticeDate }</td>

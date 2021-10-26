@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 import com.pongsung.donet.common.PageInfo;
@@ -64,6 +65,18 @@ public class NoticeDao {
 
 	public int updateNotice(SqlSessionTemplate sqlSession, Notice no) {
 		return sqlSession.update("noticeMapper.updateNotice", no);
+	}
+
+	/******************************************************************************************************************/
+	
+	public int selectFaqListCount(SqlSessionTemplate sqlSession, Category ctgry) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public ArrayList<Notice> selectFaqList(SqlSessionTemplate sqlSession, PageInfo pi, Category ctgry) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

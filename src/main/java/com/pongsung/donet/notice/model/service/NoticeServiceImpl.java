@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.dao.NoticeDao;
+import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -98,6 +99,18 @@ public class NoticeServiceImpl implements NoticeService {
 		
 	}
 
+	/******************************************************************************************************************/
 	
 
+	@Override
+	public int selectFaqListCount(Category ctgry) {
+		return NoDao.selectFaqListCount(sqlSession, ctgry);
+
+	}
+
+	@Override
+	public ArrayList<Notice> selectFaqList(PageInfo pi, Category ctgry) {
+		return NoDao.selectFaqList(sqlSession, pi, ctgry);
+
+	}
 }
