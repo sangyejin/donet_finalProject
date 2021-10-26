@@ -250,7 +250,7 @@
 			<div id="idx_top">
 				<input type="hidden" name="fpNo">
 				<div name="category" id="category">${funding.categoryName}</div>
-				<div name="fpName" id="fpName">${funding.fpName }</div>
+				<div name="fpName" id="fpName">${funding.fpName}</div>
 			</div>
 			<div id="info-container" class="container">
 				<div id="info-left-container" class="col-md-6">
@@ -264,7 +264,7 @@
 							펀딩 실패
 						</c:if>
 						<c:if
-								test="${funding.raised/funding.goal<1 &&(nowDate<startDate || nowDate > closeDate)}">
+								test="${funding.raised/funding.goal>=1 &&(nowDate<startDate || nowDate > closeDate)}">
 							펀딩 성공
 						</c:if>
 						<c:if test="${nowDate>=startDate && nowDate<=closeDate}">
@@ -306,8 +306,8 @@
 							id="supporter"><span name="supporter">${funding.numberSupporter}</span>명</span>
 					</div>
 					<div id="btn-area">
-						<input type="button" id="btn-funding" value="후원하기" /> <input
-							type="button" id="btn-share" value="  " />
+						<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" value="후원하기" /> <input
+							type="button" id="btShare" value="  " />
 					</div>
 				</div>
 			</div>
@@ -338,7 +338,7 @@
 			</div>
 			<c:if test="${loginUser.userId == funding.hostId }">
 				<div class="btnArea">
-					<input type="button" id="btn-update" value="수정">
+					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>
@@ -369,9 +369,8 @@
 	</div>
 	<script>
 		$(function() {
-
 			selectReplyList();
-
+			
 			$("#addReply").click(function() {
 				var fpNo = "${funding.fpNo}";
 
@@ -422,6 +421,7 @@
 			}
 
 		}
+		
 		function selectReplyList() {
 			var fpNo = "${funding.fpNo}";
 			var nowLink = document.location.href;
@@ -442,7 +442,7 @@
 														<div>`+r.writerNickName+`(`+ r.writerId+ `)|`+ r.createDate+ `</div>
 														<div>`+ r.replyContent+ `</div>`;
 												if ("${loginUser.userId}" == r.writerId) {
-													value += `<div class="aArea"><button class="btn-reply">수정</button><button class="btn-reply" onclick="deleteReply(`
+													value += `<div class="aArea"><button class="btn-reply" onclick="updateReply();">수정</button><button class="btn-reply" onclick="deleteReply(`
 															+ fpNo
 															+ `,`
 															+ r.replyNo
@@ -457,6 +457,9 @@
 						}
 					});
 
+		}
+		function updateReply(event){
+			console.log(event.currentTarget);
 		}
 	</script>
 </body>
