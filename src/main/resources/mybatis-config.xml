@@ -17,6 +17,7 @@
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingImage" alias="FundingImage" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingGoods" alias="FundingGoods" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingReply" alias="FundingReply" />
+		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingSupporter" alias="FundingSupporter" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Support" alias="Support" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Sponsor" alias="Sponsor" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportCategory" alias="SupportCategory" />

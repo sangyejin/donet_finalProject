@@ -275,22 +275,18 @@ select::-ms-expand {
 							<div class="cases-img">
 								<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${list.thumbnailChangeName}" alt="${list.fpName}"
 											width="278px" height="200px">
-								<c:choose>
-									<c:when test="${list.raised/list.goal*100 >=100}">
+									<c:if test="${list.raised/list.goal*100 >=100}">
 										<div class="img-text">
 											<p>COMPLETE</p>
 										</div>
-									</c:when>
-									<c:otherwise>
-										
-									</c:otherwise>
-								</c:choose>
+									</c:if>
+
 
 							</div>
 							<div class="cases-caption">
 								<div class="cases-info">
 									<div class="div-title">
-										<a href="funding/${list.fpNo}" id="title">${list.fpName}</a>
+										<a href="${pageContext.servletContext.contextPath}/funding/${list.fpNo}" id="title">${list.fpName}</a>
 									</div>
 									<p class="category-hostName">
 										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
