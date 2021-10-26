@@ -7,6 +7,11 @@
 	</settings>
 
 	<typeAliases>
+		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member"/>		
+		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event"/>
+ 
+
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Search" alias="Search" />
 		
@@ -22,14 +27,21 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportCategory" alias="SupportCategory" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportUsePlan" alias="SupportUsePlan" />
 
+
 	</typeAliases>
 
 	<mappers>
+
+		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/member-mapper.xml"/>   
+		<mapper resource="/mappers/event-mapper.xml"/> 
+
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/funding-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
+
 
 	</mappers>
 

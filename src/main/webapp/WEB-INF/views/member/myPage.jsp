@@ -121,7 +121,7 @@
     
     <!-- 비밀번호 변경 클릭 시 뜨는 모달  -->
     <div class="modal fade" id="chagePwdModal">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">

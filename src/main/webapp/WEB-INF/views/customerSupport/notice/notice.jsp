@@ -221,7 +221,7 @@ tr {
 
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
-
+.radioAlign{margin-right : 20px;}
      
         
 </style>
@@ -353,13 +353,13 @@ tr {
 				<label id="rightmargin"><b>검색어</b></label>
 				 
 				<input type="radio" name="searchtype" id="thistitle" value="title" required> 
-				<label for="thistitle">제목</label> 
+				<label class="radioAlign" for="thistitle">제목</label> 
 				
-				<input type="radio" name="searchtype" id="thiswriter" value="writer" required> 
-				<label for="thiswriter">작성자</label>
+				<input type="radio"  name="searchtype" id="thiswriter" value="writer" required> 
+				<label class="radioAlign" for="thiswriter">작성자</label>
 				
 				<input type="radio" name="searchtype" id="thiscontent" value="content" required> 
-				<label for="thiscontent">내용</label>
+				<label class="radioAlign" for="thiscontent">내용</label>
 				
 				<div id="searchbox">
 					<button type="submit" id="searchmark">

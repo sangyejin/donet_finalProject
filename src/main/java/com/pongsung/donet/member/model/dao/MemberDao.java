@@ -37,4 +37,31 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updatePwdMember", m);
 	}
 
+	public Member findUserIdMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		System.out.println("===아이디 찾기 오류 찾는중===");
+
+		System.out.println("맴버 다오 sqlSession : " + sqlSession);
+		System.out.println("맴버 다오 맴버 m : " + m.getUserId());
+		System.out.println("맴버 다오 매버 m 비번 : " + m.getUserPwd());
+		System.out.println("맴버 다오 맴버 m : " + m.getEmail());
+		System.out.println("맴버 다오 매버 m 비번 : " + m.getPhone());
+		
+		
+		return sqlSession.selectOne("memberMapper.findUserIdMember", m);
+	}
+
+	public Member findUserPwdMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		System.out.println("===비밀번호 찾기 오류 찾는중===");
+
+		System.out.println("맴버 다오 sqlSession : " + sqlSession);
+		System.out.println("맴버 다오 맴버 m 아이디 : " + m.getUserId());
+		System.out.println("맴버 다오 매버 m 이름 : " + m.getUserName());
+		System.out.println("맴버 다오 맴버 m 이메일 : " + m.getEmail());
+		System.out.println("맴버 다오 매버 m 비밀번호 : " + m.getUserPwd());
+		
+		return sqlSession.selectOne("memberMapper.findUserPwdMember", m);
+	}
+
 }

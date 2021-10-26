@@ -19,22 +19,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EVENT_STATUS = 'Y'
 	</select>
 
+	<select id="afterListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE EVENT_STATUS = 'D'
+	</select>
+
 	<select id="selectEventList" resultMap="eventResultMap">
 		SELECT *
 		FROM EVENT
 		WHERE EVENT_STATUS = 'Y' 
 		ORDER BY EVENT_NO DESC
 	</select>
+	
+	<select id="afterList" resultMap="eventResultMap">
+		SELECT *
+		FROM EVENT
+		WHERE EVENT_STATUS = 'D' 
+		ORDER BY EVENT_NO DESC
+	</select>
 
-	<select id="selectBoard" parameterType="_int" resultMap="eventResultMap">
+	<select id="selectEvent" parameterType="_int" resultMap="eventResultMap">
     	SELECT *
     	FROM EVENT
-    	WHERE EVENT_NO=#{eno} AND STATUS = 'Y'
+    	WHERE EVENT_NO=#{eno} AND EVENT_STATUS = 'Y'
    </select>
    <insert id="insertEvent" parameterType="Event">
    		INSERT INTO EVENT
    		VALUES(SEQ_EV.NEXTVAL, #{eventTitle}, #{eventContent}, #{eventStart}, #{eventLast}, DEFAULT)
    </insert>
+   
+   <update id="deleteEvent" parameterType="_int">
+   		UPDATE EVENT
+   		SET EVENT_STATUS = 'N'
+   		WHERE EVENT_NO = #{eno}
+   </update>
 	
+	<update id="updateEvent" parameterType="Event">
+		UPDATE EVENT
+		SET EVENT_TITLE=#{eventTitle}, EVENT_CONTENT=#{eventContent}, 
+			EVENT_START_DATE=#{eventStart}, EVENT_LAST_DATE=#{eventLast}
+		WHERE EVENT_NO=#{eventNo}
+	</update>
 	
 </mapper>

@@ -169,41 +169,52 @@
 
         #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
 
-        #noticeContent{
-            margin-top: -15px;
-            width: 670px;
-            margin-left: 80px;
-            height: 435px;
-        }
 
         /*footer align adjustment*/
         #gotoLEFT{ margin-left : -375px;}
         
         .goRound{
             height: 25px;
-            width: 60px;
+            width: 55px;
             border-radius: 7px;
             border-style: none;
             background-color: rgb(66, 178, 115);
 			color : #ffffff;
+			margin-right : 7px;
         }
         
         .goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
        
         #buttons{
            margin-top: 2%;
-           margin-left: 560px;
+           margin-left: 620px;
            margin-bottom: 3%;
         }
         
         #buttonSecondPart{
            margin-top: -48px;
-           margin-left: 630px;
+           margin-left: 690px;
            
         
         }
 
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
+    
+    /* img sneak*/
+    
+     #noticeContent{ margin-top : 2px; border : none;  height: 230px; }
+    
+    #imgViewArea{ 
+    		margin-top: -15px;
+            width: 670px;
+            margin-left: 80px;
+            height: 435px;
+            border : 1px solid rgb(206,212,218);
+            border-radius : 7px;
+     }
+     
+     #imgArea{ border-radius : 7px; border : none; }
+    
     </style>
 
 </head>
@@ -249,9 +260,11 @@
        <div id="sideGreenbar"></div>
        
      	  <div id= "getInThere">
-           <form id="InsertGo" method="post" action="insert.no" enctype="multipart/form-data">
+          <form id="InsertGo" method="post" action="insert.no" enctype="multipart/form-data">
        
-            <span id="headTitle"><label for="noticeTitle" maxlength="100" required>제목</label> <input type="text" id="noticeTitle" name="noticeTitle"></span>
+            <span id="headTitle"><label for="noticeTitle" >제목</label> 
+            <input type="text" id="noticeWriter"  name="noticeWriter" value="${ loginUser.userId }" hidden="true">
+            <input type="text" id="noticeTitle" name="noticeTitle"  maxlength="100" required></span>
             <div class="grayline"></div>
 
             <div id="headjustify">사진
@@ -277,17 +290,22 @@
                     <div class="clickable" id="differ">
                     	<label for="noticeOrigin" id="forThisImage">
                     		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-                    		 한 장의 첨부파일을 업로드 할 수 있습니다.
+                    		 업로드된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
                    		</label>
                     </div>
-                    <input type="file" id="noticeOrigin" name="noticeOrigin" onchange="loadFile(this)" hidden="true">
+                    <input type="file" id="noticeOrigin" name="noticeOrigin" hidden="true" accept="image/*">
                     
             </div>
 
         <div class="shabbygrayline"></div>
 
 		
-        <span>내용</span> <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  rows="10" style="resize:none;" maxlength="4000"></textarea>
+        <span>내용</span> 
+        <div id="imgViewArea">
+        	<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  rows="10" style="resize:none;" maxlength="2000">
+	        </textarea>
+		</div>
 
         <div id="buttons">
              <button class="goRound" id="insertAlert" type="submit">게시</button>
@@ -296,7 +314,7 @@
         
         
        <div id="buttonSecondPart">
-	        <button class="goRound" onclick="dontUploadYet();">임시저장</button>
+	       <!-- <button class="goRound" onclick="dontUploadYet();">임시저장</button>  -->
 	        <button class="goRound" onclick="backToList();">목록</button>
 		</div>
 </div>
@@ -305,19 +323,56 @@
 <div id="gotoLEFT">
 	<jsp:include page="../../common/footer.jsp" />
 </div>
-	<script>
-		$("#insertAlert").on('click', function(){
-			alert("새 공지사항이 등록되었습니다.");
-		})
-	</script>
 
+	<!-- 목록 -->
 	<script>	
 		function backToList(){ location.href="list.no"; }
 	</script>
 	
+	
+	<!-- 임시저장 
 	<script>
 		function dontUploadYet(){ location.href="insertSave.no"}
-	</script>
+	</script>-->
+	
+	<!-- 파일 첨부 여부 스타일 -->
+	<script type="text/javascript">
+	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#imgArea').attr('src', e.target.result); 
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 
+	$(":input[name='noticeOrigin']").change(function() {
+		if( $(":input[name='noticeOrigin']").val() == '' ) {
+			$('#imgArea').attr('src' , '');  
+		}
+		$('#noticeContent').css({ 'display' : '' });
+		readURL(this);
+	});
+
+	// 이미지 에러 시 미리보기영역 미노출
+	function imgAreaError(){
+		$('#noticeContent').css({ 'display' : 'none' });
+	}
+	</script>
+	
+	<!-- 어딜 눌러도 텍스트영역으로 -->
+	<script>
+		$('#imgViewArea').on('click', function(){
+			$('#noticeContent').focus();
+		})
+		
+		$('#imgArea').on('click', function(){
+			$('#noticeContent').focus();
+		})
+		
+	</script>
+	
 </body>
 </html>

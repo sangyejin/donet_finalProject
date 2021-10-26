@@ -34,7 +34,7 @@ public class EventController {
 		int listCount = eventService.selectEventListCount();
 		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10 , 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
 		
 		ArrayList<Event> list = eventService.selectEventList(pi);
 		System.out.println("list check : "+list); //리스트 확인 
@@ -45,11 +45,29 @@ public class EventController {
 		return "event/eventList";
 	}
 	
+	@RequestMapping("afterList.ev")
+	public String afterList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = eventService.afterListCount();
+		System.out.println("After List Count check : "+listCount); //페이지 카운트확인하기 
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		
+		ArrayList<Event> list = eventService.afterList(pi);
+		System.out.println("list check : "+list); //리스트 확인 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "event/afterEventList";
+	}
+	
 	@RequestMapping("detail.ev")
 	public ModelAndView selectEvent(int eno, ModelAndView mv) {
-		Event e = eventService.selectEvent(eno);
-		mv.addObject("e", e).setViewName("event/eventDetail");
-		
+		System.out.println("디테일 체크 : " + eno );
+		Event ev = eventService.selectEvent(eno);
+		mv.addObject("ev", ev).setViewName("event/eventDetail");
+		System.out.println("디테일 모델 체크 : " + mv );
 		return mv;
 	}
 	
@@ -59,10 +77,14 @@ public class EventController {
 	}
 	
 	@RequestMapping("insert.ev")
-	public String insertEvnet(Event e, HttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+	public String insertEvent(Event e, HttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+		
+		System.out.println("e check : " + e);
+		System.out.println("file check : " + file);
 		
 		if(!file.getOriginalFilename().equals("")) {
 			String changeName = saveFile(file, request);
+			
 			if(changeName != null) {
 				e.setOriginName(file.getOriginalFilename());
 				e.setChangeName(changeName);
@@ -71,6 +93,54 @@ public class EventController {
 		eventService.insertEvent(e);
 		
 		return "redirect:list.ev";
+	}
+
+	@RequestMapping("delete.ev")
+	public String deleteEvent(int eno, String fileName, HttpServletRequest request) {
+		System.out.println("delete check : " + eno );
+		eventService.deleteEvent(eno);
+		/*
+		if(!fileName.equals("")) {
+			deleteFile(fileName, request);
+		}*/
+		
+		return "redirect:list.ev";
+	}
+	
+	@RequestMapping("updateForm.ev")
+	public ModelAndView updateEventForm(int eno, ModelAndView mv) {
+		Event ev = eventService.selectEvent(eno);
+		mv.addObject("ev", ev).setViewName("event/eventUpdate");
+		return mv;
+	}
+
+	@RequestMapping("update.ev")
+	public ModelAndView updateEvent(Event ev, ModelAndView mv, HttpServletRequest request,
+			@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
+		/*
+		if(!file.getOriginalFilename().equals("")) {
+			if(ev.getChangeName() != null) {
+				deleteFile(ev.getChangeName(), request);
+			}
+			String changeName = saveFile(file, request);
+			
+			ev.setOriginName(file.getOriginalFilename());
+			ev.setChangeName(changeName);
+		}*/
+		System.out.println("update 중 event 객체확인중 : "+ev);
+		eventService.updateEvent(ev);
+		mv.addObject("eno", ev.getEventNo()).setViewName("redirect:detail.ev");
+		return mv;
+	}
+	
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "//upload_files//";
+		
+		File deleteFile = new File(savePath + fileName);
+		deleteFile.delete();
+		
 	}
 
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
