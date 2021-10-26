@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap id="noticeResultMap" type="Notice">
 		<id column="no_no" property="noticeNo" />
+		<result column="rownum" property="rowNum"/>
 		<result column="no_title" property="noticeTitle" />
 		<result column="no_content" property="noticeContent" />
 		<result column="no_date" property="noticeDate" />
@@ -36,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectNoticeList" resultMap="noticeResultMap" parameterType="Search" resultType="Notice">
-		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
+		SELECT ROWNUM, NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_SAVE='N' 
@@ -61,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="selectThisNotice" parameterType="_int" resultMap="noticeResultMap">
-		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
+		SELECT ROWNUM, NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_NO = #{noticeNo}

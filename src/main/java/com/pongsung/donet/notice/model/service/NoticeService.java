@@ -2,11 +2,14 @@ package com.pongsung.donet.notice.model.service;
 
 import java.util.ArrayList;
 
+import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
-import com.pongsung.donet.common.PageInfo;
 
 public interface NoticeService {
+	
+	//notice
 
 	ArrayList<Notice> selectNoticeList(PageInfo pi, Search keyword);
 
@@ -25,5 +28,12 @@ public interface NoticeService {
 	//void insertSaveNotice(Notice no);
 
 	void updateNotice(Notice no);
+	
+	/******************************************************************************************************************/
+	//FAQ 
+
+	int selectFaqListCount(Category ctgry);
+
+	ArrayList<Notice> selectFaqList(PageInfo pi,Category ctgry);
 
 }

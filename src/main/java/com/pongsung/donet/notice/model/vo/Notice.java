@@ -14,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Notice {
+	private int rowNum;
 	private int noticeNo;
 	private String noticeTitle;
 	private String noticeContent;

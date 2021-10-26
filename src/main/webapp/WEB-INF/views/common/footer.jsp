@@ -103,7 +103,7 @@
             <a href="#">채용안내</a> | 
             <a href="#">윤리경영</a> | 
             <a href="#">약관</a> | 
-            <a href="#">개선 의견 수렴</a>
+            <a href="list.one">개선 의견 수렴</a>
 
             <br><br>
 
