@@ -1,4 +1,6 @@
-package com.pongsung.donet.funding.model.vo;
+package com.pongsung.donet.notice.model.vo;
+
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +13,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class FundingGoods {
-	private int fpNo;
-	private int fgNo;
-	private String fgName;
-	private String fgContent;
-	private int fgPrice;
-	
-	
+
+public class Category {
+
+	private String userQuery;
+	private String payRefund;
+	private String etc;
+
 }

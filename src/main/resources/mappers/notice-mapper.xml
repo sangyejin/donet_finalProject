@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap id="noticeResultMap" type="Notice">
 		<id column="no_no" property="noticeNo" />
+		<result column="rownum" property="rowNum"/>
 		<result column="no_title" property="noticeTitle" />
 		<result column="no_content" property="noticeContent" />
 		<result column="no_date" property="noticeDate" />
@@ -14,7 +15,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="no_save" property="noticeSave" />
 		<result column="no_origin" property="noticeOrigin" />
 		<result column="no_new" property="noticeNew" />
-		
 	</resultMap>
 	
 	
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectNoticeList" resultMap="noticeResultMap" parameterType="Search" resultType="Notice">
-		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
+		SELECT ROWNUM, NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_SAVE='N' 
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="selectThisNotice" parameterType="_int" resultMap="noticeResultMap">
-		SELECT NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
+		SELECT ROWNUM, NO_NO, NO_TITLE, NO_CONTENT, USER_NAME, NO_DATE, NO_COUNT, NO_ORIGIN, NO_NEW
 		FROM NOTICE
         JOIN MEMBER ON NO_WRITER=USER_ID
 		WHERE NO_NO = #{noticeNo}
@@ -105,19 +105,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="insertNotice" parameterType="Notice">
-	INSERT INTO NOTICE VALUES (SEQ_NOTICE.NEXTVAL,'도넷닷컴, 이렇게 사용하세요.','사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와
-
-봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는
-
-실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는 곳이 원대하고 그들은 피가 더운지라 실현에 대한 자신과 용기가 있다 그러므로 그들은',TO_DATE('18080815','YYYYMMDD'),'admin12',DEFAULT,DEFAULT,DEFAULT);
-	
-	
 		INSERT INTO NOTICE
 		VALUES
-		(SEQ_NOTICE.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{boardWriter},
-		#{originName}, #{changeName},DEFAULT, DEFAULT, DEFAULT)
+		(SEQ_NOTICE.NEXTVAL, #{noticeTitle}, #{noticeContent}, SYSDATE,
+		#{noticeWriter},DEFAULT, DEFAULT, #{noticeOrigin}, #{noticeNew})
 	</insert>
 	
-	
+	<update id="updateNotice" parameterType="Notice">
+		UPDATE NOTICE
+		SET NO_TITLE=#{noticeTitle},
+			NO_CONTENT=#{noticeContent},
+			NO_ORIGIN=#{noticeOrigin},
+			NO_NEW=#{noticeNew}
+		WHERE NO_NO=#{noticeNo}
+		AND NO_SAVE='N'
+	</update>
 
 </mapper>

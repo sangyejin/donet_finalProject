@@ -20,6 +20,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.service.NoticeService;
+import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -119,6 +120,37 @@ public class NoticeController {
 		return mv;
 	}
 	
+	/*temp insert tiqkf
+	@RequestMapping("insertSave.no")
+	public String insertSaveNotice(@RequestParam(name="noticeWriter") String noticeWriter,
+								@RequestParam(name="noticeTitle") String noticeTitle,
+								@RequestParam(name="noticeContent") String noticeContent,
+								HttpServletRequest request, Model model, 
+								@RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
+		
+		System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " + noticeTitle + " , noticeContent : " + noticeContent);
+		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+		
+		Notice no = new Notice();
+		
+		no.setNoticeTitle(noticeTitle);
+		no.setNoticeWriter(noticeWriter);
+		no.setNoticeContent(noticeContent);
+		
+		if(!file.getOriginalFilename().equals(""))	{
+			String changeName = saveFile(file, request);
+			if(changeName != null) {
+				no.setNoticeOrigin(file.getOriginalFilename());
+				no.setNoticeNew(changeName);
+			}
+					
+		}
+		NoService.insertSaveNotice(no);
+				
+		return "redirect:list.no";
+	}
+	*/
+	
 	//insert
 	@RequestMapping("goAddForm.no")
 	public String goAddForm() {
@@ -126,17 +158,23 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("insert.no")
-	public String insertNotice(Notice no,
-								HttpServletRequest request, 
-								Model model, 
+	public String insertNotice(@RequestParam(name="noticeWriter") String noticeWriter,
+								@RequestParam(name="noticeTitle") String noticeTitle,
+								@RequestParam(name="noticeContent") String noticeContent,
+								HttpServletRequest request, Model model, 
 								@RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
-		System.out.println("Notice : " + no);
+		
+		System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " + noticeTitle + " , noticeContent : " + noticeContent);
 		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
-
-		//no.setNoticeWriter(noticeWriter);
+		
+		Notice no = new Notice();
+		
+		no.setNoticeTitle(noticeTitle);
+		no.setNoticeWriter(noticeWriter);
+		no.setNoticeContent(noticeContent);
 		
 		if(!file.getOriginalFilename().equals(""))	{
-			String changeName = uploadFile(file, request);
+			String changeName = saveFile(file, request);
 			if(changeName != null) {
 				no.setNoticeOrigin(file.getOriginalFilename());
 				no.setNoticeNew(changeName);
@@ -149,9 +187,9 @@ public class NoticeController {
 	}
 	
 	//fileUpload
-	private String uploadFile(MultipartFile file, HttpServletRequest request) {
+	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "//upload_files//";
+		String savePath = resources + "//notice_uploadFiles//";
 
 		System.out.println("savePath : " + savePath);
 
@@ -166,6 +204,7 @@ public class NoticeController {
 		try {
 			file.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			throw new CommException("file upload error");
@@ -176,9 +215,55 @@ public class NoticeController {
 	
 	//update
 	@RequestMapping("goUpdateForm.no")
-	public String updateForm() {
-		return "customerSupport/notice/adjustDeleteNotice";
+	public ModelAndView updateForm(int noticeNo, ModelAndView mv) {
+			System.out.println("noticeNo : " + noticeNo );
+			Notice no = NoService.selectThisNotice(noticeNo);
+			
+			mv.addObject("no", no);
+			mv.setViewName("customerSupport/notice/adjustDeleteNotice");
+			
+			return mv;
 	}
+	
+	@RequestMapping("update.no")
+	public ModelAndView updateNotice(@RequestParam(name="noticeWriter") String noticeWriter,
+											@RequestParam(name="noticeTitle") String noticeTitle,
+											@RequestParam(name="noticeContent") String noticeContent,
+											@RequestParam(name="noticeNo") int noticeNo,
+											HttpServletRequest request, ModelAndView model, 
+											@RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
+		
+		System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " + noticeTitle + " , noticeContent : " + noticeContent + ", noticeNo : " + noticeNo);
+		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+
+		Notice no = new Notice();
+
+		no.setNoticeNo(noticeNo);
+		no.setNoticeTitle(noticeTitle);
+		no.setNoticeWriter(noticeWriter);
+		no.setNoticeContent(noticeContent);
+		
+		if (!file.getOriginalFilename().equals("")) {
+			/*if (no.getNoticeNew()() != null) {
+				// 기존파일 존재, 새 파일 존재
+				deleteFile(no.getNoticeNew(), request);
+			}*/
+
+			String changeName = saveFile(file, request);
+
+			no.setNoticeOrigin(file.getOriginalFilename());
+			no.setNoticeNew(changeName);
+
+		}
+
+		NoService.updateNotice(no);
+
+		model.addObject("noticeNo", noticeNo).setViewName("redirect:detail.no");
+
+		return model;
+	}
+	
+	
 	
 	//delete
 	@RequestMapping("goDelete.no")
@@ -188,5 +273,70 @@ public class NoticeController {
 		
 		return "redirect:list.no";
 	}
+	
+	/******************************************************************************************************************/
+	//FAQ List
+	@RequestMapping("list.faq")
+	public String selectFaqList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+
+		int listCount = NoService.selectFaqListCount(null);
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+		ArrayList<Notice> list = NoService.selectFaqList(pi, null);
+		System.out.println("list : " + list);
+		System.out.println("listCount : " + listCount);
+
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "customerSupport/faq/faqList";
+	}
+	
+		//FAQ search
+		@RequestMapping("search.faq")
+		public String selectOfFaq( Model model,@RequestParam(value = "currentPage", required = false, defaultValue = "1")  int currentPage,
+										@RequestParam(name = "searchtype", required = false) String searchtype,
+										@RequestParam(name = "mInput", required = false) String mInput ) {
+			
+			System.out.println("searchtype : " + searchtype);
+			System.out.println("mInput : " + mInput);
+			
+			Category ctgry = new Category();
+			
+			switch(searchtype) {
+			case "userQuery":
+				ctgry.setUserQuery(searchtype);
+				break;
+
+			case "payRefund":
+				ctgry.setPayRefund(searchtype);
+				break;
+
+			case "etc":
+				ctgry.setEtc(searchtype);
+				break;
+			}
+			
+			
+			int listCount = NoService.selectFaqListCount(ctgry);
+			System.out.println(listCount);
+
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+			ArrayList<Notice> list = NoService.selectFaqList(pi, ctgry);
+			System.out.println("list : " + list);
+			System.out.println("listCount : " + listCount);
+
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			return "customerSupport/notice/notice";
+			
+		}
 	
 }

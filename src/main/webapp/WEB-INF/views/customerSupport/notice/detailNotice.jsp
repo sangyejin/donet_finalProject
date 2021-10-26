@@ -182,6 +182,9 @@
        .thisDetail > .head:hover{font-weight : bold;} 
        .thisDetail > .theDetail:hover{ text-decoration : underline; }
        
+       /*사진 불러오는 영역*/
+            #imgArea{ border-radius : 7px; border : none;  margin-left: 25px; margin-bottom: 15px; }
+       
     </style>
 
 </head>
@@ -200,18 +203,18 @@
             </tr>
             <br>
             <tr>
-                <td width: 300px;><a id="faq" class="bottomfix">자주 묻는 질문</a></td>
+                <td width: 300px;><a id="faq" class="bottomfix"  href="list.faq">자주 묻는 질문</a></td>
                 <td class="arrow"><span class="bottomfix"> > </span> </td>
             </tr>
             <br>
             <tr>
-                <td width: 300px;><a id="facetoface" class="bottomfix">1:1 문의</a></td>
+                <td width: 300px;><a id="facetoface" class="bottomfix"  href="list.one">1:1 문의</a></td>
                 <td class="arrow"><span class="bottomfix"> > </span> </td>
             </tr>
         </div>
         <div class="needhelp">
             <span><p id="help">도움이 필요하신가요?</p></span>
-            <span><a id="gethelp">1:1 문의하기</a></span>
+            <span><a id="gethelp" href="list.one">1:1 문의하기</a></span>
             <span id="helparrow"> > </span>
         </div>
     </div>
@@ -233,7 +236,12 @@
                 <td class="value"> ${ no.noticeCount }회</td>
             </tr>
             <tr>
-            <td colspan="4"><br><p id="yourContent">${ no.noticeContent } </p><br></td>
+            <td colspan="4"><br>
+            	<c:if test="${ ! empty no.noticeNew  }">
+            		<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${no.noticeNew}" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+            	</c:if>
+
+            	<p id="yourContent">${ no.noticeContent } </p><br></td>
 
             </tr>
             <tbody>
@@ -278,12 +286,12 @@
     <!-- **삭제 후 인덱스 정렬 필요 -->
     <script>
     	function adminDelete(){ 
-    		if(confirm(${no.noticeNo} + "번 게시글을 삭제합니다.")){
+    		if(confirm(${no.rowNum} + "번 게시글을 삭제합니다.")){
     			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
-    			alert(${no.noticeNo} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
+    			alert (${no.rowNum} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
         		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
     		}else{
-    			alert(${no.noticeNo} + "번 게시글을 삭제하지 않습니다.");
+    			alert("잘못 누르셨군요? ^^");
     		}
     			
     	}
@@ -304,6 +312,13 @@
 	<script>
 		function backToList(){ location.href="list.no"; }
 	</script>
+	
+	<!--이미지 에러 시 사진 미노출-->
+	<script>
+	function imgAreaError(){
+		$('#imgArea').css({ 'display' : 'none' });
+	}
+	</script> 
 
 	<div id="gotoLEFT">
 	<jsp:include page="../../common/footer.jsp" />
