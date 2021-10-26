@@ -30,51 +30,49 @@
 	<jsp:include page="../common/menubar.jsp" />
 
 	<!-- 오늘 날짜 -->
-	<jsp:useBean id="now" class="java.util.Date" />
-	<fmt:parseDate value="${now}" var="nowDate" pattern="yyyy-MM-dd" />
+	<jsp:useBean id="today" class="java.util.Date" />
+	<fmt:formatDate var="nowDate" value="${today}" pattern="yyyyMMdd" />
 
 	<!-- 펀딩 끝 날짜 -->
 	<fmt:parseDate value="${funding.closeDate }" var="closeD"
 		pattern="yyyy-MM-dd" />
+	<fmt:formatDate var="closeDate" value="${closeD}" pattern="yyyyMMdd" />
 
-	<!-- D-day계산하기위한 수식 -->
-	<fmt:parseNumber value="${now.time / (1000*60*60*24)}"
-		integerOnly="true" var="nowDate" />
-	<fmt:parseNumber value="${closeD.time / (1000*60*60*24)}"
-		integerOnly="true" var="endDate" />
 
 	<div class="wrap">
 		<div class="main-container">
 			<div id="top-div">
 				<div class="col-md-3">
-					<img src="temp.PNG" alt="">
+					<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${ funding.thumbnailChangeName}" alt="">
 				</div>
 				<div class="col-md-offset-1 col-md-8">
 					<p>${funding.categoryName}</p>
 					<p>${funding.fpName}</p>
-					<p>마감까지 ${endDate-nowDate }일</p>
+					<p>마감까지 ${closeDate-nowDate }일</p>
 				</div>
 			</div>
 			<hr>
 			<div class="content-container">
-				<label for="fundingGoods-container">선물 선택</label>
-				<input type="hidden" name="tempPrice"/>
+				<label for="fundingGoods-container">선물 선택</label> <input
+					type="hidden" name="tempPrice" id="tempPrice" value="0" />
 				<div id="fundingGoods-container">
-					<c:forEach var="fg" items="fundingGoods">
-						<div class="fundingGoods-card" onclick="selectDiv(${fg.fgPrice});">
-							<p>${fg.fgPrice}Point</p>
-							<p>${fg.fgName}</p>
-							<p>${fg.fgContent}</p>
-						</div>
-					</c:forEach>
-
+					<c:if test="${not empty fundingGoodsList}">
+						<c:forEach var="fg" items="fundingGoodsList">
+							<div class="fundingGoods-card"
+								onclick="selectDiv(${fg.fgPrice});">
+								<p>${fg.fgPrice}Point</p>
+								<p>${fg.fgName}</p>
+								<p>${fg.fgContent}</p>
+							</div>
+						</c:forEach>
+					</c:if>
 				</div>
 			</div>
-			<div  class="content-container">
+			<div class="content-container">
 				<label for="addSupport-container">추가 후원하기</label>
 				<div class="addSupport-container">
-					<input name="fpPrice" type="number" placeHolder="0,000,000"><span>원</span>
-					<button id="btn-setting" >입력</button>
+					<input name="fpPrice" id="fpPrice" type="number" placeHolder="0,000,000"><span>원</span>
+					<button id="btn-setting">입력</button>
 				</div>
 			</div>
 			<div class="content-container">
@@ -100,13 +98,17 @@
 			</div>
 			<hr>
 			<div>
-				<p>총 <span id="totalSupport"></span>원 후원하기</p>
+				<p>
+					총 <span id="totalSupport"></span>원 후원하기
+				</p>
 			</div>
 			<div class="content-container">
 				<label for="support-info-container">후원</label>
 				<div class="addSupport-container">
-					<p id="">잔여 포인트 : <span>${loginUser.point}</span></p>
-					<p>잔여 포인트가 부족합니다.</p>
+					<p id="">
+						잔여 포인트 : <span>${loginUser.point}</span>
+					</p>
+					<p id="message"></p>
 				</div>
 			</div>
 			<div id="btnArea">
@@ -117,13 +119,13 @@
 	</div>
 	<script>
 		$(function(){
-			$("#btn-setting").onclick(function(){
+			$("#btn-setting").click(function(){
 				var temp=document.getElementById("tempPrice").value;
 				var fpPrice=document.getElementById("fpPrice").value;
 				$("#totalSupport").text(temp+fpPrice);
 			});
 			
-			$("#btn-support").onclick(function(){
+			$("#btn-support").click(function(){
 				if(document.getElementById("tempPrice").value==""){
 					alert("선물이 선택되지않았습니다.");
 				}
@@ -132,13 +134,14 @@
 				}
 			});
 			
-			$("#btn-back").onclick(function(){
-				location.href="";
+			$("#btn-back").click(function(){
+				location.href="/funding";
 			});
 		});
 
 		function selectDiv(price){
-			document.getElementById("tempPrice").value=price;
+			var temp= document.getElementById("tempPrice").value = price;
+			$("#totalSupport").text(temp);
 		}
 	</script>
 </body>

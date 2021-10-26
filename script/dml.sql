@@ -630,6 +630,5 @@ select * from funding_image;
 select * from funding_project;
 select * from funding_image;
 select * from funding_goods;
-delete from funding_project;
 commit;
 

@@ -1,7 +1,5 @@
 package com.pongsung.donet.funding.model.vo;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +17,6 @@ public class FundingGoods {
 	private String fgName;
 	private String fgContent;
 	private int fgPrice;
-
+	
 	
 }
