@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.event.model.service.EventService;
+import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 
 @Controller
@@ -65,8 +68,13 @@ public class EventController {
 	@RequestMapping("detail.ev")
 	public ModelAndView selectEvent(int eno, ModelAndView mv) {
 		System.out.println("디테일 체크 : " + eno );
+		
 		Event ev = eventService.selectEvent(eno);
+		Attachment at = eventService.selectEventAttach(eno);
+		
 		mv.addObject("ev", ev).setViewName("event/eventDetail");
+		mv.addObject("at", at).setViewName("event/eventDetail");
+		
 		System.out.println("디테일 모델 체크 : " + mv );
 		return mv;
 	}
@@ -77,24 +85,75 @@ public class EventController {
 	}
 	
 	@RequestMapping("insert.ev")
-	public String insertEvent(Event e, HttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+	public String insertEvent(Event e, Attachment at,MultipartHttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
 		
 		System.out.println("e check : " + e);
+		System.out.println("file check : " + request);
+		
+		List<MultipartFile> fileList = request.getFiles("file");
+		
+		String src = request.getParameter("src");
+		System.out.println("src check : " + src);
 		System.out.println("file check : " + file);
 		
+		String path = "//upload_files//";
+		
+
 		if(!file.getOriginalFilename().equals("")) {
+			for(MultipartFile mf : fileList) {
+			
+				String changeName = saveFile(file, request);
+				
+				if(changeName != null) {
+					at.setRefEventNo(e.getEventNo());
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(changeName);
+					System.out.println("attachment check : " + at);
+					
+					/*
+					try {
+						mf.transferTo(new File(changeName));
+					} catch (IllegalStateException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					*/
+				}
+			
+				
+			}
+		
+		}
+		
+		eventService.insertEvent(e, at);
+		System.out.println("attachment return check : " + at);
+		return "redirect:list.ev";
+	}
+	/*
+	@RequestMapping("insert.ev")
+	public String insertEvent(Event e, MultipartHttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+		
+		System.out.println("e check : " + e);
+		System.out.println("file check : " + file.getOriginalFilename());
+		
+		if(!file.getOriginalFilename().equals("")) {
+			
+			
 			String changeName = saveFile(file, request);
 			
 			if(changeName != null) {
-				e.setOriginName(file.getOriginalFilename());
-				e.setChangeName(changeName);
+				e.setEventOrigin(file.getOriginalFilename());
+				e.setEventChange(changeName);
 			}
 		}
 		eventService.insertEvent(e);
 		
 		return "redirect:list.ev";
 	}
-
+	*/
+	
+	
+	
 	@RequestMapping("delete.ev")
 	public String deleteEvent(int eno, String fileName, HttpServletRequest request) {
 		System.out.println("delete check : " + eno );
