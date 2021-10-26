@@ -208,7 +208,17 @@
 			<artifactId>jquery</artifactId>
 			<version>3.2.1</version>
 		</dependency>
-
+		<!-- 썸네일 이미지 처리 -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
 
 	</dependencies>
 	<build>
