@@ -97,4 +97,9 @@ public class FundingDao {
 		return sqlSession.insert("fundingMapper.insertFundingSupporter",fundingSupporter);
 	}
 
+	public int updateFundingHitsCount(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("fundingMapper.updateFundingHitsCount",fpNo);
+	}
+
 }

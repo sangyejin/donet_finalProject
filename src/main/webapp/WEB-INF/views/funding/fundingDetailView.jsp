@@ -456,22 +456,21 @@
 		}
 		
 		function selectReplyList() {
-			var fpNo = "${funding.fpNo}";
-			var nowLink = document.location.href;
+			const fpNo = "${funding.fpNo}";
+			const nowLink = document.location.href;
 			console.log(nowLink);
-			$
-					.ajax({
+			$.ajax({
 						url : fpNo + "/reply",
 						type : "get",
 						success : function(fundingReplyList) {
 							var value = "";
 							$.each(fundingReplyList,function(i, r) {
 											value += `<div class="reply-group">
-														<input type="hidden" name="replyNo">
-														<div>`+r.writerNickName+`(`+ r.writerId+ `)|`+ r.createDate+ `</div>
-														<div>`+ r.replyContent+ `</div>`;
+														<input type="hidden" name="replyNo" class="replyNo" value="`+r.replyNo+`">
+														<div><span class="replyWriterNickName">`+r.writerNickName+`</span>(<span class="replyWriterId">`+ r.writerId+ `</span>)|<span class="replyCreateDate">`+ r.createDate+ `</span></div>
+														<div class="replyContent">`+ r.replyContent+ `</div>`;
 												if ("${loginUser.userId}" == r.writerId) {
-													value += `<div class="aArea"><button class="btn-reply" onclick="updateReply();">수정</button><button class="btn-reply" onclick="deleteReply(`
+													value += `<div class="aArea"><button class="btn-reply" onclick="updateReplyArea();">수정</button><button class="btn-reply" onclick="deleteReply(`
 															+ fpNo
 															+ `,`
 															+ r.replyNo
@@ -490,11 +489,46 @@
 					});
 
 		}
-		function updateReply(event){
-			console.log(event.currentTarget);
+	function updateReplyArea(){
+		const idx=$(".reply-group").index(event.target.parentElement.parentElement);
+		const content=$(".reply-group").eq(idx).children('.replyContent').html();
+		console.log(content);
+		
+		$(".reply-group").eq(idx).children('.replyContent').html(`<textArea style='width:100%;padding:4px;'>`+content.replaceAll('<br>','\n')+`</textArea>`);
+		$(".reply-group").eq(idx).children('.aArea').html(`<button class="btn-reply" onclick="updateReply();">저장</button><button class="btn-reply" onclick="selectReplyList();">취소</button>`);
+		
+	}
+	
+	function updateReply(){
+		if(confirm("정말로 수정하시겠습니까?")){
+		const fpNo = "${funding.fpNo}";
+		const idx=$(".reply-group").index(event.target.parentElement.parentElement);
+		console.log(idx);
+		const content=$(".reply-group").eq(idx).children('.replyContent').children("textArea").val().replaceAll('\n','<br>');
+		console.log(content);
+		const replyNo=$(".reply-group").eq(idx).children('.replyNo').val();
+		console.log(replyNo);
+		
+		$.ajax({
+			url : fpNo + "/reply/"+replyNo+"/update",
+			type : "post",
+			data:{
+				replyContent:content
+			},
+			success : function() {
+				alert("댓글이 수정되었습니다.");
+				selectReplyList();
+			},
+			error : function() {
+				console.log("댓글 리스트조회용 ajax 통신 실패");
+			}
+		});
+		
 		}
+		
+	}
 	</script>
-		<!-- JS here -->
+	<!-- JS here -->
 	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->
 	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-1.12.4.min.js"></script>

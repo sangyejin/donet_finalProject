@@ -173,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where REPLY_NO=#{replyNo}
 	</update>
 	
-	<update id="updateFundingReply" parameterType="_int">
+	<update id="updateFundingReply" parameterType="fundingReply">
 		update FUNDING_REPLY
 		set REPLY_CONTENT=#{replyContent}
 		where REPLY_NO=#{replyNo}
@@ -186,5 +186,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{takeName},#{takeAddress},#{takePhone},#{takePostCode})
 	</insert>
 	
+		
+	<update id="updateFundingHitsCount" parameterType="_int">
+		update FUNDING_PROJECT
+		set HITS=HITS+1
+		where FP_NO=#{fpNo}
+	</update>
 	
 </mapper>
