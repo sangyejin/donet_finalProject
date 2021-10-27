@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
+import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 
 public interface DonationService {
 
@@ -15,8 +17,24 @@ public interface DonationService {
 
 	ArrayList selectDonationParticipationCount();
 
-	List<Sponsor> selectSponsorList(PageInfo pi);
 
 	Support selectDonation(int suNo);
+
+	List<SupportUsePlan> selectSupportUsePlan(int suNo);
+
+	Sponsor selectSponsor(int suNo);
+
+	List<SupporComment> selectSupporComment(int suNo);
+
+	List<Sponsor> selectSponsorList(int suNo);
+
+	int insertReply(SupporComment sc);
+
+//	int selectGolbalListCount(int categoryNo);
+//
+//	List<Support> selectGlobalList(PageInfo pi, int categoryNo);
+
+
+
 
 }
