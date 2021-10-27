@@ -138,6 +138,14 @@ public class FundingServiceImpl implements FundingService {
 		}
 	}
 
+	@Override
+	public void updateFundingHitsCount(int fpNo) {
+		int result=fundingDao.updateFundingHitsCount(sqlSession,fpNo);
+		if(result<0) {
+			throw new CommException("펀딩 프로젝트 조회수 update 실패");
+		}
+	}
+
 
 
 }

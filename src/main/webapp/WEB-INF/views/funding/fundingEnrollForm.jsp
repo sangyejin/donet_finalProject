@@ -140,6 +140,8 @@ tbody tr td, thead tr th {
 </head>
 
 <body>
+	<jsp:include page="../common/menubar.jsp" />
+
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">후원</a></li>
@@ -149,7 +151,7 @@ tbody tr td, thead tr th {
 	</nav>
 	<div class="main">
 		<form id="insertForm" action="insert" method="post"
-			enctype="multipart/form-data">
+enctype="multipart/form-data">
 			<div class="div-fpName">
 				<label for="fpName" style="display: block;">펀딩 프로젝트 제목</label> <input
 					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
@@ -247,15 +249,14 @@ tbody tr td, thead tr th {
 
 
 			<div id="fileArea">
-				<input type="file" name="thumbFile" id="thumbFile"
-					onchange="loadImg(this, 0);"> <input type="file"
-					name="file1" id="file1" onchange="loadImg(this, 1);"> <input
-					type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
-				<input type="file" name="file3" id="file3"
-					onchange="loadImg(this, 3);">
+				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 0);"> 
+					<input type="file"name="file1" id="file1" onchange="loadImg(this, 1);"> 
+					<inputb type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
+				<input type="file" name="file3" id="file3" onchange="loadImg(this, 3);">
 			</div>
 		</form>
 	</div>
+	<jsp:include page="../common/footer.jsp" />
 
 	<script>
         $(function () {

@@ -19,13 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="suDate" column="SU_DATE" />
 		<result property="content" column="SU_CONTENT" />
 		<result property="target" column="SU_TARGET" />
-		<result property="bStart" column="SU_BSTART" />
-		<result property="bLast" column="SU_BLAST" />
+		<result property="bstart" column="SU_BSTART" />
+		<result property="blast" column="SU_BLAST" />
 		<result property="thumbnailOrigin" column="THUMBNAILORIGIN" />
 		<result property="thumbnailChange" column="THUMBNAILCHANGE" />
 		<result property="categoryNo" column="SU_CATEGORY" />
 		<result property="status" column="SU_SATUTS" />
 		<result property="hits" column="HITS" />
+		<result property="ddate" column="DDAY" />
+		<result property="total" column="TOTAL" />
+		<result property="totalamount" column="TOTALAMOUNT" />
+		<result property="goal" column="GOAL" />
 	</resultMap>
 
 	<resultMap id="supportUsePlanResultSet" type="SupportUsePlan">
@@ -42,51 +46,89 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="payNo" column="PAY_NO" />
 		<result property="amount" column="PAY_AMOUNT" />
 		<result property="total" column="COUNT" />
+		<result property="sum" column="SUM" />
+		<result property="payDate" column="PAY_DATE" />
 	</resultMap>
 
-		<select id="selectDonationList" resultType="_int">
-			SELECT COUNT(*)
-			FROM
-			SUPPORT
-			WHERE SU_SATUTS='Y'
-		</select>
-
-		<select id="selectDonationParticipationCount" resultType="arrayList">
-			SELECT COUNT(*)
-			FROM SPONSOR
-			GROUP BY SU_NO
-		</select>
+	<resultMap id="supporCommentResultSet" type="SupporComment">
+		<id property="scNo" column="SC_NO" />
+		<result property="comment" column="SC_COMMENT" />
+		<result property="suNo" column="SU_NO" />
+		<result property="scWriter" column="SC_WRITER" />
+		<result property="scdate" column="SC_DATE" />
+		<result property="scSatuts" column="SC_STATUS" />
+	</resultMap>
 
 
-		<select id="selectDonation" resultMap="supportResultSet">
-			SELECT S.SU_NO,
-			S.SU_TITLE, S.SU_WRITER, S.SU_START, S.SU_LAST, S.SU_DATE,
-			S.SU_CONTENT, S.SU_TARGET, S.SU_BSTART, S.SU_BLAST, S.THUMBNAILORIGIN,
-			S.THUMBNAILCHANGE, C.SU_CATEGORY_NAME, S.SU_SATUTS
-			FROM SUPPORT S
-			JOIN
-			SUPPORT_CATEGORY C ON S.SU_CATEGORY = C.SU_CATEGORY_NO
-			WHERE
-			S.SU_SATUTS='Y'
-			ORDER BY SU_NO DESC
-		</select>
-		
-		<select id="selectSponsorList" resultMap="sponsorResultSet">
-			SELECT SU_NO, COUNT(*) AS COUNT
-			FROM SPONSOR
-			GROUP BY SU_NO
-			ORDER BY SU_NO DESC
-		</select>
-		<update id="increaseCount" parameterType="_int">
-			UPDATE SUPPORT
-			SET HITS = HITS+1
-			WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
-		</update>
-		<select id="selectBoard" parameterType="_int" resultMap="supportResultSet">
-			SELECT *
-			FROM SUPPORT
-			WHERE SU_NO=#{suNo} SU_SATUTS='Y'
-		</select>
-		
+	<select id="selectDonationList" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		SUPPORT
+		WHERE SU_SATUTS='Y'
+	</select>
+
+	<select id="selectDonationParticipationCount"
+		resultType="arrayList">
+		SELECT COUNT(*)
+		FROM SPONSOR
+		GROUP BY SU_NO
+	</select>
+
+
+	<select id="selectDonation" resultMap="supportResultSet">
+		SELECT S.SU_NO,
+		S.SU_TITLE, S.SU_WRITER, S.SU_START, S.SU_LAST, S.SU_DATE,
+		S.SU_CONTENT, S.SU_TARGET, S.SU_BSTART, S.SU_BLAST, S.THUMBNAILORIGIN,
+		S.THUMBNAILCHANGE, C.SU_CATEGORY_NAME, S.SU_SATUTS, S.TOTAL,
+		S.TOTALAMOUNT,S.GOAL
+		FROM SUPPORT S
+		JOIN
+		SUPPORT_CATEGORY C ON S.SU_CATEGORY = C.SU_CATEGORY_NO
+		WHERE
+		S.SU_SATUTS='Y'
+		ORDER BY SU_NO DESC
+	</select>
+
+	<update id="increaseCount" parameterType="_int">
+		UPDATE SUPPORT
+		SET HITS = HITS+1
+		WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
+	</update>
+	<select id="selectBoard" parameterType="_int"
+		resultMap="supportResultSet">
+		SELECT SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
+		SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,THUMBNAILCHANGE,
+		SU_CATEGORY,SU_SATUTS,HITS, SU_LAST - SU_START AS DDAY, GOAL,
+		TOTALAMOUNT
+		FROM SUPPORT
+		WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
+	</select>
+	<select id="selectSupportUsePlan" parameterType="_int"
+		resultMap="supportUsePlanResultSet">
+		SELECT *
+		FROM SUPPORT_USE_PLAN
+		WHERE SU_NO=#{suNo}
+	</select>
+	<select id="selectSponsor" parameterType="_int"
+		resultMap="sponsorResultSet">
+		SELECT COUNT(*) COUNT, SUM(PAY_AMOUNT) SUM
+		FROM SPONSOR
+		GROUP BY SU_NO
+		HAVING SU_NO=#{suNo}
+	</select>
+	<select id="selectSupporComment" parameterType="_int"
+		resultMap="supporCommentResultSet">
+		SELECT * FROM SUPPORT_COMMENT WHERE SU_NO=#{suNo} ORDER BY 5 DESC
+	</select>
+	<select id="selectSponsorList" parameterType="_int"
+		resultMap="sponsorResultSet">
+		SELECT *
+		FROM SPONSOR
+		WHERE SU_NO=#{suNo}
+	</select>
+	<insert id="insertReply" parameterType="SupporComment">
+		INSERT INTO SUPPORT_COMMENT(SC_NO,SC_COMMENT,SU_NO,SC_WRITER,SC_DATE,SC_STATUS)
+		VALUES(#{scNo}, #{comment}, #{suNo}, #{scWriter}, DEFAULT, DEFAULT)
+	</insert>
 
 </mapper>

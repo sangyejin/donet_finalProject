@@ -39,5 +39,7 @@ public interface FundingService {
 
 	void insertFundingSupporter(FundingSupporter fundingSupporter);
 
+	void updateFundingHitsCount(int fpNo);
+
 
 }
