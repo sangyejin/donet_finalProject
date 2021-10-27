@@ -69,7 +69,7 @@
 		}
 		
 		#gethelp { margin-left: 3%; }
-		#gethelp:hover{ text-decoration : underline;}
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
 		
 #helparrow { margin-left: 48px; margin-top: 0px; }
 

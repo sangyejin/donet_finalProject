@@ -7,14 +7,12 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice"/>
-		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member"/>		
-		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event"/>
  		<typeAlias type="com.pongsung.donet.event.model.vo.Attachment" alias="Attachment"/>
-
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Search" alias="Search" />
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Category" alias="Category" />
+		<typeAlias type="com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions" alias="FAQ" />
+		
 		
 		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event" />

@@ -37,9 +37,6 @@
 #greenfont1, #faq, #facetoface { font-weight: bold; }
 
 /*helper*/
-#gethelp:hover{ text-decoration : underline;}
-
-
 .needhelp {
 	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
@@ -58,7 +55,7 @@
 }
 
 #gethelp { margin-left: 3%; }
-#gethelp:hover{  : underline;}
+#gethelp:hover{  color : #000000; text-decoration : underline;}
 
 #helparrow { margin-left: 48px; margin-top: 0px; }
 
@@ -278,14 +275,12 @@ tr {
 					<c:if test="${!empty list}">
 						<c:forEach items="${ list }" var="n" varStatus="status">
 							<tr class="clickable">							
-								<!--  다음 페이지로 넘어가면 숫자가 연속해서 카운트 되도록 -->
 								<td class="realNumber" hidden="true">${ n.noticeNo }</td>	
 								<td class="number">${ n.rowNum }<!--<c:out value="${status.count}"/>--> </td>
 								<td class="title">${ n.noticeTitle }</td>
 								<td class="writer">${ n.noticeWriter }</td>
 								<td class="date">${ n.noticeDate }</td>
 								<td class="viewed">${ n.noticeCount }</td>
-
 							</tr>
 						</c:forEach>
 					</c:if>

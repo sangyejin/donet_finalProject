@@ -12,7 +12,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Category {
-	private int fTypeNo;
-	private String fTypeName;
+public class FrequentlyAskedQuestions {
+	private int rowNum;
+	private int faqNo;
+	private String faqQuestion;
+	private String faqAnswered;
+	private int faqType;
+	private String faqTypeName;
+
 }

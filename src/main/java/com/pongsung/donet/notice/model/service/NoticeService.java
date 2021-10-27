@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.notice.model.vo.Category;
+import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -34,6 +35,7 @@ public interface NoticeService {
 
 	int selectFaqListCount(Category ctgry);
 
-	ArrayList<Notice> selectFaqList(PageInfo pi,Category ctgry);
+	ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi,Category ctgry);
+
 
 }
