@@ -124,7 +124,7 @@ select::-ms-expand {
 	display: inline-block !important;
 }
 
-#filter1, #filter2 {
+#filter1{
 	display: inline-block;
 }
 
@@ -235,21 +235,17 @@ select::-ms-expand {
 				</div>
 			</div>
 			<div class="div-filter">
-				<input id="search" name="search" type="text" class="rounded-pill"
-					placeholder="검색" aria-describedby="button-addon2"> <select
-					name="filter1" id="filter2">
-					<option value="1">전체</option>
-					<option value="2">진행중</option>
-					<option value="3">종료</option>
+				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2">
 				</select> <select name="filter2" id="filter1">
 					<option value="1">최신순</option>
 					<option value="2">인기순</option>
-					<option value="3">마감임박</option>
+					<option value="3">낮은가격순</option>
+					<option value="3">높은가격순</option>
 				</select>
 				<c:if
-					test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
+					test="${loginUser.userRole eq 'D'}">
 					<button id="btn-insert"
-						onclick="location.href='${pageContext.servletContext.contextPath}/funding/insertForm';">등록하기</button>
+						onclick="location.href='${pageContext.servletContext.contextPath}/goods/insertForm';">등록하기</button>
 				</c:if>
 
 			</div>
@@ -261,54 +257,19 @@ select::-ms-expand {
 			<div class="container row" style="margin: 100 auto; width: 1080px;">
 
 				<c:forEach var="list" items="${list}" varStatus="status">
-					<fmt:parseDate value="${list.startDate}" var="startDate"
-						pattern="yyyy-MM-dd" />
-					<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}"
-						integerOnly="true" var="strDate" />
-					<fmt:parseDate value="${list.closeDate }" var="closeDate"
-						pattern="yyyy-MM-dd" />
-					<fmt:parseNumber value="${closeDate.time / (1000*60*60*24)}"
-						integerOnly="true" var="endDate" />
 					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
-								<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${list.thumbnailChangeName}" alt="${list.fpName}"
+								<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${list.thumbnailChangeName}" alt="${list.fpName}"
 											width="278px" height="200px">
-									<c:if test="${list.raised/list.goal*100 >=100}">
-										<div class="img-text">
-											<p>COMPLETE</p>
-										</div>
-									</c:if>
-
-
 							</div>
 							<div class="cases-caption">
 								<div class="cases-info">
 									<div class="div-title">
-										<a href="${pageContext.servletContext.contextPath}/funding/${list.fpNo}" id="title">${list.fpName}</a>
+										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" id="title">${list.goodsName}</a>
 									</div>
-									<p class="category-hostName">
-										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
-									</p>
-									<p class="dDay">
-										<span>${endDate-strDate }</span>
-									</p>
-								</div>
-								<!-- Progress Bar -->
-								<div class="progress">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar"
-										aria-valuenow="${list.raised/list.goal*100}" aria-valuemin="0"
-										aria-valuemax="100"
-										style="width: ${list.raised/list.goal*100}%">${list.raised/list.goal*100}%
-									</div>
-								</div>
-								<div class="prices d-flex justify-content-between">
-									<p>
-										현재:<span> ${list.raised}</span>
-									</p>
-									<p>
-										목표:<span> ${list.goal}</span>원
+									<p class="goodsPrice">
+										${list.goodsPrice}
 									</p>
 								</div>
 							</div>
