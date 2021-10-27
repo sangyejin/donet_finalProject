@@ -221,6 +221,10 @@
         /*radio style*/
         .radioAlign{margin-right : 20px;}
         
+        <c:if test="${ loginUser.userRole eq 'D' }">
+        .hidFirst:hover{background-color: rgba(232, 240, 214, 0.5);}	 
+    	</c:if>
+        
     </style>
 
 </head>
@@ -276,11 +280,11 @@
                 	<c:forEach items="${ list }" var="faq" varStatus="status">
 			                <tr class="head">
 			                    <td class="number">${ faq.rowNum }</td>
-			                    <td class="trueNumber" hidden="true">${ faq.faqNo }</td>
 			                    <td class="category">${ faq.faqTypeName }</td>
 			                    <td class="title">${ faq.faqQuestion }</td>
 			                 </tr>
 			                 <tr class="hidFirst">
+			                 	<td class="trueNumber" hidden="true">${ faq.faqNo }</td>
 			                    <td colspan="3"><pre class="detailAlter">${ faq.faqAnswered } </pre></td>
 			                 </tr>
 						</c:forEach>
@@ -300,7 +304,7 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
-								<a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
+								<a class="page-link" href="list.faq?currentPage=${ pi.currentPage-1 }"> < </a>
 							</button>
 						</c:when>
 						<c:otherwise>
@@ -314,7 +318,7 @@
 						<c:choose>
 							<c:when test="${ pi.currentPage ne p }">
 								<button class="page-item">
-									<a class="page-link" href="list.no?currentPage=${ p }">${ p }</a>
+									<a class="page-link" href="list.faq?currentPage=${ p }">${ p }</a>
 								</button>
 							</c:when>
 							<c:otherwise>
@@ -329,12 +333,12 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<button class="page-item">
-								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+								<a class="page-link" href="list.faq?currentPage=${ pi.currentPage+1 }"> > </a>
 							</button>
 						</c:when>
 						<c:otherwise>
 							<button class="page-item disabled">
-								<a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }"> > </a>
+								<a class="page-link" href="list.faq?currentPage=${ pi.currentPage+1 }"> > </a>
 							</button>
 						</c:otherwise>
 					</c:choose>
@@ -403,5 +407,18 @@
  			location.href="goAddForm.faq";
     	}
     </script>
+    
+    <c:if test="${ loginUser.userRole eq 'D' }">    	
+    	<script>
+    	$(function(){
+    		$("#faqList tbody .hidFirst").click(function(){
+    			location.href="goUpdateForm.faq?faqNo="+ $(this).children().eq(0).text();
+       		});
+    	});
+    	</script>		
+    </c:if>
+    			
+    
+    
 </body>
 </html>

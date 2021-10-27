@@ -29,9 +29,7 @@
 	margin-top: 0;
 }
 
-#greenfont1 {
-	margin-right: 45%;
-}
+#greenfont1 { margin-right: 45%; }
 
 #faq {
 	margin-right: 36px;
@@ -39,50 +37,41 @@
 	text-decoration: none;
 }
 
-#facetoface {
-	margin-right: 70px;
-}
+#facetoface { margin-right: 70px; }
 
 #greenfont1:hover #facetoface:hover {
 	text-decoration: underline;
 	color: #000000;
 }
 
-#wrap {
-	margin-bottom: 7%;
-}
+#wrap { margin-bottom: 7%; }
 
-#greenfont1, #faq, #facetoface {
-	font-weight: bold;
-}
+#greenfont1, #faq, #facetoface { font-weight: bold; }
 
 /*helper*/
-.needhelp {
-	margin-top: 40%;
-	border: 1px solid rgb(244, 244, 244);
-	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
-	border-radius: 10px;
-	margin-left: -5px;
-}
-
-#help {
-	font-weight: bolder;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	width: 140px;
-	margin-left: 3%;
-}
-
-#gethelp {
-	margin-left: 3%;
-}
-
-#helparrow {
-	margin-left: 48px;
-	margin-top: 0px;
-}
+		#gethelp:hover{ text-decoration : underline;}
+		
+		.needhelp {
+			margin-top: 50px;
+			border: 1px solid rgb(244, 244, 244);
+			background-color: rgb(244, 244, 244);
+			width: 140px;
+			height: 40px;
+			border-radius: 10px;
+		}
+		
+		#help {
+			font-weight: bolder;
+			margin-bottom: 0px;
+			margin-top: 0px;
+			width: 140px;
+			margin-left: 3%;
+		}
+		
+		#gethelp { margin-left: 3%; }
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
+		
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
 /* side bar */
 #thelist {
@@ -200,17 +189,17 @@ span>mark {
 
 #buttons {
 	margin-top: 2%;
-	margin-left: 620px;
+	margin-left: 650px;
 	margin-bottom: 3%;
 }
 
 #buttonSecondPart {
 	margin-top: -48px;
-	margin-left: 690px;
+	margin-left: 720px;
 }
 
 /*content div*/
-#inputTitle {
+#faqQuestion {
 	width: 670px;
 	height: 25px;
 	margin-left: 50px;
@@ -218,7 +207,7 @@ span>mark {
 	border: 1px solid rgb(206, 212, 218);
 }
 
-#contentText {
+#faqAnswered {
 	margin-top: -25px;
 	width: 670px;
 	margin-left: 80px;
@@ -288,12 +277,11 @@ span>mark {
 
 			<div id="sideGreenbar"></div>
 			<form id="InsertFAQ" method="post" action="insert.faq">
+			
 				<div id="getInThere">
-					<span id="headTitle"><label for="inputTitle">질문</label> <input
-						type="text" id="inputTitle" name="inputTitle"></span>
+					<span id="headTitle"><label for="faqQuestion">질문</label> 
+					<input type="text" id="faqQuestion" name="faqQuestion" required></span>
 					<div class="grayline"></div>
-
-
 
 					<div id="radioType">구분</div>
 
@@ -309,17 +297,14 @@ span>mark {
 					</div>
 					<div class="grayline"></div>
 					
-					<!-- <div id="imgViewArea"> -->
-					<label for="contentText">답변</label>
-						<textarea type="text" class="form-control" required
-							id="contentText" name="contentText" rows="10"
-							style="resize: none;" maxlength="2000"></textarea>
-					<!-- </div> -->
-
+					<label for="faqAnswered">답변</label>
+						<textarea class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="2000" ></textarea>
+					</div>
 
 					<div id="buttons">
 						<button class="goRound" id="insertAlert" type="submit">추가</button>
 					</div>
+					
 			</form>
 
 			<div id="buttonSecondPart">
