@@ -60,25 +60,24 @@ h1, h2 {
 }
 
 </style>
+
 </head>
 
 <body>
+	<jsp:include page="../common/menubar.jsp" />
+
 	<div class="div-main">
 		<h1>펀딩 후원 완료</h1>
 		<div class="content">
-			<img src="temp.PNG" alt="" width="400px">
-			<h2>${fp.fpName}</h2>
+			<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${funding.thumbnailChangeName}" alt="" width="400px">
+			<h2>${funding.fpName}</h2>
 			<p>
-				[ ${fp.fpName} ]을 후원해주셔서 감사합니다.<br> 더 나은 세상을 위해 노력하겠습니다.<br>:)
+				[ ${funding.fpName} ]을 후원해주셔서 감사합니다.<br> 더 나은 세상을 위해 노력하겠습니다.<br>:)
 			</p>
 		</div>
-		<button type="button" id="btn-back">목록으로 돌아가기</button>
+		<button type="button" id="btn-back" onclick="location.href = '${pageContext.request.contextPath}/funding';">목록으로 돌아가기</button>
 	</div>
-	<script>
-		$("#btnIndex").click(function() {
-			location.href = "/";
-		})
-	</script>
+	<jsp:include page="../common/footer.jsp" />
 </body>
 
 </html>

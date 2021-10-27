@@ -25,9 +25,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
 * {
-	/* font-family: 'Gugi', cursive;*/
-	/*font-family: 'Song Myung', serif;*/
-	/* font-family: 'Nanum Gothic Coding', monospace; */
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 12px;
 	margin: 0;
@@ -149,7 +146,7 @@
 
 /* 내용작성 칸 */
 #content-container {
-	
+	overflow:auto;
 }
 
 #btn-funding {
@@ -196,8 +193,9 @@
 	background-position: center;
 }
 
-#btnArea {
+.btnArea {
 	padding-top: 10px;
+	text-align:right;
 }
 
 /*펀딩 굿즈*/
@@ -206,7 +204,6 @@
 }
 
 /*댓글*/
-
 #replyArea {
 	padding-top: 100px;
 	padding-bottom:100px;
@@ -221,8 +218,43 @@
 .btn-reply {
 	border: none;
 	background: white;
+	color: gray;
+}
+.aArea{
+	text-align:right;
 }
 </style>
+
+<!-- font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
+	rel="stylesheet">
+
+<!-- favicon -->
+<link rel="icon"
+	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
+	type="image/x-icon">
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- CSS here -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slicknav.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/flaticon.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/css/progressbar_barfiller.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/gijgo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/magnific-popup.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/themify-icons.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slick.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
+
 </head>
 
 <body>
@@ -306,18 +338,17 @@
 							id="supporter"><span name="supporter">${funding.numberSupporter}</span>명</span>
 					</div>
 					<div id="btn-area">
-						<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" value="후원하기" /> <input
-							type="button" id="btShare" value="  " />
+						<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/support';" id="btn-funding" value="후원하기" /> <input
+							type="button" id="btn-share" value="  "/>
 					</div>
 				</div>
 			</div>
 			<div id="img-container" class="container">
-				<c:if test="${not empty fundingImage}">
-					<c:forEach var="img" items="${fundingImageList}" varStatus="status">
-						<div class="col-md-${(fn:length(fundingImageList))/2} img">
-							<img
-								src="${pageContext.request.contextPath}/resources/upload_files/funding/${img.imgChangeName }"
-								alt="" class="content-img">
+				<c:if test="${not empty fundingImageList}">
+				<fmt:parseNumber value = "${12/(fn:length(fundingImageList))} " pattern = "0" var = "num"/>
+					<c:forEach var="img" items="${fundingImageList}">
+						<div class="col-md-${num}  img">
+							<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${img.imgChangeName}" download="${img.imgOriginName}" alt="" class="content-img">
 						</div>
 					</c:forEach>
 				</c:if>
@@ -327,6 +358,8 @@
 					<p>${funding.content}</p>
 				</div>
 				<div id="funding-goods" class="col-md-3">
+					<p>선물</p>
+					<hr>
 					<c:forEach var="f" items="${fundingGoodsList}">
 						<div class="funding-card">
 							<div class="fgName">${f.fgName }</div>
@@ -335,10 +368,11 @@
 						</div>
 					</c:forEach>
 				</div>
+				<div style="clear:both; display:none;"></div>
 			</div>
 			<c:if test="${loginUser.userId == funding.hostId }">
 				<div class="btnArea">
-					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" value="수정">
+					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>
@@ -355,8 +389,7 @@
 								disabled></textarea>
 						</c:if>
 						<div id="reply-insert-btn">
-							<input type="button" id="addReply"
-								class="btn-insert-reply col-md-offset-1 col-md-1" value="등록">
+							<input type="button" id="addReply" class="btn-insert-reply col-md-offset-1 col-md-1" value="등록">
 						</div>
 					</div>
 				</div>
@@ -431,12 +464,8 @@
 						url : fpNo + "/reply",
 						type : "get",
 						success : function(fundingReplyList) {
-							$("#rcount").text(fundingReplyList.length);
-
 							var value = "";
-							$.each(
-										fundingReplyList,
-										function(i, r) {
+							$.each(fundingReplyList,function(i, r) {
 											value += `<div class="reply-group">
 														<input type="hidden" name="replyNo">
 														<div>`+r.writerNickName+`(`+ r.writerId+ `)|`+ r.createDate+ `</div>
@@ -447,6 +476,9 @@
 															+ `,`
 															+ r.replyNo
 															+ `);">삭제</button></div>`;
+												}
+												if(i<fundingReplyList.length-1){
+													value+=`<hr>`;
 												}
 												value+=`</div>`;
 											});
@@ -462,6 +494,48 @@
 			console.log(event.currentTarget);
 		}
 	</script>
+		<!-- JS here -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
+
+	<!-- Date Picker -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/gijgo.min.js"></script>
+	<!-- Nice-select, sticky -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
+	<!-- Progress -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.barfiller.js"></script>
+
+	<!-- counter , waypoint,Hover Direction -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.counterup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/waypoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.countdown.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/hover-direction-snake.min.js"></script>
+
+	<!-- contact js -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/contact.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.form.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.validate.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/mail-script.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	
 </body>
 
 </html>

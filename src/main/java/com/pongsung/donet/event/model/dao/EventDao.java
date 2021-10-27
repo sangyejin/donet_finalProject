@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.common.PageInfo;
 
@@ -48,10 +49,20 @@ public class EventDao {
 	}
 
 	public ArrayList<Event> afterList(SqlSessionTemplate sqlSession, PageInfo pi) {
-int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("eventMapper.afterList", null, rowBounds);
+	}
+
+	public int insertEventAttach(SqlSessionTemplate sqlSession, Attachment at) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("eventMapper.insertEventAttach", at);
+	}
+
+	public Attachment selectEventAttach(SqlSessionTemplate sqlSession, int eno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("eventMapper.selectEventAttach", eno);
 	}
 
 }

@@ -76,6 +76,9 @@
 		<property name="maxUploadSize" value="100000000" />
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>
-
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="/Users/mingi/Donet_final/donet_finalProject/src/main/webapp/resources/upload_files">
+		</constructor-arg>
+	</bean>
 
 </beans>

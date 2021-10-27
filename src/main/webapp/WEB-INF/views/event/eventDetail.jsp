@@ -166,7 +166,12 @@
             <br>
             <section class="event_view_wrap">
                 <div class="event_view_info">
-                	<p > ${ ev.eventContent }</p>
+                	${ ev.eventContent }
+                	<c:forEach var="imageFileName" items="${map.fileList }">
+                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
+                		<img src="${ at.fileLocation }" alt="No Image">
+                		<br><br>
+                	</c:forEach>
                     <!-- image -->
                     <!-- <img src="" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
                 </div>
