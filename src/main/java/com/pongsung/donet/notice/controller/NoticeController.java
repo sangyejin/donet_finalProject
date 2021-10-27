@@ -315,11 +315,69 @@ public class NoticeController {
 		return "customerSupport/faq/faqList";
 
 	}
-	
-	//FAQ Insert
+
+	// FAQ Insert
 	@RequestMapping("goAddForm.faq")
 	public String goAddFaq() {
-			return "customerSupport/faq/addFaq";
+		return "customerSupport/faq/addFaq";
+	}
+
+	@RequestMapping("insert.faq")
+	public String insertFaq(@RequestParam(name = "faqQuestion") String faqQuestion,
+			@RequestParam(name = "searchtype") int faqType, @RequestParam(name = "faqAnswered") String faqAnswered,
+			HttpServletRequest request, Model model) {
+
+		System.out
+				.println("faqQuestion : " + faqQuestion + ", faqType : " + faqType + " , faqAnswered : " + faqAnswered);
+
+		FrequentlyAskedQuestions faq = new FrequentlyAskedQuestions();
+
+		faq.setFaqQuestion(faqQuestion);
+		faq.setFaqType(faqType);
+		faq.setFaqAnswered(faqAnswered);
+
+		NoService.insertFaq(faq);
+
+		return "redirect:list.faq";
+	}
+
+	// update
+	@RequestMapping("goUpdateForm.faq")
+	public ModelAndView updateFaq(int faqNo, ModelAndView mv) {
+		System.out.println("faqNo : " + faqNo);
+		FrequentlyAskedQuestions faq = NoService.selectThisFaq(faqNo);
+		System.out.println("*** faq : " + faq);
+
+		mv.addObject("faq", faq);
+		mv.setViewName("customerSupport/faq/adjustDeleteFaq");
+
+		return mv;
+	}
+
+	@RequestMapping("update.faq")
+	public String updateFaq(@RequestParam(name = "faqNo") int faqNo,
+			@RequestParam(name = "faqQuestion") String faqQuestion,
+			@RequestParam(name = "faqAnswered") String faqAnswered, HttpServletRequest request, ModelAndView model) {
+
+		System.out.println("faqNo : " + faqNo + ", faqQuestion : " + faqQuestion + " , faqAnswered : " + faqAnswered);
+
+		FrequentlyAskedQuestions faq = new FrequentlyAskedQuestions();
+
+		faq.setFaqNo(faqNo);
+		faq.setFaqQuestion(faqQuestion);
+		faq.setFaqAnswered(faqAnswered);
+
+		NoService.updateFaq(faq);
+
+		return "redirect:list.faq";
+	}
+
+	// delete
+	@RequestMapping("delete.faq")
+	public String deleteFaq(int faqNo, HttpServletRequest request) {
+		NoService.deleteFaq(faqNo);
+
+		return "redirect:list.faq";
 	}
 
 }

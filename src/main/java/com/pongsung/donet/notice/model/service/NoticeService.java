@@ -37,5 +37,13 @@ public interface NoticeService {
 
 	ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi,Category ctgry);
 
+	void insertFaq(FrequentlyAskedQuestions faq);
+
+	FrequentlyAskedQuestions selectThisFaq(int faqNo);
+
+	void updateFaq(FrequentlyAskedQuestions faq);
+
+	void deleteFaq(int faqNo);
+
 
 }
