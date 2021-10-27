@@ -94,7 +94,7 @@ public class FundingDao {
 
 	public int insertFundingSupporter(SqlSessionTemplate sqlSession, FundingSupporter fundingSupporter) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("fundingMapper.insertFundingSupporter",fundingSupporter);
+		return sqlSession.insert("fundingMapper.insertFundingSupporter",fundingSupporter);
 	}
 
 }

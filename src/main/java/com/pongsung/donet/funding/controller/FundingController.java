@@ -149,11 +149,11 @@ public class FundingController {
 	public String selectFundingDetail(@PathVariable("fpNo") int fpNo, Model model) {
 		Funding funding= fundingService.selectFunding(fpNo);
 		System.out.println(fpNo);
-		List<FundingImage> fundingImgList = fundingService.selectFundingImageList(fpNo);
+		List<FundingImage> fundingImageList = fundingService.selectFundingImageList(fpNo);
 		List<FundingGoods> fundingGoodsList = fundingService.selectFundingGoodsList(fpNo);
-		
+		System.out.println("fundingImgList :::"+fundingImageList);
 		model.addAttribute("funding",funding );
-		model.addAttribute("fundingImgList", fundingImgList);
+		model.addAttribute("fundingImageList", fundingImageList);
 		model.addAttribute("fundingGoodsList", fundingGoodsList);
 		return "funding/fundingDetailView";
 	}
@@ -182,7 +182,7 @@ public class FundingController {
 	//펀딩 업데이트
 	@RequestMapping(value="funding/{fpNo}/update")
 	public String updateFunding(@PathVariable("fpNo")int fpNo) {
-		fundingService.updateFunding();
+		//fundingService.updateFunding();
 		return "";
 	}
 	
@@ -194,7 +194,7 @@ public class FundingController {
 	}
 	
 	//펀딩 후원창
-	@RequestMapping(value="funding/{fpNo}/supportForm")
+	@RequestMapping(value="funding/{fpNo}/support")
 	public String supportFundingForm(@PathVariable("fpNo") int fpNo, Model model) {
 		Funding funding =fundingService.selectFunding(fpNo);
 		List<FundingGoods> fundingGoodsList = fundingService.selectFundingGoodsList(fpNo);
@@ -210,11 +210,16 @@ public class FundingController {
 		fundingSupporter.setFpSupporter(((Member)model.getAttribute("loginUser")).getUserId());
 		fundingSupporter.setFpNo(fpNo);
 		fundingService.insertFundingSupporter(fundingSupporter);
-
-		model.addAttribute("fpNo", fpNo);
-		return "redirect:/funding/complete";
+		return "redirect:/funding/"+fpNo+"/complete";
 	}
 	
+	// 펀딩프로젝트 후원완료창 확인용
+	@RequestMapping("funding/{fpNo}/complete")
+	public String completeFunding(@PathVariable("fpNo") int fpNo,Model model) {
+		Funding funding =fundingService.selectFunding(fpNo);
+		model.addAttribute("funding", funding);
+		return "funding/fundingCompleteView";
+	}
 	//펀딩 댓글 수정
 	@RequestMapping(value="funding/{fpNo}/reply/{replyNo}/update")
 	public String updateReply(@PathVariable("fpNo")int fpNo, @PathVariable("replyNo")int replyNo,FundingReply fundingReply) {
@@ -230,16 +235,7 @@ public class FundingController {
 		return String.valueOf(result);
 	}
 
-	
 
-	
-	
-	
-	// 펀딩프로젝트 후원완료창 확인용
-	@RequestMapping("funding/complete")
-	public String completeFunding() {
-		return "funding/fundingCompleteView";
-	}
 	
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		logger.info("=================== saveFile 진입 ==========================");

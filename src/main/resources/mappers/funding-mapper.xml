@@ -173,11 +173,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where REPLY_NO=#{replyNo}
 	</update>
 	
+	<update id="updateFundingReply" parameterType="_int">
+		update FUNDING_REPLY
+		set REPLY_CONTENT=#{replyContent}
+		where REPLY_NO=#{replyNo}
+	</update>
+	
 	<insert id="insertFundingSupporter" parameterType="fundingSupporter">
 		INSERT INTO FUNDING_SUPPORTER(FS_NO,FP_NO,FP_SUPPORTER,FP_SUPPORT_DATE,FP_PRICE,FG_NO
 						,TAKE_NAME,TAKE_ADDRESS,TAKE_PHONE,TAKE_POSTCODE)
-		VALUES(NVL(MAX(SELECT COUNT(*) FROM FUNDING_SUPPORT WHERE FP_NO=#{fpNo})),#{fpNo},#{fpSupporter},#{fpSupportDate},#{fpPrice}#{fgNo},
-		#{takeNAme},#{takeAddress},#{takePhone},#{takePostCode})
+		VALUES(NVL((SELECT MAX(FS_NO) FROM FUNDING_SUPPORTER WHERE FP_NO=#{fpNo}),0)+1,#{fpNo},#{fpSupporter},sysdate,#{fpPrice},#{fgNo},
+		#{takeName},#{takeAddress},#{takePhone},#{takePostCode})
 	</insert>
 	
 	
