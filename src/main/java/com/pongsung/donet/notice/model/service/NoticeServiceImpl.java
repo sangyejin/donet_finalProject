@@ -10,6 +10,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.dao.NoticeDao;
 import com.pongsung.donet.notice.model.vo.Category;
+import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -109,8 +110,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public ArrayList<Notice> selectFaqList(PageInfo pi, Category ctgry) {
+	public ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi, Category ctgry) {
 		return NoDao.selectFaqList(sqlSession, pi, ctgry);
 
 	}
+
 }

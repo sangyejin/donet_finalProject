@@ -37,10 +37,7 @@
 		
 		#greenfont1, #faq, #facetoface { font-weight: bold; }
 		
-		/*helper*/
-		
-		#gethelp:hover{ text-decoration : underline;}
-		
+		/*helper*/		
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
@@ -59,9 +56,9 @@
 		}
 		
 		#gethelp { margin-left: 3%; }
-		#gethelp:hover{  : underline;}
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
 		
-#helparrow { margin-left: 48px; margin-top: 0px; }
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
         /* main main */
         #thelist{
@@ -71,10 +68,7 @@
             width: 800px;
         }
 
-        #notice {
-		font-size: 13px;
-		font-weight: bolder;
-		}
+        #notice { font-size: 13px; font-weight: bolder; }
         
         #greenfont1, #greenfont2{ color: rgb(30, 154, 40); }
 
@@ -93,11 +87,6 @@
             margin-left: 35px;
         }
 
-        #noticeTitle{
-            width: 670px;
-            margin-left: 50px;
-        }
-
         .grayline{
             margin-top: 2%;
             margin-bottom: 2%;
@@ -113,28 +102,7 @@
             width: 1050px; 
 		 	margin-left: 150px;
         }
-
-
-		/*align style
-        span > b { margin-left: 52px; }
-
-        span > p{ 
-            margin-left: 136px;
-            margin-top : -28px;
-        }
-
-        span > p > #boldPeriod{ margin-left : -4px; font-size: 22px; }
-
-        span > mark { margin-left: 150px;  }
-
-        #justGetThere{ margin-top: -35px; }
-
-        #headjustify{ margin-top : -10px}
         
-        #alignboi{ margin-left: 180px;  margin-top: -18px; }
-
-		#justify{ margin-left: 243.5px;  margin-top: -18px; }
-*/
         #greenline{
             margin-top: 4px;
             margin-bottom: 0;
@@ -144,9 +112,7 @@
             background-color: rgb(30, 154, 40);
         }
         
-       /* .thisimg{ width: 15px;  height: 15px; }*/
-
-
+      
 /*img*/
 
 		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
@@ -201,17 +167,24 @@
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
     
     /* img sneak*/
-    
-     #noticeContent{ margin-top : 2px; border : none;  height: 230px; }
+     #noticeContent{ margin-top : 7px; border : none;  height: 230px; }
     
     #imgViewArea{ 
-    		margin-top: -15px;
+    		margin-top: -25px;
             width: 670px;
             margin-left: 80px;
-            height: 435px;
+            height: 440px;
             border : 1px solid rgb(206,212,218);
             border-radius : 7px;
      }
+     
+      #noticeTitle{
+            width: 670px;
+            height : 25px;
+            margin-left: 50px;
+            border-radius : 7px;
+            border : 1px solid rgb(206,212,218);
+        }
      
      #imgArea{ border-radius : 7px; border : none; }
     
@@ -300,7 +273,7 @@
         <div class="shabbygrayline"></div>
 
 		
-        <span>내용</span> 
+        <span><label for="noticeContent">내용</label></span> 
         <div id="imgViewArea">
         	<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
 	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  rows="10" style="resize:none;" maxlength="2000">
