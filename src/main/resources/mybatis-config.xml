@@ -28,6 +28,7 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Sponsor" alias="Sponsor" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportCategory" alias="SupportCategory" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportUsePlan" alias="SupportUsePlan" />
+		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 
 
 	</typeAliases>

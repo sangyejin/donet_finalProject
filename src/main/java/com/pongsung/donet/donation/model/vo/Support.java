@@ -22,13 +22,16 @@ public class Support {
 	private Date suDate; //작성일
 	private String content;
 	private String target;
-	private Date bStart; //사업시작일
-	private Date bLast; //사업마감일
+	private Date bstart; //사업시작일
+	private Date blast; //사업마감일
 	private String thumbnailOrigin; //썸네일 원본명
 	private String thumbnailChange; //썸네일 변경명 //변경완료//NOTION에 업데이트해야함
 	private int categoryNo;
 	private String status;
 	private int total;
+	private int totalamount;
 	private int hits;
+	private int ddate;
+	private int goal;
 	
 }

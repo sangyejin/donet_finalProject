@@ -8,8 +8,9 @@
 </head>
 <body>
 <jsp:include page="common/menubar.jsp"/>
-
 <jsp:include page="common/footer.jsp"/>
+
+
  <!-- <h1>
 	Hello world!  
 </h1> 

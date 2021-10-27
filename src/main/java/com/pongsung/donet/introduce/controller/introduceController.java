@@ -11,6 +11,12 @@ public class introduceController {
 
 		return "introduce/introduceProject";
 	}
+	
+	@RequestMapping("introduce.how")
+	public String howtoDonation() {
+
+		return "introduce/howtoDonation";
+	}
 
 
 

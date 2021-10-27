@@ -119,7 +119,8 @@
 		<div class="content">
 			<c:if test="${!empty list}">
 				<c:forEach items="${ list }" var="s" varStatus="status">
-					<div class="supportList">
+					<div class="supportList"
+						onclick="location.href = 'detail.do?suNo=${s.suNo}'">
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
@@ -137,17 +138,36 @@
 										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 								</div>
 								<div id="total">
-									<h6>2306명</h6>
+									<h6>${s.total }명</h6>
 								</div>
 							</div>
 							<div class="progressBar">
-								<span class="progressbar"> <span class="gauge"
-									style="width: 30%;"></span>
-								</span>
+								<c:choose>
+									<c:when test="${s.goal ne 0 }">
+										<c:set var="cul" value="${(s.totalamount/s.goal)*100 }" />
+										<c:choose>
+											<c:when test="${cul>=100 }">
+												<span class="progressbar"> <span class="gauge"
+													style="width: 101%;"></span>
+												</span>
+											</c:when>
+											<c:when test="${cul<100 }">
+												<span class="progressbar"> <span class="gauge"
+													style="width: ${cul}%;"></span>
+												</span>
+											</c:when>
+										</c:choose>
+									</c:when>
+									<c:when test="${s.goal eq 0 }">
+										<span class="progressbar"> <span class="gauge"
+											style="width: 0%;"></span>
+										</span>
+									</c:when>
+								</c:choose>
 							</div>
 							<div class="totalAmount">
 								<h3>
-									<b>누적 27,660,000원</b>
+									<b>누적 ${s.totalamount } 원</b>
 								</h3>
 							</div>
 						</span>
@@ -209,15 +229,7 @@
 				location.href = "vulnerable";
 			}
 		</script>
-		<script>
-			$(function() {
-				$(".supportList").click(
-						function() {
-							location.href = "detail.do?suNo="
-									+ $(this).children().eq(0).text();
-						});
-			});
-		</script>
+
 		<jsp:include page="../common/footer.jsp" />
 		<div
 			style="display: scroll; position: fixed; bottom: 10px; right: 5px;">
