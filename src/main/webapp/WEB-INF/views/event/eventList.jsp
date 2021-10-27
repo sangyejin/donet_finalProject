@@ -170,7 +170,7 @@
             	<p style="display:none" > ${ ev.eventNo } </p>
                 <div class="single-cases mb-40">
                     <div class="cases-img">
-                    	<!-- <img src="" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
+                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> 
                     </div>
                     <div class="cases-caption">
                     	<h2>${ ev.eventTitle }</h2>
