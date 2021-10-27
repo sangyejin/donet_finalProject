@@ -147,6 +147,7 @@ public class FundingController {
 	// 펀딩 디테일
 	@RequestMapping(value="funding/{fpNo}")
 	public String selectFundingDetail(@PathVariable("fpNo") int fpNo, Model model) {
+		fundingService.updateFundingHitsCount(fpNo);
 		Funding funding= fundingService.selectFunding(fpNo);
 		System.out.println(fpNo);
 		List<FundingImage> fundingImageList = fundingService.selectFundingImageList(fpNo);
@@ -220,9 +221,13 @@ public class FundingController {
 		model.addAttribute("funding", funding);
 		return "funding/fundingCompleteView";
 	}
+	
 	//펀딩 댓글 수정
+	@ResponseBody
 	@RequestMapping(value="funding/{fpNo}/reply/{replyNo}/update")
 	public String updateReply(@PathVariable("fpNo")int fpNo, @PathVariable("replyNo")int replyNo,FundingReply fundingReply) {
+		fundingReply.setReplyNo(replyNo);
+		logger.info("fundingReply update::"+fundingReply);
 		int result = fundingService.updateFundingReply(fundingReply);
 		return String.valueOf(result);
 	}
