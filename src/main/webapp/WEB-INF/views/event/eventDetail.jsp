@@ -56,8 +56,8 @@
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
         img{
-            height:200px;
-            width:100%;
+            height:80%;
+            width:80%;
           }
           
           div[class^="col-"]{
@@ -166,14 +166,19 @@
             <br>
             <section class="event_view_wrap">
                 <div class="event_view_info">
-                	${ ev.eventContent }
-                	<c:forEach var="imageFileName" items="${map.fileList }">
-                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
-                		<img src="${ at.fileLocation }" alt="No Image">
-                		<br><br>
-                	</c:forEach>
+	                <div class="contentArea">
+	                	${ ev.eventContent }
+	                	<c:forEach var="imageFileName" items="${map.fileList }">
+	                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
+	                		<img src="${ at.fileLocation }" alt="No Image">
+	                		<br><br>
+	                	</c:forEach>
+	                	</div>
+	                	<br>
                     <!-- image -->
-                    <!-- <img src="" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
+                    <div class="imageArea">
+                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="" >
+                    </div>
                 </div>
                 <!-- <div>
                 	<p> 첨부파일 </p>
@@ -209,48 +214,16 @@
             	
             	</tbody>
             </table>
-            
-         
-            <div class="btn_event_wrap">
-            	
-	            	<c:if test="${ !empty loginUser }">
-	            		<div>
-	            			<button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</button>
-	            			<button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</button>
-	            		</div>
-		            	<form id="postForm" method="post" action="">
-	            			<input type="hidden" name="eno" value="${ ev.eventNo }">
-	            			<!-- <input type="hidden" name="fileName" value="${ ev.eventNo }"> -->
-						</form>
-						<script>
-	            		function postFormSubmit(n){
-	            			var post = $("#postForm");
-	            			if(n == 1){
-	            				post.attr("action", "updateForm.ev");
-	            			}else{
-	            				post.attr("action", "delete.ev");
-	            			}
-	            			post.submit();
-	            		}
-	            		</script>            		
-	            	</c:if>
-	            	
-            	
-                <input class="btn_event" type="button" value="목록" onclick="location.href='list.ev'">
-            </div>
-        </section>  
-       
-    </div>
-   
-   <script>
+             <script>
    $(function(){
    		selectReplyList();
    		
    		$("#addReply").click(function(){
    			var eno = ${ev.eventNo};
+   			
    			if($("#replyContent").val().trim().length != 0){
    				$.ajax({
-   					url:"rinsert.ev"
+   					url:"rinsert.ev",
    					type:"post",
    					data:{eventReplyContent:$("#replyContent").val(),
    							refEventNo:eno,
@@ -284,16 +257,25 @@
 			   $("#rcount").text(list.length);
 			   
 			   var value="";
+			   
 			   $.each(list, function(i, obj){
+				   
+				   
 				   if("${loginUser.userId}" == obj.eventReplyWriter){
-					   value += "<tr style='background:#EAFAF1'>";
+					   value += "<tr>"
+						    "<th>" + obj.eventReplyWriter + "</th>" +
+				   			"<td>" + obj.eventReplyContent + "</td>" + 
+				   			"<td>" + obj.eventReplyDate + "</td>" +
+				   			"<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
+				   			"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
+				   			"</tr>";
 				   }else{
-					   value += "<tr>";
-				   }
-				   value += "<th>" + obj.eventReplyWriter + "</th>" +
+					   value += "<tr>"
+						    "<th>" + obj.eventReplyWriter + "</th>" +
 				   			"<td>" + obj.eventReplyContent + "</td>" + 
 				   			"<td>" + obj.eventReplyDate + "</td>" +
 				   			"</tr>";
+				   }
 			   });
 			   $("replyArea tbody").html(value);
 		   }, 
@@ -304,6 +286,39 @@
    };
   
    </script>
+         
+            <div class="btn_event_wrap">
+            	
+	            	<c:if test="${ !empty loginUser }">
+	            		<div>
+	            			<button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</button>
+	            			<button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</button>
+	            		</div>
+		            	<form id="postForm" method="post" action="">
+	            			<input type="hidden" name="eno" value="${ ev.eventNo }">
+	            			<!-- <input type="hidden" name="fileName" value="${ ev.eventNo }"> -->
+						</form>
+						<script>
+	            		function postFormSubmit(n){
+	            			var post = $("#postForm");
+	            			if(n == 1){
+	            				post.attr("action", "updateForm.ev");
+	            			}else{
+	            				post.attr("action", "delete.ev");
+	            			}
+	            			post.submit();
+	            		}
+	            		</script>            		
+	            	</c:if>
+	            	
+            	
+                <input class="btn_event" type="button" value="목록" onclick="location.href='list.ev'">
+            </div>
+        </section>  
+       
+    </div>
+   
+  
 
 <jsp:include page="../common/footer.jsp" />
 </body>

@@ -15,7 +15,7 @@
    	table{
    		margin-left: auto;
    		margin-right: auto;
- 		width:80%;
+ 		width:100%;
  		font-size: 80%;
  		text-align: center;
    	}
@@ -26,6 +26,7 @@
    	table tbody tr th {
    		border-right: 1re solid;
    		border-color: transparent;
+   		width:20%;
    	}
   
     .row{
@@ -34,17 +35,14 @@
    #postContent{
    		width:100%;
    		min-height: 600px;
-   		
    		display: inline-block;
    }
+   .img{
+   		width: 150px;
+   		height: 150px;
+   		margin: 10px;
+   }
 </style>
-<script>
-	function getContent(){
-		document.getElementById("content").value = document.getElementById("postContent").innerHTML;
-		return true;
-	}
-
-</script>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" /> 
@@ -68,11 +66,18 @@
        				<th><label for="datepickerLast">이벤트 종료</label>
        				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly"></td>
        			</tr>
+       			
        			<tr class="form-group">
-       				<th><label for="upfile">첨부파일</label></th>
-       				
-       				<td><input id="iFile" multiple="multiple" type="file" name="uploadFile" multiple/></td> 
-       				
+       				<th><label for="thum">썸네일 이미지</label></th>
+       				<td><img alt="" src="" id="thumImg" class="img" ></td>
+       			</tr>
+       			<tr>
+       				<th><label for="">추가 등록</label></th>
+       				<td>
+	       				<img class="img" id="plusImg1">
+	       				<img class="img" id="plusImg2">
+	       				<img class="img" id="plusImg3">
+       				</td>       			
        			</tr>
        			
        			<tr class="form-group">
@@ -80,77 +85,53 @@
        				<td><textarea id="postContent" name="eventContent" class="form-control" ></textarea></td>
        			</tr>
        			</table>
-       			<div id="imgArea">
-       				
+       			<div id="fileArea">
+       				<input type="file" name="thumFile" id="thumFile" onchange="thum(this, 0);">
+       				<input type="file" name="plusFile" id="plusFile1" onchange="thum(this, 1);">
+       				<input type="file" name="plusFile" id="plusFile2" onchange="thum(this, 2);">
+       				<input type="file" name="plusFile" id="plusFile3" onchange="thum(this, 3);">
        			</div>
        			<script type="text/javascript">
-       			/*
-       				$("#iFile").change(function(){
-       					if(this.files && this.files[0]) {
-       						var reader = new FileReader;
-       						reader.onload = function(data){
-       							$("#imgArea img").attr("src", data.target.result).width(500);
-       						}
-       						reader.readAsDataURL(this.files[0]);
-       					}
-       				});
-       			*/
-       				
-       				function readMultipleImage(input){
-       					const multipleContainer = document.getElementById("imgArea");
-       					//인풋태그에 이미지(파일)이 있는 경우 
-       					if(input.files){
-       						console.log(input.files);
-       						
-       						const fileArr = Array.from(input.files);
-       						const $colDiv1 = document.createElement("div");
-       						const $colDiv2 = document.createElement("div");
-       						
-       						$colDiv1.classList.add("column");
-       						$colDiv2.classList.add("column");
-       						
-       						fileArr.forEach((file, index) => {
-       							const reader = new FileReader();
-       							const $imgDiv = document.createElement("div");
-       							const $img = document.createElement("img");
-       							
-       							$img.classList.add("image");
-       							
-       							const $label = document.createElement("label");
-       							$label.classList.add("image-label");
-       							$label.textContent = file.name;
-       							
-       							$imgDiv.appendChild($img);
-       							$imgDIv.appendChild($label);
-       							
-       							reader.onload = e => {
-       								$img.src = e.target.result;
-       								
-       								$imgDiv.style.width = ($img.naturalWidth) * 0.2 + "px";
-       								$imgDiv.style.height = ($img.naturalWidth) * 0.2 + "px";
-       							}
-       							
-       							console.log(file.name);
-       							
-       							if(index % 2 == 0){
-       								$colDiv1.appendChild($imgDiv);
-       							}else{
-       								$colDiv2.appendChild($imgDiv);
-       							}
-       							reader.readAsDataURL(file);
-       							
-       						})
-       						multipleContainer.appendChild($colDiv1);
-       						multipleContainer.appendChild($colDiv2);
-       						
-       					}
-       					
-       				};
-       				const inputMultipleImage = document.getElementById("iFile");
-       				inputMultipleImage.addEventListener("change", e => {
-       					readMultipleImage(e.target);
-       				});
-       				
+	       			$(function(){
+	       				$("#fileArea").hide();
+	       				$("#thumImg").click(function(){
+	       					$("#thumFile").click();
+	       				});
+	       				$("#plusImg1").click(function(){
+	       					$("#plusFile1").click();
+	       				});
+	       				$("#plusImg2").click(function(){
+	       					$("#plusFile2").click();
+	       				});
+	       				$("#plusImg3").click(function(){
+	       					$("#plusFile3").click();
+	       				});
+	       			});
+	       			
+	       			function thum(inputFile, num){
+	       				if(inputFile.files.length == 1){
+	       					var reader = new FileReader();
+	       					reader.readAsDataURL(inputFile.files[0]);
+	       					reader.onload = function(e){
+	       						switch(num){
+	       							case 0:
+	       								$("#thumImg").attr("src", e.target.result);
+	       								break;
+	       							case 1:
+	       								$("#plusImg1").attr("src", e.target.result);
+	       								break;
+	       							case 2:
+	       								$("#plusImg2").attr("src", e.target.result);
+	       								break;
+	       							case 3:
+	       								$("#plusImg3").attr("src", e.target.result);
+	       								break;
+	       						}
+	       					}
+	       				}
+	       			}
+       		
+       			
        				
        			</script>
        			

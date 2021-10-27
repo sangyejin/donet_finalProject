@@ -1,6 +1,7 @@
 package com.pongsung.donet.event.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
+import com.pongsung.donet.event.model.vo.EventReply;
 import com.pongsung.donet.common.PageInfo;
 
 @Repository
@@ -55,14 +57,24 @@ public class EventDao {
 		return (ArrayList)sqlSession.selectList("eventMapper.afterList", null, rowBounds);
 	}
 
-	public int insertEventAttach(SqlSessionTemplate sqlSession, Attachment at) {
+	public int insertEventAttach(SqlSessionTemplate sqlSession, List<Attachment> attList) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("eventMapper.insertEventAttach", at);
+		return sqlSession.insert("eventMapper.insertEventAttach", attList);
 	}
 
 	public Attachment selectEventAttach(SqlSessionTemplate sqlSession, int eno) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("eventMapper.selectEventAttach", eno);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, EventReply re) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("eventMapper.insertReply", re);
+	}
+
+	public ArrayList<EventReply> replyList(SqlSessionTemplate sqlSession, int eno) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("eventMapper.replyList", eno);
 	}
 
 }
