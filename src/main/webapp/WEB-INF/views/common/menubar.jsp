@@ -174,11 +174,11 @@ height : 30px;
                 </li>
                 <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
                     <ul class="arrow_box">
-                        <li><a href="global">지구촌</a></li>
-                        <li><a href="environment">환경</a></li>
-                        <li><a href="animal">동물</a></li>
-                        <li><a href="child">아동/청소년</a></li>
-                        <li><a href="vulnerable">취약계층</a></li>
+                        <li><a href="global?suCategoryNo=1">지구촌</a></li>
+                        <li><a href="environment?suCategoryNo=2">환경</a></li>
+                        <li><a href="animal?suCategoryNo=3">동물</a></li>
+                        <li><a href="child?suCategoryNo=4">아동/청소년</a></li>
+                        <li><a href="vulnerable?suCategoryNo=5">취약계층</a></li>
                     </ul> 
                 </li>
                 <li class="greenfont" id="3"><a>이벤트</a>

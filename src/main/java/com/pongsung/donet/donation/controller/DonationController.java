@@ -82,23 +82,18 @@ public class DonationController {
 		return "donation/registration";
 	}
 	
-/*	@RequestMapping("global")
-	public String global(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model, int categoryNo) {
-		int listCount = donationService.selectGolbalListCount(categoryNo);
-		System.out.println("listCount"+listCount);
+	@RequestMapping("select.ca")
+	public String global(int suCategoryNo, Model model) {
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
-		System.out.println("pi"+pi);
-		
-		List<Support> list = donationService.selectGlobalList(pi,categoryNo);
-		System.out.println("support"+list);
+		List<Support> list = donationService.selectCategoryList(suCategoryNo);
+		System.out.println("list"+list);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
 		
 		System.out.println("model "+model);		
 		return "donation/global";
-	}*/
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "list.re", produces = "application/json; charset=utf-8")
 	public String selectReplyList(int suNo) {
@@ -124,6 +119,14 @@ public class DonationController {
 		System.out.println(replyNo);
 		System.out.println(result);
 		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="update.re/{suNo}/{replyNo}")
+	public String updateReply(@PathVariable("suNo")int suNo, @PathVariable("replyNo")int replyNo, SupporComment sc) {
+		sc.setReplyNo(replyNo);
+		int result = donationService.updateReply(sc);
 		return String.valueOf(result);
 	}
 

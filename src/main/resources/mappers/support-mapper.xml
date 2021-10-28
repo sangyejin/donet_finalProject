@@ -144,5 +144,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET SC_STATUS='N'
 		WHERE SC_NO=#{replyNo}
 	</update>
+	
+	<select id="selectCategoryListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM SUPPORT
+		WHERE SU_SATUTS='Y'
+		AND SU_CATEGORY = #{suCategoryNo}
+	</select>
+	<select id="selectCategoryList" resultMap="supportResultSet" parameterType="_int">
+		SELECT * 
+		FROM SUPPORT 
+		WHERE SU_CATEGORY = #{suCategoryNo}
+		AND SU_SATUTS='Y'
+        ORDER BY SU_NO DESC
+	</select>
+	
+	<update id="updateReply" parameterType="SupporComment">
+		UPDATE SUPPORT_COMMENT
+		SET SC_COMMENT=#{replyContent}
+		WHERE SC_NO=#{replyNo}
+	</update>
 
 </mapper>
