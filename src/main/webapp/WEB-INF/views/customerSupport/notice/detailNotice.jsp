@@ -69,7 +69,7 @@
 		}
 		
 		#gethelp { margin-left: 3%; }
-		#gethelp:hover{ text-decoration : underline;}
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
 		
 #helparrow { margin-left: 48px; margin-top: 0px; }
 
@@ -286,7 +286,7 @@
     <!-- **삭제 후 인덱스 정렬 필요 -->
     <script>
     	function adminDelete(){ 
-    		if(confirm(${no.rowNum} + "번 게시글을 삭제합니다.")){
+    		if(confirm(${no.rowNum} + "번 게시글을 삭제합니다."))){
     			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
     			alert (${no.rowNum} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
         		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 

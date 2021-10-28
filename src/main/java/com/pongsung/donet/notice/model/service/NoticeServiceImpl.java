@@ -10,6 +10,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.dao.NoticeDao;
 import com.pongsung.donet.notice.model.vo.Category;
+import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
@@ -109,8 +110,43 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public ArrayList<Notice> selectFaqList(PageInfo pi, Category ctgry) {
+	public ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi, Category ctgry) {
 		return NoDao.selectFaqList(sqlSession, pi, ctgry);
 
 	}
+
+	@Override
+	public void insertFaq(FrequentlyAskedQuestions faq) {
+		int result = NoDao.insertFaq(sqlSession, faq);
+
+		if (result < 0) {
+			throw new CommException("FAQ 추가 실패");
+		}		
+	}
+
+	@Override
+	public FrequentlyAskedQuestions selectThisFaq(int faqNo) {
+		return NoDao.selectThisFaq(sqlSession, faqNo);
+	}
+
+	@Override
+	public void updateFaq(FrequentlyAskedQuestions faq) {
+		int result = NoDao.updateFaq(sqlSession, faq);
+		
+		if(result < 0) {
+			throw new CommException("FAQ 업데이트 실패");
+		}
+	}
+
+	@Override
+	public void deleteFaq(int faqNo) {
+		int result = NoDao.deleteFaq(sqlSession, faqNo);
+		
+		if(result < 0) {
+			throw new CommException("FAQ 삭제 실패");
+		}
+		
+		
+	}
+
 }

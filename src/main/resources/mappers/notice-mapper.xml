@@ -120,5 +120,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE NO_NO=#{noticeNo}
 		AND NO_SAVE='N'
 	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	<resultMap id="faqResultMap" type="FAQ">
+		<id column="F_NO" property="faqNo" />
+		<result column="rownum" property="rowNum"/>
+		<result column="F_Q" property="faqQuestion"/>
+		<result column="F_A" property="faqAnswered" />
+		<result column="F_TYPENUM" property="faqType" />
+		<result column="F_TYPENAME" property="faqTypeName" />
+	</resultMap>
+	
+	<select id="selectFaqListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM FAQ
+		JOIN FAQ_TYPE ON F_TYPENUM=F_TYPENO
+		<if test="fTypeNo != null">
+			WHERE F_TYPENUM = #{fTypeNo}
+			<if test="fTypeName != null">
+			AND F_Q LIKE '%' || #{fTypeName} || '%'
+			</if>
+		</if>
+		
+			
+	</select>
 
+	<select id="selectFaqList" resultMap="faqResultMap" parameterType="_int" resultType="FAQ">
+		SELECT ROWNUM,F_NO, F_Q, F_A, F_TYPENAME
+		FROM FAQ
+		JOIN FAQ_TYPE ON F_TYPENUM=F_TYPENO
+		<if test="fTypeNo != null">
+			WHERE F_TYPENUM = #{fTypeNo}
+			<if test="fTypeName != null">
+			AND F_Q LIKE '%' || #{fTypeName} || '%'
+			</if>
+		</if>
+		ORDER BY F_NO
+	</select>
+	
+	<insert id="insertFaq" parameterType="FAQ">
+		INSERT INTO FAQ VALUES
+		(SEQ_FAQ.NEXTVAL, #{faqQuestion}, #{faqAnswered},
+		#{faqType})
+	</insert>
+	
+	<select id="selectThisFaq" parameterType="_int" resultMap="faqResultMap">
+		SELECT ROWNUM,F_NO, F_Q, F_A, F_TYPENAME
+		FROM FAQ
+		JOIN FAQ_TYPE ON F_TYPENUM=F_TYPENO
+		WHERE F_NO = #{faqNo}
+	</select>
+	
+	<update id="updateFaq" parameterType="FAQ">
+		UPDATE FAQ
+		SET F_Q=#{faqQuestion},
+			F_A=#{faqAnswered}
+		WHERE F_NO = #{faqNo}
+	</update>
+	
+	<delete id="deleteFaq" parameterType="_int">
+		DELETE FROM FAQ
+		WHERE F_NO = #{faqNo}
+	</delete>
+	
+	
+	
+	
 </mapper>
