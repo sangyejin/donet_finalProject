@@ -17,23 +17,7 @@
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- CSS here -->
-<link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/assets/css/slicknav.css">
-<link rel="stylesheet" href="resources/assets/css/flaticon.css">
-<link rel="stylesheet"
-	href="resources/assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="resources/assets/css/gijgo.css">
-<link rel="stylesheet" href="resources/assets/css/animate.min.css">
-<link rel="stylesheet" href="resources/assets/css/animated-headline.css">
-<link rel="stylesheet" href="resources/assets/css/magnific-popup.css">
-<link rel="stylesheet"
-	href="resources/assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="resources/assets/css/themify-icons.css">
-<link rel="stylesheet" href="resources/assets/css/slick.css">
-<link rel="stylesheet" href="resources/assets/css/nice-select.css">
-<link rel="stylesheet" href="resources/assets/css/style.css">
+
 <title>도넷닷컴</title>
 <style>
 .outer {
@@ -302,13 +286,18 @@ th {
 	background-color: rgb(224, 224, 224);
 	border-top: 2px solid #808080;
 	border-bottom: 2px solid #808080;
-	height: 30px;
+	height: 40px;
 }
 
 td {
 	border-top: 1px solid #808080;
 	border-bottom: 1px solid #808080;
-	height: 30px;
+	height: 40px;
+}
+#replyArea>thead>tr>th {
+	background-color: rgb(224, 224, 224);
+	border-top: 2px solid #808080;
+	border-bottom: 2px solid #808080;
 }
 
 #comment, #partList {
@@ -323,7 +312,7 @@ c {
 	font-weight: 600;
 }
 
-#commentSubmit, #tung {
+#addReply {
 	width: 100px;
 	height: 40px;
 	border-radius: 5px;
@@ -331,12 +320,11 @@ c {
 	font-weight: 600;
 	color: white;
 	background-color: rgb(60, 179, 113);
-	margin-top: 5%;
 	margin-left: 5%;
 	transition: all 0.5s;
 }
 
-#commentSubmit:hover, #tung:hover {
+#addReply:hover {
 	width: 100px;
 	height: 40px;
 	border-radius: 5px;
@@ -344,11 +332,10 @@ c {
 	font-weight: 600;
 	color: rgb(60, 179, 113);
 	background-color: white;
-	margin-top: 5%;
 	margin-left: 5%;
 }
 
-#commentInput {
+#replyContent {
 	width: 800px;
 	height: 38px;
 	border-radius: 7px;
@@ -381,8 +368,8 @@ d {
 }
 
 #commentTable {
-	width: 1000px;
-	height: 30px;
+	width: 1050px;
+	height: 40px;
 	margin-top: 5%;
 	table-layout: fixed;
 	word-break: break-all;
@@ -577,54 +564,37 @@ ${s.content}
 		</div>
 		<div style="margin-top: 10%;">
 			<span><a id="comment" href="">댓글&nbsp;&nbsp; </a></span>
-			<div id="greenLine"></div>
-			<c:choose>
-				<c:when test="${ sessionScope.loginUser ne null }">
+			<div id="greenLine" style="margin-bottom: 5%;"></div>
+                    	<c:if test="${ !empty loginUser }">
 					<div>
 						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 						<span style="margin-left: 3%;"><input type="text"
-							id="commentInput" placeholder="내용을 입력해주세요"></span> <span
-							style=""><input type="submit" id="commentSubmit"
-							value="댓글등록" style=""></span>
+							id="replyContent" placeholder="내용을 입력해주세요"></span> <span
+							style=""><input type="submit" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
 					</div>
-				</c:when>
-				<c:when test="${ sessionScope.loginUser eq null }">
+                        </c:if>
+                        <c:if test="${ empty loginUser }">
 					<div>
 						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 						<span style="margin-left: 7%;"><input type="text"
-							id="commentInput" placeholder="도넷닷컴의 회원이 되어주세요!"></span> <span
-							style=""><input type="submit" id="tung" value="댓글등록"
-							style=""></span>
+							id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span> <span
+							style=""><input type="submit" class="btn btn-secondary" id="addReply" value="댓글등록" ></span>
 					</div>
-				</c:when>
-
-			</c:choose>
-			<div>
-				<table id="commentTable">
-					<tr>
-						<th>번호</th>
-						<th>작성일</th>
+                        </c:if>
+            <table id="replyArea" class="table" align="center">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>작성일</th>
 						<th colspan="2">아이디</th>
-						<th colspan="7">댓글</th>
+						<th colspan="7">댓글(<span id="rcount">0</span>)</th>
 						<th></th>
-					</tr>
-					
-					<c:forEach items="${ c }" var="c" varStatus="status">
-					<c:set var="scNo" value="${c.scNo+1 }" />
-						<tr>
-							<td>${c.scNo }</td>
-							<td>${c.scdate }</td>
-							<td colspan="2">${c.scWriter }</td>
-							<td colspan="7"">${c.comment }</td>
-							<td><c:if
-									test="${ sessionScope.loginUser.userId eq c.scWriter }">
-									<input type="submit" id="update" value="수정" style="">
-									<input type="submit" id="delete" value="삭제" style="">
-								</c:if></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+            </table>
 			<div style="margin-top: 10%;">
 				<span><a id="partList" href="">참여내역</a></span>
 				<div id="greenLine"></div>
@@ -644,47 +614,104 @@ ${s.content}
 							<td>${no }</td>
 							<td>${pList.payDate }</td>
 							<td colspan="2">${pList.userId }</td>
-							<td colspan="8"">${pList.amount }원참여</td>
+							<td colspan="8"">${pList.amount }원 참여</td>
 						</tr>
 					</c:forEach>
 				</table>
 			</div>
 		</div>
 
-	</div>'
-	<script>
-	$(function() {
-		
-		$("#commentSubmit").click(function() {
-			var suNo = "${s.suNo}";
-			var scNo = "${scNo}";
-			if ($("#commentInput").val().trim().length != 0) {
+	</div>
+     <script>
+   		 <!--ajax 댓글작성-->
+   		$(function(){
+    		selectReplyList();
+    		
+    		$("#addReply").click(function(){
+        		var suNo = ${s.suNo};
+
+    			if($("#replyContent").val().trim().length != 0){
+    				
+    				$.ajax({
+    					url:"insert.re",
+    					type:"post",
+    					data:{replyContent:$("#replyContent").val(),
+    						  refBoardNo:suNo,
+    						  replyWriter:"${loginUser.userId}"},
+    					success:function(result){
+    						if(result > 0){
+    							$("#replyContent").val("");
+    							selectReplyList();
+    							
+    						}else{
+    							alert("댓글등록실패");
+    						}
+    					},error:function(){
+    						console.log("댓글 작성 ajax 통신 실패");
+    					}
+    				});
+    				
+    			}else{
+    				alert("댓글을 입력해주세요");
+    			}
+    			
+    		});
+    	});
+    	
+    	function selectReplyList(){
+    		var suNo = ${s.suNo};
+    		$.ajax({
+    			url:"list.re",
+    			data:{suNo:suNo},
+    			type:"get",
+    			success:function(commentList){
+    				$("#rcount").text(commentList.length);
+    				
+					var num= commentList.length
+    				var value="";
+    				$.each(commentList, function(i, obj){
+    					
+    					value += "<tr>"+
+    								"<td>" + num-- + "</td>" +
+    								"<td>" + obj.createDate + "</td>" +
+    					 		 	"<td colspan='2'>" + obj.replyWriter + "</td>" + 
+   								 	"<td colspan='7'>" + obj.replyContent + "</td>" 
+   								 
+   		    					if("${loginUser.userId}" == obj.replyWriter){
+   		    						value += "<td>"+
+												"<input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.replyNo+")'>"+
+   		    								"</td>";
+   		    					}else{
+   		    						value += "<td></td>";
+   		    					} 								 
+   						value += "</tr>";
+    				});
+    				$("#replyArea tbody").html(value);
+    			},error:function(){
+    				console.log("댓글 리스트조회용 ajax 통신 실패");
+    			}
+    		});
+    	}
+    	
+    	function deleteReply(replyNo){
+    		if (confirm("댓글을 삭제하시겠습니까?(Y/N)")) {
 				$.ajax({
-					url : "insert.re",
-					type : "post",
-					data : {
-						scNo : scNo,
-						content : $("#commentInput").val(),
-						suNo : suNo,
-						scWriter : "${loginUser.userId}"
-					},
-					success : function(result) {
-						if (result > 0) {
-							$("#commentInput").val("");
-						} else {
-							alert("댓글등록실패");
-						}
+					url : "delete.re/"+replyNo,
+					type : "get",
+					success : function() {
+						alert("댓글이 삭제되었습니다");
+						selectReplyList();
 					},
 					error : function() {
-						console.log("댓글 작성 ajax 통신 실패");
+						console.log("댓글 리스트조회용 ajax 통신 실패");
 					}
 				});
 			} else {
-				alert("댓글 내용이 비어있습니다.");
-			}
-		});
-	});		
-	</script>
+				alert("댓글 삭제가 취소되었습니다");
+			}	
+    	}
+    	
+    </script>
 	<script>
 		$('.slider-1 > .page-btns > div').click(function() {
 			var $this = $(this);

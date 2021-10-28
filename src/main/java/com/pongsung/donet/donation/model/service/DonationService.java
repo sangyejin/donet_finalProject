@@ -30,6 +30,10 @@ public interface DonationService {
 
 	int insertReply(SupporComment sc);
 
+	ArrayList<SupporComment> selectReplyList(int suNo);
+
+	int deleteReply(int replyNo);
+
 //	int selectGolbalListCount(int categoryNo);
 //
 //	List<Support> selectGlobalList(PageInfo pi, int categoryNo);

@@ -54,13 +54,22 @@ public class SupportDao {
 	}
 
 	public List<Sponsor> selectSponsorList(SqlSessionTemplate sqlSession, int suNo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("supportMapper.selectSponsorList",suNo);
 	}
 
 	public int insertReply(SqlSessionTemplate sqlSession, SupporComment sc) {
-		return sqlSession.insert("boardMapper.insertReply", sc);
+		return sqlSession.insert("supportMapper.insertReply", sc);
 	}
+
+	public ArrayList<SupporComment> selectReplyList(SqlSessionTemplate sqlSession, int suNo) {
+		return (ArrayList)sqlSession.selectList("supportMapper.selectReplyList", suNo);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("supportMapper.deleteReply",replyNo);
+	}
+
+
 
 //	public int selectGolbalListCount(SqlSessionTemplate sqlSession, int categoryNo) {
 //		return sqlSession.selectOne("supportMapper.selectGolbalListCount");
