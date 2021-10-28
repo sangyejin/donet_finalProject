@@ -14,11 +14,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString	
 public class SupporComment {
-
-	private int scNo;
-	private String comment;
-	private int suNo;
-	private String scWriter;
-	private Date scdate;
+	private int replyNo;
+	private String replyContent;
+	private int refBoardNo;
+	private String replyWriter;
+	private Date createDate;
 	private String scSatuts;
 }
