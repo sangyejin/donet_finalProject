@@ -28,13 +28,12 @@ FOR i in 1..20
 LOOP
 insert into funding_project 
 values (SEQ_FUNDING_PROJECT.NEXTVAL,'유기견을 향한 마음','admin',1000000,2400000,
-        to_date('2021-10-02'),to_date('2021-12-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
+        to_date('2021-10-02'),to_date('2021-11-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
         1,default,default,'github.png'
         ,'github.png',default,sysdate);
 END LOOP;
 END;
 /
-
 --BEGIN
 --FOR i in 1..20
 --LOOP

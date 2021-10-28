@@ -142,7 +142,7 @@ select::-ms-expand {
 	padding-top: 10px;
 }
 
-#title {
+.title {
 	display: block;
 	font-size: 18px;
 }
@@ -266,7 +266,7 @@ select::-ms-expand {
 							<div class="cases-caption">
 								<div class="cases-info">
 									<div class="div-title">
-										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" id="title">${list.goodsName}</a>
+										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" class="title">${list.goodsName}</a>
 									</div>
 									<p class="goodsPrice">
 										${list.goodsPrice}
