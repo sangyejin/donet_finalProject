@@ -77,6 +77,11 @@ public class MemberController {
 			return "member/myPage";
 		}
 		
+		// 출석 체크용 달력으로 가기
+		@RequestMapping("calendar.me")
+		public String calendar() {
+			return "attendance/Calendar";
+		}
 		
 		@RequestMapping("insert.me")
 		public String insertMember(@ModelAttribute Member m ,@RequestParam("post") String post,

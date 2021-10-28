@@ -106,6 +106,7 @@
                 <br>
                 
                 <div class="btns" align="center">
+                	<a href="calendar.me" class="text-primary">출석체크</a>
                 	<button class="btn btn-primary"><a data-toggle="modal" data-target="#chagePwdModal">Pwd변경</a></button>
                     <button type="submit" class="btn btn-success">수정하기</button>
                     <%-- <a href="delete.me?userId=${ loginUser.userId }" class="btn btn-danger">탈퇴하기</a> --%>
