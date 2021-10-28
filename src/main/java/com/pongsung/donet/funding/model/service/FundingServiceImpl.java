@@ -16,6 +16,7 @@ import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 
 
 @Service
@@ -109,6 +110,40 @@ public class FundingServiceImpl implements FundingService {
 			throw new CommException("댓글 등록 실패");
 		}
 		return result;
+	}
+
+	@Override
+	public void deleteFunding(int fpNo) {
+		int result=fundingDao.deleteFunding(sqlSession,fpNo);
+		if(result<0) {
+			throw new CommException("펀딩 프로젝트 삭제 실패");
+		}
+	}
+
+	@Override
+	public int updateFundingReply(FundingReply fundingReply) {
+		// TODO Auto-generated method stub
+		int result=fundingDao.updateFundingReply(sqlSession,fundingReply);
+		if(result<0) {
+			throw new CommException("펀딩 댓글 수정 실패");
+		}
+		return result;
+	}
+
+	@Override
+	public void insertFundingSupporter(FundingSupporter fundingSupporter) {
+		int result=fundingDao.insertFundingSupporter(sqlSession,fundingSupporter);
+		if(result<0) {
+			throw new CommException("펀딩 후원 실패");
+		}
+	}
+
+	@Override
+	public void updateFundingHitsCount(int fpNo) {
+		int result=fundingDao.updateFundingHitsCount(sqlSession,fpNo);
+		if(result<0) {
+			throw new CommException("펀딩 프로젝트 조회수 update 실패");
+		}
 	}
 
 

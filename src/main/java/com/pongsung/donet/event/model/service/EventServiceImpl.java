@@ -1,15 +1,18 @@
 package com.pongsung.donet.event.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pongsung.donet.event.model.dao.EventDao;
-import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.event.model.dao.EventDao;
+import com.pongsung.donet.event.model.vo.Attachment;
+import com.pongsung.donet.event.model.vo.Event;
+import com.pongsung.donet.event.model.vo.EventReply;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -40,12 +43,23 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void insertEvent(Event e) {
+	public void insertEvent(Event e, List<Attachment> attList) {
 		// TODO Auto-generated method stub
 		int result = eventDao.insertEvent(sqlSession, e);
-		if(result < 0) {
-			throw new CommException("게시글 추가 실패");
+		if(result > 0) {
+			for(Attachment at : attList) {
+				at.setRefEventNo(result);
+			}
+			if(!attList.isEmpty()) {
+				int result2 = eventDao.insertEventAttach(sqlSession, attList);
+				if(result2 < 0) {
+					throw new CommException(" 추가 사진 등록실패 ");
+				}
+			}
+		}else {
+			throw new CommException("이벤트 등록 실패 ");
 		}
+		
 	}
 
 	@Override
@@ -77,5 +91,26 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return eventDao.afterListCount(sqlSession);
 	}
+
+	@Override
+	public Attachment selectEventAttach(int eno) {
+		// TODO Auto-generated method stub
+		return eventDao.selectEventAttach(sqlSession, eno);
+	}
+
+	@Override
+	public int insertReply(EventReply re) {
+		// TODO Auto-generated method stub
+		return eventDao.insertReply(sqlSession, re);
+	}
+
+	@Override
+	public ArrayList<EventReply> replyList(int eno) {
+		// TODO Auto-generated method stub
+		return eventDao.replyList(sqlSession, eno);
+	}
+
+
+	
 
 }

@@ -26,7 +26,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
+	
 	 
 <style>
 /*
@@ -200,8 +200,8 @@ height : 30px;
                 <li class="greenfont" id="5"><a>고객지원</a>
                     <ul class="arrow_box">
                         <li><a href="list.no">공지사항</a></li>
-                        <li><a>자주 묻는 질문</a></li>
-                        <li><a>1:1 문의</a></li>
+                        <li><a href="list.faq">자주 묻는 질문</a></li>
+                        <li><a href="list.one">1:1 문의</a></li>
                     </ul> 
                 </li>
                 <li class="greenfont" id="6"><a>커뮤니티</a>

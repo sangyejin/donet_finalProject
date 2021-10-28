@@ -12,6 +12,7 @@ import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 
 @Repository
 public class FundingDao {
@@ -79,6 +80,26 @@ public class FundingDao {
 	public int deleteFundingReply(SqlSessionTemplate sqlSession, int replyNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("fundingMapper.deleteFundingReply",replyNo);
+	}
+
+	public int deleteFunding(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("fundingMapper.deleteFunding",fpNo);
+	}
+
+	public int updateFundingReply(SqlSessionTemplate sqlSession, FundingReply fundingReply) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("fundingMapper.updateFundingReply",fundingReply);
+	}
+
+	public int insertFundingSupporter(SqlSessionTemplate sqlSession, FundingSupporter fundingSupporter) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("fundingMapper.insertFundingSupporter",fundingSupporter);
+	}
+
+	public int updateFundingHitsCount(SqlSessionTemplate sqlSession, int fpNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("fundingMapper.updateFundingHitsCount",fpNo);
 	}
 
 }

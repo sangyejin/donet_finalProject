@@ -19,4 +19,6 @@ public class Sponsor {
 	private int payNo; //결제수단 번호
 	private int amount; //결제금액
 	private int total;
+	private int sum;
+	private Date payDate;
 }

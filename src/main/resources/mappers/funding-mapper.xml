@@ -59,6 +59,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="writerNickName" column="USER_NICK" />
 	</resultMap>
 	
+	<!-- 펀딩 후원 -->
+	<resultMap id="fundingSupporterResultSet" type="FundingSupporter">
+		<id property="fsNo" column="FS_NO" />
+		<id property="fpNo" column="FP_NO" />
+		<result property="fpSupporter" column="FP_SUPPORTER" />
+		<result property="fpSupportDate" column="FP_SUPPORT_DATE" />
+		<result property="fpPrice" column="FP_PRICE" />
+		<result property="fgNo" column="FG_NO" />
+		<result property="takeName" column="TAKE_NAME" />
+		<result property="takeAddress" column="TAKE_ADDRESS" />
+		<result property="takePhone" column="TAKE_PHONE" />
+		<result property="takePostCode" column="TAKE_POSTCODE" />
+	</resultMap>
 	
 	<select id="selectFundingListCount" resultType="_int">
 		select COUNT(*)
@@ -159,4 +172,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set STATUS='N'
 		where REPLY_NO=#{replyNo}
 	</update>
+	
+	<update id="updateFundingReply" parameterType="fundingReply">
+		update FUNDING_REPLY
+		set REPLY_CONTENT=#{replyContent}
+		where REPLY_NO=#{replyNo}
+	</update>
+	
+	<insert id="insertFundingSupporter" parameterType="fundingSupporter">
+		INSERT INTO FUNDING_SUPPORTER(FS_NO,FP_NO,FP_SUPPORTER,FP_SUPPORT_DATE,FP_PRICE,FG_NO
+						,TAKE_NAME,TAKE_ADDRESS,TAKE_PHONE,TAKE_POSTCODE)
+		VALUES(NVL((SELECT MAX(FS_NO) FROM FUNDING_SUPPORTER WHERE FP_NO=#{fpNo}),0)+1,#{fpNo},#{fpSupporter},sysdate,#{fpPrice},#{fgNo},
+		#{takeName},#{takeAddress},#{takePhone},#{takePostCode})
+	</insert>
+	
+		
+	<update id="updateFundingHitsCount" parameterType="_int">
+		update FUNDING_PROJECT
+		set HITS=HITS+1
+		where FP_NO=#{fpNo}
+	</update>
+	
 </mapper>

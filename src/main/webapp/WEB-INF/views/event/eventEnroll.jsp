@@ -15,8 +15,9 @@
    	table{
    		margin-left: auto;
    		margin-right: auto;
- 		width:80%;
+ 		width:100%;
  		font-size: 80%;
+ 		text-align: center;
    	}
    	table tbody tr {
    		
@@ -25,12 +26,22 @@
    	table tbody tr th {
    		border-right: 1re solid;
    		border-color: transparent;
+   		width:20%;
    	}
   
     .row{
     	min-width:800px;
     }
-   
+   #postContent{
+   		width:100%;
+   		min-height: 600px;
+   		display: inline-block;
+   }
+   .img{
+   		width: 150px;
+   		height: 150px;
+   		margin: 10px;
+   }
 </style>
 </head>
 <body>
@@ -41,7 +52,7 @@
         <h1>이벤트 생성하기</h1>
         <br>
        	
-       	<form id="erollForm" method="post" action="insert.ev" enctype="multipart/form-data">
+       	<form id="erollForm" method="post" action="insert.ev" enctype="multipart/form-data" onsubmit="getContent();">
        		<table align="center" >
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
@@ -55,21 +66,83 @@
        				<th><label for="datepickerLast">이벤트 종료</label>
        				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly"></td>
        			</tr>
+       			
        			<tr class="form-group">
-       				<th colspan="2"><label for="content">내용</label></th>
+       				<th><label for="thum">썸네일 이미지</label></th>
+       				<td><img alt="" src="" id="thumImg" class="img" ></td>
        			</tr>
+       			<tr>
+       				<th><label for="">추가 등록</label></th>
+       				<td>
+	       				<img class="img" id="plusImg1">
+	       				<img class="img" id="plusImg2">
+	       				<img class="img" id="plusImg3">
+       				</td>       			
+       			</tr>
+       			
        			<tr class="form-group">
-       				<th colspan="2"><textarea rows="10" class="form-control" name="eventContent" id="content" style="resize:none" required></textarea>
+       				<th><label for="postContent">내용</label></th>
+       				<td><textarea id="postContent" name="eventContent" class="form-control" ></textarea></td>
        			</tr>
-       			<tr class="form-group">
-       				<th><label for="upfile">첨부파일</label></th>
-       				<td><input type="file" id="upfile" class="form-control-file border" name="uploadFile"></td>
-       			</tr>
-       		</table>
+       			</table>
+       			<div id="fileArea">
+       				<input type="file" name="thumFile" id="thumFile" onchange="thum(this, 0);">
+       				<input type="file" name="plusFile" id="plusFile1" onchange="thum(this, 1);">
+       				<input type="file" name="plusFile" id="plusFile2" onchange="thum(this, 2);">
+       				<input type="file" name="plusFile" id="plusFile3" onchange="thum(this, 3);">
+       			</div>
+       			<script type="text/javascript">
+	       			$(function(){
+	       				$("#fileArea").hide();
+	       				$("#thumImg").click(function(){
+	       					$("#thumFile").click();
+	       				});
+	       				$("#plusImg1").click(function(){
+	       					$("#plusFile1").click();
+	       				});
+	       				$("#plusImg2").click(function(){
+	       					$("#plusFile2").click();
+	       				});
+	       				$("#plusImg3").click(function(){
+	       					$("#plusFile3").click();
+	       				});
+	       			});
+	       			
+	       			function thum(inputFile, num){
+	       				if(inputFile.files.length == 1){
+	       					var reader = new FileReader();
+	       					reader.readAsDataURL(inputFile.files[0]);
+	       					reader.onload = function(e){
+	       						switch(num){
+	       							case 0:
+	       								$("#thumImg").attr("src", e.target.result);
+	       								break;
+	       							case 1:
+	       								$("#plusImg1").attr("src", e.target.result);
+	       								break;
+	       							case 2:
+	       								$("#plusImg2").attr("src", e.target.result);
+	       								break;
+	       							case 3:
+	       								$("#plusImg3").attr("src", e.target.result);
+	       								break;
+	       						}
+	       					}
+	       				}
+	       			}
+       		
+       			
+       				
+       			</script>
+       			
+       			<!-- <div contentEditable="true" id="postContent" class="form-control" name="eventContent">
+       				<img src="" class="Thum"/>
+       			</div> 
+       			<textarea style="display:none" id="content" > </textarea>-->
        		<br>
        		<div class="submitBtn">
-       			<button type="submit" class="btn btn-primary">등록하기</button>
-       			<button type="reset" class="btn btn-danger">취소하기</button>
+       			<input name="submitBtn" type="submit" class="btn btn-primary" value="등록하기"/>
+       			<input type="reset" class="btn btn-danger" value="취소하기"/>
        		</div>
        	</form>
        
@@ -77,8 +150,9 @@
     </div>
  </div>
  <script>
- 
-  $(document).ready(function () {
+
+	
+  	$(document).ready(function () {
           $.datepicker.setDefaults($.datepicker.regional['ko']); 
           $( "#datepickerStart" ).datepicker({
                changeMonth: true, 
@@ -115,9 +189,11 @@
 
           });    
   });
-  
+ 
+  	</script>
 
-  </script>
+
+  
 
 <jsp:include page="../common/footer.jsp" />
 </body>

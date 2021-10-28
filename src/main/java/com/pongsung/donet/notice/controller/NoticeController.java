@@ -20,20 +20,21 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.notice.model.service.NoticeService;
+import com.pongsung.donet.notice.model.vo.Category;
+import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
 import com.pongsung.donet.notice.model.vo.Search;
 
 @Controller
 public class NoticeController {
-	
+
 	@Autowired
 	private NoticeService NoService;
-	
-	
-	//main list
+
+	// main list
 	@RequestMapping("list.no")
-	public String selectNoticeList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
-			Model model) {
+	public String selectNoticeList(
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 
 		int listCount = NoService.selectNoticeListCount(null);
 		System.out.println(listCount);
@@ -44,27 +45,25 @@ public class NoticeController {
 		System.out.println("list : " + list);
 		System.out.println("listCount : " + listCount);
 
-		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-		
+
 		return "customerSupport/notice/notice";
 	}
-	
-	
-	
-	//search
+
+	// search
 	@RequestMapping("search.no")
-	public String selectOfSearched( Model model,@RequestParam(value = "currentPage", required = false, defaultValue = "1")  int currentPage,
-									@RequestParam(name = "searchtype", required = false) String searchtype,
-									@RequestParam(name = "mInput", required = false) String mInput ) {
-		
+	public String selectOfSearched(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(name = "searchtype", required = false) String searchtype,
+			@RequestParam(name = "mInput", required = false) String mInput) {
+
 		System.out.println("searchtype : " + searchtype);
 		System.out.println("mInput : " + mInput);
-		
+
 		Search sc = new Search();
-		
-		switch(searchtype) {
+
+		switch (searchtype) {
 		case "writer":
 			sc.setWriter(mInput);
 			break;
@@ -77,8 +76,7 @@ public class NoticeController {
 			sc.setContent(mInput);
 			break;
 		}
-		
-		
+
 		int listCount = NoService.selectNoticeListCount(sc);
 		System.out.println(listCount);
 
@@ -88,70 +86,107 @@ public class NoticeController {
 		System.out.println("list : " + list);
 		System.out.println("listCount : " + listCount);
 
-		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-		
+
 		return "customerSupport/notice/notice";
-		
+
 	}
-	
-	//detail
+
+	// detail
 	@RequestMapping("detail.no")
 	public ModelAndView selectThisNotice(int noticeNo, ModelAndView mv) {
-		System.out.println("noticeNo : " + noticeNo );
+		System.out.println("noticeNo : " + noticeNo);
 		Notice no = NoService.selectThisNotice(noticeNo);
-		
-		/*이전글, 다음글*/
+
+		/* 이전글, 다음글 */
 		Notice prevNote = NoService.selectPrevNotice(noticeNo);
 		Notice nextNote = NoService.selectNextNotice(noticeNo);
 
-		System.out.println("prevNote : " + prevNote );
-		System.out.println("nextNote : " + nextNote );
+		System.out.println("prevNote : " + prevNote);
+		System.out.println("nextNote : " + nextNote);
 
-		
 		mv.addObject("no", no);
 		mv.addObject("prevNote", prevNote);
 		mv.addObject("nextNote", nextNote);
 
 		mv.setViewName("customerSupport/notice/detailNotice");
-		
+
 		return mv;
 	}
-	
-	//insert
+
+	/*
+	 * temp insert tiqkf
+	 * 
+	 * @RequestMapping("insertSave.no") public String
+	 * insertSaveNotice(@RequestParam(name="noticeWriter") String noticeWriter,
+	 * 
+	 * @RequestParam(name="noticeTitle") String noticeTitle,
+	 * 
+	 * @RequestParam(name="noticeContent") String noticeContent, HttpServletRequest
+	 * request, Model model,
+	 * 
+	 * @RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
+	 * 
+	 * System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " +
+	 * noticeTitle + " , noticeContent : " + noticeContent);
+	 * System.out.println("file.getOriginalFilename() : " +
+	 * file.getOriginalFilename());
+	 * 
+	 * Notice no = new Notice();
+	 * 
+	 * no.setNoticeTitle(noticeTitle); no.setNoticeWriter(noticeWriter);
+	 * no.setNoticeContent(noticeContent);
+	 * 
+	 * if(!file.getOriginalFilename().equals("")) { String changeName =
+	 * saveFile(file, request); if(changeName != null) {
+	 * no.setNoticeOrigin(file.getOriginalFilename()); no.setNoticeNew(changeName);
+	 * }
+	 * 
+	 * } NoService.insertSaveNotice(no);
+	 * 
+	 * return "redirect:list.no"; }
+	 */
+
+	// insert
 	@RequestMapping("goAddForm.no")
 	public String goAddForm() {
 		return "customerSupport/notice/addNotice";
 	}
-	
+
 	@RequestMapping("insert.no")
-	public String insertNotice(Notice no,
-								HttpServletRequest request, 
-								Model model, 
-								@RequestParam(name="noticeOrigin", required=false) MultipartFile file) {
-		System.out.println("Notice : " + no);
+	public String insertNotice(@RequestParam(name = "noticeWriter") String noticeWriter,
+			@RequestParam(name = "noticeTitle") String noticeTitle,
+			@RequestParam(name = "noticeContent") String noticeContent, HttpServletRequest request, Model model,
+			@RequestParam(name = "noticeOrigin", required = false) MultipartFile file) {
+
+		System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " + noticeTitle + " , noticeContent : "
+				+ noticeContent);
 		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
 
-		//no.setNoticeWriter(noticeWriter);
-		
-		if(!file.getOriginalFilename().equals(""))	{
-			String changeName = uploadFile(file, request);
-			if(changeName != null) {
+		Notice no = new Notice();
+
+		no.setNoticeTitle(noticeTitle);
+		no.setNoticeWriter(noticeWriter);
+		no.setNoticeContent(noticeContent);
+
+		if (!file.getOriginalFilename().equals("")) {
+			String changeName = saveFile(file, request);
+			if (changeName != null) {
 				no.setNoticeOrigin(file.getOriginalFilename());
 				no.setNoticeNew(changeName);
 			}
-					
+
 		}
 		NoService.insertNotice(no);
-				
+
 		return "redirect:list.no";
 	}
-	
-	//fileUpload
-	private String uploadFile(MultipartFile file, HttpServletRequest request) {
+
+	// fileUpload
+	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "//upload_files//";
+		String savePath = resources + "//notice_uploadFiles//";
 
 		System.out.println("savePath : " + savePath);
 
@@ -166,6 +201,7 @@ public class NoticeController {
 		try {
 			file.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			throw new CommException("file upload error");
@@ -173,20 +209,175 @@ public class NoticeController {
 
 		return changeName;
 	}
-	
-	//update
+
+	// update
 	@RequestMapping("goUpdateForm.no")
-	public String updateForm() {
-		return "customerSupport/notice/adjustDeleteNotice";
+	public ModelAndView updateForm(int noticeNo, ModelAndView mv) {
+		System.out.println("noticeNo : " + noticeNo);
+		Notice no = NoService.selectThisNotice(noticeNo);
+
+		mv.addObject("no", no);
+		mv.setViewName("customerSupport/notice/adjustDeleteNotice");
+
+		return mv;
 	}
-	
-	//delete
+
+	@RequestMapping("update.no")
+	public ModelAndView updateNotice(@RequestParam(name = "noticeWriter") String noticeWriter,
+			@RequestParam(name = "noticeTitle") String noticeTitle,
+			@RequestParam(name = "noticeContent") String noticeContent, @RequestParam(name = "noticeNo") int noticeNo,
+			HttpServletRequest request, ModelAndView model,
+			@RequestParam(name = "noticeOrigin", required = false) MultipartFile file) {
+
+		System.out.println("noticeWriter : " + noticeWriter + ", noticeTitle : " + noticeTitle + " , noticeContent : "
+				+ noticeContent + ", noticeNo : " + noticeNo);
+		System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+
+		Notice no = new Notice();
+
+		no.setNoticeNo(noticeNo);
+		no.setNoticeTitle(noticeTitle);
+		no.setNoticeWriter(noticeWriter);
+		no.setNoticeContent(noticeContent);
+
+		if (!file.getOriginalFilename().equals("")) {
+			/*
+			 * if (no.getNoticeNew()() != null) { // 기존파일 존재, 새 파일 존재
+			 * deleteFile(no.getNoticeNew(), request); }
+			 */
+
+			String changeName = saveFile(file, request);
+
+			no.setNoticeOrigin(file.getOriginalFilename());
+			no.setNoticeNew(changeName);
+
+		}
+
+		NoService.updateNotice(no);
+
+		model.addObject("noticeNo", noticeNo).setViewName("redirect:detail.no");
+
+		return model;
+	}
+
+	// delete
 	@RequestMapping("goDelete.no")
 	public String deleteGo(int noticeNo, HttpServletRequest request) {
-		//게시글을 삭제한다=표시상태를 'N'으로 돌린다=언젠가 다시 보이게 하고싶을 수도 있으니 파일은 삭제 안할 심산...
+		// 게시글을 삭제한다=표시상태를 'N'으로 돌린다=언젠가 다시 보이게 하고싶을 수도 있으니 파일은 삭제 안할 심산...
 		NoService.deleteGo(noticeNo);
-		
+
 		return "redirect:list.no";
 	}
-	
+
+	/******************************************************************************************************************/
+	// FAQ List
+	@RequestMapping("list.faq")
+	public String selectFaqList(
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
+
+		int listCount = NoService.selectFaqListCount(null);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+		ArrayList<FrequentlyAskedQuestions> list = NoService.selectFaqList(pi, null);
+		System.out.println("list : " + list);
+		System.out.println("listCount : " + listCount);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+		return "customerSupport/faq/faqList";
+	}
+
+	// FAQ Search
+	@RequestMapping("search.faq")
+	public String selectOfFaq(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(name = "searchtype", required = false) int searchtype,
+			@RequestParam(name = "mInput", required = false) String mInput) {
+
+		System.out.println("searchtype : " + searchtype);
+		System.out.println("mInput : " + mInput);
+
+		Category ctgry = new Category();
+		ctgry.setFTypeNo(searchtype);
+		ctgry.setFTypeName(mInput);
+
+		int listCount = NoService.selectFaqListCount(ctgry);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+		ArrayList<FrequentlyAskedQuestions> list = NoService.selectFaqList(pi, ctgry);
+		System.out.println("list : " + list);
+		System.out.println("listCount : " + listCount);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+		return "customerSupport/faq/faqList";
+
+	}
+
+	// FAQ Insert
+	@RequestMapping("goAddForm.faq")
+	public String goAddFaq() {
+		return "customerSupport/faq/addFaq";
+	}
+
+	@RequestMapping("insert.faq")
+	public String insertFaq(@RequestParam(name = "faqQuestion") String faqQuestion,
+			@RequestParam(name = "searchtype") int faqType, @RequestParam(name = "faqAnswered") String faqAnswered,
+			HttpServletRequest request, Model model) {
+
+		System.out
+				.println("faqQuestion : " + faqQuestion + ", faqType : " + faqType + " , faqAnswered : " + faqAnswered);
+
+		FrequentlyAskedQuestions faq = new FrequentlyAskedQuestions();
+
+		faq.setFaqQuestion(faqQuestion);
+		faq.setFaqType(faqType);
+		faq.setFaqAnswered(faqAnswered);
+
+		NoService.insertFaq(faq);
+
+		return "redirect:list.faq";
+	}
+
+	// update
+	@RequestMapping("goUpdateForm.faq")
+	public ModelAndView updateFaq(int faqNo, ModelAndView mv) {
+		System.out.println("faqNo : " + faqNo);
+		FrequentlyAskedQuestions faq = NoService.selectThisFaq(faqNo);
+		System.out.println("*** faq : " + faq);
+
+		mv.addObject("faq", faq);
+		mv.setViewName("customerSupport/faq/adjustDeleteFaq");
+
+		return mv;
+	}
+
+	@RequestMapping("update.faq")
+	public String updateFaq(@RequestParam(name = "faqNo") int faqNo,
+			@RequestParam(name = "faqQuestion") String faqQuestion,
+			@RequestParam(name = "faqAnswered") String faqAnswered, HttpServletRequest request, ModelAndView model) {
+
+		System.out.println("faqNo : " + faqNo + ", faqQuestion : " + faqQuestion + " , faqAnswered : " + faqAnswered);
+
+		FrequentlyAskedQuestions faq = new FrequentlyAskedQuestions();
+
+		faq.setFaqNo(faqNo);
+		faq.setFaqQuestion(faqQuestion);
+		faq.setFaqAnswered(faqAnswered);
+
+		NoService.updateFaq(faq);
+
+		return "redirect:list.faq";
+	}
+
+	// delete
+	@RequestMapping("delete.faq")
+	public String deleteFaq(int faqNo, HttpServletRequest request) {
+		NoService.deleteFaq(faqNo);
+
+		return "redirect:list.faq";
+	}
+
 }
