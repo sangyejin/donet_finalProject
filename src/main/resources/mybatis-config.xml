@@ -25,6 +25,13 @@
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingReply" alias="FundingReply" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingSupporter" alias="FundingSupporter" />
 		
+		<typeAlias type="com.pongsung.donet.goods.model.vo.Goods" alias="Goods" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsCategory" alias="GoodsCategory" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsImage" alias="GoodsImage" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsPurchase" alias="GoodsPurchase" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.RequiredCategory" alias="RequiredCategory" />
+		
+		
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Support" alias="Support" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Sponsor" alias="Sponsor" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportCategory" alias="SupportCategory" />
@@ -40,6 +47,7 @@
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/funding-mapper.xml" />
+		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
 
 

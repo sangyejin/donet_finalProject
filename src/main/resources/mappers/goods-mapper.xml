@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goodsMapper">
+	
+	<!-- 구호물품 카테고리 -->
+	<resultMap id="goodsCategoryResultSet" type="GoodsCategory">
+		<id property="categoryNo" column="GOODS_CATEGORY_NO" />
+		<result property="categoryName" column="GOODS_CATEGORY_NAME" />
+	</resultMap>
+	
+	<!-- 구호물품 -->
+	<resultMap id="goodsResultSet" type="Goods">
+		<id property="goodsNo" column="GOODS_NO" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsPrice" column="GOODS_PRICE" />
+		<result property="goodsCategoryNo" column="GOODS_CATEGORY_NO" />
+		<result property="goodsCategoryName" column="GOODS_CATEGORY_NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="thumbnailOriginName" column="THUMBNAIL_ORIGIN_NAME" />
+		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
+		<result property="hits" column="HITS" />
+		<result property="status" column="STATUS" />
+	</resultMap>
+
+	<select id="selectGoodsListCount" resultType="_int">
+		select COUNT(*)
+		from GOODS
+		where STATUS='Y'
+	</select>
+	<select id="selectGoodsCategoryList" resultType="_int">
+		select GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME
+		from GOODS_CATEGORY
+	</select>
+	<select id="selectGoodsList" resultMap="goodsResultSet">
+		select GOODS_NO, GOODS_NAME, GOODS_PRICE, A.GOODS_CATEGORY_NO, CONTENT
+		,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME, HITS, B.GOODS_CATEGORY_NAME
+		from GOODS A
+		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO = B.GOODS_CATEGORY_NO
+		where A.STATUS='Y'
+	</select>
+</mapper>

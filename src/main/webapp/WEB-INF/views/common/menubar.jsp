@@ -188,14 +188,7 @@ height : 30px;
                         
                     </ul> 
                 </li>
-                <li class="greenfont" id="4"><a>펀딩 프로젝트</a>
-                  <ul class="arrow_box">
-                        <li><a>출판</a></li>
-                        <li><a>게임/취미</a></li>
-                        <li><a>뷰티</a></li>
-                        <li><a>패션/잡화</a></li>
-                        <li><a>소셜/컨설팅</a></li>
-                    </ul> 
+                <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
                 </li>
                 <li class="greenfont" id="5"><a>고객지원</a>
                     <ul class="arrow_box">
