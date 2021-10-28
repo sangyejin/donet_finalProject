@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 구호물품 카테고리 -->
 	<resultMap id="goodsCategoryResultSet" type="GoodsCategory">
-		<id property="categoryNo" column="GOODS_CATEGORY_NO" />
-		<result property="categoryName" column="GOODS_CATEGORY_NAME" />
+		<id property="goodsCategoryNo" column="GOODS_CATEGORY_NO" />
+		<result property="goodsCategoryName" column="GOODS_CATEGORY_NAME" />
 	</resultMap>
 	
 	<!-- 구호물품 -->
@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
 		<result property="hits" column="HITS" />
 		<result property="status" column="STATUS" />
+		<result property="createDate" column="CREATE_DATE" />
 	</resultMap>
 
 	<select id="selectGoodsListCount" resultType="_int">
@@ -29,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from GOODS
 		where STATUS='Y'
 	</select>
-	<select id="selectGoodsCategoryList" resultType="_int">
+	<select id="selectGoodsCategoryList" resultMap="goodsCategoryResultSet">
 		select GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME
 		from GOODS_CATEGORY
 	</select>

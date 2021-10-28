@@ -31,10 +31,11 @@ public class GoodsController {
 	public String seletcFundingList(
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 		int listCount = goodsService.selectGoodsListCount();
-
+		logger.info("goodsListCount::" + listCount);
+		
 		List<GoodsCategory> categoryList = goodsService.selectGoodsCategoryList();
-
-		logger.info("fundingListCount::" + listCount);
+		logger.info("categoryList:::"+categoryList);
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
 //		
 		List<Goods> goodsList = goodsService.selectGoodsList(pi);

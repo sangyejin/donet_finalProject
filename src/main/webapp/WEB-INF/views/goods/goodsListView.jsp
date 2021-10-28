@@ -229,8 +229,7 @@ select::-ms-expand {
 			<div>
 				<div class="div-category-menu">
 					<c:forEach var="category" items="${categoryList}">
-						<button type="button" class="btn btn-light"
-							id="btn-${category.categoryNo}">${category.categoryName}</button>
+						<button type="button" class="btn btn-light" id="btn-${category.goodsCategoryNo}">${category.goodsCategoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
@@ -259,7 +258,7 @@ select::-ms-expand {
 					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
-								<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${list.thumbnailChangeName}" alt="${list.fpName}"
+								<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${list.thumbnailChangeName}" alt="${list.goodsName}"
 											width="278px" height="200px">
 							</div>
 							<div class="cases-caption">
@@ -284,13 +283,13 @@ select::-ms-expand {
 				<c:choose>
 					<c:when test="${ pi.currentPage eq 1 }">
 						<li class="disabled page-item"><a
-							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
+							href="goods?currentPage=${pi.currentPage-1 }" class="page-link"
 							aria-label="Previous"> <i class="ti-angle-left"></i>
 						</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a
-							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
+							href="goods?currentPage=${pi.currentPage-1 }" class="page-link"
 							aria-label="Previous"> <i class="ti-angle-left"></i>
 						</a></li>
 					</c:otherwise>
@@ -300,10 +299,10 @@ select::-ms-expand {
 					<c:choose>
 						<c:when test="${ pi.currentPage eq i }">
 							<li class="disabled page-item active"><a
-								href="funding?currentPage=${i}" class="page-link">${i}</a></li>
+								href="goods?currentPage=${i}" class="page-link">${i}</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item"><a href="funding?currentPage=${i}"
+							<li class="page-item"><a href="goods?currentPage=${i}"
 								class="page-link">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
@@ -312,13 +311,13 @@ select::-ms-expand {
 				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
 						<li class="disabled page-item"><a
-							href="funding?currentPage=${pi.currentPage+1 }" class="page-link"
+							href="goods?currentPage=${pi.currentPage+1 }" class="page-link"
 							aria-label="Next"> <i class="ti-angle-right"></i>
 						</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a
-							href="funding?currentPage=${pi.currentPage+1 }" class="page-link"
+							href="goods?currentPage=${pi.currentPage+1 }" class="page-link"
 							aria-label="Next"> <i class="ti-angle-right"></i></a></li>
 					</c:otherwise>
 				</c:choose>
