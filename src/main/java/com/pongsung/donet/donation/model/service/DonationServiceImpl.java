@@ -102,6 +102,25 @@ public class DonationServiceImpl implements DonationService {
 		return result;
 	}
 
+	@Override
+	public int selectCategoryListCount(int suCategoryNo) {
+		return supportDao.selectCategoryListCount(sqlSession, suCategoryNo);
+	}
+
+	@Override
+	public List<Support> selectCategoryList(int suCategoryNo) {
+		return supportDao.selectCategoryList(sqlSession,suCategoryNo);
+	}
+
+	@Override
+	public int updateReply(SupporComment sc) {
+		int result = supportDao.updateReply(sqlSession, sc);
+		if(result < 0) {
+			throw new CommException("댓글 수정 실패");
+		}
+		return result;
+	}
+
 
 //	@Override
 //	public int selectGolbalListCount(int categoryNo) {

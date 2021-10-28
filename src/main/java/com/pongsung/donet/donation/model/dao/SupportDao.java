@@ -69,6 +69,20 @@ public class SupportDao {
 		return sqlSession.update("supportMapper.deleteReply",replyNo);
 	}
 
+	public int selectCategoryListCount(SqlSessionTemplate sqlSession, int suCategoryNo) {
+		return sqlSession.selectOne("supportMapper.selectCategoryListCount", suCategoryNo);
+	}
+
+	public List<Support> selectCategoryList(SqlSessionTemplate sqlSession, int suCategoryNo) {
+		return sqlSession.selectList("supportMapper.selectCategoryList",suCategoryNo);
+	}
+
+	public int updateReply(SqlSessionTemplate sqlSession, SupporComment sc) {
+		return sqlSession.update("supportMapper.updateReply",sc);
+	}
+
+
+
 
 
 //	public int selectGolbalListCount(SqlSessionTemplate sqlSession, int categoryNo) {

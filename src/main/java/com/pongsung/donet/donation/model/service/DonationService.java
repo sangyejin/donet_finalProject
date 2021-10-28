@@ -34,6 +34,12 @@ public interface DonationService {
 
 	int deleteReply(int replyNo);
 
+	int selectCategoryListCount(int suCategoryNo);
+
+	List<Support> selectCategoryList(int suCategoryNo);
+
+	int updateReply(SupporComment sc);
+
 //	int selectGolbalListCount(int categoryNo);
 //
 //	List<Support> selectGlobalList(PageInfo pi, int categoryNo);

@@ -349,7 +349,7 @@ d {
 
 #update {
 	width: 40px;
-	height: 20px;
+	height: 25px;
 	border-radius: 5px;
 	border-color: rgb(60, 179, 113);
 	font-weight: 600;
@@ -359,7 +359,7 @@ d {
 
 #delete {
 	width: 40px;
-	height: 20px;
+	height: 25px;
 	border-radius: 5px;
 	border-color: rgb(60, 179, 113);
 	font-weight: 600;
@@ -586,9 +586,10 @@ ${s.content}
                     <tr>
                         <th>번호</th>
                         <th>작성일</th>
-						<th colspan="2">아이디</th>
-						<th colspan="7">댓글(<span id="rcount">0</span>)</th>
-						<th></th>
+						<th colspan="1">아이디</th>
+						<th colspan="6">댓글(<span id="rcount">0</span>)</th>
+                        <th></th>
+						<th colspan='2'></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -622,6 +623,43 @@ ${s.content}
 		</div>
 
 	</div>
+	<!-- 댓글 수정 시 모달 -->
+	<div class="modal fade" id="modifyModal" role="dialog"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal">&times;</button> 
+		 		</div> 
+		 		<div class="modal-body"> 
+		 			<div class="form-group"> 
+		 				<label for="reply_no">댓글 번호</label> 
+		 				<input class="form-control" id="reply_no" name="reply_no" readonly> 
+		 			</div> 
+		 			<div class="form-group"> 
+		 				<label for="reply_date">댓글 작성일</label> 
+		 				<input class="form-control" id="reply_date" name="reply_date" readonly> 
+		 			</div> 
+					<div class="form-group"> 
+						<label for="reply_text">댓글 내용</label>
+		  				<input class="form-control" id="reply_text" name="reply_text" placeholder="댓글 내용을 입력해주세요"> 
+		  			</div> 
+		  			<div class="form-group"> 
+		  				<label for="reply_writer">댓글 작성자</label> 
+		  				<input class="form-control" id="reply_writer" name="reply_writer" readonly> 
+		  			</div>
+		  			<div class="form-group" style="visibility:hidden;"> 
+		  				<label for="reply_rno">댓글 고유번호</label> 
+		  				<input class="form-control" id="reply_rno" name="reply_rno" readonly> 
+		  			</div>
+				</div> 
+				<div class="modal-footer"> 
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button> 
+					<button type="button" class="btn btn-success modalModBtn" onclick="updateReply();">수정</button> 
+				</div> 
+			</div> 
+		</div>
+	</div>
+	
      <script>
    		 <!--ajax 댓글작성-->
    		$(function(){
@@ -674,20 +712,25 @@ ${s.content}
     					value += "<tr>"+
     								"<td>" + num-- + "</td>" +
     								"<td>" + obj.createDate + "</td>" +
-    					 		 	"<td colspan='2'>" + obj.replyWriter + "</td>" + 
-   								 	"<td colspan='7'>" + obj.replyContent + "</td>" 
+    					 		 	"<td colspan='1'>" + obj.replyWriter + "</td>" + 
+   								 	"<td colspan='6' style='text-align:left;'>" + obj.replyContent + "</td>" 
+    								 
    								 
    		    					if("${loginUser.userId}" == obj.replyWriter){
-   		    						value += "<td>"+
-												"<input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.replyNo+")'>"+
+   		    						value += "<td colspan='2' style='border-top: 1px solid #808080;'>"+
+												"<div>"+
+													"<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.replyNo+")'></span>"+
+													"<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"+
+												"</div>"+
    		    								"</td>";
    		    					}else{
    		    						value += "<td></td>";
    		    					} 								 
-   						value += "</tr>";
+   						value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>" + obj.replyNo + "</td></tr>";
     				});
     				$("#replyArea tbody").html(value);
-    			},error:function(){
+    			},
+    			error:function(){
     				console.log("댓글 리스트조회용 ajax 통신 실패");
     			}
     		});
@@ -711,6 +754,53 @@ ${s.content}
 			}	
     	}
     	
+    	$(document).on("click", "#update", function () { 
+    		var row = $(this).parent().parent().parent().parent();
+    		var tr = row.children();
+    		
+    		var replyNo = tr.eq(0).text();
+    		var createDate = tr.eq(1).text();
+    		var replyWriter = tr.eq(2).text();
+    		var replyContent = tr.eq(3).text();
+    		var replyRno = tr.eq(5).text();
+    		
+    		$(".modal-body #reply_no").val( replyNo ); 
+    		$(".modal-body #reply_date").val( createDate ); 
+    		$(".modal-body #reply_writer").val( replyWriter ); 
+    		$(".modal-body #reply_text").val( replyContent ); 
+    		$(".modal-body #reply_rno").val( replyRno ); 
+		 });
+    	
+    	function updateReply(){
+    		if(confirm("정말로 수정하시겠습니까?")){
+    		const suNo = "${s.suNo}";
+    		console.log(suNo);
+    		const content=$('#reply_text').val();
+    		console.log(content);
+    		const replyNo=$('#reply_rno').val();
+    		console.log(replyNo);
+    		
+    		$.ajax({
+    			url : "update.re/"+suNo+"/"+replyNo,
+    			type : "post",
+    			data:{
+    				replyContent:content
+    			},
+    			success : function() {
+    				alert("댓글이 수정되었습니다.");
+    				selectReplyList();
+    			},
+    			error : function() {
+    				console.log("댓글 리스트조회용 ajax 통신 실패");
+    			}
+    		});
+    		
+
+    		
+    		}
+    		
+    	}
+
     </script>
 	<script>
 		$('.slider-1 > .page-btns > div').click(function() {
