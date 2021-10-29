@@ -218,5 +218,11 @@ public class MemberController {
 			
 		}
 		
+		//point charging
+		@RequestMapping("point.me")
+		public String chargeMyPoint() {
+			return "member/point/payment";
+		}
+		
 		
 }
