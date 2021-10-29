@@ -79,13 +79,6 @@
 	font-weight: bolder;
 }
 
-#subnote {
-	font-size: 11px;
-	font-weight: lighter;
-	color: grey
-}
-
-
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
@@ -255,7 +248,7 @@ span>mark { margin-left: 153px; }
 
 		<div id="thelist">
 			<span id="notice">1:1문의 작성</span>
-			<span id="subnote">부적절한 언어 사용시 무통보 삭제처리 됩니다. 수정 및 삭제가 불가능하니 신중하게 작성해주세요.</span>
+
 			<div id="greenline"></div>
 
 			<div id="sideGreenbar"></div>
@@ -300,7 +293,9 @@ span>mark { margin-left: 153px; }
 
 					<span><label class="askContent" for="askContent">문의<br>내용</label></span>
 					<div id="imgViewArea">
-						<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+						<img id="imgArea"
+							src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png"
+							style="width: 200px; height: 200px;" onerror="imgAreaError()" />
 						<textarea class="form-control" id="asktag" name="askContent" rows="10"
 							style="resize: none;" maxlength="2000" wrap=on  required>
 	       				 </textarea>

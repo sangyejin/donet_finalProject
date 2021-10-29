@@ -29,7 +29,12 @@ public class OneAddInterceptor extends HandlerInterceptorAdapter {
 			session.setAttribute("msg", "1:1 문의는 로그인 후에 이용 가능합니다.");
 			response.sendRedirect("/donet/loginForm.me");
 			return false;
+		}else if(loginUser.getUserRole().equals("D")){
+			session.setAttribute("msg", "관리자는 1:1 문의를 작성할 수 없습니다.");
+			response.sendRedirect("/donet/list.one");
+			return false;
 		}
+		
 		return true;
 
 	}

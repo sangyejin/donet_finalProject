@@ -53,5 +53,11 @@ public interface NoticeService {
 
 	void insertOne(Ask ask);
 
+	Ask selectThisAsk(int askNo);
+
+	void updateOne(Ask ask);
+
+	void deleteOne(int askNo);
+
 
 }

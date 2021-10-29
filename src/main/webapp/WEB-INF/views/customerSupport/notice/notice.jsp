@@ -66,10 +66,7 @@
 	width: 800px;
 }
 
-#notice {
-	font-size: 13px;
-	font-weight: bolder;
-}
+#notice { font-size: 13px; font-weight: bolder; }
 
 #subnote {
 	font-size: 11px;

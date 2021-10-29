@@ -459,4 +459,43 @@ public class NoticeController {
 			return "redirect:list.one";
 		}
 
+		// update
+		@RequestMapping("goUpdateForm.one")
+		public ModelAndView updateOne(int askNo, ModelAndView mv) {
+			System.out.println("askNo : " + askNo);
+			
+			Ask ask = NoService.selectThisAsk(askNo);
+			System.out.println("*** ask : " + ask);
+
+			mv.addObject("ask", ask);
+			mv.setViewName("customerSupport/oneOone/updateAsk");
+
+			return mv;
+		}
+		
+		@RequestMapping("update.one")
+		public String updateOne( @RequestParam(name = "askNo") int askNo,
+				HttpServletRequest request, Model model,
+				@RequestParam(name = "answered", required = false) String answered) {
+			
+			System.out.println("askNo : " + askNo + " , answered : "+ answered);
+			Ask ask = new Ask();
+			
+			ask.setAskNo(askNo);
+			ask.setAnswered(answered);
+			
+			NoService.updateOne(ask);
+
+			return "redirect:list.one";
+		}
+		
+		// delete
+		@RequestMapping("delete.one")
+		public String deleteOne(int askNo, HttpServletRequest request) {
+			NoService.deleteOne(askNo);
+
+			return "redirect:list.one";
+		}
+		
+		
 }
