@@ -297,10 +297,11 @@
 			                
 			                 <tr class="hidFirst">
 			                 	<td class="trueNumber" hidden="true">${one.askNo}</td>
-			                    <td colspan="6"><pre class="detailAlter" id="question">Q. ${one.askContent}</pre>
+			                    <td style="word-break:break-all" colspan="6" ><pre class="detailAlter" id="question">Q. ${one.askContent}</pre>
 			                  <c:if test="${ !empty one.answered }">
 			                    <br><pre  class="detailAlter" id="answer">A. ${one.answered}</pre></td>
 			                  </c:if>
+			                  
 			                  <c:if test="${ empty one.answered }">
 			                  	<br><pre id="emptyAnswer" class="detailAlter">아직은 답변이 없네요! 주말 제외 5영업일 이내 답변 드리겠습니다.</pre></td>
 			                  </c:if>
@@ -415,7 +416,7 @@
     	$(function(){
     		$('.answered:contains("N")').text("부").css('color','gray');
     		$('.answered:contains("Y")').text("여").css('color','rgb(66, 178, 115)');
-    	})
+       	})
     	
     </script>
     

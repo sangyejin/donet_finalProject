@@ -253,6 +253,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{askId},NULL, #{askTypeNo}, SYSDATE, 'N')
 	</insert>
 	
+	<select id="selectThisAsk" parameterType="_int" resultMap="askResultMap">
+		SELECT ASK_NO, ASK_TITLE, ASK_CONTENT, ANSWERED, ASK_ORIGIN_IMG, ASK_NEW_IMG, F_TYPENAME
+		FROM ASK
+        JOIN MEMBER ON ASK_ID=USER_ID
+		JOIN FAQ_TYPE ON ASK_TYPENUM=F_TYPENO
+		WHERE ASK_NO=#{askNo}
+	</select>
+	
+	<update id="updateOne" parameterType="Ask">
+		UPDATE ASK
+		SET ANSWERED = #{answered},
+			ASK_STATUS='Y'
+		WHERE ASK_NO = #{askNo}
+	</update>
+	
+	<delete id="deleteOne" parameterType="_int">
+		DELETE FROM ASK
+		WHERE ASK_NO = #{askNo}
+	</delete>
+	
+	
 	
 	
 	

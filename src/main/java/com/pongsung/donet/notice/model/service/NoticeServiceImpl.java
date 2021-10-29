@@ -169,4 +169,28 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		
 	}
+
+	@Override
+	public Ask selectThisAsk(int askNo) {
+		return NoDao.selectThisAsk(sqlSession, askNo);
+
+	}
+
+	@Override
+	public void updateOne(Ask ask) {
+		int result = NoDao.updateOne(sqlSession, ask);
+
+		if (result < 0) {
+			throw new CommException("1:1문의 답변 작성 실패");
+		}
+	}
+	
+	@Override
+	public void deleteOne(int askNo) {
+		int result = NoDao.deleteOne(sqlSession, askNo);
+
+		if (result < 0) {
+			throw new CommException("1:1문의 삭제 실패");
+		}
+	}
 }

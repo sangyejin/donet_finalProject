@@ -9,9 +9,7 @@
 <title>도넷닷컴</title>
 
 <style>
-* {
-	font-size: 12px;
-}
+* { font-size: 12px; }
 
 /*sidebar*/
 .sidebar {
@@ -73,30 +71,19 @@
 	width: 800px;
 }
 
-#notice {
-	margin-bottom: 0px;
-	font-size: 13px;
-	font-weight: bolder;
-}
-
-#subnote {
-	font-size: 11px;
-	font-weight: lighter;
-	color: grey
-}
-
+#notice { margin-bottom: 0px; font-size: 13px; font-weight: bolder; }
 
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
 #sideGreenbar {
 	background-color: rgba(232, 240, 214, 0.5);
-	height: 650px;
+	height: 800px;
 	width: 100px;
 	margin-top: 100px;
 }
 
-#getInThere { margin-top: -640px; margin-left: 35px; }
+#getInThere { margin-top: -790px; margin-left: 35px; }
 
 .grayline {
 	margin-top: 2%;
@@ -118,10 +105,6 @@ span>p>#boldPeriod { margin-left: -3px; font-size: 22px; }
 
 span>mark { margin-left: 153px; }
 
-#justGetThere { margin-top: -27px; }
-
-#headjustify { margin-top: -5px }
-
 #greenline {
 	margin-top: 4px;
 	margin-bottom: -100px;
@@ -132,11 +115,7 @@ span>mark { margin-left: 153px; }
 }
 
 /*head*/
-#support {
-	color: #000000;
-	font-weight: bolder;
-	font-size: 16px;
-}
+#support { color: #000000; font-weight: bolder; font-size: 16px; }
 
 /*button*/
 .goRound {
@@ -149,76 +128,53 @@ span>mark { margin-left: 153px; }
 	margin-right: 7px;
 }
 
-.goRound:hover {
-	background-color: rgb(232, 240, 214);
-	color: #000000;
-}
+.goRound:hover { background-color: rgb(232, 240, 214); 	color: #000000; }
 
-#buttons {
-	margin-top: 2%;
-	margin-left: 625px;
-	margin-bottom: 3%;
-}
+#buttons { margin-top: 2%; margin-left: 560px; margin-bottom: 3%; }
 
-#buttonSecondPart {
-	margin-top: -48px;
-	margin-left: 695px;
-}
-
-/*content div*/
-#askTitle {
-	width: 670px;
-	height: 25px;
-	margin-left: 50px;
-	border-radius: 7px;
-	border: 1px solid rgb(206, 212, 218);
-}
+#buttonSecondPart { margin-top: -48px; margin-left: 630px; }
 
 /*footer align adjustment*/
-#gotoLEFT {
-	margin-left: -375px;
-}
+#gotoLEFT { margin-left: -375px; }
 
-/*img*/
-
-		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
-				
-		.clickable{display : flex;}
-		
-        .biggerimg{  width: 20px;  height: 20px; }
-        
-        #differ{/*img*/ margin-left: 80px; margin-top: -25px; margin-bottom: -5px}
-
-        #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
-        
-        #imgLabel{margin-top : 5px;}
-
-/*radio style*/
-.radioAlign { margin-right: 20px; }
-#radioType { margin-right: 20px; }
-
-#radios {
+/* img sneak*/
+#imgViewArea {
+	margin-top: -35px;
+	width: 670px;
 	margin-left: 80px;
-	margin-top: -15px;
-	margin-bottom: -3px;
+	height: 325px;
+	border: 1px solid rgb(206, 212, 218);
+	border-radius: 7px;
 }
 
-/* img sneak*/	 	    
-    #imgViewArea{ 
-    		margin-top: -35px;
-            width: 670px;
-            margin-left: 80px;
-            height: 467px;
-            border : 1px solid rgb(206,212,218);
-            border-radius : 7px;
-     }
-     
-     #imgArea{ border-radius : 7px; border : none; }
-     
-     #askContent{height : 261px;  margin-top: 2.5px; border : none;}
-     
-     #asktag{height : 261px;  margin-top: 2.5px; border : none;}
-    
+#imgArea { border-radius: 7px; border: none; margin-left : 80px; margin-top : -40px;}
+
+#asktag {
+	height: 261px;
+	margin-top: 2.5px;
+	border: none;
+}
+
+/*answer area*/
+#answered{
+	margin-top: -20px;
+	width: 670px;
+	margin-left: 80px;
+	height: 315px;
+	border: 1px solid rgb(206, 212, 218);
+	border-radius: 7px;
+}
+
+#questionType{ margin-left: 80px; margin-top: -35px; }
+
+#headjustify {margin-top: -10px;}
+
+#askTitle{margin-top: -25px; margin-left: 80px;}
+
+#askContent{margin-top: 10px; margin-left: 80px;}
+
+#imgBox{ height : 290px;}
+
 </style>
 
 </head>
@@ -254,65 +210,62 @@ span>mark { margin-left: 153px; }
 
 
 		<div id="thelist">
-			<span id="notice">1:1문의 작성</span>
-			<span id="subnote">부적절한 언어 사용시 무통보 삭제처리 됩니다. 수정 및 삭제가 불가능하니 신중하게 작성해주세요.</span>
+			<span id="notice">1:1문의 답변</span>
+
 			<div id="greenline"></div>
 
 			<div id="sideGreenbar"></div>
-			
-			<form id="InsertOne" method="post" action="insert.one" enctype="multipart/form-data">
+
+			<form id="UpdateOne" method="post" action="update.one"
+				enctype="multipart/form-data">
 				<div id="getInThere">
 					<span id="headTitle"><label for="askTitle">질문</label> 
-					<input type="text" id="askTitle" name="askTitle"  maxlength='20' required></span>
+					<input
+						type="text" id="askNo" name="askNo" value="${ask.askNo}"
+						hidden="true"> <p id="askTitle">${ask.askTitle}</p>
 					<div class="grayline"></div>
 
-					<div id="radioType">구분</div>
-
-					<div id="radios">
-						<input type="radio" name="searchtype" id="userquery" value="1"
-							required> <label class="radioAlign" for="userquery">회원문의</label>
-
-						<input type="radio" name="searchtype" id="payrefund" value="2"
-							required> <label class="radioAlign" for="payrefund">결제/환불</label>
-
-						<input type="radio" name="searchtype" id="etc" value="3" required>
-						<label class="radioAlign" for="etcs">서비스 이용 및 기타</label>
+					<div id="headjustify"><label>질문<br>구분</label>
+						<div id="questionType">${ask.askTypeName}</div>
+           		 	</div>
+           		 	
+					<div class="grayline"></div>
+					
+		
+					<span>
+						<label class="askContent" for="askContent">문의<br>내용</label>
+					</span>
+					
+					
+					<div id="imgBox">
+					<c:if test="${ ! empty ask.askNewImg  }">
+							<img id="imgArea"
+								src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
+								style="width: 200px; height: 200px;" onerror="imgAreaError()" />
+						</c:if>
+						
+						<p id="askContent">${ask.askContent}</p>
+					
 					</div>
 					
 					<div class="grayline"></div>
-
-					<div id="headjustify">
-						<label id="imgLabel" id="askOriginImg">사진</label>
-						<div class="clickable" id="differ">
-							<label for="askOriginImg" id="forThisImage" > <img
-								class="biggerimg"
-								src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-								업로드된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
-							</label>
-						</div>
-						<input type="file" id="askOriginImg" name="askOriginImg"
-							hidden="true" accept="image/*">
-
+					
+					<span>
+						<label class="askContent" for="answered">답변</label>
+					</span>
+					
+						<textarea class="form-control" id="answered" name="answered"
+							rows="10" style="resize: none;" maxlength="2000" required>${ask.answered}</textarea>
+					
+					
+					<div id="buttons">
+						<button class="goRound" type="submit">수정</button>
 					</div>
-
-					<div class="grayline"></div>
-
-
-					<span><label class="askContent" for="askContent">문의<br>내용</label></span>
-					<div id="imgViewArea">
-						<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
-						<textarea class="form-control" id="asktag" name="askContent" rows="10"
-							style="resize: none;" maxlength="2000" wrap=on  required>
-	       				 </textarea>
-					</div>
-
-				<div id="buttons">
-					<button class="goRound" id="insertAlert" type="submit">추가</button>
-				</div>
-
 			</form>
 
+
 			<div id="buttonSecondPart">
+				<button class="goRound" onclick="backToAshes();">삭제</button>
 				<button class="goRound" onclick="backToList();">목록</button>
 			</div>
 		</div>
@@ -321,14 +274,21 @@ span>mark { margin-left: 153px; }
 			<jsp:include page="../../common/footer.jsp" />
 		</div>
 
-<script>
-	function backToList(){
-		  location.href="list.one";
-	}
-</script>
+		<script>
+			function backToList(){
+				  location.href="list.one";
+			}
+		</script>
+		
+		<script>
+			function backToAshes(){
+    			location.href="delete.one?askNo="+ ${ask.askNo};
+			}
+		</script>
+	
 
-<!-- 파일 첨부 여부 스타일 -->
-	<script type="text/javascript">
+		<!-- 파일 첨부 여부 스타일 -->
+		<script type="text/javascript">
 	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -344,18 +304,18 @@ span>mark { margin-left: 153px; }
 		if( $(":input[name='askOriginImg']").val() == '' ) {
 			$('#imgArea').attr('src' , '');  
 		}
-		$('#asktag').css({ 'display' : '' });
+		$('#imgArea').css({ 'display' : '' });
 		readURL(this);
 	});
 
 	// 이미지 에러 시 미리보기영역 미노출
 	function imgAreaError(){
-		$('#asktag').css({ 'display' : 'none' });
+		$('#imgArea').css({ 'display' : 'none' });
 	}
 	</script>
-	
-	<!-- 어딜 눌러도 텍스트영역으로 -->
-	<script>
+
+		<!-- 어딜 눌러도 텍스트영역으로 -->
+		<script>
 		$('#imgViewArea').on('click', function(){
 			$('#asktag').focus();
 		})
