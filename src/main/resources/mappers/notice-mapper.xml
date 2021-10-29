@@ -128,6 +128,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	
+	
+	
 	<resultMap id="faqResultMap" type="FAQ">
 		<id column="F_NO" property="faqNo" />
 		<result column="rownum" property="rowNum"/>
@@ -189,6 +192,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE F_NO = #{faqNo}
 	</delete>
 	
+	
+	
+	
+	
+	
+	
+	
+	<resultMap id="askResultMap" type="Ask">
+		<id column="ASK_NO" property="askNo" />
+		<result column="ROWNUM" property="rowNum"/>
+		<result column="ASK_TITLE" property="askTitle" />
+		<result column="ASK_CONTENT" property="askContent" />
+		<result column="ASK_ORIGIN_IMG" property="askOriginImg" />
+		<result column="ASK_NEW_IMG" property="askNewImg" />
+		<result column="USER_NAME" property="askId" />
+		<result column="ANSWERED" property="answered" />
+		<result column="F_TYPENAME" property="askTypeName" />
+		<result column="ASK_DATE" property="askDate" />
+		<result column="ASK_STATUS" property="askStatus" />
+		<result column="USER_ROLE" property="userRole" />
+	</resultMap>
+	
+	<select id="selectOneListCount" resultType="_int" parameterType="Member" >
+		SELECT COUNT(*)
+		FROM ASK
+        JOIN MEMBER ON ASK_ID=USER_ID
+		JOIN FAQ_TYPE ON ASK_TYPENUM=F_TYPENO
+		<choose>
+			<when test="userRole.equals('D')">
+				WHERE 1=1
+			</when>
+			<otherwise>
+				WHERE USER_ID=#{userId}
+			</otherwise>
+		</choose>
+			
+	</select>
+
+	<select id="selectOneList" resultMap="askResultMap" resultType="Ask" parameterType="Member">
+		SELECT ROWNUM, ASK_NO, F_TYPENAME, ASK_TITLE, USER_NAME, ASK_DATE, ASK_STATUS, ASK_CONTENT,ANSWERED
+		FROM ASK
+        JOIN MEMBER ON ASK_ID=USER_ID
+		JOIN FAQ_TYPE ON ASK_TYPENUM=F_TYPENO	
+		<choose>
+			<when test="userRole.equals('D')">
+				WHERE 1=1
+			</when>
+			<otherwise>
+				WHERE USER_ID=#{userId}
+			</otherwise>
+		</choose>
+		ORDER BY ASK_NO DESC
+	</select>
 	
 	
 	
