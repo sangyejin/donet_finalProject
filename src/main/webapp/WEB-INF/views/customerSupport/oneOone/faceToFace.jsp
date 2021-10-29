@@ -105,13 +105,7 @@
 
         tr{  margin-top: 1%; margin-bottom: 1%; }
 
-        /*****detail for table****/
-        .number{width: 100px;}
-        .category{width: 200px;}
-        .title{width : 600px;}
-
-        .hidFirst{ display: none; }
-        .detailAlter{margin-left : 40px; font-size : 12px}
+       
         
        #whole { width: 1050px; margin-left: 150px; }
 
@@ -133,11 +127,12 @@
         /*single button style*/
 		 #goRound{
 		            height: 25px;
-		            width: 30px;
+		            width: 60px;
 		            border-style:none;
 		            border-radius: 7px;
 		            color: white; 
 		            background-color: rgb(66, 178, 115); 
+		            margin-left : 740px;
 		            
 		        }
 		        
@@ -217,7 +212,24 @@
         <c:if test="${ loginUser.userRole eq 'D' }">
         .hidFirst:hover{background-color: rgba(232, 240, 214, 0.5);}	 
     	</c:if>
+    	
+    	 /*****detail for table****/    	 
+        .number{ width: 100px;}
+        .category{width: 120px;}
+        .title{width : 380px;}
+		.writer{width: 100px;}
+		.date{width: 100px;}
+		.answered{width: 100px;}
+       	.hidFirst{ display: none; }
+        .detailAlter{margin-left : 40px; font-size : 12px}
         
+        #emptyAnswer{color : gray;}
+        #question{color : rgb(66, 178, 115);}
+        /*#answer{color : b;}*/
+       
+        
+        /*footer*/
+        #footerBox{margin-left:-150px;}
     </style>
 
 </head>
@@ -238,17 +250,17 @@
 				<br>
 				<tr>
 					<td width: 300px;><a id="faq" class="bottomfix" href="list.faq">자주 묻는 질문</a></td>
-                <td class="arrow"><span id="greenfont2" class="bottomfix"> > </span> </td>
+                <td class="arrow"><span  class="bottomfix"> > </span> </td>
             </tr>
 				<br>
 				<tr>
 					<td width: 300px;><a id="facetoface" class="bottomfix">1:1 문의</a></td>
-                <td class="arrow"><span class="bottomfix"> > </span> </td>
+                <td class="arrow"><span id="greenfont2" class="bottomfix"> > </span> </td>
             </tr>
 			</div>
 			<div class="needhelp">
 				<span><p id="help">도움이 필요하신가요?</p></span> 
-				<span><a id="gethelp"  href="list.one">1:1 문의하기</a></span> 
+				<span><a id="gethelp"  href="goAskForm.one">1:1 문의하기</a></span> 
 				<span id="helparrow"> > </span>
 			</div>
 		</div>
@@ -256,13 +268,11 @@
 
 
     <div id="thelist">
-       <span id="notice">자주 묻는 질문</span>
-       <span id="subnote">가장 많이 문의하시는 질문을 모았습니다.</span>
-       
+       <span id="notice">1:1 문의</span>       
        
        <div id="greenline"></div>
        
-           <table id="faqList">
+           <table id="oneList">
                 <tr>
                    <td class="number">번호</td>
                    <td class="category">카테고리</td>
@@ -272,12 +282,13 @@
                    <td class="answered">답변여부</td>
                 </tr>
                 
-                <tbody>
+              <tbody>  
                 <c:if test="${!empty list}">
                 	<c:forEach items="${ list }" var="one">
-			                 <tr>
+                	
+			                 <tr class="head">
 			                   <td class="number">${one.rowNum}</td>
-			                   <td class="category">${one.askTypeNum}</td>
+			                   <td class="category">${one.askTypeName}</td>
 			                   <td class="title">${one.askTitle}</td>
 			                   <td class="writer">${one.askId}</td>
 			                   <td class="date">${one.askDate}</td>
@@ -286,19 +297,25 @@
 			                
 			                 <tr class="hidFirst">
 			                 	<td class="trueNumber" hidden="true">${one.askNo}</td>
-			                    <td colspan="6"><pre class="detailAlter">${one.askContent}</pre></td>
+			                    <td colspan="6"><pre class="detailAlter" id="question">Q. ${one.askContent}</pre>
+			                  <c:if test="${ !empty one.answered }">
+			                    <br><pre  class="detailAlter" id="answer">A. ${one.answered}</pre></td>
+			                  </c:if>
+			                  <c:if test="${ empty one.answered }">
+			                  	<br><pre id="emptyAnswer" class="detailAlter">아직은 답변이 없네요! 주말 제외 5영업일 이내 답변 드리겠습니다.</pre></td>
+			                  </c:if>
+			                  
+			                    
 			                 </tr>
 						</c:forEach>
 					</c:if>
-                 </tbody>
+              	 </tbody>
                  
                  <c:if test="${empty list}">
 						<tr>
 							<td colspan="6">존재하는 문의내역이 없습니다.</td>
 						</tr> 
 				</c:if>
-				
-				
            </table>
 
 
@@ -351,41 +368,36 @@
 			  
            <div id="grayline"></div>
            
+         <c:if test="${ loginUser.userRole ne 'D' }">   	
+           <button id="goRound" onclick="goAsk();">문의하기</button>
+          </c:if> 
 </div>
 
 			
-			
-<jsp:include page="../../common/footer.jsp" />
-			
+<div id="footerBox">			
+	<jsp:include page="../../common/footer.jsp" />
+</div>
     
  <script>
     	$(function(){
-    		$("#faqList tbody .head").click(function(){
+    		$("#oneList tbody .head").click(function(){
     			
     			 var currentRow = $(this).closest('tr');
     	         var nextRow = currentRow.next('.hidFirst');
     	         if(nextRow.is(":visible")){
-    	                nextRow/*.next('.hidFirst:nth-child(2n)')*/.hide();
-
+    	                nextRow.hide();
     	            }else{
     	                nextRow.show();
-
     	            }
        		});
     	});
     </script> 
     
-    <script>
-    	function adminAdd(){
- 			location.href="goAddForm.faq";
-    	}
-    </script>
-    
     <c:if test="${ loginUser.userRole eq 'D' }">    	
     	<script>
     	$(function(){
-    		$("#faqList tbody .hidFirst").click(function(){
-    			location.href="goUpdateForm.faq?faqNo="+ $(this).children().eq(0).text();
+    		$("#oneList tbody .hidFirst").click(function(){
+    			location.href="goUpdateForm.one?askNo="+ $(this).children().eq(0).text();
        		});
     	});
     	</script>		
@@ -399,6 +411,19 @@
 		</script>
     </c:if>
     			
+    <script>
+    	$(function(){
+    		$('.answered:contains("N")').text("부").css('color','gray');
+    		$('.answered:contains("Y")').text("여").css('color','rgb(66, 178, 115)');
+    	})
+    	
+    </script>
+    
+    <script>
+    	function goAsk(){
+    		location.href="goAskForm.one";
+    	}
+    </script>
     
     
 </body>

@@ -159,4 +159,14 @@ public class NoticeServiceImpl implements NoticeService {
 		return NoDao.selectOneList(sqlSession, pi, loginUser);
 
 	}
+
+	@Override
+	public void insertOne(Ask ask) {
+		int result = NoDao.insertOne(sqlSession, ask);
+
+		if (result < 0) {
+			throw new CommException("1:1문의 추가 실패");
+		}
+		
+	}
 }

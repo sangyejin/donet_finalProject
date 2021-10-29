@@ -220,7 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN MEMBER ON ASK_ID=USER_ID
 		JOIN FAQ_TYPE ON ASK_TYPENUM=F_TYPENO
 		<choose>
-			<when test="userRole.equals('D')">
+			<when test='userRole.equals("D")'>
 				WHERE 1=1
 			</when>
 			<otherwise>
@@ -236,15 +236,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN MEMBER ON ASK_ID=USER_ID
 		JOIN FAQ_TYPE ON ASK_TYPENUM=F_TYPENO	
 		<choose>
-			<when test="userRole.equals('D')">
+			<when test='userRole.equals("D")'>
 				WHERE 1=1
 			</when>
 			<otherwise>
 				WHERE USER_ID=#{userId}
 			</otherwise>
 		</choose>
-		ORDER BY ASK_NO DESC
 	</select>
+		
+	
+	<insert id="insertOne" parameterType="Ask">
+		INSERT INTO ASK
+		VALUES
+		(SEQ_ASK.NEXTVAL, #{askTitle}, #{askContent}, #{askOriginImg}, #{askNewImg},
+		#{askId},NULL, #{askTypeNo}, SYSDATE, 'N')
+	</insert>
+	
 	
 	
 	

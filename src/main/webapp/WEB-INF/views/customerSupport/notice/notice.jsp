@@ -124,10 +124,7 @@ tr {
 
 .viewed { width: 120px; }
 
-#whole {
-	width: 1050px;
-	margin-left: 150px;
-}
+#whole { width: 1050px; margin-left: 150px; }
 
 /*button style*/
        	button{
@@ -168,10 +165,7 @@ tr {
 	margin-right: 0.5%;
 }
 
-#administratorLabel {
-	font-weight: bold;
-	margin-right: 5%;
-}
+#administratorLabel { font-weight: bold; margin-right: 5%; }
 
 /*searchbox*/
 #searchbox {
@@ -250,7 +244,7 @@ tr {
 			</div>
 			<div class="needhelp">
 				<span><p id="help">도움이 필요하신가요?</p></span> 
-				<span><a id="gethelp"  href="list.one">1:1 문의하기</a></span> 
+				<span><a id="gethelp"  href="goAskForm.one">1:1 문의하기</a></span> 
 				<span id="helparrow"> > </span>
 			</div>
 		</div>

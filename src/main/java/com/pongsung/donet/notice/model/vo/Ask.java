@@ -24,6 +24,7 @@ public class Ask {
 	private String askId;
 	private String answered;
 	private String askTypeName;
+	private int askTypeNo;
 	private Date askDate;
 	private String askStatus;
 	private String userRole;
