@@ -413,5 +413,50 @@ public class NoticeController {
 
 			return "customerSupport/oneOone/faceToFace";
 		}
+		
+	//insert
+		@RequestMapping("goAskForm.one")
+		public String goAskForm() {
+			return "customerSupport/oneOone/addAsk";
+		}
+		
+		@RequestMapping("insert.one")
+		public String insertOne(@RequestParam(name = "askTitle") String askTitle,
+				@RequestParam(name = "searchtype") int oneType,
+				@RequestParam(name = "askContent") String askContent, 
+				HttpServletRequest request, Model model,
+				@RequestParam(name = "askOriginImg", required = false) MultipartFile file) {
+
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+
+			System.out.println("askTitle : " + askTitle + ", oneType : " + oneType + " , askContent : "+ askContent + " loginUser.getUserId() : " + loginUser.getUserId());
+			System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+
+			Ask ask = new Ask();
+			
+			/*set*/
+			
+			ask.setAskTitle(askTitle);
+			ask.setAskTypeNo(oneType);
+			ask.setAskContent(askContent);
+			ask.setAskId(loginUser.getUserId());
+			
+			if (!file.getOriginalFilename().equals("")) {
+				String changeName = saveFile(file, request);
+				if (changeName != null) {
+					ask.setAskOriginImg(file.getOriginalFilename());
+					ask.setAskNewImg(changeName);
+				}
+
+			}
+			
+			/*set*/
+			
+			NoService.insertOne(ask);
+
+			return "redirect:list.one";
+		}
 
 }

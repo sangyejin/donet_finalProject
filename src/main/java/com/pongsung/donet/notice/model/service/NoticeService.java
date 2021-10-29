@@ -51,5 +51,7 @@ public interface NoticeService {
 
 	ArrayList<Ask> selectOneList(PageInfo pi, Member loginUser);
 
+	void insertOne(Ask ask);
+
 
 }

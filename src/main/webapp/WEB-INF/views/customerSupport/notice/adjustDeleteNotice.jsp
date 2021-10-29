@@ -217,7 +217,7 @@
         </div>
         <div class="needhelp">
             <span><p id="help">도움이 필요하신가요?</p></span>
-            <span><a id="gethelp"  href="list.one">1:1 문의하기</a></span>
+            <span><a id="gethelp"  href="goAskForm.one">1:1 문의하기</a></span>
             <span id="helparrow"> > </span>
         </div>
     </div>
@@ -267,7 +267,7 @@
             </c:if>
             
 	        
-	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent" rows="10" style="resize:none;" maxlength="2000">
+	        <textarea type="text"  wrap=on  class="form-control" required id="noticeContent" name="noticeContent" rows="10" style="resize:none;" maxlength="2000">
 	       		${ no.noticeContent }
 	        </textarea>	
 		</div>
