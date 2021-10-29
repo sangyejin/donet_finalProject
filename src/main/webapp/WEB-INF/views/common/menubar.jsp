@@ -9,10 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
-     -->
+   
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -29,20 +26,12 @@
 	
 	 
 <style>
-/*
-body{
-    background-color: rgb(248,250,244);
-}*/
 
 *{
-   /* font-family: 'Gugi', cursive;*/
-   /*font-family: 'Song Myung', serif;*/
-   /* font-family: 'Nanum Gothic Coding', monospace; */
 	font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;
-
 }
 
 #outline{
@@ -216,21 +205,6 @@ height : 30px;
 			</ul>
             </div>
     </div>
-    <!--
-    맨 위로 돌아가기 아이디어
-
-    <a href="#menu">메뉴로 돌아가기</a>
-    <span>gday</span>
-    span{ 
-        background-color: blue;
-        width: 100px;
-        height : 100px; /*스팬은 이게 안먹어서 디스플레이 먹여줘야 크기 조정이 된다*/
-        /* position  : absolute;*/
-        position : fixed;
-        top : 100px;
-        left : 100px;
-    }   
-    -->
     
      <!-- 로그인 클릭 시 뜨는 모달  -->
     <!-- <div class="modal fade" id="loginModal">

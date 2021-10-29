@@ -27,7 +27,6 @@
     	#gotoLEFT{ margin-left : -150px;}
     
         *{ /*border: 1px red solid;*/
-            font-family: 'Nanum Gothic Coding', monospace;
             font-size: 12px;
         }
 

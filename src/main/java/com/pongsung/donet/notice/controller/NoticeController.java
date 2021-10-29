@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.notice.model.service.NoticeService;
+import com.pongsung.donet.notice.model.vo.Ask;
 import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
@@ -34,8 +37,9 @@ public class NoticeController {
 	// main list
 	@RequestMapping("list.no")
 	public String selectNoticeList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
-
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+		
 		int listCount = NoService.selectNoticeListCount(null);
 		System.out.println(listCount);
 
@@ -379,5 +383,35 @@ public class NoticeController {
 
 		return "redirect:list.faq";
 	}
+	
+	/******************************************************************************************************************/
+	
+	// main list
+		@RequestMapping("list.one")
+		public String selectOneList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+				,Model model
+				,HttpServletRequest request) {
+			
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			System.out.println("loginUser : " + loginUser);
+			System.out.println("loginUser.getUserRole() : " + loginUser.getUserRole());
+
+			
+			int listCount = NoService.selectOneListCount(loginUser);
+
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+			ArrayList<Ask> list = NoService.selectOneList(pi, loginUser);
+			System.out.println("list : " + list);
+			System.out.println("listCount : " + listCount);
+
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+
+			return "customerSupport/oneOone/faceToFace";
+		}
 
 }

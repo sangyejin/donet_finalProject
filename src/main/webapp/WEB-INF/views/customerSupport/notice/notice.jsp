@@ -11,7 +11,6 @@
 <style>
 * {
 	/*border: 1px red solid;*/
-	font-family: 'Nanum Gothic Coding', monospace;
 	font-size: 10px;
 }
 

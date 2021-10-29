@@ -9,15 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
-
     <style>
-        *{
-            /*border: 1px red solid;*/
-            font-family: 'Nanum Gothic Coding', monospace;
-            font-size: 12px;
-        }
+        *{font-size: 12px; }
         
         /*sidebar*/
 		.sidebar {
