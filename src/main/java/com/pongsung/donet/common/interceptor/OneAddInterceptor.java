@@ -26,7 +26,7 @@ public class OneAddInterceptor extends HandlerInterceptorAdapter {
 
 		if (loginUser == null) {
 			logger.info("비로그인 상태에서 [" + request.getRequestURI() + "] 접 근 시 도");
-			session.setAttribute("msg", "1:1 문의는 로그인 후에 이용 가능합니다.");
+			session.setAttribute("msg", "로그인 후 이용 가능합니다.");
 			response.sendRedirect("/donet/loginForm.me");
 			return false;
 		}else if(loginUser.getUserRole().equals("D")){
