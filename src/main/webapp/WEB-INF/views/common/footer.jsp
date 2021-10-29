@@ -10,7 +10,7 @@
 
 a { text-decoration: none; }
 
-#snstap { height: 30px; margin-top: 5px; }
+#snstap { height: 30px; margin-top: 5px; cursor:pointer; }
 
 #workinghour { font-size: smaller; }
 
@@ -75,7 +75,7 @@ a { text-decoration: none; }
 		<div id="line" align="left"></div>
 		<div id="footer">
 			<span id="toleft" align="left"> <a href="#">회사소개</a> | <a
-				href="#">채용안내</a> | <a href="#">윤리경영</a> | <a href="#">약관</a> | <a
+				id="noVacancy">채용안내</a> | <a href="moral.fo">윤리경영</a> | <a href="terms.fo">이용약관</a> | <a
 				href="goAskForm.one">개선 의견 수렴</a> <br>
 			<br>
 
@@ -106,6 +106,24 @@ a { text-decoration: none; }
 			</div>
 		</div>
 	</div>
+
+	<script>
+		$(function(){
+			$("#noVacancy").on('click', function(){
+				alert("현재 도넷닷컴은 채용중이 아닙니다.")
+			})
+		})
+	</script>
+	
+	<script>
+		$(function(){
+			$("#snstap").on('click', function(){
+				alert("준비중입니다.")
+			})
+		})
+	</script>
+	
+	
 
 	<!--sns 바 선택하면 어쩔지 고민중
     <script>

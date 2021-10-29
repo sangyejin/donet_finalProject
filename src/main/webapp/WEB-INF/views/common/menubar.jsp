@@ -228,5 +228,12 @@ height : 30px;
         </div>
     </div> -->
     
+    <script>
+    
+    	$("#logo").on('click', function(){
+    		location.href="/donet"
+    	})
+    </script>
+    
 </body>
 </html>
