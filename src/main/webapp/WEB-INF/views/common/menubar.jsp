@@ -178,6 +178,7 @@ height : 30px;
                     </ul> 
                 </li>
                 <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
+                
                 </li>
                 <li class="greenfont" id="5"><a>고객지원</a>
                     <ul class="arrow_box">
