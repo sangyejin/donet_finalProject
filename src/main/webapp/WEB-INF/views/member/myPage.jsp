@@ -6,7 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도넷닷컴</title>
+<style>
+	#pointLabel{color : gray; margin-left : 120px; margin-top : -22px; }
+	#forPointPayment:hover{ text-decoration : underline;}
+	#dvdLine{background : gray; width :455px; height : 0.01cm; margin-top : 5px; margin-bottom : 5px; margin-left : -45px;}
+</style>
 </head>
 <body>
 	
@@ -17,6 +22,9 @@
         <div class="innerOuter">
         
             <h2>마이페이지</h2>
+            <div id="pointLabel">포인트 충전을 원하시면 <a id="forPointPayment" href="point.me">여기</a>를 클릭해주세요.</div>
+            <div id="dvdLine"></div>
+      
             <br>
 
             <form action="update.me" method="post" onsubmit="">
@@ -26,6 +34,10 @@
                     
                     <label for="userName">* 이름 :</label>
                     <input type="text" class="form-control" id="userName" name="userName" value="${ loginUser.userName }" readonly><br>
+                    
+                     <label for="gotPoint">* 보유 포인트 :</label>
+                    <input type="text" class="form-control" id="gotPoint" name="gotPoint" value="${ loginUser.point }" readonly><br>
+                    
                     
                     <label for="userNick"> &nbsp; 닉네임 :</label>
                     <input type="text" class="form-control" id="userNick" name="userNick" value="${ loginUser.userNick }"><br>
@@ -41,6 +53,7 @@
                     
                     <label for="address"> &nbsp; 주소 :</label><br>
                   <%-- <input type="text" class="form-control" id="address" name="address" value="${ loginUser.address }"><br>--%>
+                    
                     
               	
 				<c:forTokens var="addr" items="${ loginUser.address }" delims="/" varStatus="status">
@@ -106,6 +119,7 @@
                 <br>
                 
                 <div class="btns" align="center">
+                	<a href="calendar.me" class="text-primary">출석체크</a>
                 	<button class="btn btn-primary"><a data-toggle="modal" data-target="#chagePwdModal">Pwd변경</a></button>
                     <button type="submit" class="btn btn-success">수정하기</button>
                     <%-- <a href="delete.me?userId=${ loginUser.userId }" class="btn btn-danger">탈퇴하기</a> --%>

@@ -28,7 +28,16 @@
 
 	<context:component-scan
 		base-package="com.pongsung.donet" />
-
-
+		
+	<interceptors>
+		<interceptor>
+			<mapping path="/list.one"/>
+			<beans:bean id="oneListInterceptor" class="com.pongsung.donet.common.interceptor.OneListInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/goAskForm.one"/>
+			<beans:bean id="oneAddInterceptor" class="com.pongsung.donet.common.interceptor.OneAddInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 </beans:beans>

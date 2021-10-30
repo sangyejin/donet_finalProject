@@ -44,6 +44,7 @@
 	margin-left: 5%;
 	display: inline-block;
 	transition: all 0.5s;
+	border: 1px solid black;
 }
 
 .supportList:hover {
@@ -119,8 +120,7 @@
 		<div class="content">
 			<c:if test="${!empty list}">
 				<c:forEach items="${ list }" var="s" varStatus="status">
-					<div class="supportList"
-						onclick="location.href = 'detail.do?suNo=${s.suNo}'">
+					<span class="supportList" onclick="location.href = 'detail.do?suNo=${s.suNo}'">
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
@@ -171,7 +171,7 @@
 								</h3>
 							</div>
 						</span>
-					</div>
+					</span>
 				</c:forEach>
 			</c:if>
 			<div class="pageOuter">

@@ -214,19 +214,19 @@
 		</div>
 		<script>
 			function global() {
-				location.href = "global";
+				location.href = "global?suCategoryNo=1";
 			}
 			function environment() {
-				location.href = "environment";
+				location.href = "environment?suCategoryNo=2";
 			}
 			function animal() {
-				location.href = "animal";
+				location.href = "animal?suCategoryNo=3";
 			}
 			function child() {
-				location.href = "child";
+				location.href = "child?suCategoryNo=4";
 			}
 			function vulnerable() {
-				location.href = "vulnerable";
+				location.href = "vulnerable?suCategoryNo=5";
 			}
 		</script>
 

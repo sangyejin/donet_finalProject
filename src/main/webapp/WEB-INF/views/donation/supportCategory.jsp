@@ -133,13 +133,11 @@ c {
 		<div id="greenLine"></div>
 	</div>
 	<div class="categoryBox">
-		<span><input type="button" class="category" id="global"
-			value="지구촌" onclick="global()" /></span> <span><button
-				class="category" id="environment" onclick="environment()">환경</button></span>
+		<span><input type="button" class="category" id="global" value="지구촌" onclick="global()" /></span> 
+		<span><button class="category" id="environment" onclick="environment()">환경</button></span>
 		<span><button class="category" id="animal" onclick="animal()">동물</button></span>
 		<span><button class="category" id="child" onclick="child()">아동/청소년</button></span>
-		<span><button class="category" id="vulnerable"
-				onclick="vulnerable()">취약계층</button></span>
+		<span><button class="category" id="vulnerable" onclick="vulnerable()">취약계층</button></span>
 	</div>
 </body>
 </html>

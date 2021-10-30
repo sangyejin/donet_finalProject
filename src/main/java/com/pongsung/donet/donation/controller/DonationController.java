@@ -3,6 +3,7 @@ package com.pongsung.donet.donation.controller;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.GsonBuilder;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.donation.model.service.DonationService;
@@ -64,17 +66,13 @@ public class DonationController {
 		Support s = donationService.selectDonation(suNo);
 		Sponsor p = donationService.selectSponsor(suNo);
 		List<SupportUsePlan> u = donationService.selectSupportUsePlan(suNo);
-		List<SupporComment> c = donationService.selectSupporComment(suNo);
 		List<Sponsor> pList = donationService.selectSponsorList(suNo);
 		
 		mv.addObject("s", s).setViewName("donation/donationDetail");
 		mv.addObject("p", p).setViewName("donation/donationDetail");
 		mv.addObject("u", u).setViewName("donation/donationDetail");
-		mv.addObject("c", c).setViewName("donation/donationDetail");
 		mv.addObject("pList", pList).setViewName("donation/donationDetail");
 
-		System.out.println("c "+c);
-		System.out.println("pList "+pList);
 		return mv;
 	}
 
@@ -84,34 +82,54 @@ public class DonationController {
 		return "donation/registration";
 	}
 	
-/*	@RequestMapping("global")
-	public String global(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model, int categoryNo) {
-		int listCount = donationService.selectGolbalListCount(categoryNo);
-		System.out.println("listCount"+listCount);
+	@RequestMapping("select.ca")
+	public String global(int suCategoryNo, Model model) {
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
-		System.out.println("pi"+pi);
-		
-		List<Support> list = donationService.selectGlobalList(pi,categoryNo);
-		System.out.println("support"+list);
+		List<Support> list = donationService.selectCategoryList(suCategoryNo);
+		System.out.println("list"+list);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
 		
 		System.out.println("model "+model);		
 		return "donation/global";
-	}*/
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "list.re", produces = "application/json; charset=utf-8")
+	public String selectReplyList(int suNo) {
+
+		ArrayList<SupporComment> commentList = donationService.selectReplyList(suNo);
+		System.out.println("commentList "+commentList);
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(commentList);
+	}
 	
 	@ResponseBody
 	@RequestMapping("insert.re")
 	public String insertReply(SupporComment sc) {
 		int result = donationService.insertReply(sc);
-		System.out.println(result);
-		System.out.println(sc);
 		
 		return String.valueOf(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="delete.re/{replyNo}")
+	public String deleteReply(@PathVariable("replyNo")int replyNo) {
+		int result = donationService.deleteReply(replyNo);
+		System.out.println(replyNo);
+		System.out.println(result);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="update.re/{suNo}/{replyNo}")
+	public String updateReply(@PathVariable("suNo")int suNo, @PathVariable("replyNo")int replyNo, SupporComment sc) {
+		sc.setReplyNo(replyNo);
+		int result = donationService.updateReply(sc);
+		return String.valueOf(result);
+	}
+
 	
 
 }

@@ -23,4 +23,5 @@ public class Goods {
 	private String thumbnailOriginName;
 	private String thumbnailChangeName;
 	private int hits;
+	private String status;
 }

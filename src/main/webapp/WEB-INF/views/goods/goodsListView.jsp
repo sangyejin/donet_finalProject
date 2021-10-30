@@ -142,7 +142,7 @@ select::-ms-expand {
 	padding-top: 10px;
 }
 
-#title {
+.title {
 	display: block;
 	font-size: 18px;
 }
@@ -228,7 +228,7 @@ select::-ms-expand {
 		<div class="div-top">
 			<div>
 				<div class="div-category-menu">
-					<c:forEach var="category" items="${category}">
+					<c:forEach var="category" items="${categoryList}">
 						<button type="button" class="btn btn-light"
 							id="btn-${category.categoryNo}">${category.categoryName}</button>
 					</c:forEach>
@@ -255,8 +255,7 @@ select::-ms-expand {
 
 		<div class="div-content">
 			<div class="container row" style="margin: 100 auto; width: 1080px;">
-
-				<c:forEach var="list" items="${list}" varStatus="status">
+				<c:forEach var="list" items="${goodsList}" varStatus="status">
 					<div class="card col-lg-4 col-md-6 col-sm-6">
 						<div class="single-cases mb-40">
 							<div class="cases-img">
@@ -266,7 +265,7 @@ select::-ms-expand {
 							<div class="cases-caption">
 								<div class="cases-info">
 									<div class="div-title">
-										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" id="title">${list.goodsName}</a>
+										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" class="title">${list.goodsName}</a>
 									</div>
 									<p class="goodsPrice">
 										${list.goodsPrice}

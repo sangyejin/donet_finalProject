@@ -27,7 +27,6 @@
     	#gotoLEFT{ margin-left : -150px;}
     
         *{ /*border: 1px red solid;*/
-            font-family: 'Nanum Gothic Coding', monospace;
             font-size: 12px;
         }
 
@@ -214,7 +213,7 @@
         </div>
         <div class="needhelp">
             <span><p id="help">도움이 필요하신가요?</p></span>
-            <span><a id="gethelp" href="list.one">1:1 문의하기</a></span>
+            <span><a id="gethelp" href="goAskForm.one">1:1 문의하기</a></span>
             <span id="helparrow"> > </span>
         </div>
     </div>
