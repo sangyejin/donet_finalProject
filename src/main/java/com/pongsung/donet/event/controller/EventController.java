@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,14 +32,16 @@ import com.pongsung.donet.event.model.service.EventService;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.funding.controller.FundingController;
 
 @Controller
 public class EventController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(EventController.class);
+	
 	@Autowired
 	private EventService eventService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(EventController.class);
 	
 	@RequestMapping("list.ev")
 	public String selectList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) {
@@ -46,7 +49,7 @@ public class EventController {
 		int listCount = eventService.selectEventListCount();
 		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5 , 9);
 		
 		ArrayList<Event> list = eventService.selectEventList(pi);
 		System.out.println("list check : "+list); //리스트 확인 
@@ -63,7 +66,7 @@ public class EventController {
 		int listCount = eventService.afterListCount();
 		System.out.println("After List Count check : "+listCount); //페이지 카운트확인하기 
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5 , 9);
 		
 		ArrayList<Event> list = eventService.afterList(pi);
 		System.out.println("list check : "+list); //리스트 확인 
@@ -75,17 +78,16 @@ public class EventController {
 	}
 	
 	@RequestMapping("detail.ev")
-	public ModelAndView selectEvent(int eno, ModelAndView mv) {
+	public String selectEvent(int eno, Model mv) {
 		System.out.println("디테일 체크 : " + eno );
 		
 		Event ev = eventService.selectEvent(eno);
-		Attachment at = eventService.selectEventAttach(eno);
+		List<Attachment> at = eventService.selectEventAttach(eno);
 		
-		mv.addObject("ev", ev).setViewName("event/eventDetail");
-		mv.addObject("at", at).setViewName("event/eventDetail");
+		mv.addAttribute("ev", ev);
+		mv.addAttribute("at", at);
 		
-		System.out.println("디테일 모델 체크 : " + mv );
-		return mv;
+		return "event/eventDetail";
 	}
 	
 	@RequestMapping("enroll.ev")
@@ -105,7 +107,8 @@ public class EventController {
 		String savePath = resources + "//upload_files//";
 		
 		Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
-		for(java.util.Map.Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
+		
+		for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
 			List<MultipartFile> fileList = entry.getValue();
 			
 			for(int i=0; i<fileList.size(); i++) {
@@ -114,15 +117,15 @@ public class EventController {
 					String originName = fileList.get(i).getOriginalFilename();
 					String changeName = saveFile(fileList.get(i), request);
 					
-					if((entry.getKey()).equals("thumFile")) {
-						e.setEventOrigin(originName);
-						e.setEventChange(changeName);
-					}else {
+					if(!(entry.getKey()).equals("thumFile")) {
 						at.setFileLocation(savePath);
 						at.setOriginName(originName);
 						at.setChangeName(changeName);
 						at.setRefEventNo(e.getEventNo());
 						attList.add(at);
+					}else {
+						e.setEventOrigin(originName);
+						e.setEventChange(changeName);
 					}
 				}
 			}

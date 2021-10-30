@@ -11,6 +11,10 @@
 		<typeAlias type="com.pongsung.donet.event.model.vo.EventReply" alias="EventReply"/>
 		<typeAlias type="com.pongsung.donet.event.model.vo.Event" alias="Event" />
 		
+		<typeAlias type="com.pongsung.donet.volunteer.model.vo.Volunteer" alias="Volunteer" />
+		<typeAlias type="com.pongsung.donet.volunteer.model.vo.VolAttachment" alias="VolAttachment" />
+		<typeAlias type="com.pongsung.donet.volunteer.model.vo.VolunteerReply" alias="VolunteerReply" />
+		
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Search" alias="Search" />
 		<typeAlias type="com.pongsung.donet.notice.model.vo.Category" alias="Category" />
@@ -50,6 +54,7 @@
 		<mapper resource="/mappers/funding-mapper.xml" />
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
+		<mapper resource="/mappers/volunteer-mapper.xml" />
 
 
 	</mappers>

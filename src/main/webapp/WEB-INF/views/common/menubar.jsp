@@ -189,7 +189,7 @@ height : 30px;
                 </li>
                 <li class="greenfont" id="6"><a>커뮤니티</a>
                     <ul class="arrow_box"> 
-                        <li><a>선행활동</a></li>
+                        <li><a href="list.vo">선행활동</a></li>
                         <li><a>?</a></li>
                     </ul> 
                 </li>                
