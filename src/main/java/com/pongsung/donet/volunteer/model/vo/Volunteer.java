@@ -18,10 +18,14 @@ public class Volunteer {
 	private int volNo;
 	private String volTitle;
 	private String volContent;
-	private String volwriter;
+	private String volWriter;
 	private Date volDate;
+	private int volPoint;
 	private char volStatus;
 	private String volCategory;
-	
+	private String volOrigin;
+	private String volChange;
+	private int volCount;
+	private int volLike;
 	
 }

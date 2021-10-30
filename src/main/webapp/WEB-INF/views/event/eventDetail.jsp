@@ -142,6 +142,18 @@
 	          border: none;
 	          background-color:rgb(241, 241, 241);
           }
+          .dateArea{
+          		float:right;
+          		height:0 auto;
+          		padding-top: 15px;
+          		padding-right: 20px;
+          }
+          .titleBox{
+          		padding-top: 15px;
+          		padding-bottom: 30px;
+          		padding-left: 20px;
+          }
+         
     </style>
 </head>
 <body>
@@ -153,33 +165,37 @@
        <article class="event_view_title"> 
        
             <header class="statusBox">
-                <p style="font-size:30px"> ${ ev.eventTitle } 
-                <span style="font-size:15px; float:right; margin-right:20px"> Goal : ${ fn:substring(ev.eventStart, 0,10) }</span>
-                <span style="font-size:15px; float:right; margin-right:20px"> ~ </span>
-                <span style="font-size:15px; float:right; margin-right:20px" > Start: ${ fn:substring(ev.eventStart, 0,10) }</span>
+                <p class="titleBox" style="font-size:30px"> ${ ev.eventTitle }
                 
-                </p>
-                
+                	<span class="dateArea"> Goal : ${ fn:substring(ev.eventStart, 0,10) } ~ Start: ${ fn:substring(ev.eventStart, 0,10) } </span>
+            	</p>
             </header>
         </article>
             <br>
             <br>
             <section class="event_view_wrap">
                 <div class="event_view_info">
+                 <div class="imageArea">
+                <c:if test="${ !empty ev.eventOrigin }">
+                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="No" >
+                </c:if>
+                </div>
+                
 	                <div class="contentArea">
-	                	${ ev.eventContent }
-	                	<c:forEach var="imageFileName" items="${map.fileList }">
-	                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
-	                		<img src="${ at.fileLocation }" alt="No Image">
-	                		<br><br>
-	                	</c:forEach>
+	               	<p> ${ ev.eventContent } </p>
+	                	<c:if test="${ !empty at }">
+		                	<c:forEach var="at" items="${ at }">
+		                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
+		                		<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${at.changeName}" alt="No" >
+		                		<br><br>
+		                	</c:forEach>
+	                	</c:if>
 	                	</div>
 	                	<br>
                     <!-- image -->
-                    <div class="imageArea">
-                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="" >
-                    </div>
+                    
                 </div>
+               
                 <!-- <div>
                 	<p> 첨부파일 </p>
                 	
@@ -210,14 +226,13 @@
                     	
                     </tr>
             	</thead>
-            	<tbody>
+            	<tbody class="replyZone">
             	
             	</tbody>
             </table>
              <script>
    $(function(){
-   		selectReplyList();
-   		
+	   selectReplyList();
    		$("#addReply").click(function(){
    			var eno = ${ev.eventNo};
    			
@@ -248,7 +263,7 @@
    });
    
    function selectReplyList(){
-	   var eno = ${ev.eventNo};
+	   var eno = "${ev.eventNo}";
 	   $.ajax({
 		   url:"rlist.ev",
 		   data:{eno:eno},
@@ -258,26 +273,21 @@
 			   
 			   var value="";
 			   
-			   $.each(list, function(i, obj){
-				   
+			   $.each(list, function(i, er){
+				   value += "<tr>"
+					    "<th>" + er.eventReplyWriter + "</th>" +
+			   			"<td>" + er.eventReplyContent + "</td>" + 
+			   			"<td>" + er.eventReplyDate + "</td>" ;
 				   
 				   if("${loginUser.userId}" == obj.eventReplyWriter){
-					   value += "<tr>"
-						    "<th>" + obj.eventReplyWriter + "</th>" +
-				   			"<td>" + obj.eventReplyContent + "</td>" + 
-				   			"<td>" + obj.eventReplyDate + "</td>" +
-				   			"<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
-				   			"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
-				   			"</tr>";
+				   	value += "<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
+							"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
+						   	"</tr>";
 				   }else{
-					   value += "<tr>"
-						    "<th>" + obj.eventReplyWriter + "</th>" +
-				   			"<td>" + obj.eventReplyContent + "</td>" + 
-				   			"<td>" + obj.eventReplyDate + "</td>" +
-				   			"</tr>";
+						value += "</tr>";
 				   }
 			   });
-			   $("replyArea tbody").html(value);
+			   $(".replyZone").html(value);
 		   }, 
 		   error:function(){
 			   console.log("댓글 리스트 조회용 ajax 통신실패 ");

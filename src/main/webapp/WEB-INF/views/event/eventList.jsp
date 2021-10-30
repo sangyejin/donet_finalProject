@@ -14,13 +14,13 @@
    			width: 100%;
    		}
         .container{
-            width: 80%;
+            width: 100%;
            
         }
         
         .eventBox{
             height: 80px;
-            width: 80%;
+            width: 100%;
             border: none;
           
         }
@@ -75,7 +75,7 @@
             cursor:pointer;
           }
           .card-title{  
-            font-size:15px;
+            font-size:20px;
             transition:1s;
             cursor:pointer;
           }
@@ -85,7 +85,7 @@
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
           }
           .card-text{
-            height:80px;  
+            height:30px;  
           }
           
           .card::before, .card::after {
@@ -165,19 +165,17 @@
         ========================= --> 
         
         <div class="row">
-        	<c:forEach items="${ list }" var="ev">
-            <div class="col-lg-4 col-md-6 col-sm-6" id="eventCard">
-            	<p style="display:none" > ${ ev.eventNo } </p>
-                <div class="single-cases mb-40">
-                    <div class="cases-img">
-                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> 
+        	<c:forEach items="${ list }" var="list">
+            <div class="col-md-6 col-lg-3 col-xl-3" id="eventCard">
+            	<p style="display:none" > ${ list.eventNo } </p>
+                <div class="card">
+                    <div class="card-img">
+                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${list.eventChange}" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> 
                     </div>
-                    <div class="cases-caption">
-                    	<h2>${ ev.eventTitle }</h2>
-                    	<div class="dates d-flex justify-content-between">
-                        	<p>Start:<span> ${ fn:substring(ev.eventStart, 0,10) }</span></p>
-                            <p>Goal:<span> ${ fn:substring(ev.eventLast, 0,10) }</span></p>
-                        </div>
+                    <div class="card-content">
+                    	<p class="card-title mt-3 mb-3">${ list.eventTitle }</p>
+                        <p class="card-text" style="margin:0 auto" >Start: ${ fn:substring(list.eventStart, 0,10) }  ~  
+                            Goal: ${ fn:substring(list.eventLast, 0,10) } </p>
                     </div>
                 </div>
             </div>
@@ -244,7 +242,7 @@
                     	<br>
                     	
                     	<c:if test="${ !empty loginUser }">
-                    		<a class="btn" href="enroll.ev">이벤트 생성</a>
+                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>
                     	
                     </div>  
