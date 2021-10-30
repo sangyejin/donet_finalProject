@@ -477,17 +477,15 @@ ${s.content}
 
 			<div class="slider-1">
 				<div class="slides">
-					<div class="active"
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/support.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/chchch.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/radesta.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/rerere.jpg?auto=compress,format);"></div>
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
+						<div
+						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/${ImgList.imgChangeName }?auto=compress,format);"></div>
+					
+					
+					</c:forEach>
 				</div>
 				<div class="page-btns">
-					<div class="active"></div>
+					<div></div>
 					<div></div>
 					<div></div>
 					<div></div>
@@ -772,7 +770,7 @@ ${s.content}
 		 });
     	
     	function updateReply(){
-    		if(confirm("정말로 수정하시겠습니까?")){
+    		if(confirm("댓글을 수정하시겠습니까?(Y/N)")){
     		const suNo = "${s.suNo}";
     		console.log(suNo);
     		const content=$('#reply_text').val();
@@ -787,19 +785,16 @@ ${s.content}
     				replyContent:content
     			},
     			success : function() {
-    				alert("댓글이 수정되었습니다.");
+    				alert("댓글이 수정되었습니다");
     				selectReplyList();
     			},
     			error : function() {
     				console.log("댓글 리스트조회용 ajax 통신 실패");
     			}
     		});
-    		
-
-    		
-    		}
-    		
     	}
+    		
+    }
 
     </script>
 	<script>

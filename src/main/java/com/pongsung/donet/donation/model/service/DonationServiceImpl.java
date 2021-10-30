@@ -6,6 +6,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
@@ -13,7 +15,11 @@ import com.pongsung.donet.donation.model.dao.SupportDao;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
+import com.pongsung.donet.funding.model.vo.Funding;
+import com.pongsung.donet.funding.model.vo.FundingGoods;
+import com.pongsung.donet.funding.model.vo.FundingImage;
 
 @Service
 public class DonationServiceImpl implements DonationService {
@@ -74,6 +80,11 @@ public class DonationServiceImpl implements DonationService {
 	public List<Sponsor> selectSponsorList(int suNo) {
 		return supportDao.selectSponsorList(sqlSession, suNo);
 	}
+	
+	@Override
+	public List<SupportImage> selectImageList(int suNo) {
+		return supportDao.selectImageList(sqlSession,suNo);
+	}
 
 	@Override
 	public ArrayList<SupporComment> selectReplyList(int suNo) {
@@ -121,6 +132,40 @@ public class DonationServiceImpl implements DonationService {
 		return result;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
+	@Override
+	public void insertBoard(Support support, List<SupportImage> imgList, List<SupportUsePlan> list) throws Exception{
+		int suNo=supportDao.insertBoard(sqlSession,support);
+		if(suNo>0) {
+			if(!imgList.isEmpty()) { //추가 사진이 있으면
+				for(SupportImage fi: imgList) {
+					fi.setSuNo(suNo);
+				}
+				int resultInsertImg=supportDao.insertImgList(sqlSession,imgList);
+				if(resultInsertImg<0) { //추가사진 db insert 실패
+					throw new CommException("게시글 이미지 등록 실패");
+				}
+			}
+			if(!list.isEmpty()) { //선물이 있으면
+				for(SupportUsePlan up: list) {
+					up.setSuNo(suNo);
+				}
+				int resultInsertUsePlan=supportDao.insertUsePlan(sqlSession, list);
+				if(resultInsertUsePlan<0) { //선물 db insert 실패
+					throw new CommException("게시글 기부계획서 등록 실패");
+				}
+			}
+			
+		}
+		else { //펀딩 db insert 실패
+			throw new CommException("게시글 DB 등록 실패");
+		}
+		
+	}
+
+
+	
+	
 
 //	@Override
 //	public int selectGolbalListCount(int categoryNo) {
