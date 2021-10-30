@@ -14,4 +14,10 @@ public interface GoodsService {
 
 	List<Goods> selectGoodsList(PageInfo pi);
 
+	void updateGoodsHitsCount(int goodsNo);
+
+	Goods selectGoods(int goodsNo);
+
+	void deleteGoods(int goodsNo);
+
 }

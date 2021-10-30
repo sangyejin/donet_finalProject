@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
 		<result property="hits" column="HITS" />
 		<result property="status" column="STATUS" />
+		<result property="numberSupporter" column="NUMBER_SUPPORTER" />
 		<result property="createDate" column="CREATE_DATE" />
 	</resultMap>
 
@@ -30,15 +31,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from GOODS
 		where STATUS='Y'
 	</select>
+	
 	<select id="selectGoodsCategoryList" resultMap="goodsCategoryResultSet">
 		select GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME
 		from GOODS_CATEGORY
 	</select>
+	
 	<select id="selectGoodsList" resultMap="goodsResultSet">
 		select GOODS_NO, GOODS_NAME, GOODS_PRICE, A.GOODS_CATEGORY_NO, CONTENT
-		,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME, HITS, B.GOODS_CATEGORY_NAME
+		,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME, HITS, B.GOODS_CATEGORY_NAME,NUMBER_SUPPORTER
 		from GOODS A
 		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO = B.GOODS_CATEGORY_NO
 		where A.STATUS='Y'
 	</select>
+	
+	<select id="selectGoods" parameterType="_int" resultMap="goodsResultSet">
+		select GOODS_NO,GOODS_NAME,GOODS_PRICE
+				,A.GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME,CONTENT,THUMBNAIL_ORIGIN_NAME
+				,THUMBNAIL_CHANGE_NAME,HITS,STATUS,NUMBER_SUPPORTER,CREATE_DATE
+		from GOODS A
+		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO=B.GOODS_CATEGORY_NO
+		where GOODS_NO=#{goodsNo}
+		and STATUS='Y'
+	</select>
+	
+	<update id="updateGoodsHitsCount" parameterType="_int">
+		UPDATE GOODS 
+		SET HITS=HITS+1
+		WHERE GOODS_NO=#{goodsNo}
+	</update>
+	
+	<delete id="deleteGoods" parameterType="_int">
+		UPDATE GOODS 
+		SET STATUS='N'
+		WHERE GOODS_NO=#{goodsNo}
+	</delete>
 </mapper>

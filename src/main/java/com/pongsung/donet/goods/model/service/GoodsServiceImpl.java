@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.goods.model.Dao.GoodsDao;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
@@ -35,6 +36,29 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Goods> selectGoodsList(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return goodsDao.selectGoodsList(sqlSession,pi);
+	}
+
+	@Override
+	public void updateGoodsHitsCount(int goodsNo) {
+		int result=goodsDao.updateGoodsHitsCount(sqlSession,goodsNo);
+		if(result<0) {
+			throw new CommException("구호물품 조회수 카운트 실패");
+		}
+	}
+
+	@Override
+	public Goods selectGoods(int goodsNo) {
+		// TODO Auto-generated method stub
+		return goodsDao.selectGoods(sqlSession,goodsNo);
+	}
+
+	@Override
+	public void deleteGoods(int goodsNo) {
+		// TODO Auto-generated method stub
+		int result=goodsDao.deleteGoods(sqlSession,goodsNo);
+		if(result<0) {
+			throw new CommException("구호물품 삭제 실패");		
+		}
 	}
 	
 }

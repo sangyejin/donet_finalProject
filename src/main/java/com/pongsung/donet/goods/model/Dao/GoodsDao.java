@@ -27,4 +27,19 @@ public class GoodsDao {
 		return sqlSession.selectList("goodsMapper.selectGoodsList");
 	}
 
+	public int updateGoodsHitsCount(SqlSessionTemplate sqlSession, int goodsNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("goodsMapper.updateGoodsHitsCount",goodsNo);
+	}
+
+	public Goods selectGoods(SqlSessionTemplate sqlSession, int goodsNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("goodsMapper.selectGoods",goodsNo);
+	}
+
+	public int deleteGoods(SqlSessionTemplate sqlSession, int goodsNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("goodsMapper.deleteGoods",goodsNo);
+	}
+
 }

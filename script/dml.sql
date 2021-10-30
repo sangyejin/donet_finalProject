@@ -54,6 +54,21 @@ END LOOP;
 END;
 /
 
+insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'펫용품');
+insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'음식');
+insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'침구');
+insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'의류');
+
+
+BEGIN
+FOR i in 1..20
+LOOP
+insert into GOODS
+values (SEQ_GOODS.NEXTVAL,'밸런스 애견사료 3kg',11500,1,'보호소의 추운 겨울에 사료마저 부족어쩌구 <br> 밸런스 애견사료는 어쩌구저쩌구 <br> 보호소에 따뜻한 어쩌구가 되어주세요','12345678.jpg','12345678.jpg',default,default,default,sysdate);
+END LOOP;
+END;
+/
+
 --NOTICE 게시글 관련 INSERT
 --1
 INSERT INTO NOTICE VALUES (SEQ_NOTICE.NEXTVAL,'도넷닷컴 설립! 안녕하세요.','사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게 일월과 같은 예가 되려니와 그와

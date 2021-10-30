@@ -24,5 +24,6 @@ public class Goods {
 	private String thumbnailChangeName;
 	private int hits;
 	private String status;
+	private int numberSupporter;
 	private Date createDate;
 }
