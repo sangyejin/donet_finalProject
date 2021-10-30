@@ -40,6 +40,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="division" column="UP_DIVISION" />
 	</resultMap>
 
+	<resultMap id="supportImageResultSet" type="SupportImage">
+		<id property="imgNo" column="IMG_NO" />
+		<result property="suNo" column="SU_NO" />
+		<result property="imgOriginName" column="IMG_ORIGIN_NAME" />
+		<result property="imgChangeName" column="IMG_CHANGE_NAME" />
+	</resultMap>
+
 	<resultMap id="sponsorResultSet" type="Sponsor">
 		<id property="userId" column="USER_ID" />
 		<result property="suNo" column="SU_NO" />
@@ -127,6 +134,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE SU_NO=#{suNo}
 	</select>
 
+	<select id="selectImageList" parameterType="_int" resultMap="supportImageResultSet">
+		SELECT *
+		FROM SUPPORT_IMAGE
+		WHERE SU_NO=#{suNo}
+	</select>
+	
 	<select id="selectReplyList" resultMap="supporCommentResultSet" parameterType="_int">
 		SELECT * 
 		FROM SUPPORT_COMMENT 
@@ -164,5 +177,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET SC_COMMENT=#{replyContent}
 		WHERE SC_NO=#{replyNo}
 	</update>
+	
+	<insert id="insertBoard" parameterType="Support">
+		<selectKey keyProperty="suNo" resultType="int" order="AFTER">
+			select seq_support.currval from dual
+			
+		</selectKey>
+		insert into SUPPORT(
+				SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,
+				SU_CONTENT,SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,
+				THUMBNAILCHANGE,SU_CATEGORY,SU_SATUTS)
+		values
+		(	
+			seq_support.nextval, #{suTitle}, #{suWriter}, TO_DATE(#{suStart})
+			, TO_DATE(#{suLast}), DEAFULT, #{content}, #{target}
+			, TO_DATE(#{bstart}), TO_DATE(#{blast}), #{thumbnailOrigin}, #{thumbnailChange}
+			,#{categoryNo} ,DEFAULT
+		)
+
+	</insert>
+		
+	<insert id="insertImgList" parameterType="java.util.List">
+		insert into SUPPORT_IMAGE(IMG_NO,SU_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.imgNo},#{item.suNo},#{item.imgOriginName},#{item.imgChangeName} from DUAL
+		</foreach>
+	</insert>
+		
+	<insert id="insertUsePlan" parameterType="java.util.List">
+		insert into SUPPORT_USE_PLAN(SU_NO,UP_NO,UP_DIVISION,UP_CONTENT,UP_AMOUNT)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.suNo},#{item.upNo},#{item.division},#{item.content},#{item.amount} from DUAL
+		</foreach>
+	</insert>
+	
 
 </mapper>

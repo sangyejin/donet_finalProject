@@ -57,6 +57,10 @@
 		margin-left:5%;
 		display:inline-block;		
 	}
+	#files{
+		margin-left: 20%;
+		margin-top: 5%;
+	}
 	e{
 		font-weight: 600;
 		font-size: 15px;
@@ -81,7 +85,7 @@
 		border-bottom: 1px solid #808080;
 		height: 30px;		
 	}
-	#addRow{
+	#addRow {
 		cursor: pointer;
 		background-color: rgb(224, 224, 224);
         width: 50px;
@@ -89,6 +93,10 @@
         border-radius: 5px;
         border-color: rgb(224, 224, 224);
         margin-left: 2%;
+	}
+	.btnDelete{
+        border-radius: 5px;
+        border-color: rgb(224, 224, 224);	
 	}
 	#submit{
         width: 200px;
@@ -113,6 +121,10 @@
         background-color: rgb(60, 179, 113);
         margin-left: 40%;
 	}
+.attachFileLoad{
+	width:170px;
+	margin-right:3.5%;
+}
 
 
 </style>
@@ -122,110 +134,134 @@
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
-		<form method="post" enctype="multipart/form-data">
+		<form id="insertForm" action="insert.bo" method="post" enctype="multipart/form-data">
 			<div style="text-align: center;">
 			<c>후원 프로젝트 제목</c>
-			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px"></div><br><br>
+			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px" id="suTitle" name="suTitle"></div><br><br><br>
 			<div>
 				<span style="display:inline-block;">
 					<c>대표 사진</c>
 					<div class="thumbnail">
 						<div>
-						    <input type="file" id="files" />
-							<img id="image" />
-						</div>
-						
-						<div>
-						    <img src="" id="output">
+							<img id="image" style="width:350px; height:350px; border-radius: 20%;"/>
 						</div>
 					</div>
+						    <input type="file" id="files" />
 				</span>
 				<span style="float:right; margin-right:15%;">
+				<br><br>
 					<c>상세 카테고리</c>
 					<div>
-						<select id="detailCategory">
-						    <option value="지구촌">지구촌</option>
-					        <option value="환경">환경</option>
-					        <option value="동물">동물</option>
-						    <option value="아동/청소년">아동/청소년</option>
-						    <option value="취약계층">취약계층</option>
+						<select id="detailCategory" name="categoryNo">
+						    <option value="1">지구촌</option>
+					        <option value="2">환경</option>
+					        <option value="3">동물</option>
+						    <option value="4">아동/청소년</option>
+						    <option value="5">취약계층</option>
 						</select>
-					</div><br><br>
+					</div><br><br><br>
 					<c>후원 주최자</c>
-					<div><input type="text" placeholder=" 후원 단체명을 입력하세요" style="width:300px; height:40px"></div><br><br>
+					<div><input type="text" placeholder=" 후원 단체명을 입력하세요" style="width:300px; height:40px" id="suWriter" name="suWriter"></div><br><br><br>
 					<c>후원 기간</c>
 					<div>
-						<input type=date id="start" required style="width:150px; height:40px">
-						<c> ~ </c><input type=date id="end" required style="width:150px; height:40px">
+						<input type=date id="start" name="suStart" required style="width:150px; height:40px">
+						<c> ~ </c><input type=date id="end" name="suDate" required style="width:150px; height:40px">
 					</div>
 				</span>
-			</div></div><br><br>
+			</div></div><br><br><br>
 			<e>내  용</e>
-			<div style="text-align: center;"><textarea id=content placeholder=" 내용을 입력하세요" style="width:800px; height:400px; resize: none;"></textarea></div><br><br>
+			<div style="text-align: center;"><textarea id=content name="content" placeholder=" 내용을 입력하세요" style="width:800px; height:400px; resize: none;"></textarea></div><br><br><br><br>
 			<e>첨부 이미지</e><br>
 			<div style="text-align: center;">
 				<span class="attach" style="margin-left:0;">
-					<input type="file" id="image" accept="image/*" onchange="setAttach1(event);"/> 
-				    <div id="attach1" style></div>
+					<img id="img1" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
 				<span class="attach">
-					<input type="file" id="image" accept="image/*" onchange="setAttach2(event)"/> 
-				    <div id="attach2" style></div>
+					<img id="img2" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
 				<span class="attach">
-					<input type="file" id="image" accept="image/*" onchange="setAttach3(event)"/> 
-				    <div id="attach3" style></div>
+					<img id="img3" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
 				<span class="attach">
-					<input type="file" id="image" accept="image/*" onchange="setAttach4(event)"/> 
-				    <div id="attach4" style></div>
+					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
-			</div><br><br>
+				<div  style="margin-top:1%; width:1000px;">
+					<span><input type="file" id="attach1" class="attachFileLoad" style="margin-left:8%;"/></span>
+					<span><input type="file" id="attach2" class="attachFileLoad" /></span>
+					<span><input type="file" id="attach3" class="attachFileLoad" /></span>
+					<span><input type="file" id="attach4" class="attachFileLoad" /></span>
+				</div>
+			</div><br><br><br><br><br><br>
 			<e>기부금 사용계획</e>
-			<button id="addRow" name="addRow"> 행 추가 </button>
+			<button id="addRow" onClick="userAdd()"> 행 추가 </button>
 			<div style="text-align: center;">
 				<table id="useplan">
+				<thead>
+					<tr id="addTr"> 
 					<th>구분</th>
 					<th>상세 내용</th>
 					<th>사용 금액</th>
 					<th>삭제</th>
+					
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td><input type="text" class="useplanTd" name="division" placeholder="구분"></td>
+				<td><input type="text" class="useplanTd" name="content" placeholder="상세내용"></td>
+				<td><input type="number" class="useplanTd" name="amount" min="1000" step="100" placeholder="사용금액"></td>
+				<td><button class="btnDelete" name="btnDelete">삭제</button></td>
+			</tr>
+			</tbody>
 				</table>
-			</div><br><br>
+			</div><br><br><br><br><br><br><br>
 			<e>프로젝트 상세정보</e>
 			<div style="text-align: center;">
 				<table id="projectInfo">
 					<tr>
 						<th style="width:180px;">사업 대상</th>
-						<td><input type="text" id="target" style="width:650px; height:30px;"></td>
+						<td><input type="text" id="target" name="target" style="width:650px; height:30px;"></td>
+					</tr>
+					<tr>
+						<th style="width:180px;">사업 기간</th>
+						<td>
+							<input type=date id="bstart" name="bstart" required style="width:150px; height:40px">
+						<c> ~ </c><input type=date id="bend" name="blast" required style="width:150px; height:40px">
+						</td>
 					</tr>
 				</table>
-			</div><br><br><br><br>
+			</div><br><br><br><br><br><br><br><br><br><br>
 			<input type="submit" value="등록하기" id="submit">	
 		</form>
 	</div>
 	
 	<script type="text/javascript">
-	 	$(document).on("click","button[name=addRow]",function(){
-	        
-	        var addText = '<tr name="addTr">'+
-	                           '<td><input type="text" class="division" name="division" placeholder="구분"></td>'+
-	                           '<td><input type="text" class="useplanDetail" name="useplanDetail" placeholder="상세내용"></td>'+
-	                           '<td><input type="text" class="price" name="price" placeholder="사용금액"></td>'+
-	                           '<td><button class="btnDelete" name="btnDelete">삭제</button></td>'+
-	                           '</tr>';
-	            
-	        var trHtml = $( "tr[name=addTr]:last" ); //last를 사용하여 trStaff라는 명을 가진 마지막 태그 호출
-	        
-	        trHtml.after(addText); //마지막 trStaff명 뒤에 붙인다.
-	        
-	    });
+		var baseCamp = 0;
+		const userAdd = ()=> {  
+			var trCnt = document.getElementsByTagName('tr').length;
+			var inner = "";
+			if(baseCamp != 0){
+				  trCnt = baseCamp;
+			}
+			if(trCnt <= 11) {
+				
+			    inner += '<tr>';
+			    inner += 	'<td><input type="text" class="useplanTd" name="division" placeholder="구분"></td>';
+			    inner += 	'<td><input type="text" class="useplanTd" name="content" placeholder="상세내용"></td>';
+			    inner += 	'<td><input type="number" class="useplanTd" name="amount" min="1000" step="100" placeholder="사용금액"></td>';
+			    inner += 	'<td><button class="btnDelete" name="btnDelete">삭제</button></td>';
+			    inner += '</tr>';
+			}
+			$('#addTr').after(inner);
+		};
+	 	
 	    
 	    //삭제 버튼
 	    $(document).on("click","button[name=btnDelete]",function(){
 	        
 	        var trHtml = $(this).parent().parent();
 	        
-	        trHtml.remove(); //tr 테그 삭제
+	        trHtml.remove();
 	        
 	    });
 	</script>
@@ -234,13 +270,61 @@
 	    var reader = new FileReader();
 
 	    reader.onload = function (e) {
-	        // get loaded data and render thumbnail.
 	        document.getElementById("image").src = e.target.result;
 	    };
 
-	    // read the image file as a data URL.
 	    reader.readAsDataURL(this.files[0]);
 	};
+	
+	document.getElementById("attach1").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img1").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach2").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img2").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach3").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img3").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach4").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img4").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	$("#submit").click(function(){
+		$("#useplan tbody tr").each( function (index) {
+	        $(this).find("input[name=division]").attr("name", "supportUsePlan[" + index + "].division");
+	        $(this).find("input[name=content]").attr("name", "supportUsePlan[" + index + "].content");
+	        $(this).find("input[name=amount]").attr("name", "supportUsePlan[" + index + "].amount");
+	        console.log(index);
+	    });
+		$("#insertForm").submit();
+	});
 	</script>
     <script>
 	    var start1 = document.getElementById('start');
@@ -256,8 +340,8 @@
 	    }, false);
    </script>
     <script>
-	    var start2 = document.getElementById('bustart');
-	    var end2 = document.getElementById('buend');
+	    var start2 = document.getElementById('bstart');
+	    var end2 = document.getElementById('bend');
 	
 	    start2.addEventListener('change', function() {
 	        if (start2.value)
@@ -267,7 +351,8 @@
 	        if (end2.value)
 	            start2.max = end2.value;
 	    }, false);
-   </script>
+   </script>		
+
 	<jsp:include page="../common/footer.jsp" />
 	<div style="display:scroll;position:fixed;bottom:10px;right:5px;"><a class="topTotop" href="#pageTop">TOP▲</a></div>
 </body>
