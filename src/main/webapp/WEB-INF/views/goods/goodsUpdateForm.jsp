@@ -39,7 +39,7 @@
 	/* margin: 20px; */
 }
 
-#insertForm {
+#updateForm {
 	text-align: center;
 	width: 800px;
 	margin: auto;
@@ -136,7 +136,6 @@ tbody tr td, thead tr th {
 	height: 340px;
 	padding: 0;
 }
-
 #beneficiaryTable,#beneficiaryTable thead th{
 	border:1px solid black;
 } 
@@ -153,52 +152,57 @@ tbody tr td, thead tr th {
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">후원</a></li>
 			<li class="breadcrumb-item"><a href="#">펀딩 프로젝트</a></li>
-			<li class="breadcrumb-item active" aria-current="page">등록</li>
+			<li class="breadcrumb-item active" aria-current="page">수정</li>
 		</ol>
 	</nav>
 	<div class="main">
-		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data">
+		<form id="updateForm" action="update" method="post" enctype="multipart/form-data">
 			<div class="div-content">
 				<div class="div-goodsName">
 						<label for="goodsName" style="display: block;">구호물품 이름</label> 
-						<input type="text" placeholder="제목을 입력하세요" id="goodsName" name="goodsName" required>
+						<input type="text" placeholder="이름을 입력하세요" id="goodsName" name="goodsName" value="${goods.goodsName }" required>
 				</div>
 				<div class="div-left col-lg-6 col-xs-12">
 					<label for="thumbImg">대표 사진</label>
 					<div class="div-thumbImg" id="thumbImg">
-						<img id="img0" width="370px" height="340px">
+						<img id="img0" width="370px" height="340px" src="${pageContext.request.contextPath}/resources/upload_files/goods/${goods.thumbnailChangeName}">
 					</div>
 				</div>
 				<div class="div-right col-lg-6 col-xs-12">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="goodsCategoryNo"
-							id="category">
-							<c:forEach var="category" items="${categoryList}">
-								<option value="${category.goodsCategoryNo}">${category.goodsCategoryName}</option>
+						<label for="cateogry">카테고리</label> <select name="goodsCategoryNo" id="category">
+							<c:forEach var="category" items="${goodsCategoryList}">
+								<c:if test="${goods.goodsCategoryNo eq category.goodsCategoryNo}">
+									<option value="${category.goodsCategoryNo}" selected>${category.goodsCategoryName}</option>
+								</c:if>
+								<c:if test="${goods.goodsCategoryNo ne category.goodsCategoryNo}">
+									<option value="${category.goodsCategoryNo}">${category.goodsCategoryName}</option>
+								</c:if>
+								
 							</c:forEach>
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goodsPrice">가격</label> <input type="text"
-							placeholder="0,000,000" id="goodsPrice" name="goodsPrice" required> <span>원</span>
+						<label for="goodsPrice">가격</label> 
+						<input type="text" placeholder="0,000,000" id="goodsPrice" name="goodsPrice" readOnly value="${goods.goodsPrice }"> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="cateogry">후원처 추가</label> 
-						<select name="addBeneficiary" id="addBeneficiary">
-							<c:forEach var="beneficiary" items="${beneficiaryList}">
-								<option value="${beneficiary.beNo},${beneficiary.beName}">${beneficiary.beName}</option>
-							</c:forEach>
-						</select>
-						<input id="btnInsertBeneficiary"class="btn btn-default" type="button" value="+">
+						<label for="cateogry">후원처</label> 
 						<div style="overflow:scroll; width:350px; height:200px;">
 							<table id="beneficiaryTable">
 								<thead>
 									<th>순번</th>
 									<th>후원처번호</th>
 									<th>후원처이름</th>
-									<th>삭제</th>
 								</thead>
 								<tbody>
+								<c:forEach items="${ beneficiaryList}" var="beneficiary" varStatus="status">
+									<tr>
+										<td>${status.count}</td>
+										<td>${beneficiary.beneficiaryNo}</td>
+										<td>${beneficiary.beneficiaryName }</td>
+									</tr>
+								</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -210,12 +214,12 @@ tbody tr td, thead tr th {
 				style="width: 800px; margin: auto;">
 				<label for="content">내용</label>
 				<textarea name="content" id="content" cols="140" rows="10"
-					style="resize: none;" required></textarea>
+					style="resize: none;" required>${goods.content}</textarea>
 				
 			</div>
 
 			<div class="btnArea">
-				<button type="button" id="btn-insert" class="btn btn-success">등록하기</button>
+				<button type="button" id="btn-update" class="btn btn-success">수정하기</button>
 				<button type="button" id="btn-back" class="btn btn-default">돌아가기</button>
 			</div>
 
@@ -228,20 +232,6 @@ tbody tr td, thead tr th {
 	<jsp:include page="../common/footer.jsp" />
 
 	<script>
-		$("#btnInsertBeneficiary").click(function(){
-			const bene=$("#addBeneficiary").val();
-            const table = document.getElementById('beneficiaryTable');
-			const len = String(table.tBodies[0].rows.length + 1);
-			
-			const splitData=bene.split(",");
-			const temp=`<tr>
-							<td>`+len+`</td>
-							<td><input class="notInput" name="beneficiaryNo" type="text" value="`+splitData[0]+`" readonly></td>
-							<td>`+splitData[1]+`</td>
-							<td><button class='btn btn-default btnDeletePresent btn-delete' data-action='delete'>-</button></td>
-						</tr>`;
-			$("#beneficiaryTable tbody").append(temp);
-		});
 	
         $(function () {
             $("#fileArea").hide();
@@ -252,11 +242,8 @@ tbody tr td, thead tr th {
     		$("#btn-back").click(function(){
     			location.href="${pageContext.servletContext.contextPath}/goods";
     		});
-    		$("#btn-insert").click(function(){
-    			$("#beneficiaryTable tbody tr").each( function (index) {
-    		        $(this).find("input[name=beneficiaryNo]").attr("name", "requiredGoods[" + index + "].beneficiaryNo");
-    		    });
-    			$("#insertForm").submit();
+    		$("#btn-update").click(function(){
+    			$("#updateForm").submit();
     		});
 
         });

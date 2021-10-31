@@ -278,7 +278,7 @@
 			</div>
 			<c:if test="${loginUser.userRole=='D' }">
 				<div class="btnArea">
-					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}/update';" id="btn-update" value="수정">
+					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}/updateForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>

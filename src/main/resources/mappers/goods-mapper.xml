@@ -26,6 +26,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createDate" column="CREATE_DATE" />
 	</resultMap>
 
+	<!-- 후원처 -->
+	<resultMap id="beneficiaryResultSet" type="Beneficiary">
+		<id property="beNo" column="BE_NO" />
+		<result property="beName" column="BE_NAME" />
+		<result property="beTel" column="BE_TEL" />
+		<result property="beAddress" column="BE_ADDRESS" />
+		<result property="beEmail" column="BE_EMAIL" />
+		<result property="beRegistration" column="BE_REGISTRATION" />
+	</resultMap>
+	
+
 	<select id="selectGoodsListCount" resultType="_int">
 		select COUNT(*)
 		from GOODS
@@ -66,4 +77,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET STATUS='N'
 		WHERE GOODS_NO=#{goodsNo}
 	</delete>
+	
+	<select id="selectBeneficiaryList" resultMap="beneficiaryResultSet">
+		select BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION
+		from BENEFICIARY
+	</select>
+	
+	<insert id="insertGoods" parameterType="Goods">
+		<selectKey keyProperty="goodsNo" resultType="_int" order="AFTER">
+			select SEQ_GOODS.currval from dual
+		</selectKey>
+		insert into GOODS(GOODS_NO,GOODS_NAME,GOODS_PRICE,GOODS_CATEGORY_NO,CONTENT
+		,THUMBNAIL_ORIGIN_NAME,THUMBNAIL_CHANGE_NAME,HITS,STATUS,NUMBER_SUPPORTER,CREATE_DATE)
+		values(	
+			SEQ_GOODS.nextval,#{goodsName},#{goodsPrice},#{goodsCategoryNo},#{content}
+			,#{thumbnailOriginName},#{thumbnailChangeName},default,default,default,sysdate )
+	</insert>
+	
+	<insert id="insertRequiredGoods" parameterType="java.util.List">
+		insert into REQUIRED_GOODS(GOODS_NO,BENEFICIARY_NO)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.goodsNo},#{item.beneficiaryNo} from DUAL
+		</foreach>
+	</insert>
+	
+	<update id="updateGoods" parameterType="Goods">
+		UPDATE GOODS 
+		SET GOODS_NAME=#{goodsName}
+		,GOODS_CATEGORY_NO=#{goodsCategoryNo}
+		,CONTENT=#{content}
+		<if test="thumbnailOriginName != null">
+			,THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
+			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}
+		</if>
+		WHERE GOODS_NO=#{goodsNo}
+	</update>
+	
+	
+	
 </mapper>
