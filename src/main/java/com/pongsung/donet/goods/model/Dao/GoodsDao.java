@@ -11,6 +11,7 @@ import com.pongsung.donet.goods.model.vo.Beneficiary;
 import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.GoodsPurchase;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 
 @Repository
@@ -68,6 +69,11 @@ public class GoodsDao {
 	public int updateGoods(SqlSessionTemplate sqlSession, Goods goods) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("goodsMapper.updateGoods",goods);
+	}
+
+	public int insertGoodsPurchase(SqlSessionTemplate sqlSession, GoodsPurchase goodsPurchase) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("goodsMapper.insertGoodsPurchase",goodsPurchase);
 	}
 
 }

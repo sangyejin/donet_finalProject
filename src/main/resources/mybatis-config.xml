@@ -45,12 +45,9 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportUsePlan" alias="SupportUsePlan" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportImage" alias="SupportImage" />
-
-
 	</typeAliases>
 
 	<mappers>
-
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
@@ -58,8 +55,6 @@
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
 		<mapper resource="/mappers/volunteer-mapper.xml" />
-
-
 	</mappers>
 
 

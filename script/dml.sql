@@ -11,54 +11,12 @@ VALUES ('user03', '$2a$10$ojddmdgWHqdD.sx7Xy7Wr.QqEkyIS3sEG.V57zQWSSnBYwG/Zo.kG'
 select * from member;
 
 
-insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'기타');
-insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'동물');
-insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'재난');
-insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'고아');
-
 
 INSERT INTO SUPPORT_CATEGORY VALUES(SEQ_SUPPORT_CATEGORY.NEXTVAL, '지구촌');
 INSERT INTO SUPPORT_CATEGORY VALUES(SEQ_SUPPORT_CATEGORY.NEXTVAL, '환경');
 INSERT INTO SUPPORT_CATEGORY VALUES(SEQ_SUPPORT_CATEGORY.NEXTVAL, '동물');
 INSERT INTO SUPPORT_CATEGORY VALUES(SEQ_SUPPORT_CATEGORY.NEXTVAL, '아동/청소년');
 INSERT INTO SUPPORT_CATEGORY VALUES(SEQ_SUPPORT_CATEGORY.NEXTVAL, '취약계층');
-
-BEGIN
-FOR i in 1..20
-LOOP
-insert into funding_project 
-values (SEQ_FUNDING_PROJECT.NEXTVAL,'유기견을 향한 마음','admin',1000000,2400000,
-        to_date('2021-10-02'),to_date('2021-11-13'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
-        1,default,default,'github.png'
-        ,'github.png',default,sysdate);
-END LOOP;
-END;
-/
-
-BEGIN
-FOR i in 1..20
-LOOP
-insert into FUNDING_GOODS(FP_NO, FG_NO, FG_NAME, FG_CONTENT, FG_PRICE)
-values (i,1,'엽서','엽서 2장 및 강아지 간식', 2000);
-END LOOP;
-END;
-/
-
-BEGIN
-FOR i in 1..20
-LOOP
-INSERT INTO FUNDING_SUPPORTER(FS_NO,FP_NO,FP_SUPPORTER,FP_SUPPORT_DATE,FP_PRICE,FG_NO
-						,TAKE_NAME,TAKE_ADDRESS,TAKE_PHONE,TAKE_POSTCODE)
-		VALUES(NVL((SELECT MAX(FS_NO) FROM FUNDING_SUPPORTER WHERE FP_NO=i),0)+1,i,'admin',sysdate,23424,1,'sdf','gggg','010-0234-2134',1234);
-END LOOP;
-END;
-/
-
-insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'펫용품');
-insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'음식');
-insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'침구');
-insert into goods_category values(SEQ_GOODS_CATEGORY.NEXTVAL,'의류');
-
 
 
 
@@ -654,8 +612,6 @@ select * from funding_image;
 --INSERT INTO FUNDIONG_SUPPORTER
 --VALUES((SELECT NVL(MAX(FS_NO)+1,1) FROM FUNDING_SUPPORTER WHERE FP_NO=1),1,'USER01',SYSDATE,100000,1,'김석구','충주시','010-1231-1214','12345','1');
 
-select * from funding_project;
-select * from funding_image;
-select * from funding_goods;
+
 commit;
 

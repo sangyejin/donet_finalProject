@@ -13,6 +13,7 @@ import com.pongsung.donet.goods.model.vo.Beneficiary;
 import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.GoodsPurchase;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 
 @Service
@@ -94,6 +95,15 @@ public class GoodsServiceImpl implements GoodsService {
 	public void updateGoods(Goods goods) {
 		// TODO Auto-generated method stub
 		int result=goodsDao.updateGoods(sqlSession,goods);
+		if(result<0) {
+			throw new CommException("구호물품 삭제 실패");		
+		}
+	}
+
+	@Override
+	public void insertGoodsPurchase(GoodsPurchase goodsPurchase) {
+		// TODO Auto-generated method stub
+		int result=goodsDao.insertGoodsPurchase(sqlSession,goodsPurchase);
 		if(result<0) {
 			throw new CommException("구호물품 삭제 실패");		
 		}

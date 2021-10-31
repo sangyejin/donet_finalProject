@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,8 +31,11 @@ import com.pongsung.donet.goods.model.vo.Beneficiary;
 import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.GoodsPurchase;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 import com.pongsung.donet.goods.model.vo.RequiredGoodsList;
+import com.pongsung.donet.member.model.service.MemberService;
+import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
@@ -41,6 +45,12 @@ public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
 	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	// 구호물품 리스트 껍데기
 	@RequestMapping("goods")
 	public String mainGoods(
@@ -48,7 +58,6 @@ public class GoodsController {
 			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
 			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
 			Model model) {
-		
 		logger.info("categoryNo::::"+categoryNo);
 		
 		FilterOrder filterOrder=new FilterOrder(categoryNo,order,"");
@@ -215,5 +224,35 @@ public class GoodsController {
 	}
 	
 	
+	//구호물품 구매창
+	@RequestMapping(value="goods/{goodsNo}/support")
+	public String supportGoodsForm(@PathVariable("goodsNo") int goodsNo, Model model) {
+		Goods goods =goodsService.selectGoods(goodsNo);
+		List<Beneficiary> beneficiaryList = goodsService.selectBeneficiaryList();
+		
+		model.addAttribute("goods", goods);
+		model.addAttribute("beneficiaryList", beneficiaryList);
+		return "goods/goodsSupportForm";
+	}
 	
+	//구호물품 구매
+	@RequestMapping(value="goods/{goodsNo}/support/insert")
+	public String insertGoodsPurchase(@PathVariable("goodsNo") int goodsNo,GoodsPurchase goodsPurchase, Model model) {
+		goodsPurchase.setUserId(((Member)model.getAttribute("loginUser")).getUserId());
+		logger.info("insertGoodsPurchase :: goodsPurchase ::"+goodsPurchase);
+		goodsService.insertGoodsPurchase(goodsPurchase);
+		
+		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
+		//model.addAttribute("loginUser", loginUser);
+		return "redirect:/goods/"+goodsNo+"/complete";
+	}
+	
+	// 구호물품 구매완료창
+	@RequestMapping("goods/{goodsNo}/complete")
+	public String completeGoods(@PathVariable("goodsNo") int goodsNo,Model model) {
+		Goods goods =goodsService.selectGoods(goodsNo);
+		model.addAttribute("goods", goods);
+
+		return "goods/goodsCompleteView";
+	}
 }

@@ -7,6 +7,7 @@ import com.pongsung.donet.goods.model.vo.Beneficiary;
 import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.GoodsPurchase;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 
 public interface GoodsService {
@@ -28,4 +29,7 @@ public interface GoodsService {
 	void insertGoods(Goods goods,List<RequiredGoods> requiredGoods);
 
 	void updateGoods(Goods goods);
+
+	void insertGoodsPurchase(GoodsPurchase goodsPurchase);
+
 }
