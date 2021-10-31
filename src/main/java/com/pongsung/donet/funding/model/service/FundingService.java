@@ -6,6 +6,7 @@ import java.util.List;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
@@ -13,9 +14,9 @@ import com.pongsung.donet.funding.model.vo.FundingSupporter;
 
 public interface FundingService {
 
-	int selectFundingListCount();
+	int selectFundingListCount(FundingFilterOrder filterOrder);
 
-	List<Funding> selectFundingList(PageInfo pi);
+	List<Funding> selectFundingList(PageInfo pi,FundingFilterOrder filterOrder);
 
 	List<FundingCategory> selectFundingCategoryList();
 

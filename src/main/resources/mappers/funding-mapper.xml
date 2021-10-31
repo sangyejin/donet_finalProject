@@ -73,14 +73,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="takePostCode" column="TAKE_POSTCODE" />
 	</resultMap>
 	
-	<select id="selectFundingListCount" resultType="_int">
+	<select id="selectFundingListCount" parameterType="FundingFilterOrder" resultType="_int">
 		select COUNT(*)
 		from FUNDING_PROJECT
 		where STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND FP_NAME LIKE '%'||#{search}||'%'
+		</if>
 	</select>
 	
 	
-	<select id="selectFundingList" resultMap="fundingResultSet">
+	<select id="selectFundingList" parameterType="FundingFilterOrder" resultMap="fundingResultSet">
 		select FP_NO, FP_NAME, B.USER_NAME, GOAL,RAISED, START_DATE, CLOSING_DATE
     		, A.CATEGORY_NO, HITS, THUMBNAIL_ORIGIN_NAME
     		, THUMBNAIL_CHANGE_NAME, C.FUNDING_CATEGORY_NAME
@@ -88,6 +94,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			join MEMBER B on A.HOST_ID=B.USER_ID
 			join FUNDING_CATEGORY C on A.CATEGORY_NO = C.FUNDING_CATEGORY_NO
 		where A.STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND A.CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND FP_NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="order != null ">
+			ORDER BY ${order}
+		</if>
 	</select>
 	
 	<select id="selectFundingCategoryList" resultMap="fundingCategoryResultSet">

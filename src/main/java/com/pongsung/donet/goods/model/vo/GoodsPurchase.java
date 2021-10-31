@@ -18,6 +18,8 @@ public class GoodsPurchase {
 	private String userId;
 	private int beneficiaryNo;
 	private String beneficiaryName;
+	private int goodsNo;
+	private int purchaseAmount;
 	private int purchasePrice;
 	private Date purchaseDate;
 }

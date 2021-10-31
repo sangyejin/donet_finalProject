@@ -2,64 +2,111 @@ package com.pongsung.donet.goods.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.GsonBuilder;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
-import com.pongsung.donet.funding.controller.FundingController;
 import com.pongsung.donet.goods.model.service.GoodsService;
 import com.pongsung.donet.goods.model.vo.Beneficiary;
+import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.GoodsPurchase;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 import com.pongsung.donet.goods.model.vo.RequiredGoodsList;
+import com.pongsung.donet.member.model.service.MemberService;
+import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
 public class GoodsController {
-	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 	
 	@Autowired
 	private GoodsService goodsService;
 	
-	// 구호물품 리스트
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	// 구호물품 리스트 껍데기
 	@RequestMapping("goods")
-	public String seletcFundingList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
-		int listCount = goodsService.selectGoodsListCount();
-		logger.info("goodsListCount::" + listCount);
+	public String mainGoods(
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
+			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
+			Model model) {
+		logger.info("categoryNo::::"+categoryNo);
 		
-		List<GoodsCategory> categoryList = goodsService.selectGoodsCategoryList();
-		logger.info("categoryList:::"+categoryList);
+		FilterOrder filterOrder=new FilterOrder(categoryNo,order,"");
+		
+		int listCount = goodsService.selectGoodsListCount(filterOrder);
+		logger.info("selectGoodsList :: goodsListCount::" + listCount);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		logger.info("selectGoodsList :: PI::::::::"+pi);
+	
 
-		List<Goods> goodsList = goodsService.selectGoodsList(pi);
-		logger.info("goodsList::" + goodsList);
+		List<GoodsCategory> categoryList = goodsService.selectGoodsCategoryList();
+		logger.info("categoryList:::"+categoryList);
 
+		//List<Goods> goodsList = goodsService.selectGoodsList(pi,filterOrder);
+		//logger.info("goodsList::" + goodsList);
+
+		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("order", order);
 		model.addAttribute("pi", pi);
-
+		
+		//model.addAttribute("goodsList", goodsList);
 		return "goods/goodsListView";
 	}
 	
-
+	//구호물품 리스트 불러오기
+	@ResponseBody
+	@RequestMapping(value="goods/list",produces="application/json;charset=utf-8")
+	public String selectGoodsList(PageInfo pi, FilterOrder filterOrder) {
+		logger.info("selectGoodsList :: filterOrder::" + filterOrder);
+		
+		int listCount = goodsService.selectGoodsListCount(filterOrder);
+		logger.info("selectGoodsList :: goodsListCount::" + listCount);
+		
+		PageInfo p = Pagination.getPageInfo(listCount, pi.getCurrentPage(), 5, 15);
+		
+		logger.info("selectGoodsList :: PI::::::::"+p);
+		logger.info("selectGoodsList :: filterOrder::::::::"+filterOrder);
+		
+		Map<String,Object> map= new HashMap<>();
+		List<Goods> goodsList=goodsService.selectGoodsList(pi,filterOrder);
+		logger.info("selectGoodsList :: goodsList:::::::"+goodsList);
+		map.put("goodsList",goodsList);
+		map.put("pi",p);
+		
+		return new GsonBuilder().create().toJson(map);
+	}
+	
 
 	// 구호물품 디테일
 	@RequestMapping(value="goods/{goodsNo}")
@@ -67,8 +114,6 @@ public class GoodsController {
 		goodsService.updateGoodsHitsCount(goodsNo);
 		Goods goods= goodsService.selectGoods(goodsNo);
 		System.out.println(goodsNo);
-		//List<GoodsImage> goodsImageList = goodsService.selectGoodsImageList(goodsNo);
-		//System.out.println("goodsImgList :::"+goodsImageList);
 		model.addAttribute("goods",goods);
 
 		return "goods/goodsDetailView";
@@ -179,5 +224,35 @@ public class GoodsController {
 	}
 	
 	
+	//구호물품 구매창
+	@RequestMapping(value="goods/{goodsNo}/support")
+	public String supportGoodsForm(@PathVariable("goodsNo") int goodsNo, Model model) {
+		Goods goods =goodsService.selectGoods(goodsNo);
+		List<Beneficiary> beneficiaryList = goodsService.selectBeneficiaryList();
+		
+		model.addAttribute("goods", goods);
+		model.addAttribute("beneficiaryList", beneficiaryList);
+		return "goods/goodsSupportForm";
+	}
 	
+	//구호물품 구매
+	@RequestMapping(value="goods/{goodsNo}/support/insert")
+	public String insertGoodsPurchase(@PathVariable("goodsNo") int goodsNo,GoodsPurchase goodsPurchase, Model model) {
+		goodsPurchase.setUserId(((Member)model.getAttribute("loginUser")).getUserId());
+		logger.info("insertGoodsPurchase :: goodsPurchase ::"+goodsPurchase);
+		goodsService.insertGoodsPurchase(goodsPurchase);
+		
+		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
+		//model.addAttribute("loginUser", loginUser);
+		return "redirect:/goods/"+goodsNo+"/complete";
+	}
+	
+	// 구호물품 구매완료창
+	@RequestMapping("goods/{goodsNo}/complete")
+	public String completeGoods(@PathVariable("goodsNo") int goodsNo,Model model) {
+		Goods goods =goodsService.selectGoods(goodsNo);
+		model.addAttribute("goods", goods);
+
+		return "goods/goodsCompleteView";
+	}
 }

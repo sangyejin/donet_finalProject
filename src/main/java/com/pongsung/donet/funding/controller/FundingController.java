@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -41,19 +42,24 @@ import com.pongsung.donet.funding.model.vo.FundingGoodsList;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
+import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
 
 @SessionAttributes("loginUser") 
 @Controller
 public class FundingController {
-	
-	
 	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
 
 	@Autowired
 	private FundingService fundingService;
-
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	//jsp에서 받아오는 string date타입으로 변환하기위해서 설정
 	@InitBinder
     protected void initBinder(WebDataBinder binder){
@@ -64,16 +70,25 @@ public class FundingController {
 	// 펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
-		int listCount = fundingService.selectFundingListCount();
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
+			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search,
+			Model model) {
+		
+		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,order,search);
+		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
+		
+		
+		int listCount = fundingService.selectFundingListCount(filterOrder);
 
 		List<FundingCategory> categoryList = fundingService.selectFundingCategoryList();
-
-		logger.info("fundingListCount::" + listCount);
+		
+		logger.info("selectFundingList ::fundingListCount::" + listCount);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
 //		
-		List<Funding> fundingList = fundingService.selectFundingList(pi);
-		logger.info("fundingList::" + fundingList);
+		List<Funding> fundingList = fundingService.selectFundingList(pi,filterOrder);
+		logger.info("selectFundingList ::fundingList::" + fundingList);
 //		
 		model.addAttribute("category", categoryList);
 		model.addAttribute("list", fundingList);
@@ -211,10 +226,13 @@ public class FundingController {
 		fundingSupporter.setFpSupporter(((Member)model.getAttribute("loginUser")).getUserId());
 		fundingSupporter.setFpNo(fpNo);
 		fundingService.insertFundingSupporter(fundingSupporter);
+		
+		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
+		//model.addAttribute("loginUser", loginUser);
 		return "redirect:/funding/"+fpNo+"/complete";
 	}
 	
-	// 펀딩프로젝트 후원완료창 확인용
+	// 펀딩프로젝트 후원완료창
 	@RequestMapping("funding/{fpNo}/complete")
 	public String completeFunding(@PathVariable("fpNo") int fpNo,Model model) {
 		Funding funding =fundingService.selectFunding(fpNo);

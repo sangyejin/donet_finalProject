@@ -100,7 +100,7 @@
 				</div>
 			</div>
 			<hr>
-			<form id="insertForm" action="support/insert" method="post" onsubmit="return insert();">
+			<form id="insertForm" action="support/insert" method="post">
 				<div class="content-container">
 					<label for="fundingGoods-container">선물 선택</label> <input
 						type="hidden" name="tempPrice" id="tempPrice" value="0" /> <input
@@ -120,7 +120,7 @@
 				<div class="content-container">
 					<label for="addSupport-container">추가 후원하기</label>
 					<div class="addSupport-container">
-						<input name="fpPrice" id="fpPrice" type="number"
+						<input name="addPrice" id="addPrice" type="number"
 							placeHolder="0,000,000"><span>원</span>
 						<button type="button" id="btn-setting">입력</button>
 					</div>
@@ -151,6 +151,7 @@
 					<p>
 						총 <span id="totalSupport"></span>원 후원하기
 					</p>
+					<input type="hidden" name="fpPrice" id="hiddenPrice">
 				</div>
 				<div class="content-container">
 					<label for="support-info-container">후원</label>
@@ -162,8 +163,8 @@
 					</div>
 				</div>
 				<div id="btnArea">
-					<button id="btn-support">후원하기</button>
-					<button id="btn-back">목록으로 돌아가기</button>
+					<button id="btn-support" type="button">후원하기</button>
+					<button id="btn-back" type="button">목록으로 돌아가기</button>
 				</div>
 			</form>
 		</div>
@@ -173,20 +174,25 @@
 		$(function(){
 			$("#btn-setting").click(function(){
 				var temp=document.getElementById("tempPrice").value;
-				var fpPrice=document.getElementById("fpPrice").value;
-				$("#totalSupport").text(Number(temp)+Number(fpPrice));
+				var addPrice=document.getElementById("addPrice").value;
+				$("#totalSupport").text(Number(temp)+Number(addPrice));
+				$("#hiddenPrice").val(Number(temp)+Number(addPrice));
 			});
-			function insert(){
+			
+			$("#btn-support").click(function(){
+				console.log(Number("${loginUser.point}"),Number($("#totalSupport").text()),Number("${loginUser.point}")<Number($("#totalSupport").text()));
 				if(document.getElementById("tempFgNo").value=="0"){
 					alert("선물이 선택되지않았습니다.");
-					return false;
+					return;
+				}
+				else if(Number("${loginUser.point}")>Number($("#totalSupport").text())){
+					return;
 				}
 				else{
-					return true;
+				$("#insertForm").submit();
 				}
-				return false;
-				
-			}
+			});
+
 			
 			$("#btn-back").click(function(){
 				location.href="${pageContext.servletContext.contextPath}/funding/${fpNo}";
@@ -197,6 +203,7 @@
 			var tempPrice= document.getElementById("tempPrice").value = price;
 			var tempFgNo=  document.getElementById("tempFgNo").value = fgNo;
 			$("#totalSupport").text(tempPrice);
+			$("#hiddenPrice").val(tempPrice);
 			console.log(event.target);
 			$(".fundingGoods-card").css("background-color","");
 			event.currentTarget.style.background="#c7c7c7";

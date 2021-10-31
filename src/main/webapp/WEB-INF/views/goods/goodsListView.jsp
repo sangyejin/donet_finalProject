@@ -229,17 +229,19 @@ select::-ms-expand {
 			<div>
 				<div class="div-category-menu">
 					<c:forEach var="category" items="${categoryList}">
-						<button type="button" class="btn btn-light" id="btn-${category.goodsCategoryNo}">${category.goodsCategoryName}</button>
+						<button type="button" class="btn btn-light btn-category" id="${category.goodsCategoryNo}">${category.goodsCategoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="div-filter">
-				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2">
-				</select> <select name="filter2" id="filter1">
-					<option value="1">최신순</option>
-					<option value="2">인기순</option>
-					<option value="3">낮은가격순</option>
-					<option value="3">높은가격순</option>
+				<p id="searchText"></p>
+				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2"
+				onkeyup="if(window.event.keyCode==13){searchText(this.value);}" />
+				</select> <select name="filter2" id="filter1" onchange="selectOrder(this.value);">
+					<option value="CREATE_DATE DESC">최신순</option>
+					<option value="HITS DESC">인기순</option>
+					<option value="GOODS_PRICE ASC">낮은가격순</option>
+					<option value="GOODS_PRICE DESC">높은가격순</option>
 				</select>
 				<c:if
 					test="${loginUser.userRole eq 'D'}">
@@ -253,74 +255,13 @@ select::-ms-expand {
 
 
 		<div class="div-content">
-			<div class="container row" style="margin: 100 auto; width: 1080px;">
-				<c:forEach var="list" items="${goodsList}" varStatus="status">
-					<div class="card col-lg-4 col-md-6 col-sm-6">
-						<div class="single-cases mb-40">
-							<div class="cases-img">
-								<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${list.thumbnailChangeName}" alt="${list.goodsName}"
-											width="278px" height="200px">
-							</div>
-							<div class="cases-caption">
-								<div class="cases-info">
-									<div class="div-title">
-										<a href="${pageContext.servletContext.contextPath}/goods/${list.goodsNo}" class="title">${list.goodsName}</a>
-									</div>
-									<p class="goodsPrice">
-										${list.goodsPrice}
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
+			<div class="container row" id="goodsListContent" style="margin: 100 auto; width: 1080px;">
 			</div>
 		</div>
 
 		<!-- pagination -->
 		<nav class="blog-pagination justify-content-center d-flex">
-			<ul class="pagination">
-				<c:choose>
-					<c:when test="${ pi.currentPage eq 1 }">
-						<li class="disabled page-item"><a
-							href="goods?currentPage=${pi.currentPage-1 }" class="page-link"
-							aria-label="Previous"> <i class="ti-angle-left"></i>
-						</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a
-							href="goods?currentPage=${pi.currentPage-1 }" class="page-link"
-							aria-label="Previous"> <i class="ti-angle-left"></i>
-						</a></li>
-					</c:otherwise>
-				</c:choose>
-
-				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-					<c:choose>
-						<c:when test="${ pi.currentPage eq i }">
-							<li class="disabled page-item active"><a
-								href="goods?currentPage=${i}" class="page-link">${i}</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item"><a href="goods?currentPage=${i}"
-								class="page-link">${i}</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-
-				<c:choose>
-					<c:when test="${ pi.currentPage eq pi.maxPage }">
-						<li class="disabled page-item"><a
-							href="goods?currentPage=${pi.currentPage+1 }" class="page-link"
-							aria-label="Next"> <i class="ti-angle-right"></i>
-						</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a
-							href="goods?currentPage=${pi.currentPage+1 }" class="page-link"
-							aria-label="Next"> <i class="ti-angle-right"></i></a></li>
-					</c:otherwise>
-				</c:choose>
+			<ul class="pagination" id="pagination">
 			</ul>
 		</nav>
 	</div>
@@ -329,7 +270,147 @@ select::-ms-expand {
 	<div id="back-top">
 		<a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 	</div>
+	
+	<script>
+	let pageInfo= {
+		currentPage:"${pi.currentPage}",
+		listCount:"${pi.listCount}",
+		startPage:"${pi.startPage}",
+		endPage:"${pi.endPage}",
+		maxPage:"${pi.maxPage}",
+		pageLimit:"${pi.pageLimit}",
+		boardLimit:"${pi.boardLimit}",
+		moveCurrentPage(movePage){
+			this.currentPage=movePage;
+			return pageInfo;
+		}
+	};
+	let categoryNo="${categoryNo}";
+	let order="${order}";
+	let search="";
+	selectGoodsList(pageInfo,categoryNo,order,search);
+		
+	function selectGoodsList(p,categoryNo,order,search){
+			//console.log("categoryNo"+categoryNo);
+			
+			$.ajax({
+				url : "goods/list",
+				type : "post",
+				data:{
+					search:search,
+					currentPage: p.currentPage,
+					listCount:p.listCount,
+					startPage:p.startPage,
+					endPage:p.endPage,
+					maxPage:p.maxPage,
+					pageLimit:p.pageLimit,
+					boardLimit:p.boardLimit,
+					categoryNo: categoryNo,
+					order: order
+				},
+				success: function(map) {
+					let value = "";
+					//console.log(pageInfo,order,categoryNo);
+					$.each(map.pi,function(i, list){
+						pageInfo[i]=list;
+					});
+					console.log("pi>>");
+					console.log(pageInfo);
+					console.log(categoryNo);
+					$.each(map.goodsList,function(i, list){	
+						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
+									<div class="single-cases mb-40">
+										<div class="cases-img">
+											<img src="${pageContext.request.contextPath}/resources/upload_files/goods/`+list.thumbnailChangeName+`" alt="`+list.goodsName+`"
+														width="278px" height="200px">
+										</div>
+										<div class="cases-caption">
+											<div class="cases-info">
+												<div class="div-title">
+													<a href="${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`" class="title">`+list.goodsName+`</a>
+												</div>
+												<p class="goodsPrice">
+													`+list.goodsPrice+`
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>`;
+					});
+					$("#goodsListContent").html(value);
+					paging(pageInfo);
+					
+				},
+				error : function() {
+					console.log("구호물품 리스트 조회용 ajax 통신 실패");
+				}
+			});
+			
+		}
+		
+		function selectOrder(order){
+			$("#searchText").text('');
+			console.log("order",pageInfo,categoryNo,order);
+			pageInfo.currentPage=1;
+			selectGoodsList(pageInfo,categoryNo,order,search);
+		}
+		
+		function paging(pi){
+			var temp=``;
 
+			if(pi.currentPage==1){
+				temp=`<li class="disabled page-item">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(pageInfo.currentPage-1),categoryNo,order,search);' class="page-link" aria-label="Previous">
+				<i class="ti-angle-left"></i>
+				</a></li>`;
+			}else{
+				temp+=`<li class="page-item">
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(pageInfo.currentPage-1),categoryNo,order,search);' class="page-link" aria-label="Previous"> 
+					<i class="ti-angle-left"></i>
+					</a></li>`;
+			}
+			for(let i= pi.startPage; i<=pi.endPage;i++){
+				if(pi.currentPage==i){
+					temp+=`<li class="disabled page-item active">
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),categoryNo,order,search);' class="page-link">`
+					+i+`</a></li>`;
+				}else{
+					temp+=`<li class="page-item">
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),categoryNo,order,search);' class="page-link">`
+					+i+`</a></li>`;
+				}
+			}
+			if(pi.currentPage==pi.maxPage){
+				temp+=`	<li class="disabled page-item">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+pageInfo.currentPage+1+`),categoryNo,order,search);' class="page-link" aria-label="Next">
+				<i class="ti-angle-right"></i>
+				</a></li>`;
+			}
+			else{
+				temp+=`<li class="page-item">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+pageInfo.currentPage+1+`),categoryNo,order,search);' class="page-link" aria-label="Next">
+				<i class="ti-angle-right"></i></a></li>`;
+			}
+			
+			$("#pagination").html(temp);
+		}
+		
+		$('.div-category-menu').on('click', function (event) {
+			$("#searchText").text('');
+        	if (event.target.tagName != 'BUTTON') return false; //-버튼누른게 아니면 return서
+        	console.log("category",pageInfo,event.target.id,order);
+        	pageInfo.currentPage=1;
+        	categoryNo=event.target.id;
+        	selectGoodsList(pageInfo,categoryNo,order,search);
+    	});
+		
+		function searchText(text){
+			selectGoodsList(pageInfo,categoryNo,order,text);
+			$("#search").val('');
+			$("#searchText").text("'"+text+"'검색 결과입니다.");
+		}
+	</script>
+	
 	<!-- JS here -->
 	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->

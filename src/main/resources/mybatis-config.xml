@@ -36,6 +36,7 @@
 		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsPurchase" alias="GoodsPurchase" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.RequiredGoods" alias="RequiredGoods" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.Beneficiary" alias="Beneficiary" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.FilterOrder" alias="FilterOrder" />
 		
 		
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Support" alias="Support" />
@@ -44,12 +45,9 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportUsePlan" alias="SupportUsePlan" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportImage" alias="SupportImage" />
-
-
 	</typeAliases>
 
 	<mappers>
-
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
@@ -57,8 +55,6 @@
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
 		<mapper resource="/mappers/volunteer-mapper.xml" />
-
-
 	</mappers>
 
 
