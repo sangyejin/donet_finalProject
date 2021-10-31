@@ -1,7 +1,6 @@
 package com.pongsung.donet.goods.model.vo;
 
-import java.sql.Date;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +12,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class GoodsPurchase {
-	private int purchaseNo;
-	private String userId;
-	private int beneficiaryNo;
-	private String beneficiaryName;
-	private int purchasePrice;
-	private Date purchaseDate;
+public class BeneficiaryList {
+	private List<Beneficiary> beneficiaryList;
 }

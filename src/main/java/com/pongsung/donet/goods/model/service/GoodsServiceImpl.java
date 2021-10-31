@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.goods.model.Dao.GoodsDao;
+import com.pongsung.donet.goods.model.vo.Beneficiary;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
+import com.pongsung.donet.goods.model.vo.RequiredGoods;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -60,5 +62,42 @@ public class GoodsServiceImpl implements GoodsService {
 			throw new CommException("구호물품 삭제 실패");		
 		}
 	}
+
+	@Override
+	public List<Beneficiary> selectBeneficiaryList() {
+		// TODO Auto-generated method stub
+		return goodsDao.selectBeneficiaryList(sqlSession);
+	}
+
+	@Override
+	public void insertGoods(Goods goods,List<RequiredGoods> requiredGoods) {
+		int goodsNo=goodsDao.insertGoods(sqlSession,goods);
+		if(goodsNo<0) {
+			throw new CommException("구호물품 등록 실패");		
+		}else {
+			System.out.println("requiredGoods::::::::::::::"+requiredGoods);
+			System.out.println("goodsNo::::::::::::::"+goodsNo);
+			for(int i=0; i<requiredGoods.size();i++) {
+				requiredGoods.get(i).setGoodsNo(goodsNo);
+			}
+			System.out.println("requiredGoods22222222::::::::::::::"+requiredGoods);
+
+			int result=goodsDao.insertRequiredGoods(sqlSession,requiredGoods);
+			if(result<0) {
+				throw new CommException("구호물품 요구 후원처 등록 실패");		
+			}	
+		}
+	}
+
+	@Override
+	public void updateGoods(Goods goods) {
+		// TODO Auto-generated method stub
+		int result=goodsDao.updateGoods(sqlSession,goods);
+		if(result<0) {
+			throw new CommException("구호물품 삭제 실패");		
+		}
+	}
+
+
 	
 }

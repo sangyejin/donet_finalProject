@@ -13,11 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class GoodsPurchase {
-	private int purchaseNo;
-	private String userId;
+public class RequiredGoods {
+	private int goodsNo;
 	private int beneficiaryNo;
-	private String beneficiaryName;
-	private int purchasePrice;
-	private Date purchaseDate;
 }

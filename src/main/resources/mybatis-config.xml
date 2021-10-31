@@ -34,7 +34,8 @@
 		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsCategory" alias="GoodsCategory" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsImage" alias="GoodsImage" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.GoodsPurchase" alias="GoodsPurchase" />
-		<typeAlias type="com.pongsung.donet.goods.model.vo.RequiredCategory" alias="RequiredCategory" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.RequiredGoods" alias="RequiredGoods" />
+		<typeAlias type="com.pongsung.donet.goods.model.vo.Beneficiary" alias="Beneficiary" />
 		
 		
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Support" alias="Support" />
