@@ -4,17 +4,18 @@ import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.goods.model.vo.Beneficiary;
+import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
 
 public interface GoodsService {
 
-	int selectGoodsListCount();
+	int selectGoodsListCount(FilterOrder filterOrder);
 
 	List<GoodsCategory> selectGoodsCategoryList();
 
-	List<Goods> selectGoodsList(PageInfo pi);
+	List<Goods> selectGoodsList(PageInfo pi, FilterOrder filterOrder);
 
 	void updateGoodsHitsCount(int goodsNo);
 

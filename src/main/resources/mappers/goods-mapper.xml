@@ -37,23 +37,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 
-	<select id="selectGoodsListCount" resultType="_int">
+	<select id="selectGoodsListCount" parameterType="FilterOrder" resultType="_int">
 		select COUNT(*)
 		from GOODS
 		where STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND GOODS_CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND GOODS_NAME LIKE '%'||#{search}||'%'
+		</if>
 	</select>
 	
-	<select id="selectGoodsCategoryList" resultMap="goodsCategoryResultSet">
+	<select id="selectGoodsCategoryList" resultMap="goodsCategoryResultSet" >
 		select GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME
 		from GOODS_CATEGORY
 	</select>
 	
-	<select id="selectGoodsList" resultMap="goodsResultSet">
+	<select id="selectGoodsList"  parameterType="FilterOrder" resultMap="goodsResultSet">
 		select GOODS_NO, GOODS_NAME, GOODS_PRICE, A.GOODS_CATEGORY_NO, CONTENT
 		,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME, HITS, B.GOODS_CATEGORY_NAME,NUMBER_SUPPORTER
 		from GOODS A
 		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO = B.GOODS_CATEGORY_NO
 		where A.STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND A.GOODS_CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND GOODS_NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="order != null ">
+			ORDER BY ${order}
+		</if>
 	</select>
 	
 	<select id="selectGoods" parameterType="_int" resultMap="goodsResultSet">

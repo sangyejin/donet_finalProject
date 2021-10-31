@@ -10,6 +10,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.goods.model.Dao.GoodsDao;
 import com.pongsung.donet.goods.model.vo.Beneficiary;
+import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
 import com.pongsung.donet.goods.model.vo.RequiredGoods;
@@ -23,9 +24,9 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsDao goodsDao;
 
 	@Override
-	public int selectGoodsListCount() {
+	public int selectGoodsListCount(FilterOrder filterOrder) {
 		// TODO Auto-generated method stub
-		return goodsDao.selectGoodsListCount(sqlSession);
+		return goodsDao.selectGoodsListCount(sqlSession,filterOrder);
 	}
 
 	@Override
@@ -35,9 +36,9 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public List<Goods> selectGoodsList(PageInfo pi) {
+	public List<Goods> selectGoodsList(PageInfo pi, FilterOrder filterOrder) {
 		// TODO Auto-generated method stub
-		return goodsDao.selectGoodsList(sqlSession,pi);
+		return goodsDao.selectGoodsList(sqlSession, pi, filterOrder);
 	}
 
 	@Override
