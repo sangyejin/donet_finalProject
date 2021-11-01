@@ -2,9 +2,11 @@ package com.pongsung.donet.member.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
@@ -68,6 +70,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findUserPwdMember", m);
 	}
 
+
 	public ArrayList<Bank> selectBkList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectBkList");
 
@@ -82,6 +85,11 @@ public class MemberDao {
 		
 	}
 
+	public Member selectThisUser(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.selectOne("memberMapper.selectThisUser", payment);
+	
+	}
+	
 	public Member selectThisUser(SqlSessionTemplate sqlSession, Member loginUser) {
 		return sqlSession.selectOne("memberMapper.selectThisUser", loginUser);
 
@@ -89,6 +97,20 @@ public class MemberDao {
 
 	public int updatePointMember(SqlSessionTemplate sqlSession, Member loginUser) {
 		return sqlSession.update("memberMapper.updatePointMember", loginUser);
+	}
+	
+	public int selectUserListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectUserListCount");
+	}
+
+	public ArrayList<Member> selectUserList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectUserList", null, rowBounds);
 	}
 
 }
