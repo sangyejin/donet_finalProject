@@ -82,9 +82,13 @@ public class MemberDao {
 		
 	}
 
-	public Member selectThisUser(SqlSessionTemplate sqlSession, Payment payment) {
-		return sqlSession.selectOne("memberMapper.selectThisUser", payment);
+	public Member selectThisUser(SqlSessionTemplate sqlSession, Member loginUser) {
+		return sqlSession.selectOne("memberMapper.selectThisUser", loginUser);
 
+	}
+
+	public int updatePointMember(SqlSessionTemplate sqlSession, Member loginUser) {
+		return sqlSession.update("memberMapper.updatePointMember", loginUser);
 	}
 
 }

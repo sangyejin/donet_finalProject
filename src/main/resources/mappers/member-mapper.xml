@@ -93,11 +93,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Payment">
+	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Member">
 		SELECT *
 		FROM MEMBER
 		WHERE USER_ID = #{userId}
 	</select>
+	
+	<update id="updatePointMember" parameterType="Member">
+		UPDATE MEMBER
+		SET POINT = POINT + #{point}
+		WHERE USER_ID = #{userId}
+	</update>
 	
 	
 	
