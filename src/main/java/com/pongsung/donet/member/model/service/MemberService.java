@@ -28,4 +28,6 @@ public interface MemberService {
 
 	void insertCard(Payment payment);
 
+	Member selectThisUser(Payment payment);
+
 }
