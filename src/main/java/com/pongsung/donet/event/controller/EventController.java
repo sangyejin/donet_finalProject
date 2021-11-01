@@ -102,7 +102,6 @@ public class EventController {
 		e.setEventContent( (e.getEventContent()).replace("\n", "<br>"));
 		Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
 		List<Attachment> attList = new ArrayList<>();
-		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "//upload_files//";
 		
@@ -113,19 +112,21 @@ public class EventController {
 			
 			for(int i=0; i<fileList.size(); i++) {
 				String fileName = fileList.get(i).getOriginalFilename();
+				
 				if(fileName != "") {
 					String originName = fileList.get(i).getOriginalFilename();
-					String changeName = saveFile(fileList.get(i), request);
+					String changeName = saveFile(fileList.get(i), request);	
 					
-					if(!(entry.getKey()).equals("thumFile")) {
-						at.setFileLocation(savePath);
-						at.setOriginName(originName);
-						at.setChangeName(changeName);
-						at.setRefEventNo(e.getEventNo());
-						attList.add(at);
-					}else {
+					if((entry.getKey()).equals("thumFile")) {
 						e.setEventOrigin(originName);
 						e.setEventChange(changeName);
+					}
+					else{ 
+							at.setFileLocation(savePath);
+							at.setOriginName(originName);
+							at.setChangeName(changeName);
+							at.setRefEventNo(e.getEventNo());
+							attList.add(at);
 					}
 				}
 			}
@@ -134,74 +135,16 @@ public class EventController {
 		System.out.println("attachment return check : " + at);
 		return "redirect:list.ev";
 		
-		/*
-		String src = request.getParameter("src");
-		System.out.println("src check : " + src);
-		System.out.println("file check : " + file);
-		
-		String path = "//upload_files//";
-		
-
-		if(!file.getOriginalFilename().equals("")) {
-			for(MultipartFile mf : fileList) {
-			
-				String changeName = saveFile(file, request);
-				
-				if(changeName != null) {
-					at.setRefEventNo(e.getEventNo());
-					at.setOriginName(file.getOriginalFilename());
-					at.setChangeName(changeName);
-					System.out.println("attachment check : " + at);
-					
-					
-					try {
-						mf.transferTo(new File(changeName));
-					} catch (IllegalStateException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-				}
-			
-				
-			}
-		
-		}*/
-		
 	}
-	/*
-	@RequestMapping("insert.ev")
-	public String insertEvent(Event e, MultipartHttpServletRequest request, Model model, @RequestParam(name="uploadFile", required=false) MultipartFile file) {
-		
-		System.out.println("e check : " + e);
-		System.out.println("file check : " + file.getOriginalFilename());
-		
-		if(!file.getOriginalFilename().equals("")) {
-			
-			
-			String changeName = saveFile(file, request);
-			
-			if(changeName != null) {
-				e.setEventOrigin(file.getOriginalFilename());
-				e.setEventChange(changeName);
-			}
-		}
-		eventService.insertEvent(e);
-		
-		return "redirect:list.ev";
-	}
-	*/
-	
-	
 	
 	@RequestMapping("delete.ev")
 	public String deleteEvent(int eno, String fileName, HttpServletRequest request) {
 		System.out.println("delete check : " + eno );
 		eventService.deleteEvent(eno);
-		/*
+		
 		if(!fileName.equals("")) {
 			deleteFile(fileName, request);
-		}*/
+		}
 		
 		return "redirect:list.ev";
 	}
@@ -214,21 +157,49 @@ public class EventController {
 	}
 
 	@RequestMapping("update.ev")
-	public ModelAndView updateEvent(Event ev, ModelAndView mv, HttpServletRequest request,
-			@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
-		/*
-		if(!file.getOriginalFilename().equals("")) {
-			if(ev.getChangeName() != null) {
-				deleteFile(ev.getChangeName(), request);
-			}
-			String changeName = saveFile(file, request);
+	public ModelAndView updateEvent(Event e, Attachment at, ModelAndView mv, HttpServletRequest request,
+			@RequestParam(value="reUploadFile", required=false) MultipartFile file, MultipartHttpServletRequest multiRequest) {
+		
+		e.setEventContent( (e.getEventContent()).replace("\n", "<br>"));
+		Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
+		List<Attachment> attList = new ArrayList<>();
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "//upload_files//";
+		
+		Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
+		for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
+			List<MultipartFile> fileList = entry.getValue();
 			
-			ev.setOriginName(file.getOriginalFilename());
-			ev.setChangeName(changeName);
-		}*/
-		System.out.println("update 중 event 객체확인중 : "+ev);
-		eventService.updateEvent(ev);
-		mv.addObject("eno", ev.getEventNo()).setViewName("redirect:detail.ev");
+			for(int i=0; i<fileList.size(); i++) {
+				String fileName = fileList.get(i).getOriginalFilename();
+				
+				if(fileName != "") {
+					if(e.getEventChange() != null) {
+						deleteFile(e.getEventChange(), request);
+					}else if(at.getChangeName() != null) {
+						deleteFile(at.getChangeName(), request);
+					}
+					String originName = fileList.get(i).getOriginalFilename();
+					String changeName = saveFile(fileList.get(i), request);	
+					
+					if((entry.getKey()).equals("thumFile")) {
+						e.setEventOrigin(originName);
+						e.setEventChange(changeName);
+					}
+					else{ 
+						at.setFileLocation(savePath);
+						at.setOriginName(originName);
+						at.setChangeName(changeName);
+						at.setRefEventNo(e.getEventNo());
+						attList.add(at);
+					}
+				}
+			}
+		}
+		//
+		System.out.println("update 중 event 객체확인중 : "+e);
+		eventService.updateEvent(e, attList);
+		mv.addObject("eno", e.getEventNo()).setViewName("redirect:detail.ev");
 		return mv;
 	}
 	
@@ -247,6 +218,16 @@ public class EventController {
 		
 		return new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create().toJson(list);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="replyUpdate.ev")
+	public String updateReply(int replyNo, EventReply eventReply) {
+		int result = eventService.replyUpdate(eventReply);
+		
+		return String.valueOf(result);
+	}
+	
+	
 	
 	/* 
 	 * =============== private ====================

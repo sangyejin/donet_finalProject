@@ -77,4 +77,19 @@ public class EventDao {
 		return (ArrayList)sqlSession.selectList("eventMapper.replyList", eno);
 	}
 
+	public int updateEventAttach(SqlSessionTemplate sqlSession, List<Attachment> attList) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("eventMapper.updateEventAttach", attList);
+	}
+
+	public int replyUpdate(SqlSessionTemplate sqlSession, EventReply eventReply) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("eventMapper.replyUpdate", eventReply);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

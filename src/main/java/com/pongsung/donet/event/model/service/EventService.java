@@ -22,8 +22,6 @@ public interface EventService {
 
 	void insertEvent(Event e, List<Attachment> attList);
 
-	void updateEvent(Event ev);
-
 	void deleteEvent(int eno);
 
 	List<Attachment> selectEventAttach(int eno);
@@ -31,6 +29,12 @@ public interface EventService {
 	int insertReply(EventReply re);
 
 	ArrayList<EventReply> replyList(int eno);
+
+	void updateEvent(Event e, List<Attachment> attList);
+
+	int replyUpdate(EventReply eventReply);
+
+	int deleteReply(int replyNo);
 
 
 }

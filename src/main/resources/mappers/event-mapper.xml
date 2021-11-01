@@ -95,6 +95,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		 SELECT #{item.originName}, #{item.changeName}, #{item.fileLocation} from DUAL
    		</foreach>)	A
    </insert>
+   
+   <update id="updateEventAttach" parameterType="java.util.List">
+		UPDATE EVENT_ATTACHMENT
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+		SET EV_AT_ORIGIN=#{item.originName}, EV_AT_NEWNAME=#{item.changeName}, 
+		WHERE EV_AT_FILENO=#{item.fileNo}
+		</foreach>
+	</update>
   
 	
 	<!-- Reply -->
@@ -108,6 +116,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EV_REF_NO=#{eno} AND EV_REPLY_STATUS='Y'
 		ORDER BY EV_REPLY_NO DESC
 	</select>
-	
+	<update id="replyUpdate" parameterType="EventReply">
+		UPDATE EVENT_REPLY
+		SET EV_REPLY_CONTENT=#{eventReplyContent}
+		WHERE EV_REPLY_NO=#{eventReplyNo}
+	</update>
+	<update id="deleteReply" parameterType="_int">
+		UPDATE EVENT_REPLY
+		SET EV_REPLY_STATUS = 'N'
+		WHERE EV_REPLY_NO=#{replyNo}
+	</update>
 	
 </mapper>
