@@ -89,7 +89,7 @@ public class EventDao {
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("eventMapper.deleteReply", replyNo);
 	}
 
 }

@@ -226,7 +226,13 @@ public class EventController {
 		
 		return String.valueOf(result);
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="replyUpdate.ev")
+	public String deleteReply(int replyNo) {
+		int result = eventService.deleteReply(replyNo);
+		
+		return String.valueOf(result);
+	}
 	
 	
 	/* 
