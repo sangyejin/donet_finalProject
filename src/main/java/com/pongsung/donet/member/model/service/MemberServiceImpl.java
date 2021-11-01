@@ -160,6 +160,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectThisUser(sqlSession, payment);
 	}
 	
+	
 	@Override
 	public int selectUserListCount() {
 		// TODO Auto-generated method stub
