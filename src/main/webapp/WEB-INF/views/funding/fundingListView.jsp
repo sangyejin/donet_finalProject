@@ -174,7 +174,7 @@ select::-ms-expand {
 	background-color: rgb(60, 179, 113);
 }
 
-#search {
+#searchInput {
 	border: 1px solid #e8e8e8;
 	height: 40px;
 	width: 200px;
@@ -182,7 +182,7 @@ select::-ms-expand {
 	transition: all 0.5s;
 }
 
-#search:hover, #search:focus {
+#searchInput:hover, #searchInput:focus {
 	border: 1px solid #e8e8e8;
 	height: 40px;
 	width: 400px;
@@ -217,7 +217,6 @@ select::-ms-expand {
 <body>
 
 	<jsp:include page="../common/menubar.jsp" />
-
 	<div class="main">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -227,23 +226,25 @@ select::-ms-expand {
 		</nav>
 		<div class="div-top">
 			<div>
-				<div class="div-category-menu">
+				<div class="div-category-menu" >
 					<c:forEach var="category" items="${category}">
 						<button type="button" class="btn btn-light"
-							id="btn-${category.categoryNo}">${category.categoryName}</button>
+							id="${category.categoryNo}">${category.categoryName}</button>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="div-filter">
-				<input id="search" name="search" type="text" class="rounded-pill"
-					placeholder="검색" aria-describedby="button-addon2"> <select
-					name="period" id="period">
+				<p id="searchText"></p>
+				<input id="searchInput" name="searchInput" type="text" class="rounded-pill"
+					placeholder="검색" aria-describedby="button-addon2"
+					onkeyup="if(window.event.keyCode==13){searchText(this.value);}">
+				<select name="period" id="period" onchange="selectPeriod(this.value);">
 					<option value="">전체</option>
 					<option value="SYSDATE < START_DATE">예정</option>
 					<option value="SYSDATE BETWEEN START_DATE AND CLOSING_DATE">진행중</option>
 					<option value="SYSDATE > CLOSING_DATE">종료</option>
-				</select> <select name="order" id="order">
-					<option value="CREATE_DATE DESC">최신순</option>
+				</select> <select name="order" id="order"  onchange="selectOrder(this.value);">
+					<option value="FP_WRITE_DATE DESC">최신순</option>
 					<option value="HITS DESC">조회순</option>
 					<option value="NUMBER_SUPPORTER DESC">후원자수순</option>
 					<option value="RAISED DESC">모인펀딩액순</option>
@@ -255,115 +256,17 @@ select::-ms-expand {
 				</c:if>
 
 			</div>
-
 		</div>
 
 
 		<div class="div-content">
-			<div class="container row" style="margin: 100 auto; width: 1080px;">
-
-				<c:forEach var="list" items="${list}" varStatus="status">
-					<fmt:parseDate value="${list.startDate}" var="startDate"
-						pattern="yyyy-MM-dd" />
-					<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}"
-						integerOnly="true" var="strDate" />
-					<fmt:parseDate value="${list.closeDate }" var="closeDate"
-						pattern="yyyy-MM-dd" />
-					<fmt:parseNumber value="${closeDate.time / (1000*60*60*24)}"
-						integerOnly="true" var="endDate" />
-					<div class="card col-lg-4 col-md-6 col-sm-6">
-						<div class="single-cases mb-40">
-							<div class="cases-img">
-								<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${list.thumbnailChangeName}" alt="${list.fpName}"
-											width="278px" height="200px">
-									<c:if test="${list.raised/list.goal*100 >=100}">
-										<div class="img-text">
-											<p>COMPLETE</p>
-										</div>
-									</c:if>
-
-
-							</div>
-							<div class="cases-caption">
-								<div class="cases-info">
-									<div class="div-title">
-										<a href="${pageContext.servletContext.contextPath}/funding/${list.fpNo}" id="title">${list.fpName}</a>
-									</div>
-									<p class="category-hostName">
-										<span>${list.categoryName}</span> | <span>${list.hostName}</span>
-									</p>
-									<p class="dDay">
-										<span>${endDate-strDate }</span>
-									</p>
-								</div>
-								<!-- Progress Bar -->
-								<div class="progress">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar"
-										aria-valuenow="${list.raised/list.goal*100}" aria-valuemin="0"
-										aria-valuemax="100"
-										style="width: ${list.raised/list.goal*100}%">${list.raised/list.goal*100}%
-									</div>
-								</div>
-								<div class="prices d-flex justify-content-between">
-									<p>
-										현재:<span> ${list.raised}</span>
-									</p>
-									<p>
-										목표:<span> ${list.goal}</span>원
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
+			<div class="container row" style="margin: 100 auto; width: 1080px;" id="fundingListContent">
 			</div>
 		</div>
 
 		<!-- pagination -->
 		<nav class="blog-pagination justify-content-center d-flex">
-			<ul class="pagination">
-				<c:choose>
-					<c:when test="${ pi.currentPage eq 1 }">
-						<li class="disabled page-item"><a
-							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
-							aria-label="Previous"> <i class="ti-angle-left"></i>
-						</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a
-							href="funding?currentPage=${pi.currentPage-1 }" class="page-link"
-							aria-label="Previous"> <i class="ti-angle-left"></i>
-						</a></li>
-					</c:otherwise>
-				</c:choose>
-
-				<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-					<c:choose>
-						<c:when test="${ pi.currentPage eq i }">
-							<li class="disabled page-item active"><a
-								href="funding?currentPage=${i}" class="page-link">${i}</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item"><a href="funding?currentPage=${i}"
-								class="page-link">${i}</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-
-				<c:choose>
-					<c:when test="${ pi.currentPage eq pi.maxPage }">
-						<li class="disabled page-item"><a
-							href="funding?currentPage=${pi.currentPage+1 }" class="page-link"
-							aria-label="Next"> <i class="ti-angle-right"></i>
-						</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a
-							href="funding?currentPage=${pi.currentPage+1 }" class="page-link"
-							aria-label="Next"> <i class="ti-angle-right"></i></a></li>
-					</c:otherwise>
-				</c:choose>
+			<ul class="pagination" id="pagination">
 			</ul>
 		</nav>
 	</div>
@@ -372,49 +275,188 @@ select::-ms-expand {
 	<div id="back-top">
 		<a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 	</div>
+	<script>
+	let pageInfo= {
+		currentPage:"${pi.currentPage}",
+		listCount:"${pi.listCount}",
+		startPage:"${pi.startPage}",
+		endPage:"${pi.endPage}",
+		maxPage:"${pi.maxPage}",
+		pageLimit:"${pi.pageLimit}",
+		boardLimit:"${pi.boardLimit}",
+		moveCurrentPage(movePage){
+			this.currentPage=movePage;
+			return pageInfo;
+		}
+	};
+	let categoryNo="${categoryNo}";
+	let order="";
+	let search="";
+	let period="";
+	selectFundingList(pageInfo,categoryNo,period,order,search);
+		
+	function selectFundingList(p,categoryNo,period,order,search){
+			//console.log("categoryNo"+categoryNo);
+			console.log("하아,,,,");
+			console.log(search);
+			console.log(p);
+			$.ajax({
+				url : "funding/list",
+				type : "post",
+				data:{
+					currentPage: p.currentPage,
+					listCount:p.listCount,
+					startPage:p.startPage,
+					endPage:p.endPage,
+					maxPage:p.maxPage,
+					pageLimit:p.pageLimit,
+					boardLimit:p.boardLimit,
+					search:search,
+					categoryNo: Number(categoryNo),
+					order: order,
+					period:period
+				},
+				success: function(map) {
+					let value = "";
+					//console.log(pageInfo,order,categoryNo);
+					$.each(map.pi,function(i, list){
+						pageInfo[i]=list;
+					});
+					console.log("pi>>");
+					console.log(pageInfo);
+					console.log(categoryNo);
+					$.each(map.fundingList,function(i, list){
+						let goalPersent = list.raised/list.goal*100;
+						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
+										<div class="single-cases mb-40">
+											<div class="cases-img">
+												<img src="${pageContext.request.contextPath}/resources/upload_files/funding/`+list.thumbnailChangeName+`" alt="`+list.fpName+`"
+													width="278px" height="200px">`;
+						if(goalPersent>=100){
+							value+=`			<div class="img-text">
+													<p>COMPLETE</p>
+												</div>`;
+						}
+						value+=`			</div>
+											<div class="cases-caption">
+												<div class="cases-info">
+													<div class="div-title">
+												<a href="${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`" id="title">`+list.fpName+`</a>
+											</div>
+											<p class="category-hostName">
+												<span>`+list.categoryName+`</span> | <span>`+list.hostName+`</span>
+											</p>
+											<p class="dDay">
+											<span>`+list.startDate +`~`+ list.closeDate +`</span>
+										</p>
+											<p class="dDay">
+												<span>`+list.dDay +`</span>
+											</p>
+										</div>
+										<div class="progress">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar"
+												aria-valuenow="`+goalPersent+`" aria-valuemin="0"
+												aria-valuemax="100"
+												style="width:`+goalPersent+`%">`+goalPersent+`%
+											</div>
+										</div>
+										<div class="prices d-flex justify-content-between">
+											<p>
+												현재:<span> `+list.raised+`</span>
+											</p>
+											<p>
+												목표:<span>`+list.goal+`</span>원
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>`;
+					});
+					$("#fundingListContent").html(value);
+					paging(pageInfo,categoryNo,period,order,search);
+					
+				},
+				error : function() {
+					console.log("구호물품 리스트 조회용 ajax 통신 실패");
+				}
+			});
+			
+		}
+		
+		function selectOrder(value){
+			$("#searchText").text('');
+			console.log("order",pageInfo,categoryNo,order,period);
+			pageInfo.currentPage=1;
+			order=value;
+			selectFundingList(pageInfo,categoryNo,period,order,search);
+		}
+		function selectPeriod(value){
+			$("#searchText").text('');
+			console.log("period",pageInfo,categoryNo,order,period);
+			pageInfo.currentPage=1;
+			period=value;
+			selectFundingList(pageInfo,categoryNo,period,order,search);
+		}
+		
+		function paging(pi,categoryNo,period,order,search){
+			var temp=``;
 
-	<!-- JS here -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-	<!-- Jquery, Popper, Bootstrap -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
-	<!-- Jquery Mobile Menu -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
-
-	<!-- Jquery Slick , Owl-Carousel Plugins -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
-	<!-- One Page, Animated-HeadLin -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
-
-	<!-- Date Picker -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/gijgo.min.js"></script>
-	<!-- Nice-select, sticky -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
-	<!-- Progress -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.barfiller.js"></script>
-
-	<!-- counter , waypoint,Hover Direction -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.counterup.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/waypoints.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.countdown.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/hover-direction-snake.min.js"></script>
-
-	<!-- contact js -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/contact.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.form.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.validate.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/mail-script.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.ajaxchimp.min.js"></script>
-
-	<!-- Jquery Plugins, main Jquery -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-
+			if(pi.currentPage==1){
+				temp=`<li class="disabled page-item">
+				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous">
+				<i class="ti-angle-left"></i>
+				</a></li>`;
+			}else{
+				temp+=`<li class="page-item">
+					<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous"> 
+					<i class="ti-angle-left"></i>
+					</a></li>`;
+			}
+			for(let i= pi.startPage; i<=pi.endPage;i++){
+				if(pi.currentPage==i){
+					temp+=`<li class="disabled page-item active">
+					<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+i+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link">`
+					+i+`</a></li>`;
+				}else{
+					temp+=`<li class="page-item">
+					<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+i+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link">`
+					+i+`</a></li>`;
+				}
+			}
+			if(pi.currentPage==pi.maxPage){
+				temp+=`	<li class="disabled page-item">
+				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
+				<i class="ti-angle-right"></i>
+				</a></li>`;
+			}
+			else{
+				temp+=`<li class="page-item">
+				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
+				<i class="ti-angle-right"></i></a></li>`;
+			}
+			
+			$("#pagination").html(temp);
+		}
+		
+		$('.div-category-menu').on('click', function (event) {
+        	if (event.target.tagName != 'BUTTON') return false; //버튼누른게 아니면 return
+        	$("#searchText").text('');
+			$("#searchInput").val('');
+			search="";
+        	console.log("category",pageInfo,event.target.id,order);
+        	pageInfo.currentPage=1;
+        	categoryNo=event.target.id;
+        	selectFundingList(pageInfo,categoryNo,period,order,search);
+    	});
+		
+		function searchText(text){
+			pageInfo.currentPage=1;
+			search=text;
+			selectFundingList(pageInfo,categoryNo,period,order,search);
+			$("#searchText").text("'"+search+"'검색 결과입니다.");
+		}
+	</script>
 </body>
 
 </html>
