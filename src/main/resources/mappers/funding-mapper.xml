@@ -80,6 +80,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="categoryNo != 0 ">
 			AND CATEGORY_NO = #{categoryNo}
 		</if>
+		<if test="period != null ">
+			AND ${period}
+		</if>
 		<if test="search != null ">
 			AND FP_NAME LIKE '%'||#{search}||'%'
 		</if>
@@ -96,6 +99,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where A.STATUS='Y'
 		<if test="categoryNo != 0 ">
 			AND A.CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="period != null ">
+			AND ${period}
 		</if>
 		<if test="search != null ">
 			AND FP_NAME LIKE '%'||#{search}||'%'

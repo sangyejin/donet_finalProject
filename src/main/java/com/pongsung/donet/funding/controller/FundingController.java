@@ -71,12 +71,15 @@ public class FundingController {
 	@RequestMapping("funding")
 	public String seletcFundingList(
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
-			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
-			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
-			@RequestParam(value = "search", required = false, defaultValue = "") String search,
+			FundingFilterOrder filterOrder,
 			Model model) {
 		
-		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,order,search);
+//		@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
+//		@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
+//		@RequestParam(value = "period", required = false, defaultValue = "") String period,
+//		@RequestParam(value = "search", required = false, defaultValue = "") String search
+//		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,period,order,search);
+		
 		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
 		
 		

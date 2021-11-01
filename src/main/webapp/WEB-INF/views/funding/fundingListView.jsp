@@ -237,14 +237,16 @@ select::-ms-expand {
 			<div class="div-filter">
 				<input id="search" name="search" type="text" class="rounded-pill"
 					placeholder="검색" aria-describedby="button-addon2"> <select
-					name="filter1" id="filter2">
-					<option value="1">전체</option>
-					<option value="2">진행중</option>
-					<option value="3">종료</option>
-				</select> <select name="filter2" id="filter1">
-					<option value="1">최신순</option>
-					<option value="2">인기순</option>
-					<option value="3">마감임박</option>
+					name="period" id="period">
+					<option value="">전체</option>
+					<option value="SYSDATE < START_DATE">예정</option>
+					<option value="SYSDATE BETWEEN START_DATE AND CLOSING_DATE">진행중</option>
+					<option value="SYSDATE > CLOSING_DATE">종료</option>
+				</select> <select name="order" id="order">
+					<option value="CREATE_DATE DESC">최신순</option>
+					<option value="HITS DESC">조회순</option>
+					<option value="NUMBER_SUPPORTER DESC">후원자수순</option>
+					<option value="RAISED DESC">모인펀딩액순</option>
 				</select>
 				<c:if
 					test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
