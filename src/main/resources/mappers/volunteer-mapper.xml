@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="volunteerMapper">
+
+	<resultMap id="volunteerResultMap" type="Volunteer">
+		<id column="VOL_NO" property="volNo"/>
+		<result column="VOL_TITLE" property="volTitle"/>
+		<result column="VOL_CONTENT" property="volContent"/>
+		<result column="VOL_WRITER" property="volWriter"/>
+		<result column="VOL_DATE" property="volDate"/>
+		<result column="VOL_POINT" property="volPoint"/>
+		<result column="VOL_STATUS" property="volStatus"/>
+		<result column="VOL_CATEGORY" property="volCategory"/>
+		<result column="VOL_ORIGIN" property="volOrigin"/>
+		<result column="VOL_CHANGE" property="volChange"/>
+	</resultMap>
+	<resultMap id="volunteerAttachResultMap" type="VolAttachment">
+		<id column="VOL_AT_FILENO" property="fileNo" />
+		<result column="VOL_AT_REF_NO" property="refVolunteerNo" />
+		<result column="VOL_AT_ORIGIN" property="originName" />
+		<result column="VOL_AT_NEWNAME" property="changeName" />
+		<result column="VOL_AT_LOCATION" property="fileLocation" />
+	</resultMap>
+	<resultMap id="volunteerReplyResultMap" type="VolunteerReply">
+		<id column="VOL_REPLY_NO" property="volReplyNo" />
+		<result column="VOL_REF_NO" property="volRefNo" />
+		<result column="VOL_REPLY_WRITER" property="volReplyWriter" />
+		<result column="VOL_REPLY_CONTENT" property="volReplyContent" />
+		<result column="VOL_REPLY_STATUS" property="volReplyStatus" />
+		<result column="VOL_REPLY_DATE" property="volReplyDate" />
+	</resultMap>
+	
+	<select id="selectVolunteerListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y'
+	</select>
+	<select id="selectVolunteerList" resultMap="volunteerResultMap">
+		SELECT *
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' 
+		ORDER BY VOL_NO DESC
+	</select>
+	 <insert id="insertVolunteer" parameterType="Volunteer">
+   		INSERT INTO VOLUNTEER
+   		VALUES(SEQ_VOL.NEXTVAL, #{volTitle}, #{volContent},#{volWriter}, SYSDATE,
+   		DEFAULT ,DEFAULT , #{volCategory},#{volOrigin}, #{volChange}, DEFAULT, DEFAULT)
+   </insert>
+   <insert id="insertVolunteerAttach" parameterType="java.util.List" >
+   		INSERT INTO VOL_ATTACHMENT (VOL_AT_FILENO, VOL_AT_REF_NO, VOL_AT_ORIGIN, VOL_AT_NEWNAME, VOL_AT_LOCATION )
+   		SELECT SEQ_VOL_ATTA.NEXTVAL, SEQ_VOL.CURRVAL, A.* 
+   		FROM(
+   		<foreach collection="list" item="item" separator=" UNION ALL ">
+   		 SELECT #{item.originName}, #{item.changeName}, #{item.fileLocation} FROM DUAL
+   		</foreach>)A
+   </insert>
+   <select id="selectVolunteer" parameterType="_int" resultMap="volunteerResultMap">
+    	SELECT *
+    	FROM VOLUNTEER
+    	WHERE VOL_NO=#{vno} AND VOL_STATUS = 'Y'
+   </select>
+   
+	<select id="selectVolunteerAttachment" parameterType="_int" resultMap="volunteerAttachResultMap">
+   		SELECT *
+    	FROM VOL_ATTACHMENT
+    	WHERE VOL_AT_REF_NO = #{vno}
+   </select>
+</mapper>

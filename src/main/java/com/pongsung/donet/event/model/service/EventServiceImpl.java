@@ -93,7 +93,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public Attachment selectEventAttach(int eno) {
+	public List<Attachment> selectEventAttach(int eno) {
 		// TODO Auto-generated method stub
 		return eventDao.selectEventAttach(sqlSession, eno);
 	}

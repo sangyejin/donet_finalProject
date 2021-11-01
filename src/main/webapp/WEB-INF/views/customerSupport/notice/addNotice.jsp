@@ -8,11 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
 
     <style>
         *{ /*border: 1px red solid;*/
-            font-family: 'Nanum Gothic Coding', monospace;
             font-size: 12px;
         }
 
@@ -217,7 +215,7 @@
         </div>
         <div class="needhelp">
             <span><p id="help">도움이 필요하신가요?</p></span>
-            <span><a id="gethelp"  href="list.one">1:1 문의하기</a></span>
+            <span><a id="gethelp"  href="goAskForm.one">1:1 문의하기</a></span>
             <span id="helparrow"> > </span>
         </div>
     </div>
@@ -241,25 +239,6 @@
             <div class="grayline"></div>
 
             <div id="headjustify">사진
-            	<!--  kinda gave up
-                <span class="clickable"><b>B</b></span>
-                <span class="clickable"><i>I</i></span>
-                <span class="clickable"><u>U</u></span>
-                <span class="clickable"><del>T</del></span>
-                <span class="clickable"><p>T<b id="boldPeriod">.</b></p></span>
-
-                <div id="justGetThere">
-                    <span class="clickable"><mark>T</mark></span>
-                                    <span> | </span>
-                   
-                </div>
-                     <div id="alignboi">
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Left.png"></span>
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Center.png"></span>
-                        <span class="clickable"><img class="thisimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Right.png"></span>
-                     </div>  
-                    <div class="clickable" id="justify"><img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/Justify.png"></div>
-                    <div id="aLine"> | </div> -->
                     <div class="clickable" id="differ">
                     	<label for="noticeOrigin" id="forThisImage">
                     		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
@@ -276,7 +255,7 @@
         <span><label for="noticeContent">내용</label></span> 
         <div id="imgViewArea">
         	<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
-	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  rows="10" style="resize:none;" maxlength="2000">
+	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  wrap=on rows="10" style="resize:none;" maxlength="2000">
 	        </textarea>
 		</div>
 

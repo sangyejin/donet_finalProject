@@ -62,9 +62,9 @@ public class EventDao {
 		return sqlSession.insert("eventMapper.insertEventAttach", attList);
 	}
 
-	public Attachment selectEventAttach(SqlSessionTemplate sqlSession, int eno) {
+	public List<Attachment> selectEventAttach(SqlSessionTemplate sqlSession, int eno) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("eventMapper.selectEventAttach", eno);
+		return sqlSession.selectList("eventMapper.selectEventAttach", eno);
 	}
 
 	public int insertReply(SqlSessionTemplate sqlSession, EventReply re) {

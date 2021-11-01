@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 @Repository
 public class MemberDao {
@@ -68,6 +70,26 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findUserPwdMember", m);
 	}
 
+
+	public ArrayList<Bank> selectBkList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectBkList");
+
+	}
+
+	public int insertCard(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.insert("memberMapper.insertCard", payment);
+	}
+
+	public int updatePoint(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.update("memberMapper.updatePoint", payment);
+		
+	}
+
+	public Member selectThisUser(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.selectOne("memberMapper.selectThisUser", payment);
+	
+	}
+	
 	public int selectUserListCount(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.selectUserListCount");
@@ -81,5 +103,6 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectUserList", null, rowBounds);
 	}
+	
 
 }

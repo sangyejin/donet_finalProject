@@ -26,7 +26,7 @@ public interface EventService {
 
 	void deleteEvent(int eno);
 
-	Attachment selectEventAttach(int eno);
+	List<Attachment> selectEventAttach(int eno);
 
 	int insertReply(EventReply re);
 

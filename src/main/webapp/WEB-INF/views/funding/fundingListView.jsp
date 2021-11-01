@@ -40,7 +40,7 @@
 <style>
 * {
 	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 12px;
+	font-size: 1.4em;
 }
 
 .card {

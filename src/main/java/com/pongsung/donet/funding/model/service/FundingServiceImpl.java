@@ -13,6 +13,7 @@ import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.dao.FundingDao;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
@@ -28,14 +29,14 @@ public class FundingServiceImpl implements FundingService {
 	private FundingDao fundingDao;
 
 	@Override
-	public int selectFundingListCount() {
-		return fundingDao.selectFundingListCount(sqlSession);
+	public int selectFundingListCount(FundingFilterOrder filterOrder) {
+		return fundingDao.selectFundingListCount(sqlSession,filterOrder);
 	}
 	
 	@Override
-	public List<Funding> selectFundingList(PageInfo pi) {
+	public List<Funding> selectFundingList(PageInfo pi,FundingFilterOrder filterOrder) {
 		// TODO Auto-generated method stub
-		return fundingDao.selectFundingList(sqlSession,pi);
+		return fundingDao.selectFundingList(sqlSession,pi,filterOrder);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.pongsung.donet.member.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +21,9 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -223,8 +226,70 @@ public class MemberController {
 			
 		}
 		
-
 			
+
+		//point charging
+		@RequestMapping("point.me")
+		public String chargeMyPoint(Model model) {
+			ArrayList<Bank> bkList = memberService.selectBkList();
+			
+			//데이터베이스 은행명 가져오기
+			model.addAttribute("bkList", bkList);
+			
+			return "member/point/payment";
+		}
+		
+		@RequestMapping("insertCard.me")
+		public String insertCard(@RequestParam(name = "cardNumber") String cardNumber,
+								@RequestParam(name = "expireM") String expireM,
+								@RequestParam(name = "expireY") String expireY,
+								@RequestParam(name = "cvcNum") int cvcNum,
+								@RequestParam(name = "cardBankName") int cardBankName,
+								@RequestParam(name = "surname") String surname,
+								@RequestParam(name = "fstname") String fstname,
+								@RequestParam(name = "amount") int amount,
+								HttpServletRequest request, Model model
+								) {
+			
+			System.out.println("카드결제 인서트 : 컨트롤러");
+			System.out.println("cardNumber : " + cardNumber + ", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
+			
+			Payment payment = new Payment();
+			
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			String expireDate = expireM+expireY; //유효기간
+			String fullName = surname+fstname; //이름
+			
+			payment.setUserId(loginUser.getUserId());
+			payment.setCardNo(cardNumber);
+			payment.setPayExpiry(Integer.parseInt(expireDate));
+			payment.setPayCvc(cvcNum);
+			payment.setBNo(cardBankName);
+			payment.setPayName(fullName);
+			payment.setPointAmount(amount);
+			
+			memberService.insertCard(payment);
+			
+			//유저정보 새로 가져와서 넘겨주기
+			
+			Member thisUser = memberService.selectThisUser(payment);
+			
+			
+			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
+			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
+
+			model.addAttribute("loginUser", thisUser);
+			
+			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
+			
+			return "redirect:/myPage.me";
+
+		}
+		
+		//회원 목록
 		@RequestMapping("userList.me")
 		public String selectUserList(@RequestParam(value="currentPage", required = false , defaultValue ="1") int currentPage, Model model) {
 			
@@ -246,6 +311,5 @@ public class MemberController {
 			
 			return "member/supportReply";
 		}
-		
 		
 }

@@ -11,6 +11,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 
 @Repository
@@ -54,13 +55,55 @@ public class SupportDao {
 	}
 
 	public List<Sponsor> selectSponsorList(SqlSessionTemplate sqlSession, int suNo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("supportMapper.selectSponsorList",suNo);
+	}
+	
+	public List<SupportImage> selectImageList(SqlSessionTemplate sqlSession, int suNo) {
+		return sqlSession.selectList("supportMapper.selectImageList",suNo);
 	}
 
 	public int insertReply(SqlSessionTemplate sqlSession, SupporComment sc) {
-		return sqlSession.insert("boardMapper.insertReply", sc);
+		return sqlSession.insert("supportMapper.insertReply", sc);
 	}
+
+	public ArrayList<SupporComment> selectReplyList(SqlSessionTemplate sqlSession, int suNo) {
+		return (ArrayList)sqlSession.selectList("supportMapper.selectReplyList", suNo);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("supportMapper.deleteReply",replyNo);
+	}
+
+	public int selectCategoryListCount(SqlSessionTemplate sqlSession, int suCategoryNo) {
+		return sqlSession.selectOne("supportMapper.selectCategoryListCount", suCategoryNo);
+	}
+
+	public List<Support> selectCategoryList(SqlSessionTemplate sqlSession, int suCategoryNo) {
+		return sqlSession.selectList("supportMapper.selectCategoryList",suCategoryNo);
+	}
+
+	public int updateReply(SqlSessionTemplate sqlSession, SupporComment sc) {
+		return sqlSession.update("supportMapper.updateReply",sc);
+	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession, Support support) {
+		sqlSession.insert("supportMapper.insertBoard",support);
+		return Integer.valueOf(String.valueOf(support.getSuNo()));
+	}
+
+	public int insertImgList(SqlSessionTemplate sqlSession, List<SupportImage> imgList) {
+		return sqlSession.insert("supportMapper.insertImgList",imgList);
+	}
+
+	public int insertUsePlan(SqlSessionTemplate sqlSession, List<SupportUsePlan> list) {
+		return sqlSession.insert("supportMapper.insertUsePlan",list);
+	}
+
+
+
+
+
+
 
 //	public int selectGolbalListCount(SqlSessionTemplate sqlSession, int categoryNo) {
 //		return sqlSession.selectOne("supportMapper.selectGolbalListCount");

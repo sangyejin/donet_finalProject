@@ -7,15 +7,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
 
 <style>
 * { /*border: 1px red solid;*/
-	font-family: 'Nanum Gothic Coding', monospace;
 	font-size: 12px;
 }
 
@@ -262,7 +256,7 @@ span>mark {
 			</div>
 			<div class="needhelp">
 				<span><p id="help">도움이 필요하신가요?</p></span> <span><a
-					id="gethelp" href="list.one">1:1 문의하기</a></span> <span id="helparrow">
+					id="gethelp" href="goAskForm.one">1:1 문의하기</a></span> <span id="helparrow">
 					> </span>
 			</div>
 		</div>
@@ -298,7 +292,7 @@ span>mark {
 					<div class="grayline"></div>
 					
 					<label for="faqAnswered">답변</label>
-						<textarea class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="2000" ></textarea>
+						<textarea wrap=on  class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="2000" ></textarea>
 					</div>
 
 					<div id="buttons">

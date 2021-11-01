@@ -64,15 +64,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{userId} and user_name=#{userName} and email=#{email} and status='Y'
 	</select>
 	
-	<!--출석할때마다 10포인트적립  -->
+	<update id="pointUpdate" parameterType="Member">
+		update member set point=#{point} where user_Id=#{userId}
+	</update>
+	
+	<resultMap id="bankResultMap" type="Bank">
+		<id property="bankNo" column="BANK_NO"/>
+		<result property="bankName" column="BANK_NAME"/>
+	</resultMap>
+	
+	<select id="selectBkList" resultMap="bankResultMap">
+		SELECT *
+		FROM BANK
+	</select>
+	
+	<insert id="insertCard" parameterType="Payment">
+		INSERT INTO PAYMENT VALUES
+		(SEQ_PAYMENT.NEXTVAL, #{userId}, #{cardNo},
+		 #{payCvc}, #{payExpiry}, #{payName}, #{bNo})
+	</insert>
+	
+	<update id="updatePoint" parameterType="Payment">
+		UPDATE MEMBER
+		SET POINT = POINT + #{pointAmount}
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	
+	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Payment">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<!--출석할때마다 1500포인트적립  -->
 	<select id="getMemberPoint" parameterType="Member" resultMap="memberResultSet">
 		select * from member 
 		where user_Id=#{userId}
 	</select>
-	
-	<update id="pointUpdate" parameterType="Member">
-		update member set point=#{point} where user_Id=#{userId}
-	</update>
 	
 	<!-- 회원 목록 -->
 	<select id="selectUserListCount" resultType="_int">
@@ -87,5 +116,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE STATUS='Y'
 		ORDER BY USER_ID DESC
 	</select>
+	
+	
+
 	
 </mapper>

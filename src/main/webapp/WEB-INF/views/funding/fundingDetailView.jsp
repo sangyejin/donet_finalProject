@@ -277,6 +277,8 @@
 	<fmt:parseNumber value="${closeD.time / (1000*60*60*24)}"
 		integerOnly="true" var="endDate" />
 
+	<!-- 목표 달성 퍼센트 -->
+	<fmt:formatNumber var="goalPersent" value="${funding.raised/funding.goal*100}" pattern="0"/>
 	<div id="wrap">
 		<div id="div-container">
 			<div id="idx_top">
@@ -305,17 +307,18 @@
 						</p>
 
 						<p>
-							달성률 <span id="goalPersent" name="goalPersent">${funding.raised/funding.goal*100}</span>%
+							
+							달성률 <span id="goalPersent" name="goalPersent">${goalPersent }</span>%
 						</p>
 					</div>
 
 					<div id="info">
 						<div class="progress">
 							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="${funding.raised/funding.goal*100}"
+								aria-valuenow="${goalPersent }"
 								aria-valuemin="0" aria-valuemax="100"
-								style="width: ${funding.raised/funding.goal*100}%">
-								${funding.raised/funding.goal*100}</div>
+								style="width: ${goalPersent }%">
+								${goalPersent }</div>
 						</div>
 					</div>
 					<div class="data">

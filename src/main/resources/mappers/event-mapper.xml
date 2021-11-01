@@ -16,10 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<resultMap id="eventAttachResultMap" type="Attachment">
 		<id column="EV_AT_FILENO" property="fileNo" />
-		<result column="EV_AT_ORIGN" property="originName" />
+		<result column="EV_AT_REF_NO" property="refEventNo" />
+		<result column="EV_AT_ORIGIN" property="originName" />
 		<result column="EV_AT_NEWNAME" property="changeName" />
 		<result column="EV_AT_LOCATION" property="fileLocation" />
-		<result column="EV_AT_REF_NO" property="refEventNo" />
 	</resultMap>
 	<resultMap id="eventReplyResultMap" type="EventReply">
 		<id column="EV_REPLY_NO" property="eventReplyNo" />
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="EV_REPLY_DATE" property="eventReplyDate" />
 	</resultMap>
 
-
+	<!-- Event -->
 	<select id="selectEventListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM EVENT
@@ -57,32 +57,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY EVENT_NO DESC
 	</select>
 
-	<select id="selectEvent" parameterType="_int" resultMap="eventResultMap">
-    	SELECT *
-    	FROM EVENT
-    	WHERE EVENT_NO=#{eno} AND EVENT_STATUS = 'Y'
-   </select>
-   
-   <select id="selectEventAttach" parameterType="_int" resultMap="eventAttachResultMap">
-   		SELECT *
-    	FROM EVENT_ATTACHMENT
-    	WHERE EV_AT_REF_NO=#{eno}
-   </select>
-   
    <insert id="insertEvent" parameterType="Event">
    		INSERT INTO EVENT
    		VALUES(SEQ_EV.NEXTVAL, #{eventTitle}, #{eventContent},#{eventOrigin}, #{eventChange}, #{eventStart}, #{eventLast}, DEFAULT)
    </insert>
    
-   <insert id="insertEventAttach" parameterType="java.util.List" >
-   		INSERT INTO EVENT_ATTACHMENT (EV_AT_FILENO, EV_AT_ORIGN, EV_AT_NEWNAME, EV_AT_LOCATION, EV_AT_STATUS, EV_AT_REF_NO )
-   		SELECT SEQ_EV_ATTA.NEXTVAL, A.* 
-   		FROM (
-   		<foreach collection="list" item="item" separator=" UNION ALL ">
-   		 #{item.originName}, #{item.changeName}, #{item.fileLocation}, #{item.refEventNo} FROM DUAL
-   		</foreach>)	A
-   </insert>
-   
+	<select id="selectEvent" parameterType="_int" resultMap="eventResultMap">
+    	SELECT *
+    	FROM EVENT
+    	WHERE EVENT_NO=#{eno} AND EVENT_STATUS = 'Y'
+   </select>
+    
    <update id="deleteEvent" parameterType="_int">
    		UPDATE EVENT
    		SET EVENT_STATUS = 'N'
@@ -96,6 +81,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EVENT_NO=#{eventNo}
 	</update>
 	
+   <!-- attachment -->
+   <select id="selectEventAttach" parameterType="_int" resultMap="eventAttachResultMap">
+   		SELECT *
+    	FROM EVENT_ATTACHMENT
+    	WHERE EV_AT_REF_NO=#{eno}
+   </select>
+   
+   <insert id="insertEventAttach" parameterType="java.util.List" >
+   		insert into EVENT_ATTACHMENT(EV_AT_FILENO, EV_AT_REF_NO, EV_AT_ORIGIN, EV_AT_NEWNAME, EV_AT_LOCATION )
+   		SELECT SEQ_EV_ATTA.NEXTVAL, SEQ_EV.CURRVAL, A.* 
+   		FROM (<foreach collection="list" item="item" separator=" UNION ALL ">
+   		 SELECT #{item.originName}, #{item.changeName}, #{item.fileLocation} from DUAL
+   		</foreach>)	A
+   </insert>
+  
+	
+	<!-- Reply -->
 	<insert id="insertReply" parameterType="EventReply">
 		INSERT INTO EVENT_REPLY
 		VALUES (SEQ_EV_REPLY.NEXTVAL, #{refEventNo}, #{eventReplyWriter}, #{eventReplyContent}, DEFAULT, SYSDATE)

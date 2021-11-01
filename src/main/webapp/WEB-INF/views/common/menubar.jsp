@@ -9,10 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Song+Myung&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
-     -->
+   
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -29,20 +26,12 @@
 	
 	 
 <style>
-/*
-body{
-    background-color: rgb(248,250,244);
-}*/
 
 *{
-   /* font-family: 'Gugi', cursive;*/
-   /*font-family: 'Song Myung', serif;*/
-   /* font-family: 'Nanum Gothic Coding', monospace; */
 	font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;
-
 }
 
 #outline{
@@ -174,11 +163,11 @@ height : 30px;
                 </li>
                 <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
                     <ul class="arrow_box">
-                        <li><a href="global">지구촌</a></li>
-                        <li><a href="environment">환경</a></li>
-                        <li><a href="animal">동물</a></li>
-                        <li><a href="child">아동/청소년</a></li>
-                        <li><a href="vulnerable">취약계층</a></li>
+                        <li><a href="global?suCategoryNo=1">지구촌</a></li>
+                        <li><a href="environment?suCategoryNo=2">환경</a></li>
+                        <li><a href="animal?suCategoryNo=3">동물</a></li>
+                        <li><a href="child?suCategoryNo=4">아동/청소년</a></li>
+                        <li><a href="vulnerable?suCategoryNo=5">취약계층</a></li>
                     </ul> 
                 </li>
                 <li class="greenfont" id="3"><a>이벤트</a>
@@ -188,14 +177,8 @@ height : 30px;
                         
                     </ul> 
                 </li>
-                <li class="greenfont" id="4"><a>펀딩 프로젝트</a>
-                  <ul class="arrow_box">
-                        <li><a>출판</a></li>
-                        <li><a>게임/취미</a></li>
-                        <li><a>뷰티</a></li>
-                        <li><a>패션/잡화</a></li>
-                        <li><a>소셜/컨설팅</a></li>
-                    </ul> 
+                <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
+                
                 </li>
                 <li class="greenfont" id="5"><a>고객지원</a>
                     <ul class="arrow_box">
@@ -206,7 +189,7 @@ height : 30px;
                 </li>
                 <li class="greenfont" id="6"><a>커뮤니티</a>
                     <ul class="arrow_box"> 
-                        <li><a>선행활동</a></li>
+                        <li><a href="list.vo">선행활동</a></li>
                         <li><a>?</a></li>
                     </ul> 
                 </li>                
@@ -216,21 +199,6 @@ height : 30px;
 			</ul>
             </div>
     </div>
-    <!--
-    맨 위로 돌아가기 아이디어
-
-    <a href="#menu">메뉴로 돌아가기</a>
-    <span>gday</span>
-    span{ 
-        background-color: blue;
-        width: 100px;
-        height : 100px; /*스팬은 이게 안먹어서 디스플레이 먹여줘야 크기 조정이 된다*/
-        /* position  : absolute;*/
-        position : fixed;
-        top : 100px;
-        left : 100px;
-    }   
-    -->
     
      <!-- 로그인 클릭 시 뜨는 모달  -->
     <!-- <div class="modal fade" id="loginModal">
@@ -260,6 +228,13 @@ height : 30px;
             </div>
         </div>
     </div> -->
+    
+    <script>
+    
+    	$("#logo").on('click', function(){
+    		location.href="/donet"
+    	})
+    </script>
     
 </body>
 </html>

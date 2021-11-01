@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.notice.model.service.NoticeService;
+import com.pongsung.donet.notice.model.vo.Ask;
 import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
@@ -34,8 +37,9 @@ public class NoticeController {
 	// main list
 	@RequestMapping("list.no")
 	public String selectNoticeList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
-
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+		
 		int listCount = NoService.selectNoticeListCount(null);
 		System.out.println(listCount);
 
@@ -241,11 +245,6 @@ public class NoticeController {
 		no.setNoticeContent(noticeContent);
 
 		if (!file.getOriginalFilename().equals("")) {
-			/*
-			 * if (no.getNoticeNew()() != null) { // 기존파일 존재, 새 파일 존재
-			 * deleteFile(no.getNoticeNew(), request); }
-			 */
-
 			String changeName = saveFile(file, request);
 
 			no.setNoticeOrigin(file.getOriginalFilename());
@@ -379,5 +378,119 @@ public class NoticeController {
 
 		return "redirect:list.faq";
 	}
+	
+	/******************************************************************************************************************/
+	
+	// main list
+		@RequestMapping("list.one")
+		public String selectOneList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+				,Model model
+				,HttpServletRequest request) {
+			
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			System.out.println("loginUser : " + loginUser);
+			System.out.println("loginUser.getUserRole() : " + loginUser.getUserRole());
 
+			
+			int listCount = NoService.selectOneListCount(loginUser);
+
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+
+			ArrayList<Ask> list = NoService.selectOneList(pi, loginUser);
+			System.out.println("list : " + list);
+			System.out.println("listCount : " + listCount);
+
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+
+			return "customerSupport/oneOone/faceToFace";
+		}
+		
+	//insert
+		@RequestMapping("goAskForm.one")
+		public String goAskForm() {
+			return "customerSupport/oneOone/addAsk";
+		}
+		
+		@RequestMapping("insert.one")
+		public String insertOne(@RequestParam(name = "askTitle") String askTitle,
+				@RequestParam(name = "searchtype") int oneType,
+				@RequestParam(name = "askContent") String askContent, 
+				HttpServletRequest request, Model model,
+				@RequestParam(name = "askOriginImg", required = false) MultipartFile file) {
+
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+
+			System.out.println("askTitle : " + askTitle + ", oneType : " + oneType + " , askContent : "+ askContent + " loginUser.getUserId() : " + loginUser.getUserId());
+			System.out.println("file.getOriginalFilename() : " + file.getOriginalFilename());
+
+			Ask ask = new Ask();
+			
+			/*set*/
+			
+			ask.setAskTitle(askTitle);
+			ask.setAskTypeNo(oneType);
+			ask.setAskContent(askContent);
+			ask.setAskId(loginUser.getUserId());
+			
+			if (!file.getOriginalFilename().equals("")) {
+				String changeName = saveFile(file, request);
+				if (changeName != null) {
+					ask.setAskOriginImg(file.getOriginalFilename());
+					ask.setAskNewImg(changeName);
+				}
+
+			}
+			
+			/*set*/
+			
+			NoService.insertOne(ask);
+
+			return "redirect:list.one";
+		}
+
+		// update
+		@RequestMapping("goUpdateForm.one")
+		public ModelAndView updateOne(int askNo, ModelAndView mv) {
+			System.out.println("askNo : " + askNo);
+			
+			Ask ask = NoService.selectThisAsk(askNo);
+			System.out.println("*** ask : " + ask);
+
+			mv.addObject("ask", ask);
+			mv.setViewName("customerSupport/oneOone/updateAsk");
+
+			return mv;
+		}
+		
+		@RequestMapping("update.one")
+		public String updateOne( @RequestParam(name = "askNo") int askNo,
+				HttpServletRequest request, Model model,
+				@RequestParam(name = "answered", required = false) String answered) {
+			
+			System.out.println("askNo : " + askNo + " , answered : "+ answered);
+			Ask ask = new Ask();
+			
+			ask.setAskNo(askNo);
+			ask.setAnswered(answered);
+			
+			NoService.updateOne(ask);
+
+			return "redirect:list.one";
+		}
+		
+		// delete
+		@RequestMapping("delete.one")
+		public String deleteOne(int askNo, HttpServletRequest request) {
+			NoService.deleteOne(askNo);
+
+			return "redirect:list.one";
+		}
+		
+		
 }

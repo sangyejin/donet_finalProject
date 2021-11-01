@@ -1,9 +1,16 @@
 package com.pongsung.donet.donation.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -11,20 +18,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.GsonBuilder;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
+import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.donation.model.service.DonationService;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
+import com.pongsung.donet.donation.model.vo.SupportUsePlanList;
+import com.pongsung.donet.funding.model.vo.FundingImage;
+import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
@@ -64,17 +80,16 @@ public class DonationController {
 		Support s = donationService.selectDonation(suNo);
 		Sponsor p = donationService.selectSponsor(suNo);
 		List<SupportUsePlan> u = donationService.selectSupportUsePlan(suNo);
-		List<SupporComment> c = donationService.selectSupporComment(suNo);
 		List<Sponsor> pList = donationService.selectSponsorList(suNo);
+		List<SupportImage> ImgList = donationService.selectImageList(suNo);
 		
 		mv.addObject("s", s).setViewName("donation/donationDetail");
 		mv.addObject("p", p).setViewName("donation/donationDetail");
 		mv.addObject("u", u).setViewName("donation/donationDetail");
-		mv.addObject("c", c).setViewName("donation/donationDetail");
 		mv.addObject("pList", pList).setViewName("donation/donationDetail");
+		mv.addObject("ImgList", ImgList).setViewName("donation/donationDetail");
 
-		System.out.println("c "+c);
-		System.out.println("pList "+pList);
+		System.out.println("ImgList "+ImgList);
 		return mv;
 	}
 
@@ -84,34 +99,119 @@ public class DonationController {
 		return "donation/registration";
 	}
 	
-/*	@RequestMapping("global")
-	public String global(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model, int categoryNo) {
-		int listCount = donationService.selectGolbalListCount(categoryNo);
-		System.out.println("listCount"+listCount);
+	@RequestMapping("select.ca")
+	public String global(int suCategoryNo, Model model) {
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
-		System.out.println("pi"+pi);
-		
-		List<Support> list = donationService.selectGlobalList(pi,categoryNo);
-		System.out.println("support"+list);
+		List<Support> list = donationService.selectCategoryList(suCategoryNo);
+		System.out.println("list"+list);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
 		
 		System.out.println("model "+model);		
 		return "donation/global";
-	}*/
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "list.re", produces = "application/json; charset=utf-8")
+	public String selectReplyList(int suNo) {
+
+		ArrayList<SupporComment> commentList = donationService.selectReplyList(suNo);
+		System.out.println("commentList "+commentList);
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(commentList);
+	}
 	
 	@ResponseBody
 	@RequestMapping("insert.re")
 	public String insertReply(SupporComment sc) {
 		int result = donationService.insertReply(sc);
-		System.out.println(result);
-		System.out.println(sc);
 		
 		return String.valueOf(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="delete.re/{replyNo}")
+	public String deleteReply(@PathVariable("replyNo")int replyNo) {
+		int result = donationService.deleteReply(replyNo);
+		System.out.println(replyNo);
+		System.out.println(result);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="update.re/{suNo}/{replyNo}")
+	public String updateReply(@PathVariable("suNo")int suNo, @PathVariable("replyNo")int replyNo, SupporComment sc) {
+		sc.setReplyNo(replyNo);
+		int result = donationService.updateReply(sc);
+		return String.valueOf(result);
+	}
+
+	@RequestMapping("insert.bo")
+	public String insertBoard(Support support, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
+			,@ModelAttribute SupportUsePlanList supportUsePlan, Model model)
+			throws Exception {
+		support.setSuWriter(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
+		List<SupportUsePlan> list= supportUsePlan.getSupportUsePlan();
+		System.out.println("support "+support);
+		System.out.println("fundingGoods "+ list);
+		
+		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
+		List<SupportImage> imgList = new ArrayList<>(); //추가 img 저장하는 리스트
+		
+		Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
+		for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
+			
+			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
+			
+			
+			//파일을 저장, 파일이름 변경
+			
+			for(int i=0; i<fileList.size();i++) {
+				String fileName=fileList.get(i).getOriginalFilename();
+				if(fileName!="") { 
+					String originName = fileList.get(i).getOriginalFilename();
+					String changeName = saveFile(fileList.get(i),request);
+					System.out.println("change::"+changeName);
+					if( (entry.getKey()).equals("thumbFile")) { //현재 tag가 대표사진이면 funding에 setting
+						support.setThumbnailOrigin(originName);
+						support.setThumbnailChange(changeName);
+					}
+					else { //아니면 추가사진
+						SupportImage img=new SupportImage();
+						img.setImgChangeName(changeName);
+						img.setImgOriginName(originName); 
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						imgList.add(img);
+					}
+				}
+			}
+			
+		}
+		
+		
+		donationService.insertBoard(support,imgList,list);
+		
+		return "redirect:/list.do";
+	}
+		private String saveFile(MultipartFile file, HttpServletRequest request) {
+			String resources = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = resources+"/upload_files/donation/";
+
+			System.out.println("savePath"+savePath);
+			String originName = file.getOriginalFilename();
+			String ext = originName.substring(originName.lastIndexOf("."));
+			String changeName =System.currentTimeMillis() + "_" + (int)( Math.random() * 10000000) + ext;
+			System.out.println("changeName"+changeName);
+			try {
+				file.transferTo(new File(savePath+changeName));
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new CommException("파일 업로드 실패");
+			}
+			return changeName;
+		}
 	
 
 }

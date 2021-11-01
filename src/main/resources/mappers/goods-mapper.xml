@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goodsMapper">
+	
+	<!-- 구호물품 카테고리 -->
+	<resultMap id="goodsCategoryResultSet" type="GoodsCategory">
+		<id property="goodsCategoryNo" column="GOODS_CATEGORY_NO" />
+		<result property="goodsCategoryName" column="GOODS_CATEGORY_NAME" />
+	</resultMap>
+	
+	<!-- 구호물품 -->
+	<resultMap id="goodsResultSet" type="Goods">
+		<id property="goodsNo" column="GOODS_NO" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsPrice" column="GOODS_PRICE" />
+		<result property="goodsCategoryNo" column="GOODS_CATEGORY_NO" />
+		<result property="goodsCategoryName" column="GOODS_CATEGORY_NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="thumbnailOriginName" column="THUMBNAIL_ORIGIN_NAME" />
+		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
+		<result property="hits" column="HITS" />
+		<result property="status" column="STATUS" />
+		<result property="numberSupporter" column="NUMBER_SUPPORTER" />
+		<result property="createDate" column="CREATE_DATE" />
+	</resultMap>
+
+	<!-- 후원처 -->
+	<resultMap id="beneficiaryResultSet" type="Beneficiary">
+		<id property="beNo" column="BE_NO" />
+		<result property="beName" column="BE_NAME" />
+		<result property="beTel" column="BE_TEL" />
+		<result property="beAddress" column="BE_ADDRESS" />
+		<result property="beEmail" column="BE_EMAIL" />
+		<result property="beRegistration" column="BE_REGISTRATION" />
+	</resultMap>
+	
+
+	<select id="selectGoodsListCount" parameterType="FilterOrder" resultType="_int">
+		select COUNT(*)
+		from GOODS
+		where STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND GOODS_CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND GOODS_NAME LIKE '%'||#{search}||'%'
+		</if>
+	</select>
+	
+	<select id="selectGoodsCategoryList" resultMap="goodsCategoryResultSet" >
+		select GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME
+		from GOODS_CATEGORY
+	</select>
+	
+	<select id="selectGoodsList"  parameterType="FilterOrder" resultMap="goodsResultSet">
+		select GOODS_NO, GOODS_NAME, GOODS_PRICE, A.GOODS_CATEGORY_NO, CONTENT
+		,THUMBNAIL_ORIGIN_NAME, THUMBNAIL_CHANGE_NAME, HITS, B.GOODS_CATEGORY_NAME,NUMBER_SUPPORTER
+		from GOODS A
+		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO = B.GOODS_CATEGORY_NO
+		where A.STATUS='Y'
+		<if test="categoryNo != 0 ">
+			AND A.GOODS_CATEGORY_NO = #{categoryNo}
+		</if>
+		<if test="search != null ">
+			AND GOODS_NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="order != null ">
+			ORDER BY ${order}
+		</if>
+	</select>
+	
+	<select id="selectGoods" parameterType="_int" resultMap="goodsResultSet">
+		select GOODS_NO,GOODS_NAME,GOODS_PRICE
+				,A.GOODS_CATEGORY_NO,GOODS_CATEGORY_NAME,CONTENT,THUMBNAIL_ORIGIN_NAME
+				,THUMBNAIL_CHANGE_NAME,HITS,STATUS,NUMBER_SUPPORTER,CREATE_DATE
+		from GOODS A
+		join GOODS_CATEGORY B on A.GOODS_CATEGORY_NO=B.GOODS_CATEGORY_NO
+		where GOODS_NO=#{goodsNo}
+		and STATUS='Y'
+	</select>
+	
+	<update id="updateGoodsHitsCount" parameterType="_int">
+		UPDATE GOODS 
+		SET HITS=HITS+1
+		WHERE GOODS_NO=#{goodsNo}
+	</update>
+	
+	<delete id="deleteGoods" parameterType="_int">
+		UPDATE GOODS 
+		SET STATUS='N'
+		WHERE GOODS_NO=#{goodsNo}
+	</delete>
+	
+	<select id="selectBeneficiaryList" resultMap="beneficiaryResultSet">
+		select BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION
+		from BENEFICIARY
+	</select>
+	
+	<insert id="insertGoods" parameterType="Goods">
+		<selectKey keyProperty="goodsNo" resultType="_int" order="AFTER">
+			select SEQ_GOODS.currval from dual
+		</selectKey>
+		insert into GOODS(GOODS_NO,GOODS_NAME,GOODS_PRICE,GOODS_CATEGORY_NO,CONTENT
+		,THUMBNAIL_ORIGIN_NAME,THUMBNAIL_CHANGE_NAME,HITS,STATUS,NUMBER_SUPPORTER,CREATE_DATE)
+		values(	
+			SEQ_GOODS.nextval,#{goodsName},#{goodsPrice},#{goodsCategoryNo},#{content}
+			,#{thumbnailOriginName},#{thumbnailChangeName},default,default,default,sysdate )
+	</insert>
+	
+	<insert id="insertRequiredGoods" parameterType="java.util.List">
+		insert into REQUIRED_GOODS(GOODS_NO,BENEFICIARY_NO)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.goodsNo},#{item.beneficiaryNo} from DUAL
+		</foreach>
+	</insert>
+	
+	<update id="updateGoods" parameterType="Goods">
+		UPDATE GOODS 
+		SET GOODS_NAME=#{goodsName}
+		,GOODS_CATEGORY_NO=#{goodsCategoryNo}
+		,CONTENT=#{content}
+		<if test="thumbnailOriginName != null">
+			,THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
+			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}
+		</if>
+		WHERE GOODS_NO=#{goodsNo}
+	</update>
+	
+		<insert id="insertGoodsPurchase" parameterType="GoodsPurchase">
+		insert into GOODS_PURCHASE(PURCHASE_NO,USER_ID,GOODS_NO
+									,BENEFICIARY_NO,PURCHASE_PRICE,PURCHASE_AMOUNT,PURCHASE_DATE)
+		values(
+			NVL((SELECT MAX(PURCHASE_NO) FROM GOODS_PURCHASE WHERE USER_ID=#{userId}),0)+1,#{userId},#{goodsNo}
+			,#{beneficiaryNo},#{purchasePrice},#{purchaseAmount},sysdate
+		)
+
+	</insert>
+</mapper>
