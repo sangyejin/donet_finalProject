@@ -1,5 +1,7 @@
 package com.pongsung.donet.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -7,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.member.model.dao.MemberDao;
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -119,6 +123,35 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return userInfo;
+	}
+
+
+	@Override
+	public ArrayList<Bank> selectBkList() {
+		return memberDao.selectBkList(sqlSession);
+
+	}
+
+
+	@Override
+	public void insertCard(Payment payment) {
+		int result = memberDao.insertCard(sqlSession, payment);
+
+		if (result > 0) {
+			System.out.println("결제 내역 인서트 완료, 포인트 업데이트 시작");
+			
+			int updateResult = memberDao.updatePoint(sqlSession, payment);
+			
+			if(updateResult < 0) {
+				throw new CommException("포인트 업데이트 실패");
+			}
+			
+			
+		}else {
+			throw new CommException("결제 내역 추가 실패");
+
+		}
+				
 	}
 
 }

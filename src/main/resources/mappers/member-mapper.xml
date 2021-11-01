@@ -64,4 +64,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{userId} and user_name=#{userName} and email=#{email} and status='Y'
 	</select>
 	
+	
+	<resultMap id="bankResultMap" type="Bank">
+		<id property="bankNo" column="BANK_NO"/>
+		<result property="bankName" column="BANK_NAME"/>
+	</resultMap>
+	
+	<select id="selectBkList" resultMap="bankResultMap">
+		SELECT *
+		FROM BANK
+	</select>
+	
+	<insert id="insertCard" parameterType="Payment">
+		INSERT INTO PAYMENT VALUES
+		(SEQ_PAYMENT.NEXTVAL, #{userId}, #{cardNo},
+		 #{payCvc}, #{payExpiry}, #{payName}, #{bNo})
+	</insert>
+	
+	<update id="updatePoint" parameterType="Payment">
+		UPDATE MEMBER
+		SET POINT = POINT + #{pointAmount}
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
