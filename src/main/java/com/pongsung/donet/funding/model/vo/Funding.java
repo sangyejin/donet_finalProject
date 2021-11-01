@@ -32,5 +32,6 @@ public class Funding {
 	private String thumbnailChangeName;
 	private int numberSupporter;
 	private Date fpWriteDate;
+	private int dDay;
 	
 }
