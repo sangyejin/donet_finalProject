@@ -17,6 +17,8 @@
 		<typeAlias type="com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions" alias="FAQ" />
 		
 		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.pongsung.donet.attendance.model.vo.Attendance" alias="Attendance" />
+		
 		
 		<typeAlias type="com.pongsung.donet.funding.model.vo.Funding" alias="Funding" />
 		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingCategory" alias="FundingCategory" />
@@ -41,7 +43,8 @@
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/funding-mapper.xml" />
 		<mapper resource="/mappers/support-mapper.xml" />
-
+		<mapper resource="/mappers/attendance-mapper.xml" />
+		
 
 	</mappers>
 

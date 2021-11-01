@@ -1,8 +1,12 @@
 package com.pongsung.donet.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.member.model.vo.Member;
 
 @Repository
@@ -62,6 +66,20 @@ public class MemberDao {
 		System.out.println("맴버 다오 매버 m 비밀번호 : " + m.getUserPwd());
 		
 		return sqlSession.selectOne("memberMapper.findUserPwdMember", m);
+	}
+
+	public int selectUserListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectUserListCount");
+	}
+
+	public ArrayList<Member> selectUserList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectUserList", null, rowBounds);
 	}
 
 }

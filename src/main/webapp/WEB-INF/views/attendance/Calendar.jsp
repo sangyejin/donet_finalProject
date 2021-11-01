@@ -12,16 +12,7 @@
  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'rel='stylesheet'/>
  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
 	
- <link href='/fullcalendar/core/main.css' rel='stylesheet' />
- <link href='/fullcalendar/daygrid/main.css' rel='stylesheet' />
- <link href='/fullcalendar/timegrid/main.css' rel='stylesheet' />
 
- <script src='/fullcalendar/core/main.js'></script>
- <script src='/fullcalendar/daygrid/main.js'></script>
- <script src='/fullcalendar/interaction/main.min.js'></script>
- <script src='/fullcalendar/timegrid/main.min.js'></script>
- <script src='/fullcalendar/core/locales/ko.js'></script>	
-	
 </head>
 
 
@@ -42,19 +33,19 @@
 	<div id="external-events">
 	
 		<c:set value="y" var="y"/>
-		<c:if test="${mcheck ne y }">
-    	<button id="ckbtn11" type="button" class="btnCheck1" name="memCheck" value="y" style="display: inline">출석체크</button>
+		<c:if test="${attCheck ne 'y' }">
+    	<button id="ckbtn11" type="button" class="btnCheck1" name="attCheck" value="y" style="display: inline">출석체크</button>
  		</c:if>
- 		<c:if test="${mcheck eq y }">
+ 		<c:if test="${attCheck eq 'y' }">
     	<button id="ckbtn22" type="button" class="btnCheck2" style="display: inline">출석완료</button>
 		</c:if>
 		
-	    <input type="hidden" id="memNum" class="memNumber" name="memNum" value="${member.userId}">
+	    <input type="hidden" id="userId" class="memberUserId" name="userId" value="${loginUser.userId}">
 	    	
 	    <!--1.출석체크 -->	
 		<!--스크립트에서 배열에 넣기위해 컨트롤에서 받은 출석날짜값이있는 ar을 반복문을돌림.-->
 	    <c:forEach items="${getCheck}" var="gcheck">
-	    	<input type="hidden" value="${gcheck.checkDate}" class="checkDate">
+	    	<input type="hidden" value="${gcheck.attDate}" class="attDate">
 	    </c:forEach>
 	    <!--  -->
 	 
@@ -85,9 +76,9 @@
 			url: "checkInsert",
 			type: "POST",
 			data:{
-				memNum: $(".memNumber").val(),
-				memCheck: $(".btnCheck1").val(),
-				checkDate: currentDate
+				userId: $(".memberUserId").val(),
+				attCheck: $(".btnCheck1").val(),
+				attDate: currentDate
 			},
 			success: function(data){
 				alert(data);
@@ -117,7 +108,9 @@
 	        };
 	      }
 	    });
-		
+	    
+	    /*2.출석체크 */
+	    //db에있는 출석날짜를 가져와서 화면에 출력하는 폼에 넣은 후 check라는 배열에 넣음(push).
 	    var check = [];
 		$(".attDate").each(function(){
 			var dateC = {};
@@ -125,7 +118,7 @@
 			dateC.end = $(this).val();
 			dateC.color="";
 			dateC.className="test";
-			
+			dateC.title= "출석완료";
 			check.push(dateC);
 			
 		});

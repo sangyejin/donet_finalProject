@@ -64,4 +64,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{userId} and user_name=#{userName} and email=#{email} and status='Y'
 	</select>
 	
+	<!--출석할때마다 10포인트적립  -->
+	<select id="getMemberPoint" parameterType="Member" resultMap="memberResultSet">
+		select * from member 
+		where user_Id=#{userId}
+	</select>
+	
+	<update id="pointUpdate" parameterType="Member">
+		update member set point=#{point} where user_Id=#{userId}
+	</update>
+	
+	<!-- 회원 목록 -->
+	<select id="selectUserListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE STATUS='Y' OR STATUS='N'
+	</select>
+	
+	<select id="selectUserList" resultMap = "memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE STATUS='Y'
+		ORDER BY USER_ID DESC
+	</select>
+	
 </mapper>
