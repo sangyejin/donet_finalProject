@@ -1,5 +1,7 @@
 package com.pongsung.donet.member.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +19,9 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -220,8 +224,53 @@ public class MemberController {
 		
 		//point charging
 		@RequestMapping("point.me")
-		public String chargeMyPoint() {
+		public String chargeMyPoint(Model model) {
+			ArrayList<Bank> bkList = memberService.selectBkList();
+			
+			model.addAttribute("bkList", bkList);
+			
 			return "member/point/payment";
+		}
+		
+		@RequestMapping("insertCard.me")
+		public String insertCard(@RequestParam(name = "cardNumber") String cardNumber,
+								@RequestParam(name = "expireM") String expireM,
+								@RequestParam(name = "expireY") String expireY,
+								@RequestParam(name = "cvcNum") int cvcNum,
+								@RequestParam(name = "cardBankName") int cardBankName,
+								@RequestParam(name = "surname") String surname,
+								@RequestParam(name = "fstname") String fstname,
+								@RequestParam(name = "amount") int amount,
+								HttpServletRequest request, Model model
+								) {
+			
+			System.out.println("카드결제 인서트 : 컨트롤러");
+			System.out.println("cardNumber : " + cardNumber + ", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
+			
+			Payment payment = new Payment();
+			
+			//로그인 유저 가져오기
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			String expireDate = expireM+expireY; //유효기간
+			String fullName = surname+fstname;
+			
+			payment.setUserId(loginUser.getUserId());
+			payment.setCardNo(cardNumber);
+			payment.setPayExpiry(Integer.parseInt(expireDate));
+			payment.setPayCvc(cvcNum);
+			payment.setBNo(cardBankName);
+			payment.setPayName(fullName);
+			payment.setPointAmount(amount);
+			
+			memberService.insertCard(payment);
+			
+			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
+			
+			return "redirect:/";
+			
+			
 		}
 		
 		

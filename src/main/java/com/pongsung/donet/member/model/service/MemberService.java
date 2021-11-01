@@ -1,8 +1,12 @@
 package com.pongsung.donet.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 public interface MemberService {
 	
@@ -19,5 +23,9 @@ public interface MemberService {
 	Member findUserIdMember(Member m);
 
 	Member findUserPwdMember(BCryptPasswordEncoder bCryptPasswordEncoder, Member m);
+
+	ArrayList<Bank> selectBkList();
+
+	void insertCard(Payment payment);
 
 }

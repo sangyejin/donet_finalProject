@@ -245,11 +245,6 @@ public class NoticeController {
 		no.setNoticeContent(noticeContent);
 
 		if (!file.getOriginalFilename().equals("")) {
-			/*
-			 * if (no.getNoticeNew()() != null) { // 기존파일 존재, 새 파일 존재
-			 * deleteFile(no.getNoticeNew(), request); }
-			 */
-
 			String changeName = saveFile(file, request);
 
 			no.setNoticeOrigin(file.getOriginalFilename());

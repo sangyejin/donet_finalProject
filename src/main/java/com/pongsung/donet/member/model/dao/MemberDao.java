@@ -1,9 +1,13 @@
 package com.pongsung.donet.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.member.model.vo.Payment;
 
 @Repository
 public class MemberDao {
@@ -62,6 +66,20 @@ public class MemberDao {
 		System.out.println("맴버 다오 매버 m 비밀번호 : " + m.getUserPwd());
 		
 		return sqlSession.selectOne("memberMapper.findUserPwdMember", m);
+	}
+
+	public ArrayList<Bank> selectBkList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectBkList");
+
+	}
+
+	public int insertCard(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.insert("memberMapper.insertCard", payment);
+	}
+
+	public int updatePoint(SqlSessionTemplate sqlSession, Payment payment) {
+		return sqlSession.update("memberMapper.updatePoint", payment);
+		
 	}
 
 }
