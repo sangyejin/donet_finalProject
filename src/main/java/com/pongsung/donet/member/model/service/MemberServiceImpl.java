@@ -154,4 +154,10 @@ public class MemberServiceImpl implements MemberService {
 				
 	}
 
+
+	@Override
+	public Member selectThisUser(Payment payment) {
+		return memberDao.selectThisUser(sqlSession, payment);
+	}
+
 }

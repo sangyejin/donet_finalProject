@@ -65,6 +65,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	
+	
+	
+	
+	
 	<resultMap id="bankResultMap" type="Bank">
 		<id property="bankNo" column="BANK_NO"/>
 		<result property="bankName" column="BANK_NAME"/>
@@ -86,6 +91,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET POINT = POINT + #{pointAmount}
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	
+	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Payment">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+	</select>
+	
 	
 	
 	

@@ -227,6 +227,7 @@ public class MemberController {
 		public String chargeMyPoint(Model model) {
 			ArrayList<Bank> bkList = memberService.selectBkList();
 			
+			//데이터베이스 은행명 가져오기
 			model.addAttribute("bkList", bkList);
 			
 			return "member/point/payment";
@@ -254,7 +255,7 @@ public class MemberController {
 			Member loginUser = (Member) session.getAttribute("loginUser");
 			
 			String expireDate = expireM+expireY; //유효기간
-			String fullName = surname+fstname;
+			String fullName = surname+fstname; //이름
 			
 			payment.setUserId(loginUser.getUserId());
 			payment.setCardNo(cardNumber);
@@ -266,9 +267,19 @@ public class MemberController {
 			
 			memberService.insertCard(payment);
 			
+			//유저정보 새로 가져와서 넘겨주기
+			
+			Member thisUser = memberService.selectThisUser(payment);
+			
+			
+			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
+			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
+
+			model.addAttribute("loginUser", thisUser);
+			
 			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
 			
-			return "redirect:/";
+			return "redirect:/myPage.me";
 			
 			
 		}
