@@ -159,7 +159,23 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectThisUser(Payment payment) {
 		return memberDao.selectThisUser(sqlSession, payment);
 	}
-	
+
+
+	@Override
+	public Member selectThisUser(Member loginUser) {
+		return memberDao.selectThisUser(sqlSession, loginUser);
+	}
+
+
+	@Override
+	public void updatePoint(Member loginUser) {
+		int updateResult = memberDao.updatePointMember(sqlSession, loginUser);
+		
+		if(updateResult < 0) {
+			throw new CommException("포인트 업데이트 실패");
+		}
+		
+	}
 	
 	@Override
 	public int selectUserListCount() {
@@ -173,5 +189,5 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.selectUserList(sqlSession, pi);
 	}
-
+	
 }

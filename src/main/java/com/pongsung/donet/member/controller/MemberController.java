@@ -251,7 +251,7 @@ public class MemberController {
 								HttpServletRequest request, Model model
 								) {
 			
-			System.out.println("카드결제 인서트 : 컨트롤러");
+			System.out.println("카드결제 인서트 : 컨트롤러"); //결제내역 기록
 			System.out.println("cardNumber : " + cardNumber + ", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
 			
 			Payment payment = new Payment();
@@ -275,7 +275,7 @@ public class MemberController {
 			
 			//유저정보 새로 가져와서 넘겨주기
 			
-			Member thisUser = memberService.selectThisUser(payment);
+			Member thisUser = memberService.selectThisUser(loginUser);
 			
 			
 			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
@@ -289,6 +289,33 @@ public class MemberController {
 
 		}
 		
+
+		@RequestMapping("updatePoint.me")
+		public String updatePoint(@RequestParam(name = "amount") int amount, HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			//포인트 셋
+			loginUser.setPoint(amount);
+			
+			//포인트 업데이트
+			memberService.updatePoint(loginUser);
+			
+			//업데이트 된 정보로 받아오기
+			Member thisUser = memberService.selectThisUser(loginUser);
+			
+			
+			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
+			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
+
+			model.addAttribute("loginUser", thisUser);
+			
+			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
+			
+			return "redirect:/myPage.me";
+			
+		}
+
 		//회원 목록
 		@RequestMapping("userList.me")
 		public String selectUserList(@RequestParam(value="currentPage", required = false , defaultValue ="1") int currentPage, Model model) {

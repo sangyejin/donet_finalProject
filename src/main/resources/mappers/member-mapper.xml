@@ -91,13 +91,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Payment">
+	<select id="selectThisUser" resultMap="memberResultSet"  parameterType="Member">
 		SELECT *
 		FROM MEMBER
 		WHERE USER_ID = #{userId}
 	</select>
 	
-	<!--출석할때마다 1500포인트적립  -->
+	<update id="updatePointMember" parameterType="Member">
+		UPDATE MEMBER
+		SET POINT = POINT + #{point}
+		WHERE USER_ID = #{userId}
+	</update>
+	
+<!--출석할때마다 1500포인트적립  -->
 	<select id="getMemberPoint" parameterType="Member" resultMap="memberResultSet">
 		select * from member 
 		where user_Id=#{userId}
@@ -116,8 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE STATUS='Y'
 		ORDER BY USER_ID DESC
 	</select>
-	
-	
+
 
 	
 </mapper>

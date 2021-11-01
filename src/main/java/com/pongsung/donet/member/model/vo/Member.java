@@ -27,8 +27,7 @@ public class Member {
 	private String status; // 유저 상태
 	private Date enrollDate; // 유저 가입일
 	private Date modifyDate; // 유저 계정 수정일
-	private int point; // 유저 포인트
-	
+	private int point; // 유저 포인트	
 	
 	
 }

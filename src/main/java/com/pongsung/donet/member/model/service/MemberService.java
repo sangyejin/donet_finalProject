@@ -31,8 +31,12 @@ public interface MemberService {
 
 	Member selectThisUser(Payment payment);
 	
+	Member selectThisUser(Member loginUser);
+
+	void updatePoint(Member loginUser);
+	
 	int selectUserListCount();
 
 	ArrayList<Member> selectUserList(PageInfo pi);
-
+	
 }

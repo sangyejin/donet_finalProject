@@ -90,6 +90,15 @@ public class MemberDao {
 	
 	}
 	
+	public Member selectThisUser(SqlSessionTemplate sqlSession, Member loginUser) {
+		return sqlSession.selectOne("memberMapper.selectThisUser", loginUser);
+
+	}
+
+	public int updatePointMember(SqlSessionTemplate sqlSession, Member loginUser) {
+		return sqlSession.update("memberMapper.updatePointMember", loginUser);
+	}
+	
 	public int selectUserListCount(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.selectUserListCount");
@@ -103,6 +112,5 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectUserList", null, rowBounds);
 	}
-	
 
 }
