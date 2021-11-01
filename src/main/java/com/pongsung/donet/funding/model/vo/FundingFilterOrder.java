@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class FundingFilterOrder {
 	private int categoryNo;
+	private String period;
 	private String order;
 	private String search;
 }
