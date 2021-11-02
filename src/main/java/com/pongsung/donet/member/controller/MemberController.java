@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
 import com.pongsung.donet.member.model.vo.Bank;
@@ -68,7 +70,7 @@ public class MemberController {
 			return "redirect:/";
 		} 
 		
-		
+		// 회원 등록 페이지로 이동
 		@RequestMapping("enrollForm.me")
 		public String enrollForm() {
 			//logger.debug("====== START ========");
@@ -76,16 +78,18 @@ public class MemberController {
 			return "member/memberEnrollForm";
 		}
 		
+		// 마이 페이지로 이동
 		@RequestMapping("myPage.me")
 		public String myPage() {
 			return "member/myPage";
 		}
 		
-		// 출석 체크용 달력으로 가기
+		// 출석 체크용 달력으로 이동
 		@RequestMapping("calendar.me")
 		public String calendar() {
 			return "attendance/Calendar";
 		}
+		
 		
 		@RequestMapping("insert.me")
 		public String insertMember(@ModelAttribute Member m ,@RequestParam("post") String post,
@@ -222,6 +226,8 @@ public class MemberController {
 			
 		}
 		
+			
+
 		//point charging
 		@RequestMapping("point.me")
 		public String chargeMyPoint(Model model) {
@@ -280,10 +286,10 @@ public class MemberController {
 			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
 			
 			return "redirect:/myPage.me";
-			
-			
+
 		}
 		
+
 		@RequestMapping("updatePoint.me")
 		public String updatePoint(@RequestParam(name = "amount") int amount, HttpServletRequest request, Model model) {
 			HttpSession session = request.getSession();
@@ -309,6 +315,28 @@ public class MemberController {
 			return "redirect:/myPage.me";
 			
 		}
+
+		//회원 목록
+		@RequestMapping("userList.me")
+		public String selectUserList(@RequestParam(value="currentPage", required = false , defaultValue ="1") int currentPage, Model model) {
+			
+			int listCount = memberService.selectUserListCount();
+			System.out.println("userListCount : " + listCount );
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			
+			ArrayList<Member> list = memberService.selectUserList(pi);
+			System.out.println("list의 값 : " + list);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			return "member/memberUserList";
+		}
 		
+		// 후원 프로젝트 댓글로 이동
+		@RequestMapping("supportReply.me")
+			public String selectUserList() {
+			
+			return "member/supportReply";
+		}
 		
 }

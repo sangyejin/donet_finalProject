@@ -3,8 +3,6 @@ package com.pongsung.donet.notice.model.service;
 import java.util.ArrayList;
 
 import com.pongsung.donet.common.PageInfo;
-import com.pongsung.donet.member.model.vo.Member;
-import com.pongsung.donet.notice.model.vo.Ask;
 import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;

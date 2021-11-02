@@ -1,4 +1,4 @@
-package com.pongsung.donet.attendance.vo;
+package com.pongsung.donet.attendance.model.vo;
 
 import java.sql.Date;
 

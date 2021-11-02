@@ -41,8 +41,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap id="supportImageResultSet" type="SupportImage">
+		<id property="suNo" column="SU_NO" />
 		<id property="imgNo" column="IMG_NO" />
-		<result property="suNo" column="SU_NO" />
 		<result property="imgOriginName" column="IMG_ORIGIN_NAME" />
 		<result property="imgChangeName" column="IMG_CHANGE_NAME" />
 	</resultMap>
@@ -189,18 +189,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				THUMBNAILCHANGE,SU_CATEGORY,SU_SATUTS)
 		values
 		(	
-			seq_support.nextval, #{suTitle}, #{suWriter}, TO_DATE(#{suStart})
-			, TO_DATE(#{suLast}), DEAFULT, #{content}, #{target}
-			, TO_DATE(#{bstart}), TO_DATE(#{blast}), #{thumbnailOrigin}, #{thumbnailChange}
-			,#{categoryNo} ,DEFAULT
+			seq_support.nextval, #{suTitle}, #{suWriter}, #{suStart}
+			, #{suLast}, default, #{content}, #{target}
+			, #{bstart}, #{blast}, #{thumbnailOrigin}, #{thumbnailChange}
+			,#{categoryNo} ,default
 		)
 
 	</insert>
 		
 	<insert id="insertImgList" parameterType="java.util.List">
-		insert into SUPPORT_IMAGE(IMG_NO,SU_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
+		insert into SUPPORT_IMAGE(SU_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
 		<foreach collection="list" item="item" separator=" UNION ALL ">
-			select #{item.imgNo},#{item.suNo},#{item.imgOriginName},#{item.imgChangeName} from DUAL
+			select #{item.suNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName} from DUAL
 		</foreach>
 	</insert>
 		

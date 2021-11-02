@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.member.model.dao.MemberDao;
 import com.pongsung.donet.member.model.vo.Bank;
@@ -125,7 +126,6 @@ public class MemberServiceImpl implements MemberService {
 		return userInfo;
 	}
 
-
 	@Override
 	public ArrayList<Bank> selectBkList() {
 		return memberDao.selectBkList(sqlSession);
@@ -153,7 +153,14 @@ public class MemberServiceImpl implements MemberService {
 		}
 				
 	}
-	
+
+
+	@Override
+	public Member selectThisUser(Payment payment) {
+		return memberDao.selectThisUser(sqlSession, payment);
+	}
+
+
 	@Override
 	public Member selectThisUser(Member loginUser) {
 		return memberDao.selectThisUser(sqlSession, loginUser);
@@ -169,5 +176,18 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	}
+	
+	@Override
+	public int selectUserListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectUserListCount(sqlSession);
+	}
 
+
+	@Override
+	public ArrayList<Member> selectUserList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return memberDao.selectUserList(sqlSession, pi);
+	}
+	
 }

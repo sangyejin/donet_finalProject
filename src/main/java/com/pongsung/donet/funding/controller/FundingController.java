@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,6 +43,8 @@ import com.pongsung.donet.funding.model.vo.FundingGoodsList;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
+import com.pongsung.donet.goods.model.vo.FilterOrder;
+import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
@@ -70,13 +73,16 @@ public class FundingController {
 	// 펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
-			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
-			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
-			@RequestParam(value = "search", required = false, defaultValue = "") String search,
-			Model model) {
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+			,Model model) {
 		
-		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,order,search);
+//		@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
+//		@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
+//		@RequestParam(value = "period", required = false, defaultValue = "") String period,
+//		@RequestParam(value = "search", required = false, defaultValue = "") String search,
+//		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,period,order,search);
+		FundingFilterOrder filterOrder= new FundingFilterOrder(0,null,"FP_WRITE_DATE",null);
+		
 		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
 		
 		
@@ -86,10 +92,10 @@ public class FundingController {
 		
 		logger.info("selectFundingList ::fundingListCount::" + listCount);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
-//		
+		
 		List<Funding> fundingList = fundingService.selectFundingList(pi,filterOrder);
 		logger.info("selectFundingList ::fundingList::" + fundingList);
-//		
+		
 		model.addAttribute("category", categoryList);
 		model.addAttribute("list", fundingList);
 		model.addAttribute("pi", pi);
@@ -97,6 +103,29 @@ public class FundingController {
 		return "funding/fundingListView";
 	}
 
+	//구호물품 리스트 불러오기
+	@ResponseBody
+	@RequestMapping(value="funding/list",produces="application/json;charset=utf-8")
+	public String selectFundingList(PageInfo pi, FundingFilterOrder fundingFilterOrder) {
+		logger.info("selectFundingList :: filterOrder::" + fundingFilterOrder);
+		
+		int listCount = fundingService.selectFundingListCount(fundingFilterOrder);
+		logger.info("selecFundingList :: FundingListCount::" + listCount);
+		
+		PageInfo p = Pagination.getPageInfo(listCount, pi.getCurrentPage(), 5, 15);
+		
+		logger.info("selectFundingList :: PI::::::::"+p);
+		logger.info("selectFundingList :: filterOrder::::::::"+fundingFilterOrder);
+		
+		Map<String,Object> map= new HashMap<>();
+		List<Funding> fundingList = fundingService.selectFundingList(pi,fundingFilterOrder);
+		logger.info("selectFundingList :: FundingList:::::::"+ fundingList);
+		map.put("fundingList", fundingList);
+		map.put("pi",p);
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(map);
+	}
+	
 	// 펀딩프로젝트 등록 폼으로 이동
 	@RequestMapping("funding/insertForm")
 	public String enrollForm(Model model) {

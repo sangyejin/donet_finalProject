@@ -46,6 +46,6 @@ public class Support {
 	private int totalamount;
 	private int hits;
 	private int ddate;
-	private int goal;
+	private long goal;
 	
 }

@@ -16,6 +16,6 @@ public class SupportUsePlan {
 	private int suNo;
 	private int upNo;
 	private String content;
-	private int amount;
+	private long amount;
 	private String division;
 }
