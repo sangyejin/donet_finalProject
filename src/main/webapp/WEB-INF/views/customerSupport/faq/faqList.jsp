@@ -10,18 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
     <style>
-        *{font-size: 12px; }
-        
-        /*sidebar*/
+       * {font-size: 10px;}
+
+		/*sidebar*/
 		.sidebar {
 			width: 150px;
 			height: 400px;
-			margin-left: 25px;
+			margin-left: 60px;
 			padding: 0;
 			float: left;
 			margin-top: 0;
 		}
-		
 		#greenfont1 { margin-right: 45%;}
 		
 		#faq { margin-right: 36px; color: rgb(30, 154, 40); text-decoration: none; }
@@ -63,7 +62,7 @@
 			float: left;
 			margin-left: 5%;
 			margin-top: 0px;
-			width: 800px;
+			width: 725px;
 		}
 		
 		#notice { font-size: 13px; font-weight: bolder; }
@@ -76,23 +75,23 @@
         select{  margin-left: 299.5px; }
 
         /*table*/
-        #greenline{
-            margin-top: 4px;
-            margin-bottom: 0;
-            width: 800px;
-            height: 1px;
-            border : 1px solid rgb(30, 154, 40);
-            background-color: rgb(30, 154, 40);
-        }
+        #greenline {
+			margin-top: 7px;
+			margin-bottom: 0;
+			width:  725px;
+			height: 1px;
+			border: 1px solid rgb(30, 154, 40);
+			background-color: rgb(30, 154, 40);
+		}
 
-        #grayline{
-            margin-top: 5%;
-            margin-bottom: 2%;
-            width: 800px;
-            height: 0.001cm;
-            border : 0.3px solid grey;
-            background-color: grey;
-        }
+        #grayline {
+			margin-top: 5%;
+			margin-bottom: 2%;
+			width: 725px;
+			height: 0.001cm;
+			border: 0.3px solid grey;
+			background-color: grey;
+		}
 
         table{ border-collapse: collapse; /*테두리간 간격 없앰*/ }
 
@@ -113,7 +112,7 @@
         .hidFirst{ display: none; }
         .detailAlter{margin-left : 40px; margin-right : 10px; font-size : 12px}
         
-       #whole { width: 1050px; margin-left: 150px; }
+		#whole { width: 1050px; margin : auto;}
 
         /*buttons*/
         button{
@@ -124,11 +123,7 @@
             background-color: rgb(244, 244, 244) ;
         }
 	
-	     #buttons{
-           margin-top: 2%;
-           margin-left : 300px;
-           margin-bottom: 3%;
-        }
+	     #buttons{  margin-top: 2%; margin-left : 300px; margin-bottom: 3%;}
         
         /*single button style*/
 		 #goRound{
@@ -153,58 +148,55 @@
             text-align: left;
         }
 
-/******************************************************************************************/
+/*searchbox*/
+#searchbox {
+	width: 200px;
+	height: 25px;
+	border: 1px solid rgb(219, 217, 217);
+	border-radius: 5px;
+	margin-left: 525px;
+	margin-top: -2.5%;
+}
 
-       /*searchbox*/
-       	#searchcategory{ margin-top : 20px; margin-bottom : 5px;}
-  
-		#searchbox {
-			width: 200px;
-			height: 25px;
-			border: 1px solid rgb(219, 217, 217);
-			border-radius: 5px;
-			margin-left: 75%;
-			margin-top: -2.5%;
-		}
-		
-		#searchmark {
-			width: 30px;
-			height: 25px;
-			margin-top:-1px;
-			margin-left:-1px;
-			background-color: rgb(66, 178, 115);
-			border-radius: 4px;
-			border-bottom-right-radius: 0;
-			border-top-right-radius: 0;
-		}
-		
-		#searchmark:hover{ background-color: rgb(232, 240, 214); }
-		
-		#magnifier {
-			width: 15px;
-			height: 15px;
-			margin-top: 1%;
-			margin-bottom: 1%;
-		}
-		
-		#mInput {
-			width: 165px;
-			height: 21px;
-			float: left;
-			margin-left: 32.5px;
-			margin-top: -12%;
-			padding: 0;
-			border-bottom-right-radius: 4px;
-			border-top-right-radius: 4px;
-			border-style: none;
-		}
+#searchmark {
+	width: 30px;
+	height: 25px;
+	margin-top:-1px;
+	margin-left:-1px;
+	background-color: rgb(66, 178, 115);
+	border-radius: 4px;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+
+#searchmark:hover{ background-color: rgb(232, 240, 214); }
+
+#magnifier {
+	width: 15px;
+	height: 15px;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+#mInput {
+	width: 165px;
+	height: 21px;
+	float: left;
+	margin-left: 32.5px;
+	margin-top: -12%;
+	padding: 0;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	border-style: none;
+}
+
 		
 			/*admin*/
 			#administratorOption>button { width: 50px; height: 20px; }
 			
 			#administratorLabel { font-weight: bold; margin-right: 52px; }
 			
-			#administratorOption{margin-left : 227px;}
+			#administratorOption{margin-left : 262px;}
 			
 		        
         /*head*/

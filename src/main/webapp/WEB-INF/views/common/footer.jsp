@@ -6,7 +6,10 @@
 <meta charset="UTF-8">
 <title>도넷닷컴</title>
 <style>
+*{ margin: 0; padding: 0;}
 #realBody>* { margin-left : 250px; color: gray; }
+
+#footerDiv{border : 0.5px solid rgb(224,224,224); margin : 0; padding : 0; margin-bottom : 10px; margin-top : 10%;}
 
 a { text-decoration: none; }
 
@@ -40,12 +43,6 @@ a { text-decoration: none; }
 }
 #address { margin-top: 30px; margin-left: 180px; }
 
-#line {  margin: 0;
-	    padding: 0;
-        margin-top: 10%;
-        border: solid 1px rgb(244, 244, 244);
-        margin-bottom: 10px;
-}
 #toleft>a:hover, #home:hover { text-decoration: underline; }
 #readyimg { display: none; }
 #realBody{width : 100%; float : left; margin : auto;}
@@ -56,8 +53,9 @@ a { text-decoration: none; }
 </style>
 </head>
 <body>
+
 	<div id="realBody" align="center">
-		<div id="line"></div>
+		<div id="footerDiv"></div>
 				<div id="footer">
 					<span id="toleft" align="left"> <a href="#">회사소개</a> | <a
 						id="noVacancy">채용안내</a> | <a href="moral.fo">윤리경영</a> | <a href="terms.fo">이용약관</a> | <a

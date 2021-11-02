@@ -9,10 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 <style>
-* {
-	/*border: 1px red solid;*/
-	font-size: 10px;
-}
+* {font-size: 10px;}
 
 /*sidebar*/
 .sidebar {
@@ -203,8 +200,6 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
 .radioAlign{margin-right : 20px;}
-     
-        
 </style>
 
 </head>
