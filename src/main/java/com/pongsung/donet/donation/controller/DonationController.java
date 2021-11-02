@@ -151,33 +151,32 @@ public class DonationController {
 	public String insertBoard(Support support, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
 			,@ModelAttribute SupportUsePlanList supportUsePlan, Model model)
 			throws Exception {
-		support.setSuWriter(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
 		List<SupportUsePlan> list= supportUsePlan.getSupportUsePlan();
 		System.out.println("support "+support);
-		System.out.println("fundingGoods "+ list);
+		System.out.println("SupportUsePlan "+ list);
 		
-		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
-		List<SupportImage> imgList = new ArrayList<>(); //추가 img 저장하는 리스트
+		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); 
+		List<SupportImage> imgList = new ArrayList<>(); 
 		
 		Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
 		for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
 			
-			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
+			List<MultipartFile> fileList=entry.getValue(); 
 			
 			
-			//파일을 저장, 파일이름 변경
+			
 			
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
 				if(fileName!="") { 
 					String originName = fileList.get(i).getOriginalFilename();
 					String changeName = saveFile(fileList.get(i),request);
-					System.out.println("change::"+changeName);
-					if( (entry.getKey()).equals("thumbFile")) { //현재 tag가 대표사진이면 funding에 setting
+					System.out.println("change "+changeName);
+					if( (entry.getKey()).equals("thumbFile")) { 
 						support.setThumbnailOrigin(originName);
 						support.setThumbnailChange(changeName);
 					}
-					else { //아니면 추가사진
+					else { 
 						SupportImage img=new SupportImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
