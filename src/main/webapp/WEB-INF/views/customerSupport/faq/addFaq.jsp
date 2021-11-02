@@ -75,15 +75,9 @@
 	width: 800px;
 }
 
-#notice {
-	margin-bottom: 0px;
-	font-size: 13px;
-	font-weight: bolder;
-}
+#notice { margin-bottom: 0px; font-size: 13px; font-weight: bolder; }
 
-#greenfont2 {
-	color: rgb(30, 154, 40);
-}
+#greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
 #sideGreenbar {
@@ -93,10 +87,7 @@
 	margin-top: 100px;
 }
 
-#getInThere {
-	margin-top: -555px;
-	margin-left: 35px;
-}
+#getInThere { margin-top: -555px; margin-left: 35px; }
 
 .grayline {
 	margin-top: 2%;
@@ -108,36 +99,11 @@
 	background-color: grey;
 }
 
-#whole {
-	width: 1050px;
-	margin-left: 150px;
-}
+#whole { width: 1050px; margin-left: 150px; }
 
-span>b {
-	margin-left: 52px;
-}
+#justGetThere { margin-top: -27px; }
 
-span>p {
-	margin-left: 136px;
-	margin-top: -21px;
-}
-
-span>p>#boldPeriod { /*margin-top : -9px;*/
-	margin-left: -3px;
-	font-size: 22px;
-}
-
-span>mark {
-	margin-left: 153px;
-}
-
-#justGetThere {
-	margin-top: -27px;
-}
-
-#headjustify {
-	margin-top: -5px
-}
+#headjustify { margin-top: -5px }
 
 #greenline {
 	margin-top: 4px;
@@ -176,10 +142,7 @@ span>mark {
 	margin-right: 7px;
 }
 
-.goRound:hover {
-	background-color: rgb(232, 240, 214);
-	color: #000000;
-}
+.goRound:hover { background-color: rgb(232, 240, 214); color: #000000;}
 
 #buttons {
 	margin-top: 2%;
@@ -187,10 +150,7 @@ span>mark {
 	margin-bottom: 3%;
 }
 
-#buttonSecondPart {
-	margin-top: -48px;
-	margin-left: 720px;
-}
+#buttonSecondPart { margin-top: -48px; margin-left: 720px; }
 
 /*content div*/
 #faqQuestion {
@@ -211,13 +171,9 @@ span>mark {
 }
 
 /*radio style*/
-.radioAlign {
-	margin-right: 20px;
-}
+.radioAlign { margin-right: 20px;}
 
-#radioType {
-	margin-right: 20px;
-}
+#radioType {margin-right: 20px;}
 
 #radios {
 	margin-left: 80px;
@@ -274,7 +230,7 @@ span>mark {
 			
 				<div id="getInThere">
 					<span id="headTitle"><label for="faqQuestion">질문</label> 
-					<input type="text" id="faqQuestion" name="faqQuestion" required></span>
+					<input type="text" id="faqQuestion" name="faqQuestion" maxlength="30" required></span>
 					<div class="grayline"></div>
 
 					<div id="radioType">구분</div>
@@ -292,7 +248,7 @@ span>mark {
 					<div class="grayline"></div>
 					
 					<label for="faqAnswered">답변</label>
-						<textarea wrap=on  class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="2000" ></textarea>
+						<textarea wrap=on  class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="1000" ></textarea>
 					</div>
 
 					<div id="buttons">

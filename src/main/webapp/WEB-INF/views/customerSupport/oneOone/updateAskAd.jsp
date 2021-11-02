@@ -21,9 +21,9 @@
 	margin-top: 0;
 }
 
-#greenfont1 { margin-right: 45%; }
+#greenfont1 {margin-right: 45%;}
 
-#faq { margin-right: 36px; }
+#faq {margin-right: 36px;}
 
 #facetoface {
 	margin-right: 70px;
@@ -71,19 +71,23 @@
 	width: 800px;
 }
 
-#notice { margin-bottom: 0px; font-size: 13px; font-weight: bolder; }
+#notice {
+	margin-bottom: 0px;
+	font-size: 13px;
+	font-weight: bolder;
+}
 
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
 #sideGreenbar {
 	background-color: rgba(232, 240, 214, 0.5);
-	height: 800px;
+	height: 985px;
 	width: 100px;
 	margin-top: 100px;
 }
 
-#getInThere { margin-top: -790px; margin-left: 35px; }
+#getInThere { margin-top: -975px; margin-left: 35px; }
 
 .grayline {
 	margin-top: 2%;
@@ -95,15 +99,17 @@
 	background-color: grey;
 }
 
+.contentLine {
+	margin-top: 200px;
+	margin-bottom: 2%;
+	margin-left: 8.5%;
+	width: 700px;
+	height: 0.001cm;
+	border: 0.3px solid grey;
+	background-color: grey;
+}
+
 #whole { width: 1050px; margin-left: 150px; }
-
-span>b { margin-left: 52px; }
-
-span>p { margin-left: 136px; margin-top: -21px; }
-
-span>p>#boldPeriod { margin-left: -3px; font-size: 22px; }
-
-span>mark { margin-left: 153px; }
 
 #greenline {
 	margin-top: 4px;
@@ -115,7 +121,11 @@ span>mark { margin-left: 153px; }
 }
 
 /*head*/
-#support { color: #000000; font-weight: bolder; font-size: 16px; }
+#support {
+	color: #000000;
+	font-weight: bolder;
+	font-size: 16px;
+}
 
 /*button*/
 .goRound {
@@ -128,11 +138,21 @@ span>mark { margin-left: 153px; }
 	margin-right: 7px;
 }
 
-.goRound:hover { background-color: rgb(232, 240, 214); 	color: #000000; }
+.goRound:hover {
+	background-color: rgb(232, 240, 214);
+	color: #000000;
+}
 
-#buttons { margin-top: 2%; margin-left: 560px; margin-bottom: 3%; }
+#buttons {
+	margin-top: 2%;
+	margin-left: 560px;
+	margin-bottom: 3%;
+}
 
-#buttonSecondPart { margin-top: -48px; margin-left: 630px; }
+#buttonSecondPart { margin-top: -25px; margin-left: 695px;}
+
+#deleteOne{ margin-left: 630px; margin-top: -48px;}
+
 
 /*footer align adjustment*/
 #gotoLEFT { margin-left: -375px; }
@@ -147,7 +167,12 @@ span>mark { margin-left: 153px; }
 	border-radius: 7px;
 }
 
-#imgArea { border-radius: 7px; border: none; margin-left : 80px; margin-top : -40px;}
+#imgArea {
+	border-radius: 7px;
+	border: none;
+	margin-left: 80px;
+	margin-top: -40px;
+}
 
 #asktag {
 	height: 261px;
@@ -156,7 +181,7 @@ span>mark { margin-left: 153px; }
 }
 
 /*answer area*/
-#answered{
+#answered {
 	margin-top: -20px;
 	width: 670px;
 	margin-left: 80px;
@@ -165,16 +190,15 @@ span>mark { margin-left: 153px; }
 	border-radius: 7px;
 }
 
-#questionType{ margin-left: 80px; margin-top: -35px; }
+#questionType { margin-left: 80px; margin-top: -35px; }
 
-#headjustify {margin-top: -10px;}
+#headjustify { margin-top: -10px; }
 
-#askTitle{margin-top: -25px; margin-left: 80px;}
+#askTitle { margin-top: -25px; margin-left: 80px; }
 
-#askContent{margin-top: 10px; margin-left: 80px;}
+#askContent {margin-top: 10px; margin-left: 80px; }
 
-#imgBox{ height : 290px;}
-
+#imgBox {height: 290px;}
 </style>
 
 </head>
@@ -219,55 +243,62 @@ span>mark { margin-left: 153px; }
 			<form id="UpdateOne" method="post" action="update.one"
 				enctype="multipart/form-data">
 				<div id="getInThere">
-					<span id="headTitle"><label for="askTitle">질문</label> 
-					<input
+					<span id="headTitle"><label for="askTitle">질문</label> <input
 						type="text" id="askNo" name="askNo" value="${ask.askNo}"
-						hidden="true"> <p id="askTitle">${ask.askTitle}</p>
-					<div class="grayline"></div>
+						hidden="true">
+						<p id="askTitle">${ask.askTitle}</p>
+						<div class="grayline"></div>
 
-					<div id="headjustify"><label>질문<br>구분</label>
-						<div id="questionType">${ask.askTypeName}</div>
-           		 	</div>
-           		 	
-					<div class="grayline"></div>
-					
-		
-					<span>
-						<label class="askContent" for="askContent">문의<br>내용</label>
+						<div id="headjustify">
+							<label>질문<br>구분
+							</label>
+							<div id="questionType">${ask.askTypeName}</div>
+						</div>
+
+						<div class="grayline"></div> <span> <label
+							class="askContent" for="askContent">문의<br>내용
+						</label>
 					</span>
-					
-					
-					<div id="imgBox">
-					<c:if test="${ ! empty ask.askNewImg  }">
-							<img id="imgArea"
-								src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
-								style="width: 200px; height: 200px;" onerror="imgAreaError()" />
-						</c:if>
-						
-						<p id="askContent">${ask.askContent}</p>
-					
-					</div>
-					
-					<div class="grayline"></div>
-					
-					<span>
-						<label class="askContent" for="answered">답변</label>
-					</span>
-					
-						<textarea class="form-control" id="answered" name="answered"
-							rows="10" style="resize: none;" maxlength="2000" required>${ask.answered}</textarea>
-					
-					
-					<div id="buttons">
-						<button class="goRound" type="submit">수정</button>
-					</div>
+
+
+						<div id="imgBox">
+							<c:if test="${ ! empty ask.askNewImg  }">
+								<img id="imgArea"
+									src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
+									style="width: 200px; height: 200px;" onerror="imgAreaError()" />
+							</c:if>
+
+							<p id="askContent">${ask.askContent}</p>
+
+						</div>
+
+						<div class="contentLine"></div> <span> <label
+							class="askContent" for="answered">답변</label>
+					</span> <textarea class="form-control" id="answered" name="answered"
+							rows="10" style="resize: none;" maxlength="1000" wrap="on"
+							required>${ask.answered}</textarea>
+
+
+						<div id="buttons">
+							<button class="goRound" type="submit">답변</button>
+						</div>
 			</form>
 
 
-			<div id="buttonSecondPart">
-				<button class="goRound" onclick="backToAshes();">삭제</button>
-				<button class="goRound" onclick="backToList();">목록</button>
-			</div>
+
+
+			
+			
+				<form id="deleteOne" method="post" action="delete.one">
+					<input type="text" id="askNo" name="askNo" value="${ask.askNo}"
+						hidden="true">
+					<button class="goRound" type="submit">삭제</button>
+				</form>
+				
+				<div id="buttonSecondPart">
+				<button id="backToList"class="goRound" onclick="backToList();">목록</button>
+				</div>
+
 		</div>
 
 		<div id="gotoLEFT">
@@ -275,55 +306,52 @@ span>mark { margin-left: 153px; }
 		</div>
 
 		<script>
-			function backToList(){
-				  location.href="list.one";
+			function backToList() {
+				location.href = "list.one";
 			}
 		</script>
-		
-		<script>
-			function backToAshes(){
-    			location.href="delete.one?askNo="+ ${ask.askNo};
-			}
-		</script>
-	
+
 
 		<!-- 파일 첨부 여부 스타일 -->
 		<script type="text/javascript">
-	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#imgArea').attr('src', e.target.result); 
+			// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('#imgArea').attr('src', e.target.result);
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
 			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
 
-	$(":input[name='askOriginImg']").change(function() {
-		if( $(":input[name='askOriginImg']").val() == '' ) {
-			$('#imgArea').attr('src' , '');  
-		}
-		$('#imgArea').css({ 'display' : '' });
-		readURL(this);
-	});
+			$(":input[name='askOriginImg']").change(function() {
+				if ($(":input[name='askOriginImg']").val() == '') {
+					$('#imgArea').attr('src', '');
+				}
+				$('#imgArea').css({
+					'display' : ''
+				});
+				readURL(this);
+			});
 
-	// 이미지 에러 시 미리보기영역 미노출
-	function imgAreaError(){
-		$('#imgArea').css({ 'display' : 'none' });
-	}
-	</script>
+			// 이미지 에러 시 미리보기영역 미노출
+			function imgAreaError() {
+				$('#imgArea').css({
+					'display' : 'none'
+				});
+			}
+		</script>
 
 		<!-- 어딜 눌러도 텍스트영역으로 -->
 		<script>
-		$('#imgViewArea').on('click', function(){
-			$('#asktag').focus();
-		})
-		
-		$('#imgArea').on('click', function(){
-			$('#asktag').focus();
-		})
-		
-	</script>
+			$('#imgViewArea').on('click', function() {
+				$('#asktag').focus();
+			})
+
+			$('#imgArea').on('click', function() {
+				$('#asktag').focus();
+			})
+		</script>
 </body>
 </html>

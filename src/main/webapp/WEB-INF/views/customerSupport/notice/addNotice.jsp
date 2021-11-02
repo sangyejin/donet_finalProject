@@ -10,9 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-        *{ /*border: 1px red solid;*/
-            font-size: 12px;
-        }
+        *{ font-size: 12px;  }
 
         /*sidebar*/        
 		.sidebar {
@@ -26,8 +24,8 @@
 		
 		#greenfont1 { margin-right: 45%; text-decoration: none; }
 		
-		 #faq { margin-right: 36px; }
-#facetoface { margin-right: 70px; }
+		#faq { margin-right: 36px; }
+		#facetoface { margin-right: 70px; }
 		
 		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 		
@@ -80,26 +78,19 @@
             margin-top: -0.5px;
         }
 
-        #getInThere{
-            margin-top: -545px;
-            margin-left: 35px;
-        }
+        #getInThere{ margin-top: -545px;  margin-left: 35px; }
 
         .grayline{
             margin-top: 2%;
             margin-bottom: 2%;
             margin-left: 8.5%;
-
             width: 700px;
             height: 0.001cm;
             border : 0.3px solid grey;
             background-color: grey;
         }
 
-        #whole{
-            width: 1050px; 
-		 	margin-left: 150px;
-        }
+        #whole{  width: 1050px;  margin-left: 150px; }
         
         #greenline{
             margin-top: 4px;
@@ -133,7 +124,6 @@
 
         #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
 
-
         /*footer align adjustment*/
         #gotoLEFT{ margin-left : -375px;}
         
@@ -155,12 +145,7 @@
            margin-bottom: 3%;
         }
         
-        #buttonSecondPart{
-           margin-top: -48px;
-           margin-left: 690px;
-           
-        
-        }
+        #buttonSecondPart{ margin-top: -48px; margin-left: 690px; }
 
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
     
@@ -184,7 +169,13 @@
             border : 1px solid rgb(206,212,218);
         }
      
-     #imgArea{ border-radius : 7px; border : none; }
+     
+     /*사진 전부 정사각형으로 만들기*/
+     #imgArea{ border-radius : 7px; border : none; }		
+     
+     .imgWrapper { position: relative; width: 200px; height: 200px; } 
+     .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
+
     
     </style>
 
@@ -235,14 +226,14 @@
        
             <span id="headTitle"><label for="noticeTitle" >제목</label> 
             <input type="text" id="noticeWriter"  name="noticeWriter" value="${ loginUser.userId }" hidden="true">
-            <input type="text" id="noticeTitle" name="noticeTitle"  maxlength="100" required></span>
+            <input type="text" id="noticeTitle" name="noticeTitle"  maxlength="30" required></span>
             <div class="grayline"></div>
 
             <div id="headjustify">사진
                     <div class="clickable" id="differ">
                     	<label for="noticeOrigin" id="forThisImage">
                     		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-                    		 업로드된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
+                    		 업로드된 사진은 하단에서 확인 가능합니다.
                    		</label>
                     </div>
                     <input type="file" id="noticeOrigin" name="noticeOrigin" hidden="true" accept="image/*">
@@ -254,8 +245,11 @@
 		
         <span><label for="noticeContent">내용</label></span> 
         <div id="imgViewArea">
-        	<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
-	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  wrap=on rows="10" style="resize:none;" maxlength="2000">
+        	<div class="imgWrapper">
+        		<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" onerror="imgAreaError()"/>
+	        </div>
+	        
+	        <textarea type="text" class="form-control" required id="noticeContent" name="noticeContent"  wrap=on rows="10" style="resize:none;" maxlength="1000">
 	        </textarea>
 		</div>
 
@@ -266,7 +260,6 @@
         
         
        <div id="buttonSecondPart">
-	       <!-- <button class="goRound" onclick="dontUploadYet();">임시저장</button>  -->
 	        <button class="goRound" onclick="backToList();">목록</button>
 		</div>
 </div>
@@ -280,12 +273,6 @@
 	<script>	
 		function backToList(){ location.href="list.no"; }
 	</script>
-	
-	
-	<!-- 임시저장 
-	<script>
-		function dontUploadYet(){ location.href="insertSave.no"}
-	</script>-->
 	
 	<!-- 파일 첨부 여부 스타일 -->
 	<script type="text/javascript">

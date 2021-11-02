@@ -45,5 +45,19 @@ public interface NoticeService {
 
 	void deleteFaq(int faqNo);
 
+	/******************************************************************************************************************/
+
+	int selectOneListCount(Member loginUser);
+
+	ArrayList<Ask> selectOneList(PageInfo pi, Member loginUser);
+
+	void insertOne(Ask ask);
+
+	Ask selectThisAsk(int askNo);
+
+	void updateOne(Ask ask);
+
+	void deleteOne(int askNo);
+
 
 }
