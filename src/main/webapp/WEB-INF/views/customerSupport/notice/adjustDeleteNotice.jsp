@@ -12,13 +12,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-        *{ font-size: 12px; }
+        *{ font-size: 12px;  }
 
-        /*sidebar*/        
+       /*sidebar*/
 		.sidebar {
 			width: 150px;
 			height: 400px;
-			margin-left: 25px;
+			margin-left: 60px;
 			padding: 0;
 			float: left;
 			margin-top: 0;
@@ -26,7 +26,7 @@
 		
 		#greenfont1 { margin-right: 45%; text-decoration: none; }
 		
-		 #faq { margin-right: 36px; }
+		#faq { margin-right: 36px; }
 		#facetoface { margin-right: 70px; }
 		
 		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
@@ -35,8 +35,7 @@
 		
 		#greenfont1, #faq, #facetoface { font-weight: bold; }
 		
-		/*helper*/
-				
+		/*helper*/		
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
@@ -60,50 +59,48 @@
 		#helparrow { margin-left: 48px; margin-top: 0px; }
 
         /* main main */
-        #thelist{
-            float: left;
-            margin-left: 5%;
-            margin-top: 4px;
-            width: 800px;
-        }
+        #thelist{  float: left; margin-left: 5%;  width: 710px; }
 
         #notice { font-size: 13px; font-weight: bolder; }
         
         #greenfont1, #greenfont2{ color: rgb(30, 154, 40); }
-
-       
-
+        
         /*writing box*/
         #sideGreenbar{
             background-color: rgba(232, 240, 214, 0.5);
-            height: 555px;
+            height: 550px;
             width: 100px;
             margin-top: -0.5px;
         }
 
-        #getInThere{ margin-top: -545px;   margin-left: 35px;  }
+        #getInThere{ margin-top: -540px;  margin-left: 35px; }
 
         .grayline{
             margin-top: 2%;
             margin-bottom: 2%;
-            margin-left: 8.5%;
-            width: 700px;
+            margin-left: 65px;
+            width: 610px;
+            height: 0.001cm;
+            border : 0.3px solid grey;
+            background-color: grey;
+        }
+        
+        .overContentGrayLine{
+            margin-top: 5px;
+            margin-bottom: 20px;
+            margin-left: 65px;
+            width: 610px;
             height: 0.001cm;
             border : 0.3px solid grey;
             background-color: grey;
         }
 
-        #whole{ width: 1050px;  margin-left: 150px; }
-
-        #greenline{
-            margin-top: 4px;
-            margin-bottom: 0;
-            width: 800px;
-            height: 1px;
-            border : 1px solid rgb(30, 154, 40);
-            background-color: rgb(30, 154, 40);
-        }
+		#whole { width: 1050px; margin : auto;}
         
+        #greenline{ margin-top: 4px; margin-bottom: 0; width: 710px; height: 1px; border : 1px solid rgb(30, 154, 40); background-color: rgb(30, 154, 40);}
+        
+/*img*/
+
 		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
 				
 		.clickable{display : flex;}
@@ -112,25 +109,14 @@
         
         #differ{/*img*/ margin-left: 85px; margin-top: -20px; }
 
-        .shabbygrayline{
-            margin-top: 1%;
-            margin-bottom: 2%;
-            margin-left: 8.5%;
-            width: 700px;
-            height: 0.001cm;
-            border : 0.3px solid grey;
-            background-color: grey;
-        }
-
         #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
-
 
         /*footer align adjustment*/
         #gotoLEFT{ margin-left : -375px;}
         
         .goRound{
             height: 25px;
-            width: 60px;
+            width: 55px;
             border-radius: 7px;
             border-style: none;
             background-color: rgb(66, 178, 115);
@@ -140,22 +126,16 @@
         
         .goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
        
-        #buttons{
-           margin-top: 2%;
-           margin-left: 620px;
-           margin-bottom: 3%;
-        }
-        
-        #buttonSecondPart{ margin-top: -48px; margin-left: 690px; }
-
-	#support { color: #000000; font-weight: bolder; font-size : 16px;}
+        #buttons{  margin-top: 2%;  margin-left: 530px; margin-bottom: 3%;  }
+        #buttonSecondPart{ margin-top: -45.5px; margin-left: 600px; }
+		#support { color: #000000; font-weight: bolder; font-size : 16px;}
     
     /* img sneak*/
      #noticeContent{ margin-top : 7px; border : none;  height: 230px; }
     
     #imgViewArea{ 
     		margin-top: -25px;
-            width: 670px;
+            width: 580px;
             margin-left: 80px;
             height: 440px;
             border : 1px solid rgb(206,212,218);
@@ -163,19 +143,23 @@
      }
      
       #noticeTitle{
-            width: 670px;
+            width: 580px;
             height : 25px;
-            margin-left: 55px;
+            margin-left: 80px;
             border-radius : 7px;
             border : 1px solid rgb(206,212,218);
         }
-             
-      /*사진 전부 정사각형으로 만들기*/
-     #imgArea{ border-radius : 7px; border : none; }		
+        	#titleDiv{
+        		margin-top : -25px;
+        	}
+     
+     
+     /*사진 전부 정사각형으로 만들기*/
+     #imgArea{ border-radius : 7px; border : none; margin-bottom : -20px; }		
      
      .imgWrapper { position: relative; width: 200px; height: 200px; } 
      .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
-     
+
     
     </style>
 
@@ -224,12 +208,13 @@
      	  <div id= "getInThere">
            <form id="UpdateGo" method="post" action="update.no" enctype="multipart/form-data">
        
-            <span id="headTitle"><label for="noticeTitle" maxlength="100">제목</label> 
-            <input type="text" id="noticeNo" name="noticeNo"  value="${ no.noticeNo }" hidden="true"></span>
+            <span id="headTitle"><label for="noticeTitle">제목</label> 
+            <input type="text" id="noticeNo" name="noticeNo"  value="${ no.noticeNo }" hidden="true">
              <input type="text" id="noticeWriter"  name="noticeWriter" value="${ loginUser.userId }" hidden="true">
-            
-            <input type="text" id="noticeTitle" name="noticeTitle" maxlength="30" value="${ no.noticeTitle }" required></span>
            
+            	<div id="titleDiv">
+            		<input type="text" id="noticeTitle" name="noticeTitle" maxlength="30" value="${ no.noticeTitle }" required></span>
+         		  </div>
             <div class="grayline"></div>
 
             <div id="headjustify">사진
@@ -243,7 +228,7 @@
                     
             </div>
 
-        <div class="shabbygrayline"></div>
+       	 <div class="overContentGrayLine"></div>
 
 		
         <span><label for="noticeContent">내용</label></span> 

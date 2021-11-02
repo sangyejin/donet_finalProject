@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.notice.model.dao.NoticeDao;
+import com.pongsung.donet.notice.model.vo.Ask;
 import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
@@ -112,7 +114,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi, Category ctgry) {
 		return NoDao.selectFaqList(sqlSession, pi, ctgry);
-
 	}
 
 	@Override
@@ -147,6 +148,51 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		
 		
+	}
+	
+	/******************************************************************************************************************/
+
+
+	@Override
+	public int selectOneListCount(Member loginUser) {
+		return NoDao.selectOneListCount(sqlSession, loginUser);
+	}
+
+	@Override
+	public ArrayList<Ask> selectOneList(PageInfo pi, Member loginUser) {
+		return NoDao.selectOneList(sqlSession, pi, loginUser);
+	}
+
+	@Override
+	public void insertOne(Ask ask) {
+		int result = NoDao.insertOne(sqlSession, ask);
+
+		if (result < 0) {
+			throw new CommException("문의 실패");
+		}	
+	}
+
+	@Override
+	public Ask selectThisAsk(int askNo) {
+		return NoDao.selectThisAsk(sqlSession, askNo);
+	}
+
+	@Override
+	public void updateOne(Ask ask) {
+		int result = NoDao.updateOne(sqlSession, ask);
+		
+		if(result < 0) {
+			throw new CommException("문의 답변 실패");
+		}
+	}
+
+	@Override
+	public void deleteOne(int askNo) {
+		int result = NoDao.deleteFaq(sqlSession, askNo);
+		
+		if(result < 0) {
+			throw new CommException("문의 삭제 실패");
+		}
 	}
 
 }

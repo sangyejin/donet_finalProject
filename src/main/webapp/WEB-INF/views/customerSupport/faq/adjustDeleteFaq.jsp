@@ -8,19 +8,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 <style>
-* { /*border: 1px red solid;*/
-	font-size: 12px;
-}
+ *{ font-size: 10px;  }
 
-/*sidebar*/
-.sidebar {
-	width: 150px;
-	height: 400px;
-	margin-left: 25px;
-	padding: 0;
-	float: left;
-	margin-top: 0;
-}
+       /*sidebar*/
+		.sidebar {
+			width: 150px;
+			height: 400px;
+			margin-left: 60px;
+			padding: 0;
+			float: left;
+			margin-top: 0;
+		}
 
 #greenfont1 { margin-right: 45%; }
 
@@ -32,10 +30,7 @@
 
 #facetoface { margin-right: 70px; }
 
-#greenfont1:hover #facetoface:hover {
-	text-decoration: underline;
-	color: #000000;
-}
+#greenfont1:hover #facetoface:hover { text-decoration: underline; color: #000000;}
 
 #wrap { margin-bottom: 7%; }
 
@@ -66,101 +61,37 @@
 		
 		#helparrow { margin-left: 48px; margin-top: 0px; }
 
-/* side bar */
-#thelist {
-	float: left;
-	margin-left: 5%;
-	margin-top: 0px;
-	width: 800px;
-}
+ /* main main */
+        #thelist{  float: left; margin-left: 5%;  width: 710px; }
 
-#notice {
-	margin-bottom: 0px;
-	font-size: 13px;
-	font-weight: bolder;
-}
+#notice { margin-bottom: 0px; font-size: 13px; font-weight: bolder; }
 
-#greenfont2 {color: rgb(30, 154, 40);}
+#greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
-#sideGreenbar {
-	background-color: rgba(232, 240, 214, 0.5);
-	height: 515px;
-	width: 100px;
-	margin-top: 100px;
-}
+#sideGreenbar {background-color: rgba(232, 240, 214, 0.5); height: 500px; width: 100px;}
 
-#getInThere {
-	margin-top: -505px;
-	margin-left: 35px;
-}
+     #getInThere{ margin-top: -490px;  margin-left: 35px; }
 
-.grayline {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-left: 8.5%;
-	width: 700px;
-	height: 0.001cm;
-	border: 0.3px solid grey;
-	background-color: grey;
-}
+/*div lines*/
+.grayline{
+            margin-top: 2%;
+            margin-bottom: 2%;
+            margin-left: 65px;
+            width: 610px;
+            height: 0.001cm;
+            border : 0.3px solid grey;
+            background-color: grey;
+        }
+         
+   #greenline{ margin-top: 4px; margin-bottom: 0; width: 710px; height: 1px; border : 1px solid rgb(30, 154, 40); background-color: rgb(30, 154, 40);}
+        
+        
+ #whole{  width: 1050px;  margin: auto; }
 
-#whole {
-	width: 1050px;
-	margin-left: 150px;
-}
-
-span>b {
-	margin-left: 52px;
-}
-
-span>p {
-	margin-left: 136px;
-	margin-top: -21px;
-}
-
-span>p>#boldPeriod { /*margin-top : -9px;*/
-	margin-left: -3px;
-	font-size: 22px;
-}
-
-span>mark {
-	margin-left: 153px;
-}
-
-#justGetThere {
-	margin-top: -27px;
-}
-
-#headjustify {
-	margin-top: -5px
-}
-
-#greenline {
-	margin-top: 4px;
-	margin-bottom: -100px;
-	width: 800px;
-	height: 1px;
-	border: 1px solid rgb(30, 154, 40);
-	background-color: rgb(30, 154, 40);
-}
-
-.shabbygrayline {
-	margin-top: 1%;
-	margin-bottom: 2%;
-	margin-left: 8.5%;
-	width: 700px;
-	height: 0.001cm;
-	border: 0.3px solid grey;
-	background-color: grey;
-}
 
 /*head*/
-#support {
-	color: #000000;
-	font-weight: bolder;
-	font-size: 16px;
-}
+#support { color: #000000; font-weight: bolder; font-size: 16px;}
 
 /*button*/
 .goRound {
@@ -173,58 +104,37 @@ span>mark {
 	margin-right: 7px;
 }
 
-.goRound:hover {
-	background-color: rgb(232, 240, 214);
-	color: #000000;
-}
-
-#buttons {
-	margin-top: 2%;
-	margin-left: 590px;
-	margin-bottom: 3%;
-}
-
-#buttonSecondPart {
-	margin-top: -48px;
-	margin-left: 660px;
-}
-
+.goRound:hover { background-color: rgb(232, 240, 214); color: #000000;}
+#buttons{  margin-top: 15px;  margin-left: 500px; margin-bottom: 3%;  }
+#buttonSecondPart{ margin-top: -46px; margin-left: 640px; }
+#deleteButtonDiv{ margin-top: -25px; margin-left: -70px;}
 /*content div*/
-#faqQuestion {
-	width: 670px;
-	height: 25px;
-	margin-left: 50px;
-	border-radius: 7px;
-	border: 1px solid rgb(206, 212, 218);
-}
+#titleDiv{margin-top : -25px;}
 
-#faqAnswered {
-	margin-top: -25px;
-	width: 670px;
-	margin-left: 80px;
-	height: 447px;
-	border: 1px solid rgb(206, 212, 218);
-	border-radius: 7px;
-}
+#faqQuestion {
+            width: 580px;
+            height : 25px;
+            margin-left: 80px;
+            border-radius : 7px;
+            border : 1px solid rgb(206,212,218);
+        }
+
+#faqAnswered { 
+    		margin-top: -25px;
+            width: 580px;
+            margin-left: 80px;
+            height: 440px;
+            border : 1px solid rgb(206,212,218);
+            border-radius : 7px;
+     }
 
 /*radio style*/
-.radioAlign {
-	margin-right: 20px;
-}
+.radioAlign { margin-right: 20px;}
 
-#radioType {
-	margin-right: 20px;
-}
+#radioType {margin-right: 20px;}
 
-#radios {
-	margin-left: 80px;
-	margin-top: -20px;
-	margin-bottom: 10px;
-}
+#radios { margin-left: 80px; margin-top: -20px; margin-bottom: 10px;} 
 
-/*footer align adjustment*/
- #gotoLEFT{ margin-left : -375px;}
-        
 </style>
 
 </head>
@@ -272,9 +182,10 @@ span>mark {
 			
 				<div id="getInThere">
 					<input id="faqNo" name="faqNo" hidden="true" value="${ faq.faqNo }">
-					<!-- faq number -->
 					<span id="headTitle"><label for="faqQuestion">질문</label> 
-					<input type="text" id="faqQuestion" name="faqQuestion" value="${faq.faqQuestion}" maxlength="30"  required></span>
+						<div id="titleDiv">
+							<input type="text" id="faqQuestion" name="faqQuestion" value="${faq.faqQuestion}" maxlength="30"  required></span>
+						</div>
 					<div class="grayline"></div>
 					
 					<label for="faqAnswered">답변</label>
@@ -289,14 +200,14 @@ span>mark {
 
 			<div id="buttonSecondPart">
 				<button class="goRound" onclick="backToList();">목록</button>
-				<button class="goRound" onclick="backToAshes();">삭제</button>
-				
+					<div id="deleteButtonDiv">
+						<button class="goRound" onclick="backToAshes();">삭제</button>
+					</div>
 			</div>
 		</div>
 
-		<div id="gotoLEFT">
-			<jsp:include page="../../common/footer.jsp" />
-		</div>
+			
+				<jsp:include page="../../common/footer.jsp" />
 		
 		<script>
 		function backToList(){ location.href="list.faq"; }
@@ -313,5 +224,6 @@ span>mark {
 	    		}			
 		}
 		</script>
+		
 </body>
 </html>

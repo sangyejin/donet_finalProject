@@ -9,21 +9,22 @@
 <title>도넷닷컴</title>
 
 <style>
-* { font-size: 12px; }
+ *{ font-size: 12px;  }
 
-/*sidebar*/
-.sidebar {
-	width: 150px;
-	height: 400px;
-	margin-left: 25px;
-	padding: 0;
-	float: left;
-	margin-top: 0;
-}
+       /*sidebar*/
+		.sidebar {
+			width: 150px;
+			height: 400px;
+			margin-left: 60px;
+			padding: 0;
+			float: left;
+			margin-top: 0;
+		}
 
-#greenfont1 {margin-right: 45%;}
 
-#faq {margin-right: 36px;}
+#greenfont1 { margin-right: 45%; }
+
+#faq { margin-right: 36px; }
 
 #facetoface {
 	margin-right: 70px;
@@ -63,13 +64,9 @@
 
 #helparrow { margin-left: 48px; margin-top: 0px; }
 
-/* side bar */
-#thelist {
-	float: left;
-	margin-left: 5%;
-	margin-top: 0px;
-	width: 800px;
-}
+		/* main main */
+        #thelist{  float: left; margin-left: 5%;  width: 710px; }
+
 
 #notice {
 	margin-bottom: 0px;
@@ -77,48 +74,38 @@
 	font-weight: bolder;
 }
 
+#subnote {
+	font-size: 11px;
+	font-weight: lighter;
+	color: grey
+}
+
+
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
 #sideGreenbar {
 	background-color: rgba(232, 240, 214, 0.5);
-	height: 985px;
+	height: 615px;
 	width: 100px;
-	margin-top: 100px;
 }
 
-#getInThere { margin-top: -975px; margin-left: 35px; }
+#getInThere { margin-top: -605px; margin-left: 35px; }
 
-.grayline {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-left: 8.5%;
-	width: 700px;
-	height: 0.001cm;
-	border: 0.3px solid grey;
-	background-color: grey;
-}
-
-.contentLine {
-	margin-top: 200px;
-	margin-bottom: 2%;
-	margin-left: 8.5%;
-	width: 700px;
-	height: 0.001cm;
-	border: 0.3px solid grey;
-	background-color: grey;
-}
-
-#whole { width: 1050px; margin-left: 150px; }
-
-#greenline {
-	margin-top: 4px;
-	margin-bottom: -100px;
-	width: 800px;
-	height: 1px;
-	border: 1px solid rgb(30, 154, 40);
-	background-color: rgb(30, 154, 40);
-}
+/*div lines*/
+.grayline{
+            margin-top: 2%;
+            margin-bottom: 2%;
+            margin-left: 65px;
+            width: 610px;
+            height: 0.001cm;
+            border : 0.3px solid grey;
+            background-color: grey;
+        }
+        
+#greenline{ margin-top: 4px; margin-bottom: 0; width: 710px; height: 1px; border : 1px solid rgb(30, 154, 40); background-color: rgb(30, 154, 40);}
+        
+#whole{  width: 1050px;  margin: auto; }
 
 /*head*/
 #support {
@@ -142,64 +129,66 @@
 	background-color: rgb(232, 240, 214);
 	color: #000000;
 }
+#buttons{  margin-top: 2%;  margin-left: 530px; margin-bottom: 3%;  }
+#buttonSecondPart{ margin-top: -46px; margin-left: 600px; }
 
-#buttons {
-	margin-top: 2%;
-	margin-left: 560px;
-	margin-bottom: 3%;
-}
+/*content div*/
+#askTitle {
+            width: 580px;
+            height : 25px;
+            margin-left: 80px;
+            border-radius : 7px;
+            border : 1px solid rgb(206,212,218);
+        }
 
-#buttonSecondPart { margin-top: -25px; margin-left: 695px;}
+/*img*/
 
-#deleteOne{ margin-left: 630px; margin-top: -48px;}
+		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
+				
+		.clickable{display : flex;}
+		
+        .biggerimg{  width: 20px;  height: 20px; }
+        
+        #differ{/*img*/ margin-left: 80px; margin-top: -25px; margin-bottom: -5px}
 
+        #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
+        
+        #imgLabel{margin-top : 5px;}
 
-/*footer align adjustment*/
-#gotoLEFT { margin-left: -375px; }
+/*radio style*/
+.radioAlign { margin-right: 20px; }
+#radioType { margin-right: 20px; }
 
-/* img sneak*/
-#imgViewArea {
-	margin-top: -35px;
-	width: 670px;
+#radios {
 	margin-left: 80px;
-	height: 325px;
-	border: 1px solid rgb(206, 212, 218);
-	border-radius: 7px;
+	margin-top: -15px;
+	margin-bottom: -3px;
 }
 
-#imgArea {
-	border-radius: 7px;
-	border: none;
-	margin-left: 80px;
-	margin-top: -40px;
-}
-
-#asktag {
-	height: 261px;
-	margin-top: 2.5px;
-	border: none;
-}
-
-/*answer area*/
-#answered {
-	margin-top: -20px;
-	width: 670px;
-	margin-left: 80px;
-	height: 315px;
-	border: 1px solid rgb(206, 212, 218);
-	border-radius: 7px;
-}
-
-#questionType { margin-left: 80px; margin-top: -35px; }
-
-#headjustify { margin-top: -10px; }
-
-#askTitle { margin-top: -25px; margin-left: 80px; }
-
-#askContent {margin-top: 10px; margin-left: 80px; }
-
-#imgBox {height: 290px;}
+/* img sneak*/	 	    
+    #imgViewArea{ 
+    		margin-top: -36px;
+            width: 580px;
+            margin-left: 80px;
+            height: 440px;
+            border : 1px solid rgb(206,212,218);
+            border-radius : 7px;
+     }
+     #asktag{height : 234px;  margin-top: 2.5px; border : none;}
+     
+      /*사진 전부 정사각형으로 만들기*/
+     #imgArea{ border-radius : 7px; border : none; }		
+     
+     .imgWrapper { position: relative; width: 200px; height: 200px; } 
+     .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
+     
+     /*content div*/
+	 #titleDiv{margin-top : -25px; margin-left : -5px;}
+     
+    /*푸터 tlqkfTHING*/
+    #footerAdjust{ margin : 0; padding : 0; position : absolute;}
 </style>
+
 
 </head>
 <body>

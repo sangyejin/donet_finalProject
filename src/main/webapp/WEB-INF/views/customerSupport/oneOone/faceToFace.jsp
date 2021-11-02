@@ -10,18 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
     <style>
-        *{font-size: 12px;}
-        
-        /*sidebar*/
+        * {font-size: 10px;}
+
+		/*sidebar*/
 		.sidebar {
 			width: 150px;
 			height: 400px;
-			margin-left: 25px;
+			margin-left: 60px;
 			padding: 0;
 			float: left;
 			margin-top: 0;
 		}
-		
 		#greenfont1 { margin-right: 45%;}
 		
 		#faq { margin-right: 36px; }
@@ -58,12 +57,12 @@
 		
 		#helparrow { margin-left: 48px; margin-top: 0px; }
 
-        /* mainbody*/
+       /* mainbody*/
 		#thelist {
 			float: left;
 			margin-left: 5%;
 			margin-top: 0px;
-			width: 800px;
+			width: 725px;
 		}
 		
 		#notice { font-size: 13px; font-weight: bolder; }
@@ -76,23 +75,23 @@
         select{  margin-left: 299.5px; }
 
         /*table*/
-        #greenline{
-            margin-top: 4px;
-            margin-bottom: 0;
-            width: 800px;
-            height: 1px;
-            border : 1px solid rgb(30, 154, 40);
-            background-color: rgb(30, 154, 40);
-        }
+        #greenline {
+			margin-top: 7px;
+			margin-bottom: 0;
+			width:  725px;
+			height: 1px;
+			border: 1px solid rgb(30, 154, 40);
+			background-color: rgb(30, 154, 40);
+		}
 
-        #grayline{
-            margin-top: 5%;
-            margin-bottom: 2%;
-            width: 800px;
-            height: 0.001cm;
-            border : 0.3px solid grey;
-            background-color: grey;
-        }
+        #grayline {
+			margin-top: 5%;
+			margin-bottom: 2%;
+			width: 725px;
+			height: 0.001cm;
+			border: 0.3px solid grey;
+			background-color: grey;
+		}
 
         table{ border-collapse: collapse; /*테두리간 간격 없앰*/ }
 
@@ -105,9 +104,7 @@
 
         tr{  margin-top: 1%; margin-bottom: 1%; }
 
-       
-        
-       #whole { width: 1050px; margin-left: 150px; }
+		#whole { width: 1050px; margin : auto;}
 
         /*buttons*/
         button{
@@ -132,7 +129,7 @@
 		            border-radius: 7px;
 		            color: white; 
 		            background-color: rgb(66, 178, 115); 
-		            margin-left : 740px;
+		            margin-left : 660px;
 		            
 		        }
 		        
@@ -143,10 +140,7 @@
 
         #rightmargin{ margin-right: 5%; }
 
-        pre{ 
-            margin-left: -100px;
-            text-align: left;
-        }
+        pre{   margin-left: -100px;  text-align: left;}
 
 /******************************************************************************************/
 
