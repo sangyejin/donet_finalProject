@@ -48,7 +48,7 @@ a { text-decoration: none; }
 }
 #toleft>a:hover, #home:hover { text-decoration: underline; }
 #readyimg { display: none; }
-#realBody{width : 100%; float : left;}
+#realBody{width : 100%; float : left; margin : auto;}
 
 /* 추가 레이아웃 설정 */
 #listen { margin-left: 120px; }

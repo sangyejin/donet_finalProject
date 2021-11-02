@@ -42,7 +42,7 @@
    	margin-left : 0;
 }
 
-#insideOfOutline{ width: 1050px; height: 110px; }
+#insideOfOutline{ width: 1050px; height: 110px; margin : auto;}
 
 ul>li{ list-style-type: none; }
 
