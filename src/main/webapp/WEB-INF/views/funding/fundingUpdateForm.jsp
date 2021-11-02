@@ -22,6 +22,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <style>
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    margin: 0;
+	padding: 0;
+}
 
 #fpName {
 	width: 800px;

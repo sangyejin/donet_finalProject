@@ -211,7 +211,9 @@ tbody tr td, thead tr th {
 				<label for="content">내용</label>
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
-				
+				<div contentEditable="true">
+					뀨
+				</div>
 			</div>
 
 			<div class="btnArea">
