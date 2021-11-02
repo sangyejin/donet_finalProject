@@ -274,11 +274,11 @@ span>mark {
 					<input id="faqNo" name="faqNo" hidden="true" value="${ faq.faqNo }">
 					<!-- faq number -->
 					<span id="headTitle"><label for="faqQuestion">질문</label> 
-					<input type="text" id="faqQuestion" name="faqQuestion" value="${faq.faqQuestion}" required></span>
+					<input type="text" id="faqQuestion" name="faqQuestion" value="${faq.faqQuestion}" maxlength="30"  required></span>
 					<div class="grayline"></div>
 					
 					<label for="faqAnswered">답변</label>
-						<textarea wrap=on  class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="2000">${faq.faqAnswered}</textarea>
+						<textarea wrap=on  class="form-control" required id="faqAnswered" name="faqAnswered" rows="10" style="resize: none;" maxlength="1000">${faq.faqAnswered}</textarea>
 					</div>
 
 					<div id="buttons">

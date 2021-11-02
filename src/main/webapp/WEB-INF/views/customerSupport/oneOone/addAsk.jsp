@@ -213,11 +213,17 @@ span>mark { margin-left: 153px; }
             border-radius : 7px;
      }
      
-     #imgArea{ border-radius : 7px; border : none; }
      
      #askContent{height : 261px;  margin-top: 2.5px; border : none;}
      
      #asktag{height : 261px;  margin-top: 2.5px; border : none;}
+     
+      /*사진 전부 정사각형으로 만들기*/
+     #imgArea{ border-radius : 7px; border : none; }		
+     
+     .imgWrapper { position: relative; width: 200px; height: 200px; } 
+     .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
+     
     
 </style>
 
@@ -263,7 +269,7 @@ span>mark { margin-left: 153px; }
 			<form id="InsertOne" method="post" action="insert.one" enctype="multipart/form-data">
 				<div id="getInThere">
 					<span id="headTitle"><label for="askTitle">질문</label> 
-					<input type="text" id="askTitle" name="askTitle"  maxlength='20' required></span>
+					<input type="text" id="askTitle" name="askTitle"  maxlength='30' required></span>
 					<div class="grayline"></div>
 
 					<div id="radioType">구분</div>
@@ -287,7 +293,7 @@ span>mark { margin-left: 153px; }
 							<label for="askOriginImg" id="forThisImage" > <img
 								class="biggerimg"
 								src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-								업로드된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
+								업로드된 사진은 하단에서 확인 가능합니다.
 							</label>
 						</div>
 						<input type="file" id="askOriginImg" name="askOriginImg"
@@ -300,14 +306,19 @@ span>mark { margin-left: 153px; }
 
 					<span><label class="askContent" for="askContent">문의<br>내용</label></span>
 					<div id="imgViewArea">
-						<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+						
+						<div class="imgWrapper">
+							<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+						</div>
+						
+						
 						<textarea class="form-control" id="asktag" name="askContent" rows="10"
-							style="resize: none;" maxlength="2000" wrap=on  required>
+							style="resize: none;" maxlength="1000" wrap=on  required>
 	       				 </textarea>
 					</div>
 
 				<div id="buttons">
-					<button class="goRound" id="insertAlert" type="submit">추가</button>
+					<button class="goRound" id="insertAlert" type="submit">문의</button>
 				</div>
 
 			</form>

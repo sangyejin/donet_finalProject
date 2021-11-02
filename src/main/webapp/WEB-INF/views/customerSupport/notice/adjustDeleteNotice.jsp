@@ -12,9 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-        *{ /*border: 1px red solid;*/
-            font-size: 12px;
-        }
+        *{ font-size: 12px; }
 
         /*sidebar*/        
 		.sidebar {
@@ -59,7 +57,7 @@
 		#gethelp { margin-left: 3%; }
 		#gethelp:hover{  color : #000000; text-decoration : underline;}
 		
-#helparrow { margin-left: 48px; margin-top: 0px; }
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
         /* main main */
         #thelist{
@@ -69,10 +67,7 @@
             width: 800px;
         }
 
-        #notice {
-		font-size: 13px;
-		font-weight: bolder;
-		}
+        #notice { font-size: 13px; font-weight: bolder; }
         
         #greenfont1, #greenfont2{ color: rgb(30, 154, 40); }
 
@@ -86,26 +81,19 @@
             margin-top: -0.5px;
         }
 
-        #getInThere{
-            margin-top: -545px;
-            margin-left: 35px;
-        }
+        #getInThere{ margin-top: -545px;   margin-left: 35px;  }
 
         .grayline{
             margin-top: 2%;
             margin-bottom: 2%;
             margin-left: 8.5%;
-
             width: 700px;
             height: 0.001cm;
             border : 0.3px solid grey;
             background-color: grey;
         }
 
-        #whole{
-            width: 1050px; 
-		 	margin-left: 150px;
-        }
+        #whole{ width: 1050px;  margin-left: 150px; }
 
         #greenline{
             margin-top: 4px;
@@ -158,12 +146,7 @@
            margin-bottom: 3%;
         }
         
-        #buttonSecondPart{
-           margin-top: -48px;
-           margin-left: 690px;
-           
-        
-        }
+        #buttonSecondPart{ margin-top: -48px; margin-left: 690px; }
 
 	#support { color: #000000; font-weight: bolder; font-size : 16px;}
     
@@ -186,7 +169,13 @@
             border-radius : 7px;
             border : 1px solid rgb(206,212,218);
         }
-     #imgArea{ border-radius : 7px; border : none; }
+             
+      /*사진 전부 정사각형으로 만들기*/
+     #imgArea{ border-radius : 7px; border : none; }		
+     
+     .imgWrapper { position: relative; width: 200px; height: 200px; } 
+     .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
+     
     
     </style>
 
@@ -239,7 +228,7 @@
             <input type="text" id="noticeNo" name="noticeNo"  value="${ no.noticeNo }" hidden="true"></span>
              <input type="text" id="noticeWriter"  name="noticeWriter" value="${ loginUser.userId }" hidden="true">
             
-            <input type="text" id="noticeTitle" name="noticeTitle"  value="${ no.noticeTitle }" required></span>
+            <input type="text" id="noticeTitle" name="noticeTitle" maxlength="30" value="${ no.noticeTitle }" required></span>
            
             <div class="grayline"></div>
 
@@ -247,7 +236,7 @@
                     <div class="clickable" id="differ">
                     	<label for="noticeOrigin" id="forThisImage">
                     		<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-                    		 수정된 사진은 하단에서 확인 가능하며, 정사각형의 사진 업로드를 권장합니다.
+                    		 수정된 사진은 하단에서 확인 가능합니다.
                    		</label>
                     </div>
                     <input type="file" id="noticeOrigin" name="noticeOrigin" hidden="true" accept="image/*">
@@ -260,14 +249,18 @@
         <span><label for="noticeContent">내용</label></span> 
         <div id="imgViewArea">
         	<c:if test="${ ! empty no.noticeNew  }">
-            		<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${no.noticeNew}" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+	        	<div class="imgWrapper">
+	            	<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${no.noticeNew}" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+		        </div>
             </c:if>
             <c:if test="${  empty no.noticeNew  }">
+            	 <div class="imgWrapper">
         			<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+          		</div>
             </c:if>
             
 	        
-	        <textarea type="text"  wrap=on  class="form-control" required id="noticeContent" name="noticeContent" rows="10" style="resize:none;" maxlength="2000">
+	        <textarea type="text"  wrap=on  class="form-control" required id="noticeContent" name="noticeContent" rows="10" style="resize:none;" maxlength="1000">
 	       		${ no.noticeContent }
 	        </textarea>	
 		</div>
@@ -279,7 +272,6 @@
         
         
        <div id="buttonSecondPart">
-	        <!-- <button class="goRound" onclick="dontUploadYet();">임시저장</button> -->
 	        <button class="goRound" onclick="backToList();">목록</button>
 		</div>
 </div>
@@ -293,13 +285,6 @@
 	<script>	
 		function backToList(){ location.href="list.no"; }
 	</script>
-	
-	
-	<!-- 임시저장 
-	<script>
-		function dontUploadYet(){ location.href="updateSave.no"}
-	</script> -->
-	
 	
 	<!-- 파일 첨부 여부 스타일 -->
 	<script type="text/javascript">

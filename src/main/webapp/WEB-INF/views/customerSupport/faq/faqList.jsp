@@ -111,7 +111,7 @@
         .title{width : 600px;}
 
         .hidFirst{ display: none; }
-        .detailAlter{margin-left : 40px; font-size : 12px}
+        .detailAlter{margin-left : 40px; margin-right : 10px; font-size : 12px}
         
        #whole { width: 1050px; margin-left: 150px; }
 
@@ -359,7 +359,7 @@
 						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
 					
-					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" value="" required>
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="100" value="" required>
 				</div>
 			</div>
 			</form>
