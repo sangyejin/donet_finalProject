@@ -124,7 +124,7 @@
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
-									src="${ pageContext.servletContext.contextPath}/resources/imgs/${s.thumbnailChange}">
+									src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}">
 							</div>
 							<div class="supportTitle">
 								<h3>${s.suTitle}</h3>
@@ -231,9 +231,6 @@
 		</script>
 
 		<jsp:include page="../common/footer.jsp" />
-		<div
-			style="display: scroll; position: fixed; bottom: 10px; right: 5px;">
-			<a class="topTotop" href="#pageTop">TOP▲</a>
-		</div>
+		<jsp:include page="../donation/subMenu.jsp" />
 </body>
 </html>
