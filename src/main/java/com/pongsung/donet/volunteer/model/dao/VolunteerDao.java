@@ -46,4 +46,28 @@ public class VolunteerDao {
 		return  sqlSession.selectList("volunteerMapper.selectVolunteerAttachment", vno);
 	}
 
+	public void countVolunteer(SqlSessionTemplate sqlSession, int vno) {
+		// TODO Auto-generated method stub
+		  sqlSession.selectOne("volunteerMapper.countVolunteer", vno);
+	}
+
+	public int choseListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("volunteerMapper.choseListCount");
+	}
+
+	public ArrayList<Volunteer> choseList(SqlSessionTemplate sqlSession, PageInfo pi, String chose) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("volunteerMapper.choseList",chose);
+	}
+
+	public ArrayList<Volunteer> sortList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("volunteerMapper.sortList", null, rowBounds);
+	}
+
 }

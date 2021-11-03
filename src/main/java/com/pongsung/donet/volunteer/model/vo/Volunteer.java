@@ -23,9 +23,7 @@ public class Volunteer {
 	private int volPoint;
 	private char volStatus;
 	private String volCategory;
-	private String volOrigin;
-	private String volChange;
 	private int volCount;
-	private int volLike;
+
 	
 }

@@ -5,7 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>선행활동</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 	
       <style>
    		body{
@@ -17,7 +25,7 @@
         }
         
      
-        .statusBox{
+        #statusArea{
             height: 80px;
             width: 100%;
             border: none;
@@ -29,9 +37,8 @@
         input, enrollBtn{
             transition:0.5s;
             cursor:pointer;
-            margin: 60px;
             float: center;
-            width: 170px;
+            width: 120px;
             height: 40px;
             border: none;
             background-color: rgb(241, 241, 241);
@@ -40,7 +47,7 @@
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        img{
+        .card-img{
             height:200px;
             width:100%;
           }
@@ -99,10 +106,7 @@
           .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
             transform: scale3d(1, 1, 1);
           }
-          .boardCard{
-            max-height:300px;
-            width:100%;
-          }
+
           .container_footer{
               margin-right:220px;
               float:right;
@@ -116,12 +120,14 @@
          	max-width:100px;
          	background-color: rgb(142, 211, 173);
          }
-        #eventCard{
+        #boardCard{
+            max-height:300px;
+            width:100%;
         	transition:0.5s;
             cursor:pointer;
         	background-color: rgb(142, 211, 173);
         }
-        #eventCard:hover {
+        #boardCard:hover {
         	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
@@ -133,29 +139,25 @@
 
   <div class="container mt-2 ">
      <div class="container mt-2 ">
-        <!--   <div class="card card-block mb-2">
-            <h4 class="card-title">Card 1</h4>
-            <p class="card-text">Welcom to bootstrap card styles</p>
-            <a href="#" class="btn btn-primary">Submit</a>
-          </div>   -->
         <div class="col-md-2">
             <div class="col-md-2" id="titleText"><h1>선행활동</h1></div>
             <br>
-            <div class="col-md-2 ">
-                <input type="button" id="allBtn" value="전체" class="active" />
-                <input type="button" id="seaBtn" value="바다" />
-                <input type="button" id="mountinBtn" value="산" />
-                <input type="button" id="villageBtn" value="동네" />
-                <input type="button" id="animalBtn" value="동물" />
-                <input type="button" id="etcBtn" value="기타" />
-                
-            </div> 
+            <form method="post" class="categoryForm">
+	            <div id="statusArea">
+	                <input type="button" id="allBtn" value="전체" class="active" />
+	                <input type="button" id="seaBtn" value="바다" />
+	                <input type="button" id="mountinBtn" value="산" />
+	                <input type="button" id="villageBtn" value="동네" />
+	                <input type="button" id="animalBtn" value="동물" />
+	                <input type="button" id="etcBtn" value="기타" />
+	            </div>
+            </form> 
             <div>
-            	<form>
-                    <section>
-                        <option value="최신순">최신순</option>
-                        <option value="오래된순">오래된순</option>
-                    </section>
+            	<form method="post">
+                    <select id="selectBox" onchange="selectSort();">
+                        <option type="button" id="newBtn" value="desc">최신순</option>
+                        <option type="button" id="oldBtn" value="asc">오래된순</option>
+                    </select>
                 </form>
             </div>
             <br>
@@ -168,22 +170,22 @@
             	<p style="display:none" > ${ vo.volNo } </p>
                 <div class="card ">
                     <div class="card-img">
-                      	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${vo.volChange}" alt="" style="height:200px; background-color:rgb(241, 241, 241)">
+                    	<img src="#" alt="NoImage" >
+                     
                     </div> 
                     <div class="card-content">
 	       	        	<p class="card-title mt-3 mb-3">${ vo.volTitle }</p>
 	                	<p class="card-user">${ vo.volWriter }</p>
-	                	<p class="card-data">조회수 : ${ vo.volCount } <span>좋아요 : ${ vo.volLike } </span></p> 
+	                	<p class="card-data">조회수 : ${ vo.volCount } <span>좋아요 : 0 </span></p> 
                 	</div>
                 </div>
             </div>
         	</c:forEach>
             <br>
-      
-            <hr>
-            <br>
-
-            <!-- Footer Search Area -->
+    </div>
+     <hr>
+     <br>
+         <!-- Footer Search Area -->
         <div class="container_footer">
             <div class="input-group icons">
                 <form id="searchBoardForm" class="form-inline">
@@ -239,15 +241,76 @@
         
         </div>
     </div>
-    </div>
 </div>
     <script>
-    $('input').click(function(){
-        if($(this).hasClass("active")){
-          $(this).removeClass("active");
-        }else{
-          $(this).addClass("active");  
-        }
+    function selectSort(){
+    	var sort = document.getElementById("selectBox");
+    	
+    	sort = sort.options[sort.selectedIndex].value;
+    	if(sort == "desc"){
+    		$.ajax({
+        		url: "list.vo",
+        		type: "post",
+        		cache: false,
+        		data: {"sort": sort},
+        		success: function(data){
+        			console.log(data);
+        			$("body").html(data);
+        		},
+        		error: function(data){
+        			alert("error");
+        		}
+        	});	
+    	}else{
+    		$.ajax({
+        		url: "sort.vo",
+        		type: "post",
+        		cache: false,
+        		data: {"sort": sort},
+        		success: function(data){
+        			console.log(data);
+        			$("body").html(data);
+        		},
+        		error: function(data){
+        			alert("error");
+        		}
+        	});	
+    	}
+    	
+    }
+    
+    
+    $('#statusArea input').click(function(){
+    	var chose = $(this).val();
+    	if(chose == "전체"){
+    		$.ajax({
+        		url: "list.vo",
+        		type: "post",
+        		cache: false,
+        		data: {"chose": chose},
+        		success: function(data){
+        			console.log(data);
+        			$("body").html(data);
+        		},
+        		error: function(data){
+        			alert("error");
+        		}
+        	});
+    	}else{
+    		$.ajax({
+        		url: "choseList.vo",
+        		type: "post",
+        		cache: false,
+        		data: {"chose": chose},
+        		success: function(data){
+        			console.log(data);
+        			$("body").html(data);
+        		},
+        		error: function(data){
+        			alert("error");
+        		}
+        	});
+    	}
       });
     
     $(function() {

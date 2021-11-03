@@ -1,12 +1,19 @@
 package com.pongsung.donet.event.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.event.model.dao.EventDao;
@@ -43,23 +50,12 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void insertEvent(Event e, List<Attachment> attList) {
+	public void insertEvent(Event e) {
 		// TODO Auto-generated method stub
 		int result = eventDao.insertEvent(sqlSession, e);
-		if(result > 0) {
-			for(Attachment at : attList) {
-				at.setRefEventNo(result);
-			}
-			if(!attList.isEmpty()) {
-				int result2 = eventDao.insertEventAttach(sqlSession, attList);
-				if(result2 < 0) {
-					throw new CommException(" 추가 사진 등록실패 ");
-				}
-			}
-		}else {
-			throw new CommException("이벤트 등록 실패 ");
+		if(result < 0) {
+			throw new CommException("게시글 등록 실패");
 		}
-		
 	}
 
 	@Override
@@ -72,11 +68,22 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void updateEvent(Event ev) {
+	public void updateEvent(Event ev,  List<Attachment> attList) {
 		// TODO Auto-generated method stub
+		
 		int result = eventDao.updateEvent(sqlSession, ev);
-		if(result < 0) {
-			throw new CommException("수정 실패 ");
+		if(result > 0) {
+			for(Attachment at : attList) {
+				at.setRefEventNo(result);
+			}
+			if(!attList.isEmpty()) {
+				int result2 = eventDao.updateEventAttach(sqlSession, attList);
+				if(result2 < 0) {
+					throw new CommException(" 추가 사진 수정실패 ");
+				}
+			}
+		}else {
+			throw new CommException("수정 실패");
 		}
 	}
 
@@ -110,6 +117,26 @@ public class EventServiceImpl implements EventService {
 		return eventDao.replyList(sqlSession, eno);
 	}
 
+	@Override
+	public int replyUpdate(EventReply eventReply) {
+		
+		int result = eventDao.replyUpdate(sqlSession,eventReply);
+		if(result < 0) {
+			throw new CommException("펀딩 댓글 수정 실패");
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		int result = eventDao.deleteReply(sqlSession, replyNo);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
+	}
+
+	
 
 	
 
