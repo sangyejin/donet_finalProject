@@ -18,9 +18,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
-* {
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 12px;
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    margin: 0;
+	padding: 0;
+}
 }
 
 .main-container {

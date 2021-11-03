@@ -77,11 +77,13 @@
                                              </tr>
                                         </thead>
                                         <tbody>
-                                        	<c:forEach items="${ list }" var="m">
+                                        	<c:forEach items="${ empty list }" var="m">
                                             <tr>
                                                 <td colspan="8">조회된 회원이 없습니다.</td>                                                
                                             </tr>
-                                           
+                                            </c:forEach>
+                                            
+                                            <c:forEach items="${ !empty list }" var="m">
                                             <tr>
                                                 <td>${ m.userId }</td>
                                                 <td>${ m.userName }</td> 

@@ -7,22 +7,80 @@
 <head>
 <meta charset="UTF-8">
 <title>도넷닷컴</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
 <style>
 	#pointLabel{color : gray; margin-left : 120px; margin-top : -22px; }
 	#forPointPayment:hover{ text-decoration : underline;}
-	#dvdLine{background : gray; width :455px; height : 0.01cm; margin-top : 5px; margin-bottom : 5px; margin-left : -45px;}
+	#dvdLine{background : gray; width :455px; height : 0.01cm; margin-top : 5px; margin-bottom : 5px; margin-left : -15px;}
+	
+	#pointView{
+		hieght: 40%;
+		width: 100%; 
+		/* float:none; */ 
+		/* margin:0 auto; */
+	}
+	.main-container {
+  width: 1280px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 700px 330px; /* 각 행(세로줄)의 길이 */
+  grid-template-rows: 900px 200px; /* 각 열(가로줄)의 길이 */
+  gap: 10px; /* 자식요소간의 간격 */
+}
+
+.temp-box {
+  background: #dee3eb;
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  border: 1px solid #dee3eb;
+
+}
+
+.box-two {
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+.box-two > div:first-child {
+  flex: 1;
+}
+.box-two > div:last-child {
+  flex: 1;
+}
+.gap-box {
+  background: #f2f4f7;
+  height: 10px;
+}
+.border-dee3eb {
+  border: 1px solid #dee3eb;
+}
+
+
 </style>
 </head>
 <body>
 	
      <jsp:include page="../common/menubar.jsp"/>
-	 <div class="col-xs-12" style="width: 30%; float:none; margin:0 auto">
-     <div class="content">
+     
+     <div class="main-container">
+     <div class="row temp-box box-one" >
+	 <div class="col-md-7" style="width: 30%; float:none; margin:0 auto">
+     <div class="content ">
         <br><br>
-        <div class="innerOuter">
+        <div class="innerOuter ">
         
             <h2>마이페이지</h2>
-            <div id="pointLabel">포인트 충전을 원하시면 <a id="forPointPayment" href="point.me">여기</a>를 클릭해주세요.</div>
+           <!--  <div id="pointLabel">포인트 충전을 원하시면 <a id="forPointPayment" href="point.me">여기</a>를 클릭해주세요.</div> -->
             <div id="dvdLine"></div>
       
             <br>
@@ -30,14 +88,10 @@
             <form action="update.me" method="post" onsubmit="">
                 <div class="form-group">
                     <label>* 아이디 :</label>
-                    <input type="text" class="form-control" name="userId" value="${ loginUser.userId }" readonly><br>
+                    <input type="text" class="form-control" name="userId" value="${ loginUser.userId }" readonly ><br>
                     
                     <label for="userName">* 이름 :</label>
-                    <input type="text" class="form-control" id="userName" name="userName" value="${ loginUser.userName }" readonly><br>
-                    
-                     <label for="gotPoint">* 보유 포인트 :</label>
-                    <input type="text" class="form-control" id="gotPoint" name="gotPoint" value="${ loginUser.point }" readonly><br>
-                    
+                    <input type="text" class="form-control" id="userName" name="userName" value="${ loginUser.userName }" readonly><br>                                                  
                     
                     <label for="userNick"> &nbsp; 닉네임 :</label>
                     <input type="text" class="form-control" id="userNick" name="userNick" value="${ loginUser.userNick }"><br>
@@ -51,10 +105,9 @@
                     <label for="birthdate"> &nbsp; 생년월일 :</label>
                     <input type="text" class="form-control" id="birthdate" name="birthdate" value="${ loginUser.birthdate }"><br>
                     
-                    <label for="address"> &nbsp; 주소 :</label><br>
+                    <label for="address"> &nbsp; - 주소 - </label><br>
                   <%-- <input type="text" class="form-control" id="address" name="address" value="${ loginUser.address }"><br>--%>
-                    
-                    
+                 
               	
 				<c:forTokens var="addr" items="${ loginUser.address }" delims="/" varStatus="status">
 					<c:if test="${ status.index eq 0 && addr >= '0' && addr <= '99999' }">
@@ -119,8 +172,10 @@
                 <br>
                 
                 <div class="btns" align="center">
-                	<a href="supportReply.me" class="text-primary">후프젝댓글</a> &nbsp;
+                	<a href="supportReply.me" class="text-primary">후원 후기 게시판</a> &nbsp;
+                	<c:if test="${ loginUser.userId eq 'admin' }">
                 	<a href="userList.me" class="text-primary">회원목록</a> &nbsp;
+                	</c:if>
                 	<a href="calendar.at" class="text-primary">출석체크</a>
                 	<button class="btn btn-primary"><a data-toggle="modal" data-target="#chagePwdModal">Pwd변경</a></button>
                     <button type="submit" class="btn btn-success">수정하기</button>
@@ -132,8 +187,80 @@
         </div>
         <br><br>
     </div>
-    </div>
-    <!-- div를 생성하여 나머지 정보들을 가져 올 수 있도록 함 포인트 만들기 -->
+   </div>
+ </div>
+
+<div class="temp-box box-two">
+<!-- 유저 포인트 뷰 -->
+	<div id="pointView" class="card text-center bg-light mb-3 h-30 border-dee3eb"> 				
+  			<div class="card-body">
+    			<h4 class="card-title">&nbsp;&nbsp; <h3 class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;${ sessionScope.loginUser.userName } 님의 페이 포인트</h3> </h4> <br>   			   			
+    				<h4 class="text">${ sessionScope.loginUser.point } pt.</h4>    			
+    				<br>
+    				<div class="float-center">
+    					<a href="point.me" class="btn btn-primary">포인트 충전</a>
+  					</div>
+  			</div>
+	  	<div class="card-footer text-muted">
+	    <a class="btn btn-success" href="list.do">후원 하기</a> &emsp; &emsp; 
+	    <a class="btn btn-success" href="list.ev">물품 후원</a> &emsp; &emsp; 
+	    <a class="btn btn-success" href="${ pageContext.servletContext.contextPath }/funding">펀딩 후원</a>
+	  </div>
+	  <ul class="list-group list-group-flush">
+    	<li class="list-group-item"><button class="btn btn-secondary w-100" href="">포인트 상세내역</button></li>
+   	  </ul>
+	</div>
+	
+	<div class="gap-box"></div>
+	
+	<div class="panel panel-default">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">Panel heading</div>
+	  <div class="panel-body">
+	    <p>...</p>
+	  </div>
+	
+	  <!-- Table -->
+	  <table class="table">
+	    ...
+	  </table>
+	</div>
+
+	<div class="gap-box"></div>
+
+	<div class="panel panel-default">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">Panel heading</div>
+	  <div class="panel-body">
+	    <p>...</p>
+	  </div>
+	
+	  <!-- Table -->
+	  <table class="table">
+	    ...
+	  </table>
+	</div>
+
+	<div class="gap-box"></div>
+
+		<div class="panel panel-default">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">Panel heading</div>
+	  <div class="panel-body">
+	    <p>...</p>
+	  </div>
+	
+	  <!-- Table -->
+	  <table class="table">
+	    ...
+	  </table>
+	</div>
+
+
+
+</div>
+	
+</div>
     
     <!-- 비밀번호 변경 클릭 시 뜨는 모달  -->
     <div class="modal fade" id="chagePwdModal">
@@ -170,6 +297,8 @@
             </div>
         </div>
     </div>
+	
+	
 	
 	<script>
 	

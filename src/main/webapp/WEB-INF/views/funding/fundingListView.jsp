@@ -36,12 +36,17 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
 
+<!-- jQuery --> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <title>도넷닷컴</title>
 <style>
-* {
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 1.4em;
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    margin: 0;
+	padding: 0;
 }
+
 
 .card {
 	margin-right: 0px !important;
@@ -218,12 +223,6 @@ select::-ms-expand {
 
 	<jsp:include page="../common/menubar.jsp" />
 	<div class="main">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">후원</a></li>
-				<li class="breadcrumb-item active" aria-current="page">펀딩 프로젝트</li>
-			</ol>
-		</nav>
 		<div class="div-top">
 			<div>
 				<div class="div-category-menu" >
@@ -297,9 +296,6 @@ select::-ms-expand {
 		
 	function selectFundingList(p,categoryNo,period,order,search){
 			//console.log("categoryNo"+categoryNo);
-			console.log("하아,,,,");
-			console.log(search);
-			console.log(p);
 			$.ajax({
 				url : "funding/list",
 				type : "post",
@@ -435,7 +431,7 @@ select::-ms-expand {
 				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
 				<i class="ti-angle-right"></i></a></li>`;
 			}
-			
+			${currentPage}
 			$("#pagination").html(temp);
 		}
 		
@@ -457,6 +453,49 @@ select::-ms-expand {
 			$("#searchText").text("'"+search+"'검색 결과입니다.");
 		}
 	</script>
+	
+	<!-- JS here -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
+
+	<!-- Date Picker -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/gijgo.min.js"></script>
+	<!-- Nice-select, sticky -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
+	<!-- Progress -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.barfiller.js"></script>
+
+	<!-- counter , waypoint,Hover Direction -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.counterup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/waypoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.countdown.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/hover-direction-snake.min.js"></script>
+
+	<!-- contact js -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/contact.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.form.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.validate.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/mail-script.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	
 </body>
 
 </html>

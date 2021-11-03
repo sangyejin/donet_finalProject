@@ -1,12 +1,20 @@
 -- FUNDING INSERT
-
-
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'기타');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'동물');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'재난');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'고아');
 
-
+BEGIN
+FOR i in 1..5
+LOOP
+insert into funding_project 
+values (SEQ_FUNDING_PROJECT.NEXTVAL,i||'크아아악','admin',100000000,100000,
+        to_date('2021-9-02'),to_date('2021-10-13'),'난민들의 고통을 어쩌구 <br>도와주세요 <br>', sysdate,
+        3,default,default,'2020.jpg'
+        ,'2020.jpg',default,sysdate);
+END LOOP;
+END;
+/
 BEGIN
 FOR i in 1..20
 LOOP
@@ -100,15 +108,5 @@ values(seq_beneficiary.nextval,'동물협회'||i,'02-1234-3456','서울특별시
 END LOOP;
 END;
 /
-
-select * from funding_project
-WHERE SYSDATE BETWEEN START_DATE AND CLOSING_DATE;
-
-select * from funding_project
-WHERE SYSDATE < START_DATE;
-
-select * from funding_project
-WHERE SYSDATE > CLOSING_DATE;
-
 
 commit;

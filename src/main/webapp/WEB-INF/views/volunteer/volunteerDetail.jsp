@@ -7,8 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
 	
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+   
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	    
     <style>
        *{
         margin:0 auto;
@@ -162,9 +175,10 @@
 	<div class="container mt-2 ">
         <h1>이벤트</h1>
         <br>
-       <article class="event_view_title"> 
-       		<c:forEach items="${ list }" var="vo">
+       <article class="vol_view_title"> 
+       		
         		<div class="vol_view_wrap">
+        		<p style="display:none" > ${ vo.volNo } </p>
             		<div class="statusBox">
 		                <!-- 게시글 제목 -->
 		                <p style="text-align:left; margin-left:20px; font-size:30px">${vo.volTitle }</p>
@@ -173,34 +187,28 @@
 		                <!-- 게시글 작성일 -->
 		                <span style="font-size:15px; float:left; margin-left:23px">${vo.volDate }</span>
 		                <!-- 게시글 추천 & 조회수 -->
-		                <span style="font-size:15px; float:right; margin-right:30px; padding-right:10px">추천 : ${vo.volLike } </span>
+		                <span style="font-size:15px; float:right; margin-right:30px; padding-right:10px" class="likeP">추천 : 0 </span>
 		                <span style="font-size:15px; float:right; margin-right:30px">조회수 : ${vo.volCount } </span>
             		</div>
         		</div>
-        	</c:forEach>
+        	
         </article>
             <br>
             <br>
-            <section class="event_view_wrap">
-                <div class="event_view_info">
+            <section class="vol_view_wrap">
+                <div class="vol_view_info">
 	                <div class="contentArea">
-	                <c:forEach items="${ list }" var="vo">
-	                	${ vo.volContent }
-	        		</c:forEach>
-	                	<c:if test="${ not empty at }">
+	               		${vo.volContent }
+	                	
+	                	<!-- <c:if test="${ not empty at }">
 	                	<c:forEach var="vat" items="${ at }" >
 	                			
 	                		<br><br>
 	                		</c:forEach>
-	                	</c:if>
+	                	</c:if>-->
 	                	</div>
 	                	<br>
-                    <!-- image -->
-                    
-                    <div class="imageArea">
-                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${vo.volChange}" alt="No" >
-                    </div>
-                    
+                   
                     <div class="view_info_hashtag">
                         <!-- hashtag area-->
                         <span style="padding-right: 10px;">#해쉬태그</span>
@@ -209,11 +217,30 @@
                         <span style="padding-right: 10px;">#해쉬태그</span>
                         <span style="padding-right: 10px;">#해쉬태그</span>
                         <span style="padding-right: 10px;">#해쉬태그</span>
+                        <button class="w3-button w3-black w3-round" id="likeBtn">
+	                       	<i class="fa fa-heart" style="font-size:15px">&nbsp;</i>
+	                    </button>
+                        <!-- 
+                        <c:choose>
+                        	<c:when test="${ nLike == 0 }">
+	                        	<button class="w3-button w3-black w3-round" id="likeBtn">
+	                        	<i class="fa fa-heart-o" style="font-size:15px">&nbsp;</i>
+	                        	</button>
+	                        	<input type="hidden" id="likeCheck" value="${ nLike }" />
+                        	</c:when>
+                        	<c:when test="${ nLike == 1 }">
+                        		<button class="w3-button w3-black w3-round" id="likeBtn">
+	                        	<i class="fa fa-heart" style="font-size:15px">&nbsp;</i>
+	                        	</button>
+	                        	<input type="hidden" id="likeCheck" value="${ nLike }" />
+                        	</c:when>
+                        </c:choose>
+                         -->
                         <br>
                         <hr align="center">
                     </div>
                 </div>
-                
+               
                 <br>
          
             <table id="replyArea" class="reply" align="center">

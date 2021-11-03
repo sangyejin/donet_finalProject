@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.event.model.vo.Attachment;
+import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.volunteer.model.dao.VolunteerDao;
 import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
@@ -24,46 +25,58 @@ public class VolunteerServiceImpl implements VolunteerService {
 	
 
 	@Override
-	public int selectVolunteerListCount() {
+	public int selectVolunteerListCount() throws Exception {
 		// TODO Auto-generated method stub
 		return volunteerDao.selectVolunteerListCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Volunteer> selectVolunteerList(PageInfo pi) {
+	public ArrayList<Volunteer> selectVolunteerList(PageInfo pi) throws Exception {
 		// TODO Auto-generated method stub
 		return volunteerDao.selectVolunteerList(sqlSession, pi);
 	}
 
 	@Override
-	public void insertVolunteer(Volunteer vo, List<VolAttachment> attList) {
+	public void insertVolunteer(Volunteer vo)  throws Exception{
 		int result = volunteerDao.insertVolunteer(sqlSession, vo);
-		if(result > 0) {
-			for(VolAttachment at : attList) {
-				at.setRefVolunteerNo(result);
-			}
-			if(!attList.isEmpty()) {
-				int result2 = volunteerDao.insertVolunteerAttach(sqlSession, attList);
-				if(result2 < 0) {
-					throw new CommException(" 추가 사진 등록실패 ");
-				}
-			}
-		}else {
+		
+		if(result < 0){
 			throw new CommException("이벤트 등록 실패 ");
 		}
 		
 	}
 
 	@Override
-	public Volunteer selectVolunteer(int vno) {
+	public Volunteer selectVolunteer(int vno) throws Exception{
 		// TODO Auto-generated method stub
+		volunteerDao.countVolunteer(sqlSession, vno);
 		return volunteerDao.selectVolunteer(sqlSession, vno);
 	}
 
 	@Override
-	public List<VolAttachment> selectVolunteerAttachment(int vno) {
+	public List<VolAttachment> selectVolunteerAttachment(int vno) throws Exception {
 		// TODO Auto-generated method stub
 		return volunteerDao.selectVolunteerAttachment(sqlSession, vno);
 	}
+
+	@Override
+	public int choseListCount(String chose) {
+		// TODO Auto-generated method stub
+		return  volunteerDao.choseListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Volunteer> choseList(PageInfo pi, String chose) {
+		// TODO Auto-generated method stub
+		return volunteerDao.choseList(sqlSession, pi, chose);
+	}
+
+	@Override
+	public ArrayList<Volunteer> sortList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return volunteerDao.sortList(sqlSession, pi);
+	}
+
+	
 
 }

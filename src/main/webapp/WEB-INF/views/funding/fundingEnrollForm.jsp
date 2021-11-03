@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,24 +9,32 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- 부트스트랩 	-->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- include libraries(jQuery, bootstrap) --> 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+<!-- CDN 파일 summernote css/js --> 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> 
+<!-- CDN 한글화 --> 
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 
 <style>
-* {
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 1em !important;
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    margin: 0;
+	padding: 0;
 }
+
 #fpName {
 	width: 800px;
 }
@@ -138,20 +147,10 @@ tbody tr td, thead tr th {
 }
 </style>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
-	<jsp:include page="../common/menubar.jsp" />
-
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">후원</a></li>
-			<li class="breadcrumb-item"><a href="#">펀딩 프로젝트</a></li>
-			<li class="breadcrumb-item active" aria-current="page">등록</li>
-		</ol>
-	</nav>
 	<div class="main">
 		<form id="insertForm" action="insert" method="post"
 enctype="multipart/form-data">
@@ -209,8 +208,13 @@ enctype="multipart/form-data">
 			<div class="div-content col-xs-12"
 				style="width: 800px; margin: auto;">
 				<label for="content">내용</label>
+				<!-- 
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
+				 -->
+			
+  				<textarea id="summernote" name="content" placeholder=""></textarea>
+
 				<label for="present">선물 <input id="btnInsertPresent"class="btn btn-default" type="button" value="+"></label>
 				<table id="tablePresent" class="table table-hover">
 					<thead>
@@ -256,10 +260,12 @@ enctype="multipart/form-data">
 					<inputb type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
 				<input type="file" name="file3" id="file3" onchange="loadImg(this, 3);">
 			</div>
+			<div id="imgArea" style="display:none;">
+				
+			</div>
 		</form>
 	</div>
-	<jsp:include page="../common/footer.jsp" />
-
+<jsp:include page="../common/footer.jsp" />
 	<script>
         $(function () {
             $("#fileArea").hide();
@@ -354,8 +360,121 @@ enctype="multipart/form-data">
  
             }
         });
-
+        
+        $('#summernote').summernote({
+            placeholder: '',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+          });
+        
+        
+        /*
+        $('#summernote').summernote({ 
+        	lang: 'ko-KR', // default: 'en-US' 
+        	height: 500, // set editor height 
+        	minHeight: 500, // set minimum height of editor 
+        	maxHeight: 500, // set maximum height of editor 
+        	focus: true, // set focus to editable area after initializing summe 
+        	callbacks: { 
+        		onImageUpload:
+        			//let temp=$(".form-control-file");
+        			//console.log(temp.value);
+        			function(files, editor, welEditable) { 	
+        				for (var i = files.length - 1; i >= 0; i--) {
+        					console.log(files[i]);
+        					console.log(this);
+        					//$("#imgArea").append(`<img src="'+url+'" class="summernoteimg_obj" id="'+file.name+'" width="100%" height="100%"/>`);
+        					//sendFile(files[i], this); 
+        					} 
+        				}
+        		} 
+        });
+        $("#summernote").summernote({ 
+        	onMediaDelete : function($target, editor, $editable) { 
+        						alert($target.context.dataset.filename); 
+        						$target.remove(); 
+        						} 
+        });
+        function sendFile(file, el) { 
+        	var form_data = new FormData(); 
+        	form_data.append('file', file); 
+        	$.ajax({ 
+        		data: form_data,
+        		headers : { 
+        			'X-CSRF-TOKEN': $("#csrf_token").val() },
+        			type: "POST", 
+        			url: 'image_upload',
+        			cache: false,
+        			contentType: false, 
+        			enctype: 'multipart/form-data',
+        			processData: false,
+        			async: false
+        	}).done(
+        		function( msg ) { 
+        			if(msg.result=='IMAGE_OK') {
+        				var url = msg.url; 
+        				id = msg.id; 
+        				$(el).summernote('editor.insertImage', url,fun_summernote_imgcallback);
+        				$('#imageBoard > ul').append('<li><img src="'+url+'" class="summernoteimg_obj" id="'+id+'" width="100%" height="100%"/></li>'); 
+        			} else { 
+        				showmessage("알림","이미지 파일이 아닙니다.",2000,''); } 
+        		}); 
+        	}
+        
+*/
+/*
+        $('#summernote').summernote({
+            placeholder: '',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            callbacks: {
+                onImageUpload : function(files, editor, welEditable){
+               	for(var i = files.length - 1; i>=0; i--){
+               		uploadFile(files[i],this);	  
+               		alert(files[i].name);
+               	}
+               }
+            }
+          });
+        function uploadFile(file, el){
+				var data = new FormData();
+				
+				data.append("file", file);	
+				/*
+				$.ajax({
+					data : data,
+					type : "POST",
+					url : "insert.ev",
+					cache : false,
+					contentType : false,
+					enctype : 'multipart/form-data',
+					processData : false,
+					success : function(url){
+						$(el).summernote('editor.insertImage', url);
+					}
+				});
+			}
+				*/
     </script>
+
 </body>
 
 </html>

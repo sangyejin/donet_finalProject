@@ -4,27 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>도넷닷컴</title>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
-   
-    <!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
-    <!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-	    
-	<!-- datepicker -->    
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	 
 <style>
 
 *{ font-family: 'Noto Sans KR', sans-serif !important;
@@ -114,12 +94,12 @@ a{ color : #000000;  text-decoration: none; }
                
             <!-- 로그인 전 -->
             <c:if test="${ empty sessionScope.loginUser }">
-       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="enrollForm.me" >회원가입</a> | <a class="noDecoration" href="loginForm.me" >로그인</a></div>
+       		<div class="loginDiv" id="userinfo"><a class="noDecoration" href="${ pageContext.servletContext.contextPath }/enrollForm.me" >회원가입</a> | <a class="noDecoration" href="${ pageContext.servletContext.contextPath }/loginForm.me" >로그인</a></div>
        		</c:if>
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="logout.me">로그아웃</a> </div>
+       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/logout.me">로그아웃</a> </div>
             </c:if>
         <br>
         
@@ -142,14 +122,14 @@ a{ color : #000000;  text-decoration: none; }
         
         <div id="secondLine"> 
             <ul>
-                 <li class="greenfont" id="1"><a href="introduce.pr">도넷 닷컴 소개</a>
+                 <li class="greenfont" id="1"><a href="${ pageContext.servletContext.contextPath }/introduce.pr">도넷 닷컴 소개</a>
                     <ul class="arrow_box">
-                        <li><a href="introduce.pr">프로젝트 소개</a></li>
-                        <li><a href="introduce.how">후원 방법</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/introduce.pr">프로젝트 소개</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/introduce.how">후원 방법</a></li>
                         <li><a>통계 조회</a></li>
                     </ul> 
                 </li>
-                <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
+                <li class="greenfont" id="2"><a href="${ pageContext.servletContext.contextPath }/list.do">후원 프로젝트</a>
                 
                 	<!--  서브메뉴 가림
                     <ul class="arrow_box">
@@ -162,24 +142,26 @@ a{ color : #000000;  text-decoration: none; }
                      -->
                      
                 </li>
-                <li class="greenfont" id="3"><a>이벤트</a>
+                <li class="greenfont" id="3"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
+                <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/goods">구호 물품</a>
+                
+                <li class="greenfont" id="5"><a>이벤트</a>
                     <ul class="arrow_box">
-                        <li><a href="list.ev">진행중인이벤트</a></li>
-                        <li><a href="afterList.ev">지난이벤트</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/list.ev">진행중인이벤트</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/afterList.ev">지난이벤트</a></li>
                         
                     </ul> 
                 </li>
-                <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
                 
                 </li>
-                <li class="greenfont" id="5"><a>고객지원</a>
+                <li class="greenfont" id="6"><a>고객지원</a>
                     <ul class="arrow_box">
-                        <li><a href="list.no">공지사항</a></li>
-                        <li><a href="list.faq">자주 묻는 질문</a></li>
-                        <li><a href="list.one">1:1 문의</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/list.no">공지사항</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/list.faq">자주 묻는 질문</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/list.one">1:1 문의</a></li>
                     </ul> 
                 </li>
-                <li class="greenfont" id="6"><a href="list.vo">선행활동</a>
+                <li class="greenfont" id="7"><a href="list.vo">선행활동</a>
                    <!--  <ul class="arrow_box"> 
                         <li><</li> 서브메뉴 필요없을 것 같아서 주석처리함
                         <li><a>?</a></li>
@@ -223,10 +205,11 @@ a{ color : #000000;  text-decoration: none; }
     </div> -->
     
     <script>
-    
-    	$("#logo").on('click', function(){
-    		location.href="/donet"
-    	})
+    	const logo = document.getElementById("logo");
+    	logo.onclick = function() { 
+    		location.href="${ pageContext.servletContext.contextPath }";
+    	}
+
     </script>
     
 </body>

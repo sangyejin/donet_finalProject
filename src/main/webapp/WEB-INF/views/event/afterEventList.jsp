@@ -7,8 +7,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-	
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+   
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
     <style>
    		body{
    			width: 100%;
@@ -168,18 +180,18 @@
         ========================= --> 
         
         <div class="row">
-        	<c:forEach items="${ list }" var="ev">
+        	<c:forEach items="${ list }" var="list">
             <div class="col-lg-4 col-md-6 col-sm-6" id="eventCard">
-            	<p style="display:none" > ${ ev.eventNo } </p>
+            	<p style="display:none" > ${ list.eventNo } </p>
                 <div class="single-cases mb-40">
                     <div class="cases-img">
-                    	<!-- <img src="" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> -->
+                    	
                     </div>
                     <div class="cases-caption">
-                    	<h2>${ ev.eventTitle }</h2>
+                    	<h2>${ list.eventTitle }</h2>
                     	<div class="dates d-flex justify-content-between">
-                        	<p>Start:<span> ${ fn:substring(ev.eventStart, 0,10) }</span></p>
-                            <p>Goal:<span> ${ fn:substring(ev.eventLast, 0,10) }</span></p>
+                        	<p>Start:<span> ${ fn:substring(list.eventStart, 0,10) }</span></p>
+                            <p>Goal:<span> ${ fn:substring(list.eventLast, 0,10) }</span></p>
                         </div>
                     </div>
                 </div>
