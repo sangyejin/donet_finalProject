@@ -106,7 +106,7 @@ public class EventController {
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
-		String resources = request.getSession().getServletContext().getRealPath("/resources");
+		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources  + "/upload_files/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();
@@ -119,7 +119,7 @@ public class EventController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
-			jsonObject.addProperty("url", "/summernoteImg/"+saveFileName);
+			jsonObject.addProperty("url", "resources/upload_files/" + saveFileName);
 			jsonObject.addProperty("responseCode", "succcess");
 		} catch(IOException e) {
 			FileUtils.deleteQuietly(targetFile);
@@ -127,24 +127,6 @@ public class EventController {
 			e.printStackTrace();
 		}	
 
-
-
-		/*
-		String changeName = saveFile(multipartFile, request);
-		
-		File targetFile = new File(changeName);	
-		try {
-			InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/resources/upload_files/"+changeName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
-				
-		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-			jsonObject.addProperty("responseCode", "error");
-			e.printStackTrace();
-		}
-		 */
 		
 		String result = jsonObject.toString();
 		return result;
@@ -162,51 +144,6 @@ public class EventController {
 		return "redirect:list.ev";
 	}
 	
-	/*
-	@RequestMapping("insert.ev")
-	public String insertEvent(Event e,HttpServletRequest request, 
-			MultipartHttpServletRequest multiRequest, Model model )
-			throws Exception {
-		
-		e.setEventContent( (e.getEventContent()).replace("\n", "<br>"));
-		
-		
-		Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
-		List<Attachment> attList = new ArrayList<>();
-		
-		Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
-		
-		for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
-			List<MultipartFile> fileList = entry.getValue();
-			
-			for(int i=0; i<fileList.size(); i++) {
-				String fileName = fileList.get(i).getOriginalFilename();
-				
-				if(fileName != "") {
-					String originName = fileList.get(i).getOriginalFilename();
-					String changeName = saveFile(fileList.get(i), request);	
-					
-					if(!("thumFile").isEmpty()) {
-						
-					}
-					else{ 
-						Attachment at = new Attachment();
-						at.setOriginName(originName);
-						at.setChangeName(changeName);
-						at.setRefEventNo(e.getEventNo());
-						attList.add(at);
-					}
-				}
-			}
-		}
-		
-		eventService.insertEvent(e, attList);
-		
-		return "redirect:list.ev";
-		
-	}
-	
-	*/
 	@RequestMapping("delete.ev")
 	public String deleteEvent(int eno, String fileName, HttpServletRequest request) {
 		System.out.println("delete check : " + eno );
