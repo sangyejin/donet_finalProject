@@ -208,12 +208,12 @@
     	</c:if>
     	
     	 /*****detail for table****/    	 
-        .number{ width: 100px;}
-        .category{width: 120px;}
+        .number{ width: 70px;}
+        .category{width: 110px;}
         .title{width : 380px;}
-		.writer{width: 100px;}
+		.writer{width: 80px;}
 		.date{width: 100px;}
-		.answered{width: 100px;}
+		.answered{width: 80px;}
        	.hidFirst{ display: none; }
         .detailAlter{margin-left : 40px; font-size : 12px}
         
