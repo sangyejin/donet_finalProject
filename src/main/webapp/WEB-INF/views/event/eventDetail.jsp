@@ -7,8 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-	
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+   
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	    
     <style>
        *{
         margin:0 auto;
@@ -166,7 +179,6 @@
        
             <header class="statusBox">
                 <p class="titleBox" style="font-size:30px"> ${ ev.eventTitle }
-                
                 	<span class="dateArea"> Goal : ${ fn:substring(ev.eventStart, 0,10) } ~ Start: ${ fn:substring(ev.eventStart, 0,10) } </span>
             	</p>
             </header>
@@ -175,21 +187,15 @@
             <br>
             <section class="event_view_wrap">
                 <div class="event_view_info">
-                 <div class="imageArea">
-                <c:if test="${ !empty ev.eventOrigin }">
-                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${ev.eventChange}" alt="No" >
-                </c:if>
-                </div>
-                
 	                <div class="contentArea">
 	               	<p> ${ ev.eventContent } </p>
-	                	<c:if test="${ !empty at }">
+	                	<!--<c:if test="${ !empty at }">
 		                	<c:forEach var="at" items="${ at }">
-		                		<!-- <img src="${pageContext.request.contextPath}/download?imageFileName=${imageFileName}"> -->
-		                		<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${at.changeName}" alt="No" >
-		                		<br><br>
+		                		
+		                		<!-- <img src="${ pageContext.servletContext.contextPath }/resources/upload_files/event/${at.changeName}" alt="No" > -->
+		                		<!--<br><br>
 		                	</c:forEach>
-	                	</c:if>
+	                	</c:if> -->
 	                	</div>
 	                	<br>
                     <!-- image -->
@@ -211,7 +217,7 @@
             					
             				</th>
             				<th>
-            					<button class="btn btn-secondary" id="addReply">등록하기</button>
+            					<input type="button" class="btn col-md-offset-1 col" id="addReply" value="등록">
             				</th>
             			</c:if>
             			<c:if test="${ empty loginUser }">
@@ -226,13 +232,14 @@
                     	
                     </tr>
             	</thead>
-            	<tbody class="replyZone">
+            	<tbody id="replyZone">
             	
             	</tbody>
             </table>
              <script>
    $(function(){
 	   selectReplyList();
+	   
    		$("#addReply").click(function(){
    			var eno = ${ev.eventNo};
    			
@@ -246,10 +253,12 @@
    					},
    					success:function(result){
    						if(result > 0){
+   							console.log("댓글 작성성공 ");
    							$("#replyContent").val("");
    							selectReplyList();
    						}else{
    							alert("댓글등록실패 ");
+   							console.log("댓글 작성실패 ");
    						}
    					},
    					error:function(){
@@ -268,32 +277,78 @@
 		   url:"rlist.ev",
 		   data:{eno:eno},
 		   type:"get",
-		   success:function(list){
-			   $("#rcount").text(list.length);
+		   success:function(replyList){
+			   $("#rcount").text(replyList.length);
 			   
 			   var value="";
 			   
-			   $.each(list, function(i, er){
-				   value += "<tr>"
-					    "<th>" + er.eventReplyWriter + "</th>" +
-			   			"<td>" + er.eventReplyContent + "</td>" + 
-			   			"<td>" + er.eventReplyDate + "</td>" ;
+			   $.each(replyList, function(i, er){
+				   value += "<tr class='replyArea'>" +  
+					    "<th class='replyWriter'>" + er.eventReplyWriter + "</th>" +
+			   			"<td class='replyContent'>" + er.eventReplyContent + "</td>" + 
+			   			"<td class='replyDate'>" + er.eventReplyDate + "</td>" +
+			   			"<td class='replyNo' style='display:none;'>"+ er.eventReplyNo +"</td>";
 				   
 				   if("${loginUser.userId}" == obj.eventReplyWriter){
-				   	value += "<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
-							"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
+				   	value += "<td><input type='button' class='replyBtn' onclick='updateReplyForm();' value='수정'></td>" +
+							"<td><input type='button' class='replyBtn' onclick='deleteReply("eno + ',' + er.eventReplyNo");' value='삭제'></td>" +
 						   	"</tr>";
 				   }else{
 						value += "</tr>";
 				   }
 			   });
-			   $(".replyZone").html(value);
+			   $("#replyZone").html(value);
 		   }, 
 		   error:function(){
 			   console.log("댓글 리스트 조회용 ajax 통신실패 ");
 		   }
 	   });
    };
+   function updateReplyForm(){
+	   const idx = $(".replyArea").index(event.target.parentElement.parentElement);
+	   const content = $(".replyArea").eq(idx).children('replyContent').html();
+	   
+	   $(".replyArea").eq(idx).children(".replyContent").html('<textarea style="width100%">' + content.replaceAll('<br>', '\n') + '</textarea>');
+	   $(".replyArea").eq(idx).children(".replyDate").html('<input type="button" class="replyBtn" onclick="updateReply();" value="수정"> <input type="button" class="replyBtn" onclick="selectReplyList();" value="취소">'); 
+	   
+   }
+   function updateReply(){
+	   var eno = "${ev.eventNo}";
+	   var idx = $(".replyArea").index(event.target.parentElement.parentElement);
+	   var content = $(".replyArea").eq(idx).children(".replyContent").children("textarea").val().replaceAll("\n", "<br>");
+	   var replyNo = $(".replyArea").eq(idx).children(".replyNo").val();
+	   console.log(replyNo);
+	   
+	   $.ajax({
+		   url :"updateReply.ev",
+		   type : "post",
+		   data : { replyContent:content },
+		   success : function(){
+			   alert("댓글이 수정되었습니다");
+			   selectReplyList();
+		   },
+		   error : function(){
+			   console.log("댓글 수정실패 ajax ");
+		   }
+	   });
+   }
+   function deleteReply(eno, replyNo){
+	   if(confirm("댓글을 삭제하시겠습니까?")){
+		   $.ajax({
+			   url :"deleteReply.ev",
+			   type : "get",
+			   success : function(){
+				   alert("댓글이 삭제되었습니다 ");
+				   selectReplyList();
+			   },
+			   error : function(){
+				   console.log("댓글 삭제 ajax 실패 ");
+			   }
+		   });
+	   }else {
+		   alert("댓글 삭제가 취소되었습니다 ");
+	   }
+   }
   
    </script>
          
