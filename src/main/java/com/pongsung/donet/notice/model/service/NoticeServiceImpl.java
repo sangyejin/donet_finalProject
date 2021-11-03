@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
 	@Autowired
 	private NoticeDao NoDao;
 
@@ -36,19 +36,19 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice selectThisNotice(int noticeNo) {
+	public Notice selectThisNotice(int noticeNo){
 		Notice no = null;
-
+		
 		int result = NoDao.getCount(sqlSession, noticeNo);
-
-		if (result > 0) {
+		
+		if(result > 0) {
 			System.out.println("선택된 공지사항 가지러 가는 중");
 			no = NoDao.selectThisNotice(sqlSession, noticeNo);
-		} else {
+		}else {
 			throw new CommException("조회수 오류");
-
+			
 		}
-
+		
 		return no;
 	}
 
@@ -65,11 +65,11 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void deleteGo(int noticeNo) {
 		int result = NoDao.deleteGo(sqlSession, noticeNo);
-
-		if (result < 0) {
+		
+		if(result < 0) {
 			throw new CommException("공지사항 삭제 실패");
 		}
-
+		
 	}
 
 	@Override
@@ -82,25 +82,28 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	/*
-	 * @Override public void insertSaveNotice(Notice no) { int result =
-	 * NoDao.insertSaveNotice(sqlSession, no);
-	 * 
-	 * if (result < 0) { throw new CommException("공지사항 추가 실패"); }
-	 * 
-	 * }
-	 */
+	@Override
+	public void insertSaveNotice(Notice no) {
+		int result = NoDao.insertSaveNotice(sqlSession, no);
+
+		if (result < 0) {
+			throw new CommException("공지사항 추가 실패");
+		}
+		
+	}*/
 
 	@Override
 	public void updateNotice(Notice no) {
 		int result = NoDao.updateNotice(sqlSession, no);
-
-		if (result < 0) {
+		
+		if(result < 0) {
 			throw new CommException("공지사항 업데이트 실패");
 		}
-
+		
 	}
 
 	/******************************************************************************************************************/
+	
 
 	@Override
 	public int selectFaqListCount(Category ctgry) {
@@ -111,7 +114,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<FrequentlyAskedQuestions> selectFaqList(PageInfo pi, Category ctgry) {
 		return NoDao.selectFaqList(sqlSession, pi, ctgry);
-
 	}
 
 	@Override
@@ -120,7 +122,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 		if (result < 0) {
 			throw new CommException("FAQ 추가 실패");
-		}
+		}		
 	}
 
 	@Override
@@ -131,8 +133,8 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void updateFaq(FrequentlyAskedQuestions faq) {
 		int result = NoDao.updateFaq(sqlSession, faq);
-
-		if (result < 0) {
+		
+		if(result < 0) {
 			throw new CommException("FAQ 업데이트 실패");
 		}
 	}
@@ -140,24 +142,25 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void deleteFaq(int faqNo) {
 		int result = NoDao.deleteFaq(sqlSession, faqNo);
-
-		if (result < 0) {
+		
+		if(result < 0) {
 			throw new CommException("FAQ 삭제 실패");
 		}
+		
+		
 	}
-
+	
 	/******************************************************************************************************************/
+
 
 	@Override
 	public int selectOneListCount(Member loginUser) {
 		return NoDao.selectOneListCount(sqlSession, loginUser);
-
 	}
 
 	@Override
 	public ArrayList<Ask> selectOneList(PageInfo pi, Member loginUser) {
 		return NoDao.selectOneList(sqlSession, pi, loginUser);
-
 	}
 
 	@Override
@@ -165,32 +168,31 @@ public class NoticeServiceImpl implements NoticeService {
 		int result = NoDao.insertOne(sqlSession, ask);
 
 		if (result < 0) {
-			throw new CommException("1:1문의 추가 실패");
-		}
-		
+			throw new CommException("문의 실패");
+		}	
 	}
 
 	@Override
 	public Ask selectThisAsk(int askNo) {
 		return NoDao.selectThisAsk(sqlSession, askNo);
-
 	}
 
 	@Override
 	public void updateOne(Ask ask) {
 		int result = NoDao.updateOne(sqlSession, ask);
-
-		if (result < 0) {
-			throw new CommException("1:1문의 답변 작성 실패");
+		
+		if(result < 0) {
+			throw new CommException("문의 답변 실패");
 		}
 	}
-	
+
 	@Override
 	public void deleteOne(int askNo) {
-		int result = NoDao.deleteOne(sqlSession, askNo);
-
-		if (result < 0) {
-			throw new CommException("1:1문의 삭제 실패");
+		int result = NoDao.deleteFaq(sqlSession, askNo);
+		
+		if(result < 0) {
+			throw new CommException("문의 삭제 실패");
 		}
 	}
+
 }

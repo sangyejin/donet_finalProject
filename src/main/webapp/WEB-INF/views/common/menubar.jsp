@@ -7,21 +7,22 @@
     
 <style>
 
-*{
-	font-family: 'Noto Sans KR', sans-serif;
+*{ font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;
 }
 
 #outline{
-    width: 1050px;
+    width: 100%;
     height: 110px;
     box-shadow: 0px 10px 5px -3px rgb(244, 244, 244);
     margin-bottom: 5%;
    	position : inline;
-   	margin-left : 150px;
+   	margin-left : 0;
 }
+
+#insideOfOutline{ width: 1050px; height: 110px; margin : auto;}
 
 ul>li{ list-style-type: none; }
 
@@ -61,17 +62,9 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 #outline > #logoLine > li{  float : left; }
 
-#logo{
-    margin-left: 25px;
-    width : 160px;
-    height: 70px;
-    margin-top : -5px;
-}
+#logo{ margin-left: 25px;  width : 160px; height: 70px; margin-top : -5px; }
 
-#userinfo{
- 	margin-left: 700px;
- 	margin-top : -35px;
-}
+#userinfo{ margin-left: 700px; margin-top : -35px; }
 
 #secondLine{  margin-top : -7px; }
 
@@ -81,27 +74,22 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 a{ color : #000000;  text-decoration: none; }
 
-.smallerFonts{
-	color : rgb(30, 154, 40);  
-	text-decoration: none;
-	font-size : 10px;
-}
-.loginDiv{
-color : rgb(30, 154, 40);  
-width : 300px;
-height : 30px;
-}
+.smallerFonts{ color : rgb(30, 154, 40);   text-decoration: none; font-size : 10px; }
+.loginDiv{ color : rgb(30, 154, 40); width : 300px; height : 30px; }
 
 </style>
 </head>
 <body>
+
 	<c:if test="${ !empty msg }">
 		<script>
 			alert("${msg}");
 		</script>
 		<c:remove var="msg" scope="session"/>
 	</c:if>
+	
     <div id="outline" align="center">
+    	<div id="insideOfOutline" >
             <div id = "right" rowspan="8"><img id="logo" src="${ pageContext.servletContext.contextPath }/resources/imgs/logo1.png" alt=""></div>
                
             <!-- 로그인 전 -->
@@ -142,6 +130,8 @@ height : 30px;
                     </ul> 
                 </li>
                 <li class="greenfont" id="2"><a href="list.do">후원 프로젝트</a>
+                
+                	<!--  서브메뉴 가림
                     <ul class="arrow_box">
                         <li><a href="global?suCategoryNo=1">지구촌</a></li>
                         <li><a href="environment?suCategoryNo=2">환경</a></li>
@@ -149,6 +139,8 @@ height : 30px;
                         <li><a href="child?suCategoryNo=4">아동/청소년</a></li>
                         <li><a href="vulnerable?suCategoryNo=5">취약계층</a></li>
                     </ul> 
+                     -->
+                     
                 </li>
                 <li class="greenfont" id="3"><a>이벤트</a>
                     <ul class="arrow_box">
@@ -167,16 +159,17 @@ height : 30px;
                         <li><a href="list.one">1:1 문의</a></li>
                     </ul> 
                 </li>
-                <li class="greenfont" id="6"><a>커뮤니티</a>
-                    <ul class="arrow_box"> 
-                        <li><a href="list.vo">선행활동</a></li>
+                <li class="greenfont" id="6"><a href="list.vo">선행활동</a>
+                   <!--  <ul class="arrow_box"> 
+                        <li><</li> 서브메뉴 필요없을 것 같아서 주석처리함
                         <li><a>?</a></li>
-                    </ul> 
+                    </ul>  -->
                 </li>                
                 
                 
 
 			</ul>
+            </div>
             </div>
     </div>
     

@@ -18,10 +18,12 @@ public class Goods {
 	private String goodsName;
 	private int goodsPrice;
 	private int goodsCategoryNo;
-	private int goodsCategoryName;
+	private String goodsCategoryName;
 	private String content;
 	private String thumbnailOriginName;
 	private String thumbnailChangeName;
 	private int hits;
 	private String status;
+	private int numberSupporter;
+	private Date createDate;
 }

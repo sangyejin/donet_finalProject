@@ -20,9 +20,58 @@
 
 <title>도넷닷컴</title>
 <style>
+body.dark-theme {
+	color: rgb(224, 224, 224);
+	background: black;
+}
+
+body.dark-theme a {
+	color: white;
+}
+
+body.dark-theme th {
+	color: black;
+}
+
+body.dark-theme .btn-toggle {
+	border-color: rgb(60, 179, 113);
+}
+
+body.light-theme {
+	color: black;
+	background: white;
+}
+
+body.light-theme a {
+	color: rgb(60, 179, 113);
+}
+
+body.light-theme .top {
+	color: white;
+}
+
 .outer {
 	width: 1050px;
 	margin: auto;
+}
+
+.top {
+	cursor: pointer;
+	color: white;
+	font-size: 14px;
+	background-color: rgb(60, 179, 113);
+	border-radius: 5px;
+	padding: 7px 5px 7px 7px;
+}
+.btn-toggle {
+	height: 35px;
+	cursor: pointer;
+	color: rgb(60, 179, 113);
+	font-size: 14px;
+	background-color: white;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	padding: 7px 5px 7px 7px;	
 }
 
 #greenLine {
@@ -31,15 +80,6 @@
 	height: 3px;
 	float: right;
 	margin-right: 1%;
-}
-
-.topTotop {
-	cursor: pointer;
-	color: white;
-	font-size: 14px;
-	background-color: rgb(60, 179, 113);
-	border-radius: 5px;
-	padding: 7px 5px 7px 7px;
 }
 
 .title {
@@ -376,7 +416,7 @@ d {
 }
 </style>
 </head>
-<body id="pageTop">
+<body class="dark-theme || light-theme">
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="outer">
@@ -388,7 +428,7 @@ d {
 
 			<div>
 				<img alt=""
-					src="${ pageContext.servletContext.contextPath}/resources/imgs/${s.thumbnailChange}"
+					src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}"
 					id="thumbnailImg">
 			</div>
 			<div class="detailInfo">
@@ -477,27 +517,24 @@ ${s.content}
 
 			<div class="slider-1">
 				<div class="slides">
-					<div class="active"
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/support.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/chchch.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/radesta.jpg?auto=compress,format);"></div>
-					<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/imgs/donation/rerere.jpg?auto=compress,format);"></div>
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
+						<div
+						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
+					
+					
+					</c:forEach>
 				</div>
 				<div class="page-btns">
-					<div class="active"></div>
+				<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
 					<div></div>
-					<div></div>
-					<div></div>
+				</c:forEach>
 				</div>
 				<div class="side-btns">
 					<div>
-						<span><i class="fas fa-angle-left"></i></span>
+						<span class="fas fa-angle-left"><</span>
 					</div>
 					<div>
-						<span><i class="fas fa-angle-right"></i></span>
+						<span class="fas fa-angle-right">></span>
 					</div>
 				</div>
 			</div>
@@ -578,7 +615,7 @@ ${s.content}
 						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 						<span style="margin-left: 7%;"><input type="text"
 							id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span> <span
-							style=""><input type="submit" class="btn btn-secondary" id="addReply" value="댓글등록" ></span>
+							style=""><input type="submit" class="btn btn-secondary" id="addReply" style="width:100px;" value="댓글등록" ></span>
 					</div>
                         </c:if>
             <table id="replyArea" class="table" align="center">
@@ -772,7 +809,7 @@ ${s.content}
 		 });
     	
     	function updateReply(){
-    		if(confirm("정말로 수정하시겠습니까?")){
+    		if(confirm("댓글을 수정하시겠습니까?(Y/N)")){
     		const suNo = "${s.suNo}";
     		console.log(suNo);
     		const content=$('#reply_text').val();
@@ -787,19 +824,16 @@ ${s.content}
     				replyContent:content
     			},
     			success : function() {
-    				alert("댓글이 수정되었습니다.");
+    				alert("댓글이 수정되었습니다");
     				selectReplyList();
     			},
     			error : function() {
     				console.log("댓글 리스트조회용 ajax 통신 실패");
     			}
     		});
-    		
-
-    		
-    		}
-    		
     	}
+    		
+    }
 
     </script>
 	<script>
@@ -855,9 +889,38 @@ ${s.content}
 		}, 3000);
 	</script>
 	<jsp:include page="../common/footer.jsp" />
+		<div class="subMenu">
 	<div
 		style="display: scroll; position: fixed; bottom: 10px; right: 5px;">
-		<a class="topTotop" href="#pageTop">TOP▲</a>
+		<a href="#" class="top">Top▲</a>
 	</div>
+	<div
+		style="display: scroll; position: fixed; bottom: 3px; right: 60px;">
+		<button class="btn-toggle">Dark-Mode</button>
+	</div>
+	</div>
+	<script type="text/javascript">
+		$(window).scroll(function() {
+			if ($(this).scrollTop() > 400) {
+				$('.subMenu').fadeIn();
+			} else {
+				$('.subMenu').fadeOut();
+			}
+		});
+
+		$('.top').click(function() {
+			$('html, body').animate({
+				scrollTop : 0
+			}, 400);
+			return false;
+		});
+
+		const btn = document.querySelector('.btn-toggle');
+		btn.addEventListener('click', function() {
+			document.body.classList.toggle('light-theme');
+		});
+	</script>
+	
+
 </body>
 </html>

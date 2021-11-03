@@ -12,6 +12,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class GoodsCategory {
-	private int categoryNo;
-	private String categoryName;
+	private int goodsCategoryNo;
+	private String goodsCategoryName;
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
@@ -17,17 +18,17 @@ import com.pongsung.donet.funding.model.vo.FundingSupporter;
 @Repository
 public class FundingDao {
 
-	public int selectFundingListCount(SqlSessionTemplate sqlSession) {
+	public int selectFundingListCount(SqlSessionTemplate sqlSession,FundingFilterOrder filterOrder) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("fundingMapper.selectFundingListCount");
+		return sqlSession.selectOne("fundingMapper.selectFundingListCount",filterOrder);
 	}
 
-	public List<Funding> selectFundingList(SqlSessionTemplate sqlSession,PageInfo pi) {
+	public List<Funding> selectFundingList(SqlSessionTemplate sqlSession,PageInfo pi,FundingFilterOrder filterOrder) {
 		// TODO Auto-generated method stub
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return sqlSession.selectList("fundingMapper.selectFundingList",null,rowBounds);
+		return sqlSession.selectList("fundingMapper.selectFundingList",filterOrder,rowBounds);
 	}
 
 	public List<FundingCategory> selectFundingCategoryList(SqlSessionTemplate sqlSession) {

@@ -22,7 +22,10 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <style>
-
+* {
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-size: 1em !important;
+}
 #fpName {
 	width: 800px;
 }
@@ -43,7 +46,7 @@
 }
 
 label {
-	display: block;
+	display: block !important;
 }
 
 #content {
@@ -188,7 +191,7 @@ enctype="multipart/form-data">
 					</div>
 					<div class="div-input">
 						<label for="">추가사진</label>
-						<div class="group-img container-fluid">
+						<div class="group-img">
 							<div class="div-contentImg col-xs-4" id="contentImg1">
 								<img class="contentImg" width="100px" id="img1">
 							</div>
@@ -208,8 +211,7 @@ enctype="multipart/form-data">
 				<label for="content">내용</label>
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
-				<label for="present">선물 <input id="btnInsertPresent"
-					class="btn btn-default" type="button" value="+"></label>
+				<label for="present">선물 <input id="btnInsertPresent"class="btn btn-default" type="button" value="+"></label>
 				<table id="tablePresent" class="table table-hover">
 					<thead>
 						<tr>

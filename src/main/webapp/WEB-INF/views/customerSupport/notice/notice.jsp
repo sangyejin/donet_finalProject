@@ -9,16 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 <style>
-* {
-	/*border: 1px red solid;*/
-	font-size: 10px;
-}
+* {font-size: 10px;}
 
 /*sidebar*/
 .sidebar {
 	width: 150px;
 	height: 400px;
-	margin-left: 25px;
+	margin-left: 60px;
 	padding: 0;
 	float: left;
 	margin-top: 0;
@@ -63,7 +60,7 @@
 	float: left;
 	margin-left: 5%;
 	margin-top: 0px;
-	width: 800px;
+	width: 725px;
 }
 
 #notice { font-size: 13px; font-weight: bolder; }
@@ -82,7 +79,7 @@
 #greenline {
 	margin-top: 7px;
 	margin-bottom: 0;
-	width: 800px;
+	width:  725px;
 	height: 1px;
 	border: 1px solid rgb(30, 154, 40);
 	background-color: rgb(30, 154, 40);
@@ -91,7 +88,7 @@
 #grayline {
 	margin-top: 5%;
 	margin-bottom: 2%;
-	width: 800px;
+	width: 725px;
 	height: 0.001cm;
 	border: 0.3px solid grey;
 	background-color: grey;
@@ -106,22 +103,19 @@ td {
 	border-bottom: 1px solid grey;
 }
 
-tr {
-	margin-top: 1%;
-	margin-bottom: 1%;
-}
+tr { margin-top: 1%; margin-bottom: 1%;}
 
-.number { width: 120px; }
+.number { width: 100px; }
 
 .title { width: 350px; }
 
-.writer { width: 120px; }
+.writer { width: 100px; }
 
-.date { width: 120px; }
+.date { width: 100px; }
 
-.viewed { width: 120px; }
+.viewed { width: 100px; }
 
-#whole { width: 1050px; margin-left: 150px; }
+#whole { width: 1050px; margin : auto;}
 
 /*button style*/
        	button{
@@ -139,15 +133,12 @@ tr {
         }
         
  /*single button style*/
- #goRound{
-            height: 25px;
+ #goRound{ height: 25px;
             width: 30px;
             border-style:none;
             border-radius: 7px;
             color: white; 
-            background-color: rgb(66, 178, 115); 
-            
-        }
+            background-color: rgb(66, 178, 115);  }
         
  #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
           
@@ -170,7 +161,7 @@ tr {
 	height: 25px;
 	border: 1px solid rgb(219, 217, 217);
 	border-radius: 5px;
-	margin-left: 75%;
+	margin-left: 525px;
 	margin-top: -2.5%;
 }
 
@@ -209,8 +200,6 @@ tr {
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
 .radioAlign{margin-right : 20px;}
-     
-        
 </style>
 
 </head>
@@ -219,7 +208,7 @@ tr {
 	<jsp:include page="../../common/menubar.jsp" />
 
 
-	<div id="whole">
+	<div id="whole" >
 
 		<div class="sidebar">
 			<h5 id="support">고객지원</h5>
@@ -351,7 +340,7 @@ tr {
 						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
 					
-					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" value="" required>
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="100" value="" required>
 				</div>
 			</div>
 			</form>
