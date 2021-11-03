@@ -146,13 +146,7 @@ tbody tr td, thead tr th {
 </head>
 
 <body>
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">후원</a></li>
-			<li class="breadcrumb-item"><a href="#">펀딩 프로젝트</a></li>
-			<li class="breadcrumb-item active" aria-current="page">등록</li>
-		</ol>
-	</nav>
+
 	<div class="main">
 		<form id="insertForm" action="insert" method="post"
 			enctype="multipart/form-data">

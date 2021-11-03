@@ -38,6 +38,12 @@
 
 <title>도넷닷컴</title>
 <style>
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    margin: 0;
+	padding: 0;
+}
 
 
 .card {
@@ -215,12 +221,6 @@ select::-ms-expand {
 
 	<jsp:include page="../common/menubar.jsp" />
 	<div class="main">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">후원</a></li>
-				<li class="breadcrumb-item active" aria-current="page">펀딩 프로젝트</li>
-			</ol>
-		</nav>
 		<div class="div-top">
 			<div>
 				<div class="div-category-menu" >
@@ -429,7 +429,7 @@ select::-ms-expand {
 				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
 				<i class="ti-angle-right"></i></a></li>`;
 			}
-			
+			${currentPage}
 			$("#pagination").html(temp);
 		}
 		

@@ -1,5 +1,7 @@
 package com.pongsung.donet.funding.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -7,16 +9,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +32,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -38,14 +46,12 @@ import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.service.FundingService;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingGoodsList;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
-import com.pongsung.donet.goods.model.vo.FilterOrder;
-import com.pongsung.donet.goods.model.vo.Goods;
-import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
@@ -73,7 +79,7 @@ public class FundingController {
 	// 펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
 			,Model model) {
 		
 //		@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
@@ -141,7 +147,7 @@ public class FundingController {
 			,@ModelAttribute FundingGoodsList fundingGoods, Model model)
 			throws Exception {
 		//multipartRequest.setCharacterEncoding("utf-8");
-		funding.setContent( (funding.getContent()).replace("\n", "<br>"));  
+		//funding.setContent( (funding.getContent()).replace("\n", "<br>"));  
 		funding.setHostId(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
 		List<FundingGoods> fgList=fundingGoods.getFundingGoods();
 		System.out.println("funding:::"+funding);
@@ -158,7 +164,6 @@ public class FundingController {
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
 			
 			//파일을 저장, 파일이름 변경
-			
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
 				if(fileName!="") { 
@@ -173,7 +178,8 @@ public class FundingController {
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
-						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						//img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						img.setImgNo(i);
 						imgList.add(img);
 					}
 				}
@@ -319,6 +325,4 @@ public class FundingController {
 		deleteFile.delete();
 		
 	}
-	
-	
 }

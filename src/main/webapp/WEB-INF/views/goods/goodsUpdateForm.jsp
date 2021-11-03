@@ -147,14 +147,6 @@ tbody tr td, thead tr th {
 
 <body>
 	<jsp:include page="../common/menubar.jsp" />
-
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">후원</a></li>
-			<li class="breadcrumb-item"><a href="#">펀딩 프로젝트</a></li>
-			<li class="breadcrumb-item active" aria-current="page">수정</li>
-		</ol>
-	</nav>
 	<div class="main">
 		<form id="updateForm" action="update" method="post" enctype="multipart/form-data">
 			<div class="div-content">
@@ -262,8 +254,6 @@ tbody tr td, thead tr th {
                 }
             }
         }
-        
-		
     </script>
 </body>
 
