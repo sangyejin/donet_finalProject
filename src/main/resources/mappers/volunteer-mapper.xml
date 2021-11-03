@@ -3,7 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="volunteerMapper">
-
 	<resultMap id="volunteerResultMap" type="Volunteer">
 		<id column="VOL_NO" property="volNo"/>
 		<result column="VOL_TITLE" property="volTitle"/>
@@ -13,15 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="VOL_POINT" property="volPoint"/>
 		<result column="VOL_STATUS" property="volStatus"/>
 		<result column="VOL_CATEGORY" property="volCategory"/>
-		<result column="VOL_ORIGIN" property="volOrigin"/>
-		<result column="VOL_CHANGE" property="volChange"/>
+		<result column="VOL_COUNT" property="volCount"/>
 	</resultMap>
 	<resultMap id="volunteerAttachResultMap" type="VolAttachment">
 		<id column="VOL_AT_FILENO" property="fileNo" />
 		<result column="VOL_AT_REF_NO" property="refVolunteerNo" />
 		<result column="VOL_AT_ORIGIN" property="originName" />
 		<result column="VOL_AT_NEWNAME" property="changeName" />
-		<result column="VOL_AT_LOCATION" property="fileLocation" />
 	</resultMap>
 	<resultMap id="volunteerReplyResultMap" type="VolunteerReply">
 		<id column="VOL_REPLY_NO" property="volReplyNo" />
@@ -46,14 +43,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <insert id="insertVolunteer" parameterType="Volunteer">
    		INSERT INTO VOLUNTEER
    		VALUES(SEQ_VOL.NEXTVAL, #{volTitle}, #{volContent},#{volWriter}, SYSDATE,
-   		DEFAULT ,DEFAULT , #{volCategory},#{volOrigin}, #{volChange}, DEFAULT, DEFAULT)
+   		DEFAULT ,DEFAULT , #{volCategory}, DEFAULT)
    </insert>
    <insert id="insertVolunteerAttach" parameterType="java.util.List" >
-   		INSERT INTO VOL_ATTACHMENT (VOL_AT_FILENO, VOL_AT_REF_NO, VOL_AT_ORIGIN, VOL_AT_NEWNAME, VOL_AT_LOCATION )
+   		INSERT INTO VOL_ATTACHMENT (VOL_AT_FILENO, VOL_AT_REF_NO, VOL_AT_ORIGIN, VOL_AT_NEWNAME )
    		SELECT SEQ_VOL_ATTA.NEXTVAL, SEQ_VOL.CURRVAL, A.* 
    		FROM(
    		<foreach collection="list" item="item" separator=" UNION ALL ">
-   		 SELECT #{item.originName}, #{item.changeName}, #{item.fileLocation} FROM DUAL
+   		 SELECT #{item.originName}, #{item.changeName} FROM DUAL
    		</foreach>)A
    </insert>
    <select id="selectVolunteer" parameterType="_int" resultMap="volunteerResultMap">
@@ -67,4 +64,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	FROM VOL_ATTACHMENT
     	WHERE VOL_AT_REF_NO = #{vno}
    </select>
+   <update id="countVolunteer" parameterType="_int">
+   		UPDATE VOLUNTEER SET
+   		VOL_COUNT = VOL_COUNT+1
+   		WHERE VOL_NO=#{vno}
+   		
+   </update>
+   <select id="choseList" resultMap="volunteerResultMap">
+   		SELECT *
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' AND VOL_CATEGORY=#{chose}
+		ORDER BY VOL_NO DESC
+   </select>
+   <select id="choseListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' AND VOL_CATEGORY=#{chose}
+	</select>
+	<select id="sortList" resultMap="volunteerResultMap">
+		SELECT *
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' 
+	</select>
 </mapper>

@@ -146,7 +146,7 @@
 							<img id="image" style="width:350px; height:350px; border-radius: 20%;"/>
 						</div>
 					</div>
-						    <input type="file" id="files" />
+						    <input type="file" id="files" name="thumbFile"/>
 				</span>
 				<span style="float:right; margin-right:15%;">
 				<br><br>
@@ -165,7 +165,7 @@
 					<c>후원 기간</c>
 					<div>
 						<input type=date id="start" name="suStart" required style="width:150px; height:40px">
-						<c> ~ </c><input type=date id="end" name="suDate" required style="width:150px; height:40px">
+						<c> ~ </c><input type=date id="end" name="suLast" required style="width:150px; height:40px">
 					</div>
 				</span>
 			</div></div><br><br><br>
@@ -186,18 +186,19 @@
 					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
 				<div  style="margin-top:1%; width:1000px;">
-					<span><input type="file" id="attach1" class="attachFileLoad" style="margin-left:8%;"/></span>
-					<span><input type="file" id="attach2" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach3" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach4" class="attachFileLoad" /></span>
+					<span><input type="file" id="attach1" name="file1" class="attachFileLoad" style="margin-left:8%;"/></span>
+					<span><input type="file" id="attach2" name="file2" class="attachFileLoad" /></span>
+					<span><input type="file" id="attach3" name="file3" class="attachFileLoad" /></span>
+					<span><input type="file" id="attach4" name="file4" class="attachFileLoad" /></span>
 				</div>
 			</div><br><br><br><br><br><br>
 			<e>기부금 사용계획</e>
-			<button id="addRow" onClick="userAdd()"> 행 추가 </button>
+			<button id="addRow"> 행 추가 </button>
 			<div style="text-align: center;">
 				<table id="useplan">
 				<thead>
 					<tr id="addTr"> 
+					<th>번호</th>
 					<th>구분</th>
 					<th>상세 내용</th>
 					<th>사용 금액</th>
@@ -207,6 +208,9 @@
 			</thead>
 			<tbody>
 			<tr>
+				<td style="vertical-align: middle">1
+					<input type='hidden' name='upNo' value="1">
+				</td>
 				<td><input type="text" class="useplanTd" name="division" placeholder="구분"></td>
 				<td><input type="text" class="useplanTd" name="content" placeholder="상세내용"></td>
 				<td><input type="number" class="useplanTd" name="amount" min="1000" step="100" placeholder="사용금액"></td>
@@ -236,24 +240,22 @@
 	</div>
 	
 	<script type="text/javascript">
-		var baseCamp = 0;
-		const userAdd = ()=> {  
-			var trCnt = document.getElementsByTagName('tr').length;
-			var inner = "";
-			if(baseCamp != 0){
-				  trCnt = baseCamp;
-			}
-			if(trCnt <= 11) {
-				
-			    inner += '<tr>';
-			    inner += 	'<td><input type="text" class="useplanTd" name="division" placeholder="구분"></td>';
-			    inner += 	'<td><input type="text" class="useplanTd" name="content" placeholder="상세내용"></td>';
-			    inner += 	'<td><input type="number" class="useplanTd" name="amount" min="1000" step="100" placeholder="사용금액"></td>';
-			    inner += 	'<td><button class="btnDelete" name="btnDelete">삭제</button></td>';
-			    inner += '</tr>';
-			}
-			$('#addTr').after(inner);
-		};
+        $('#addRow').click(function () {
+            const table = document.getElementById('useplan');
+            const totalRowCnt = table.rows.length;
+            const len = String(table.tBodies[0].rows.length + 1);
+           	
+            var html = `<tr>
+            			<td name='tdUpNo' style='vertical-align:middle'>`+len+`<input class='useplanTd' type='hidden' name='upNo' value=`+len+`>
+            			</td><td><input class='useplanTd' type='text' name='division' placeholder='구분' required></td>
+                    	<td><input class='useplanTd' type='text' name='content' placeholder='상세내용' required></td>
+                    	<td><input class='useplanTd' type='number' name='amount' min='1000' step='100' placeholder='사용금액' required></td>
+                    	<td><button class='btnDelete'  name='btnDelete'>삭제</button></td>
+                		</tr>`;
+              
+            $("#useplan tbody").append(html);
+            
+        });
 	 	
 	    
 	    //삭제 버튼
@@ -318,6 +320,7 @@
 	
 	$("#submit").click(function(){
 		$("#useplan tbody tr").each( function (index) {
+	        $(this).find("input[name=upNo]").attr("name", "supportUsePlan[" + index + "].upNo");
 	        $(this).find("input[name=division]").attr("name", "supportUsePlan[" + index + "].division");
 	        $(this).find("input[name=content]").attr("name", "supportUsePlan[" + index + "].content");
 	        $(this).find("input[name=amount]").attr("name", "supportUsePlan[" + index + "].amount");
@@ -354,6 +357,6 @@
    </script>		
 
 	<jsp:include page="../common/footer.jsp" />
-	<div style="display:scroll;position:fixed;bottom:10px;right:5px;"><a class="topTotop" href="#pageTop">TOP▲</a></div>
+	<jsp:include page="../donation/subMenu.jsp" />
 </body>
 </html>

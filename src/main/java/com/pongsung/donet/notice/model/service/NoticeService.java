@@ -3,6 +3,8 @@ package com.pongsung.donet.notice.model.service;
 import java.util.ArrayList;
 
 import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.member.model.vo.Member;
+import com.pongsung.donet.notice.model.vo.Ask;
 import com.pongsung.donet.notice.model.vo.Category;
 import com.pongsung.donet.notice.model.vo.FrequentlyAskedQuestions;
 import com.pongsung.donet.notice.model.vo.Notice;
@@ -44,6 +46,20 @@ public interface NoticeService {
 	void updateFaq(FrequentlyAskedQuestions faq);
 
 	void deleteFaq(int faqNo);
+
+	/******************************************************************************************************************/
+
+	int selectOneListCount(Member loginUser);
+
+	ArrayList<Ask> selectOneList(PageInfo pi, Member loginUser);
+
+	void insertOne(Ask ask);
+
+	Ask selectThisAsk(int askNo);
+
+	void updateOne(Ask ask);
+
+	void deleteOne(int askNo);
 
 
 }

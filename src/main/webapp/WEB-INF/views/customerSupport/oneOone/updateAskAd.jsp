@@ -189,6 +189,7 @@
     #footerAdjust{ margin : 0; padding : 0; position : absolute;}
 </style>
 
+
 </head>
 <body>
 	<jsp:include page="../../common/menubar.jsp" />
@@ -222,123 +223,124 @@
 
 
 		<div id="thelist">
-			<span id="notice">1:1문의 작성</span>
-			<span id="subnote">부적절한 언어 사용시 무통보 삭제처리 됩니다. 수정 및 삭제가 불가능하니 신중하게 작성해주세요.</span>
+			<span id="notice">1:1문의 답변</span>
+
 			<div id="greenline"></div>
 
 			<div id="sideGreenbar"></div>
-			
-			<form id="InsertOne" method="post" action="insert.one" enctype="multipart/form-data">
+
+			<form id="UpdateOne" method="post" action="update.one"
+				enctype="multipart/form-data">
 				<div id="getInThere">
-					<span id="headTitle"><label for="askTitle">질문</label> 
-						<div id="titleDiv">
-							<input type="text" id="askTitle" name="askTitle"  maxlength='30' required></span>
-						</div>
-					<div class="grayline"></div>
+					<span id="headTitle"><label for="askTitle">질문</label> <input
+						type="text" id="askNo" name="askNo" value="${ask.askNo}"
+						hidden="true">
+						<p id="askTitle">${ask.askTitle}</p>
+						<div class="grayline"></div>
 
-					<div id="radioType">구분</div>
-
-					<div id="radios">
-						<input type="radio" name="searchtype" id="userquery" value="1"
-							required> <label class="radioAlign" for="userquery">회원문의</label>
-
-						<input type="radio" name="searchtype" id="payrefund" value="2"
-							required> <label class="radioAlign" for="payrefund">결제/환불</label>
-
-						<input type="radio" name="searchtype" id="etc" value="3" required>
-						<label class="radioAlign" for="etcs">서비스 이용 및 기타</label>
-					</div>
-					
-					<div class="grayline"></div>
-
-					<div id="headjustify">
-						<label id="imgLabel" id="askOriginImg">사진</label>
-						<div class="clickable" id="differ">
-							<label for="askOriginImg" id="forThisImage" > <img
-								class="biggerimg"
-								src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-								업로드된 사진은 하단에서 확인 가능합니다.
+						<div id="headjustify">
+							<label>질문<br>구분
 							</label>
+							<div id="questionType">${ask.askTypeName}</div>
 						</div>
-						<input type="file" id="askOriginImg" name="askOriginImg"
-							hidden="true" accept="image/*">
 
-					</div>
+						<div class="grayline"></div> <span> <label
+							class="askContent" for="askContent">문의<br>내용
+						</label>
+					</span>
 
-					<div class="grayline"></div>
 
-					<span><label class="askContent" for="askContent">문의<br>내용</label></span>
-					<div id="imgViewArea">
-						
-						<div class="imgWrapper">
-							<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/imgs/empty.png" style="width : 200px; height : 200px;" onerror="imgAreaError()"/>
+						<div id="imgBox">
+							<c:if test="${ ! empty ask.askNewImg  }">
+								<img id="imgArea"
+									src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
+									style="width: 200px; height: 200px;" onerror="imgAreaError()" />
+							</c:if>
+
+							<p id="askContent">${ask.askContent}</p>
+
 						</div>
-						
-						<textarea class="form-control" id="asktag" name="askContent" rows="10"
-							style="resize: none;" maxlength="1000" wrap=on  required>
-	       				 </textarea>
-					</div>
 
-				<div id="buttons">
-					<button class="goRound" id="insertAlert" type="submit">문의</button>
-				</div>
+						<div class="contentLine"></div> <span> <label
+							class="askContent" for="answered">답변</label>
+					</span> <textarea class="form-control" id="answered" name="answered"
+							rows="10" style="resize: none;" maxlength="1000" wrap="on"
+							required>${ask.answered}</textarea>
 
+
+						<div id="buttons">
+							<button class="goRound" type="submit">답변</button>
+						</div>
 			</form>
 
-			<div id="buttonSecondPart">
-				<button class="goRound" onclick="backToList();">목록</button>
-			</div>
+
+
+
 			
+			
+				<form id="deleteOne" method="post" action="delete.one">
+					<input type="text" id="askNo" name="askNo" value="${ask.askNo}"
+						hidden="true">
+					<button class="goRound" type="submit">삭제</button>
+				</form>
+				
+				<div id="buttonSecondPart">
+				<button id="backToList"class="goRound" onclick="backToList();">목록</button>
+				</div>
+
 		</div>
 
-		<div id="footerAdjust">
+		<div id="gotoLEFT">
 			<jsp:include page="../../common/footer.jsp" />
 		</div>
 
-
-<script>
-	function backToList(){
-		  location.href="list.one";
-	}
-</script>
-
-<!-- 파일 첨부 여부 스타일 -->
-	<script type="text/javascript">
-	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#imgArea').attr('src', e.target.result); 
+		<script>
+			function backToList() {
+				location.href = "list.one";
 			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
+		</script>
 
-	$(":input[name='askOriginImg']").change(function() {
-		if( $(":input[name='askOriginImg']").val() == '' ) {
-			$('#imgArea').attr('src' , '');  
-		}
-		$('#asktag').css({ 'display' : '' });
-		readURL(this);
-	});
 
-	// 이미지 에러 시 미리보기영역 미노출
-	function imgAreaError(){
-		$('#asktag').css({ 'display' : 'none' });
-	}
-	</script>
-	
-	<!-- 어딜 눌러도 텍스트영역으로 -->
-	<script>
-		$('#imgViewArea').on('click', function(){
-			$('#asktag').focus();
-		})
-		
-		$('#imgArea').on('click', function(){
-			$('#asktag').focus();
-		})
-		
-	</script>
+		<!-- 파일 첨부 여부 스타일 -->
+		<script type="text/javascript">
+			// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('#imgArea').attr('src', e.target.result);
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+
+			$(":input[name='askOriginImg']").change(function() {
+				if ($(":input[name='askOriginImg']").val() == '') {
+					$('#imgArea').attr('src', '');
+				}
+				$('#imgArea').css({
+					'display' : ''
+				});
+				readURL(this);
+			});
+
+			// 이미지 에러 시 미리보기영역 미노출
+			function imgAreaError() {
+				$('#imgArea').css({
+					'display' : 'none'
+				});
+			}
+		</script>
+
+		<!-- 어딜 눌러도 텍스트영역으로 -->
+		<script>
+			$('#imgViewArea').on('click', function() {
+				$('#asktag').focus();
+			})
+
+			$('#imgArea').on('click', function() {
+				$('#asktag').focus();
+			})
+		</script>
 </body>
 </html>

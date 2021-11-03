@@ -7,8 +7,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-	
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	<!-- Latest compiled JavaScript -->
+
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+
     <style>
    		body{
    			width: 100%;
@@ -50,7 +61,7 @@
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        img{
+        .card-img{
             height:200px;
             width:100%;
           }
@@ -129,7 +140,7 @@
         #eventCard{
         	transition:0.5s;
             cursor:pointer;
-        	background-color: rgb(142, 211, 173);
+        	border:1px solid gray;
         }
         #eventCard:hover {
         	transform: scale(1.05);
@@ -140,13 +151,8 @@
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
-   <div class="container mt-2 ">
-       <div class="container mt-2 ">
-        <!--   <div class="card card-block mb-2">
-            <h4 class="card-title">Card 1</h4>
-            <p class="card-text">Welcom to bootstrap card styles</p>
-            <a href="#" class="btn btn-primary">Submit</a>
-          </div>   -->
+<div class="container mt-2 ">
+	<div class="container mt-2 ">
         <div>
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
@@ -170,7 +176,7 @@
             	<p style="display:none" > ${ list.eventNo } </p>
                 <div class="card">
                     <div class="card-img">
-                    	<img src="${ pageContext.servletContext.contextPath }/resources/upload_files/${list.eventChange}" alt="" style="height:200px; background-color:rgb(241, 241, 241)"> 
+                    	 <img src="#" alt="NoImage" >
                     </div>
                     <div class="card-content">
                     	<p class="card-title mt-3 mb-3">${ list.eventTitle }</p>
@@ -180,7 +186,8 @@
                 </div>
             </div>
             </c:forEach>
-        </div>    
+        </div>  
+        <br>  
         <!-- ========================= 
             Paging Area 
         ========================= --> 
@@ -251,7 +258,7 @@
             </div>
         </div>
     </div>
-
+</div>
 	<script>
 		$(function() {
 			$(".row #eventCard").click(function(){
