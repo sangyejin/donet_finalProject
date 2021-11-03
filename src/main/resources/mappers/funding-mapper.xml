@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
 		<result property="fpWriteDate" column="FP_WRITE_DATE" />
 		<result property="numberSupporter" column="NUMBER_SUPPORTER" />
+		<result property="dDay" column="D_DAY" />
 	</resultMap>
 	
 	<!-- 펀딩 이미지 -->
@@ -77,10 +78,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select COUNT(*)
 		from FUNDING_PROJECT
 		where STATUS='Y'
-		<if test="categoryNo != 0 ">
+		<if test="categoryNo!=0">
 			AND CATEGORY_NO = #{categoryNo}
 		</if>
-		<if test="search != null ">
+		<if test="period!=null and !period.equals('')">
+			AND ${period}
+		</if>
+		<if test="search!=null and !search.equals('')">
 			AND FP_NAME LIKE '%'||#{search}||'%'
 		</if>
 	</select>
@@ -89,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectFundingList" parameterType="FundingFilterOrder" resultMap="fundingResultSet">
 		select FP_NO, FP_NAME, B.USER_NAME, GOAL,RAISED, START_DATE, CLOSING_DATE
     		, A.CATEGORY_NO, HITS, THUMBNAIL_ORIGIN_NAME
-    		, THUMBNAIL_CHANGE_NAME, C.FUNDING_CATEGORY_NAME
+    		, THUMBNAIL_CHANGE_NAME, C.FUNDING_CATEGORY_NAME,CLOSING_DATE-START_DATE AS "D_Day"
 		from FUNDING_PROJECT A
 			join MEMBER B on A.HOST_ID=B.USER_ID
 			join FUNDING_CATEGORY C on A.CATEGORY_NO = C.FUNDING_CATEGORY_NO
@@ -97,10 +101,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="categoryNo != 0 ">
 			AND A.CATEGORY_NO = #{categoryNo}
 		</if>
-		<if test="search != null ">
+		<if test="period != null and !period.equals('')">
+			AND ${period}
+		</if>
+		<if test="search != null and !search.equals('')">
 			AND FP_NAME LIKE '%'||#{search}||'%'
 		</if>
-		<if test="order != null ">
+		<if test="order != null and !order.equals('')">
 			ORDER BY ${order}
 		</if>
 	</select>

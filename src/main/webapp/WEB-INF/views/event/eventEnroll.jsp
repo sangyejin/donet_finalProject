@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도넷닷컴</title>
 <style>
 	
    	#eForm{
@@ -42,17 +44,39 @@
    		height: 150px;
    		margin: 10px;
    }
+   .editor{
+   		width: 100%;
+   		hieght: 600px;
+   }
 </style>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	
+	<!-- datepicker -->    
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- Summernote -->
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+
+	
 </head>
 <body>
-<jsp:include page="../common/menubar.jsp" /> 
+<jsp:include page="../common/menubar.jsp" />
 <div class="container">
 	<div class="row text-center">
 		<div class="col-md-12" style="float:none; margin:0 auto; " id="eForm">
         <h1>이벤트 생성하기</h1>
         <br>
        	
-       	<form id="erollForm" method="post" action="insert.ev" enctype="multipart/form-data" onsubmit="getContent();">
+       	<form id="erollForm" method="post" action="insert.ev" enctype="multipart/form-data" >
        		<table align="center" >
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
@@ -67,78 +91,9 @@
        				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly"></td>
        			</tr>
        			
-       			<tr class="form-group">
-       				<th><label for="thum">썸네일 이미지</label></th>
-       				<td><img alt="" src="" id="thumImg" class="img" ></td>
-       			</tr>
-       			<tr>
-       				<th><label for="">추가 등록</label></th>
-       				<td>
-	       				<img class="img" id="plusImg1">
-	       				<img class="img" id="plusImg2">
-	       				<img class="img" id="plusImg3">
-       				</td>       			
-       			</tr>
-       			
-       			<tr class="form-group">
-       				<th><label for="postContent">내용</label></th>
-       				<td><textarea id="postContent" name="eventContent" class="form-control" ></textarea></td>
-       			</tr>
        			</table>
-       			<div id="fileArea">
-       				<input type="file" name="thumFile" id="thumFile" onchange="thum(this, 0);">
-       				<input type="file" name="plusFile" id="plusFile1" onchange="thum(this, 1);">
-       				<input type="file" name="plusFile" id="plusFile2" onchange="thum(this, 2);">
-       				<input type="file" name="plusFile" id="plusFile3" onchange="thum(this, 3);">
-       			</div>
-       			<script type="text/javascript">
-	       			$(function(){
-	       				$("#fileArea").hide();
-	       				$("#thumImg").click(function(){
-	       					$("#thumFile").click();
-	       				});
-	       				$("#plusImg1").click(function(){
-	       					$("#plusFile1").click();
-	       				});
-	       				$("#plusImg2").click(function(){
-	       					$("#plusFile2").click();
-	       				});
-	       				$("#plusImg3").click(function(){
-	       					$("#plusFile3").click();
-	       				});
-	       			});
-	       			
-	       			function thum(inputFile, num){
-	       				if(inputFile.files.length == 1){
-	       					var reader = new FileReader();
-	       					reader.readAsDataURL(inputFile.files[0]);
-	       					reader.onload = function(e){
-	       						switch(num){
-	       							case 0:
-	       								$("#thumImg").attr("src", e.target.result);
-	       								break;
-	       							case 1:
-	       								$("#plusImg1").attr("src", e.target.result);
-	       								break;
-	       							case 2:
-	       								$("#plusImg2").attr("src", e.target.result);
-	       								break;
-	       							case 3:
-	       								$("#plusImg3").attr("src", e.target.result);
-	       								break;
-	       						}
-	       					}
-	       				}
-	       			}
-       		
-       			
+       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7"></textarea>
        				
-       			</script>
-       			
-       			<!-- <div contentEditable="true" id="postContent" class="form-control" name="eventContent">
-       				<img src="" class="Thum"/>
-       			</div> 
-       			<textarea style="display:none" id="content" > </textarea>-->
        		<br>
        		<div class="submitBtn">
        			<input name="submitBtn" type="submit" class="btn btn-primary" value="등록하기"/>
@@ -149,8 +104,68 @@
        </div>
     </div>
  </div>
- <script>
 
+ <script>
+ /*
+ $(document).ready(function(){
+	 $("#summernote").summernote({
+			height: 500,                 
+	    	minHeight: null,            
+	    	maxHeight: null,            
+	    	focus: true,           
+	    	disableResizeEditor: true,
+   		callbacks: {
+	    		onImageUpload : function(files, editor, welEditable){
+		    		for(var i = files.length - 1; i>=0; i--){
+		    			uploadFile(files[i],this);	  
+		    			
+		    			}
+		    	 }
+			}	
+		});
+ });
+ */
+ 
+ 
+	
+			$("#summernote").summernote({
+				height: 500, 
+				width: 1000,
+		    	minHeight: null,            
+		    	maxHeight: null,            
+		    	focus: true,           
+		    	disableResizeEditor: true,
+   	   		callbacks: {
+		    		onImageUpload: function(files, editor, welEditable){
+			    		for(var i = files.length - 1; i>=0; i--){
+			    			sendFile(files[i],this);	  
+			    		}	
+		    		}
+   	   			}
+			});
+		
+
+			
+		
+		function sendFile(file, el){
+				var data = new FormData();
+				data.append("file", file);	
+				$.ajax({
+					data : data,
+					type : "POST",
+					url : "imageFile.ev",
+					cache : false,
+					contentType : false,
+					processData : false,
+					enctype : "multipart/form-data",
+					success : function(data){
+						$(el).summernote('editor.insertImage', data.url);
+						
+					}
+				});
+			}
+
+ 
 	
   	$(document).ready(function () {
           $.datepicker.setDefaults($.datepicker.regional['ko']); 
@@ -191,7 +206,7 @@
   });
  
   	</script>
-
+<script src="resources/js/bootstrap.min.js"></script>
 
   
 

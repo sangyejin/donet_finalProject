@@ -215,9 +215,7 @@ select::-ms-expand {
 </head>
 
 <body>
-
 	<jsp:include page="../common/menubar.jsp" />
-
 	<div class="main">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -248,11 +246,8 @@ select::-ms-expand {
 					<button id="btn-insert"
 						onclick="location.href='${pageContext.servletContext.contextPath}/goods/insertForm';">등록하기</button>
 				</c:if>
-
 			</div>
-
 		</div>
-
 
 		<div class="div-content">
 			<div class="container row" id="goodsListContent" style="margin: 100 auto; width: 1080px;">
@@ -305,7 +300,7 @@ select::-ms-expand {
 					maxPage:p.maxPage,
 					pageLimit:p.pageLimit,
 					boardLimit:p.boardLimit,
-					categoryNo: categoryNo,
+					categoryNo:categoryNo,
 					order: order
 				},
 				success: function(map) {
@@ -360,35 +355,35 @@ select::-ms-expand {
 
 			if(pi.currentPage==1){
 				temp=`<li class="disabled page-item">
-				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(pageInfo.currentPage-1),categoryNo,order,search);' class="page-link" aria-label="Previous">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous">
 				<i class="ti-angle-left"></i>
 				</a></li>`;
 			}else{
 				temp+=`<li class="page-item">
-					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(pageInfo.currentPage-1),categoryNo,order,search);' class="page-link" aria-label="Previous"> 
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous"> 
 					<i class="ti-angle-left"></i>
 					</a></li>`;
 			}
 			for(let i= pi.startPage; i<=pi.endPage;i++){
 				if(pi.currentPage==i){
 					temp+=`<li class="disabled page-item active">
-					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),categoryNo,order,search);' class="page-link">`
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link">`
 					+i+`</a></li>`;
 				}else{
 					temp+=`<li class="page-item">
-					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),categoryNo,order,search);' class="page-link">`
+					<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+i+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link">`
 					+i+`</a></li>`;
 				}
 			}
 			if(pi.currentPage==pi.maxPage){
 				temp+=`	<li class="disabled page-item">
-				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+pageInfo.currentPage+1+`),categoryNo,order,search);' class="page-link" aria-label="Next">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
 				<i class="ti-angle-right"></i>
 				</a></li>`;
 			}
 			else{
 				temp+=`<li class="page-item">
-				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+pageInfo.currentPage+1+`),categoryNo,order,search);' class="page-link" aria-label="Next">
+				<a onclick='selectGoodsList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
 				<i class="ti-angle-right"></i></a></li>`;
 			}
 			
@@ -397,6 +392,8 @@ select::-ms-expand {
 		
 		$('.div-category-menu').on('click', function (event) {
 			$("#searchText").text('');
+			$("#search").val('');
+			search="";
         	if (event.target.tagName != 'BUTTON') return false; //-버튼누른게 아니면 return서
         	console.log("category",pageInfo,event.target.id,order);
         	pageInfo.currentPage=1;
@@ -405,8 +402,9 @@ select::-ms-expand {
     	});
 		
 		function searchText(text){
-			selectGoodsList(pageInfo,categoryNo,order,text);
-			$("#search").val('');
+			pageInfo.currentPage=1;
+			search=text;
+			selectGoodsList(pageInfo,categoryNo,order,search);
 			$("#searchText").text("'"+text+"'검색 결과입니다.");
 		}
 	</script>

@@ -244,14 +244,16 @@ public class NoticeController {
 		no.setNoticeWriter(noticeWriter);
 		no.setNoticeContent(noticeContent);
 
+		
 		if (!file.getOriginalFilename().equals("")) {
+			
 			String changeName = saveFile(file, request);
 
 			no.setNoticeOrigin(file.getOriginalFilename());
 			no.setNoticeNew(changeName);
 
 		}
-
+		
 		NoService.updateNotice(no);
 
 		model.addObject("noticeNo", noticeNo).setViewName("redirect:detail.no");
@@ -264,10 +266,16 @@ public class NoticeController {
 	public String deleteGo(int noticeNo, HttpServletRequest request) {
 		// 게시글을 삭제한다=표시상태를 'N'으로 돌린다=언젠가 다시 보이게 하고싶을 수도 있으니 파일은 삭제 안할 심산...
 		NoService.deleteGo(noticeNo);
+		
+		//이전 게시글로 보내줌
+		Notice prevNote = NoService.selectPrevNotice(noticeNo);
 
-		return "redirect:list.no";
+
+		return "redirect:detail.no?noticeNo="+prevNote.getNoticeNo();
 	}
 
+	
+	
 	/******************************************************************************************************************/
 	// FAQ List
 	@RequestMapping("list.faq")
@@ -444,10 +452,7 @@ public class NoticeController {
 					ask.setAskOriginImg(file.getOriginalFilename());
 					ask.setAskNewImg(changeName);
 				}
-
 			}
-			
-			/*set*/
 			
 			NoService.insertOne(ask);
 
@@ -463,12 +468,13 @@ public class NoticeController {
 			System.out.println("*** ask : " + ask);
 
 			mv.addObject("ask", ask);
-			mv.setViewName("customerSupport/oneOone/updateAsk");
+			mv.setViewName("customerSupport/oneOone/updateAskAd");
 
 			return mv;
 		}
 		
 		@RequestMapping("update.one")
+		//잘되는데...
 		public String updateOne( @RequestParam(name = "askNo") int askNo,
 				HttpServletRequest request, Model model,
 				@RequestParam(name = "answered", required = false) String answered) {
@@ -485,9 +491,18 @@ public class NoticeController {
 		}
 		
 		// delete
+		//왜 삭제만 쥐랄이지?
 		@RequestMapping("delete.one")
 		public String deleteOne(int askNo, HttpServletRequest request) {
+			
+			HttpSession session = request.getSession();
+
+			System.out.println("진짜청컨대삭제좀돼라샹넘아");
+			System.out.println("askNo : " + askNo);
 			NoService.deleteOne(askNo);
+			
+			session.setAttribute("msg", "문의 삭제 완료");
+
 
 			return "redirect:list.one";
 		}

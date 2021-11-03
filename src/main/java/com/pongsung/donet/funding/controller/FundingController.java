@@ -1,21 +1,29 @@
 package com.pongsung.donet.funding.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +32,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -37,12 +46,12 @@ import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.service.FundingService;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
+import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.funding.model.vo.FundingGoods;
 import com.pongsung.donet.funding.model.vo.FundingGoodsList;
 import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingReply;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
-import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
@@ -70,13 +79,16 @@ public class FundingController {
 	// 펀딩 리스트
 	@RequestMapping("funding")
 	public String seletcFundingList(
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
-			@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
-			@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
-			@RequestParam(value = "search", required = false, defaultValue = "") String search,
-			Model model) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+			,Model model) {
 		
-		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,order,search);
+//		@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
+//		@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
+//		@RequestParam(value = "period", required = false, defaultValue = "") String period,
+//		@RequestParam(value = "search", required = false, defaultValue = "") String search,
+//		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,period,order,search);
+		FundingFilterOrder filterOrder= new FundingFilterOrder(0,null,"FP_WRITE_DATE",null);
+		
 		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
 		
 		
@@ -86,10 +98,10 @@ public class FundingController {
 		
 		logger.info("selectFundingList ::fundingListCount::" + listCount);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
-//		
+		
 		List<Funding> fundingList = fundingService.selectFundingList(pi,filterOrder);
 		logger.info("selectFundingList ::fundingList::" + fundingList);
-//		
+		
 		model.addAttribute("category", categoryList);
 		model.addAttribute("list", fundingList);
 		model.addAttribute("pi", pi);
@@ -97,6 +109,29 @@ public class FundingController {
 		return "funding/fundingListView";
 	}
 
+	//구호물품 리스트 불러오기
+	@ResponseBody
+	@RequestMapping(value="funding/list",produces="application/json;charset=utf-8")
+	public String selectFundingList(PageInfo pi, FundingFilterOrder fundingFilterOrder) {
+		logger.info("selectFundingList :: filterOrder::" + fundingFilterOrder);
+		
+		int listCount = fundingService.selectFundingListCount(fundingFilterOrder);
+		logger.info("selecFundingList :: FundingListCount::" + listCount);
+		
+		PageInfo p = Pagination.getPageInfo(listCount, pi.getCurrentPage(), 5, 15);
+		
+		logger.info("selectFundingList :: PI::::::::"+p);
+		logger.info("selectFundingList :: filterOrder::::::::"+fundingFilterOrder);
+		
+		Map<String,Object> map= new HashMap<>();
+		List<Funding> fundingList = fundingService.selectFundingList(pi,fundingFilterOrder);
+		logger.info("selectFundingList :: FundingList:::::::"+ fundingList);
+		map.put("fundingList", fundingList);
+		map.put("pi",p);
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(map);
+	}
+	
 	// 펀딩프로젝트 등록 폼으로 이동
 	@RequestMapping("funding/insertForm")
 	public String enrollForm(Model model) {
@@ -112,7 +147,7 @@ public class FundingController {
 			,@ModelAttribute FundingGoodsList fundingGoods, Model model)
 			throws Exception {
 		//multipartRequest.setCharacterEncoding("utf-8");
-		funding.setContent( (funding.getContent()).replace("\n", "<br>"));  
+		//funding.setContent( (funding.getContent()).replace("\n", "<br>"));  
 		funding.setHostId(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
 		List<FundingGoods> fgList=fundingGoods.getFundingGoods();
 		System.out.println("funding:::"+funding);
@@ -129,7 +164,6 @@ public class FundingController {
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
 			
 			//파일을 저장, 파일이름 변경
-			
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
 				if(fileName!="") { 
@@ -144,7 +178,8 @@ public class FundingController {
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
-						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						//img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						img.setImgNo(i);
 						imgList.add(img);
 					}
 				}
@@ -290,6 +325,4 @@ public class FundingController {
 		deleteFile.delete();
 		
 	}
-	
-	
 }

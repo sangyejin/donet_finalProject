@@ -2,27 +2,29 @@ package com.pongsung.donet.volunteer.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
@@ -38,8 +40,24 @@ public class VolunteerController {
 	@Autowired
 	private VolunteerService volunteerService;
 	
+	@RequestMapping("sort.vo")
+	public String sortList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) throws Exception {
+		
+		int listCount = volunteerService.selectVolunteerListCount();
+		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		
+		ArrayList<Volunteer> list = volunteerService.sortList(pi);
+		System.out.println("list check : "+list); //리스트 확인 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "volunteer/volunteerList";
+	}
 	@RequestMapping("list.vo")
-	public String selectList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) {
+	public String selectList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model) throws Exception {
 		
 		int listCount = volunteerService.selectVolunteerListCount();
 		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
@@ -54,50 +72,70 @@ public class VolunteerController {
 		
 		return "volunteer/volunteerList";
 	}
+	@RequestMapping("choseList.vo")
+	public String choseList(@RequestParam(value="currentpage", required=false, defaultValue="1") int currentPage, Model model,HttpServletRequest request) throws Exception {
+		String chose = request.getParameter("chose");
+		System.out.println("category value check : "+ chose); //category value check
+		int listCount = volunteerService.choseListCount(chose);
+		System.out.println("listCount check : "+listCount); //페이지 카운트확인하기 
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
+		
+		ArrayList<Volunteer> list = volunteerService.choseList(pi,chose);
+		System.out.println("list check : "+list); //리스트 확인 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "volunteer/volunteerList";
+	}
 	
 	@RequestMapping("enroll.vo")
 	public String enrollForm() {
 		return "volunteer/volunteerEnroll";
 	}
 	
-	@RequestMapping("insert.vo")
-	public String insertVolunteer(Volunteer vo,HttpServletRequest request, 
-			MultipartHttpServletRequest multiRequest, @ModelAttribute Model model )
-			throws Exception {
-		vo.setVolContent(vo.getVolContent().replace("\n", "<br>"));
+	@RequestMapping(value="insert.vo")
+	public String insertVolunteer(Volunteer vo, MultipartHttpServletRequest request) throws Exception {
 		
-		Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
-		List<VolAttachment> attList = new ArrayList<>();
+		vo.setVolContent((vo.getVolContent()).replace("\n", "<br>"));
 		
-		Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
-		for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
-			List<MultipartFile> fileList = entry.getValue();
-			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
-			for(int i=0; i<fileList.size(); i++) {
-				String fileName = fileList.get(i).getOriginalFilename();
-				if(fileName != "") {
-					String originName = fileList.get(i).getOriginalFilename();
-					String changeName = saveFile(fileList.get(i), request);
-					
-					if((entry.getKey()).equals("thumFile")) {
-						vo.setVolOrigin(originName);
-						vo.setVolChange(changeName);
-					}else {
-						VolAttachment at = new VolAttachment();
-						at.setOriginName(originName);
-						at.setChangeName(changeName);
-						attList.add(at);
-					}
-				}
-			}
-		}
-		System.out.println("attachment return check : " + attList);
-		volunteerService.insertVolunteer(vo, attList);
-		System.out.println("attachment return check : " + attList);
+		volunteerService.insertVolunteer(vo);
+		
 		return "redirect:list.vo";
 	}
+	
+	@RequestMapping(value="imageFile.vo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		JsonObject jsonObject = new JsonObject();
+		String resources = request.getSession().getServletContext().getRealPath("/resources");
+		String savePath = resources  + "/upload_files/";
+		
+		String originalFileName = multipartFile.getOriginalFilename();
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		
+		String saveFileName = UUID.randomUUID()+extension;
+			
+		File targetFile = new File(savePath+saveFileName);
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);
+			jsonObject.addProperty("url", "/summernoteImg/"+saveFileName);
+			jsonObject.addProperty("responseCode", "succcess");
+		} catch(IOException e) {
+			FileUtils.deleteQuietly(targetFile);
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}	
+
+		String result = jsonObject.toString();
+		return result;
+	}
+	
 	@RequestMapping("detail.vo")
-	public String selectVolunteer( int vno, Model mv) {
+	public String selectVolunteer( int vno, Model mv) throws Exception {
 		System.out.println("디테일 체크 : " + vno );
 		
 		Volunteer vo = volunteerService.selectVolunteer(vno);
@@ -115,9 +153,8 @@ public class VolunteerController {
 	 * =============== private ====================
 	 */
 	private void deleteFile(String fileName, HttpServletRequest request) {
-		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "//upload_files//";
-		
+		String resources = request.getSession().getServletContext().getRealPath("/resources");
+		String savePath = resources + "/upload_files/" + "event/";
 		File deleteFile = new File(savePath + fileName);
 		deleteFile.delete();
 		
@@ -125,8 +162,8 @@ public class VolunteerController {
 
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
 		
-		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "/upload_files/";
+		String resources = request.getSession().getServletContext().getRealPath("/resources");
+		String savePath = resources  + "/upload_files/";
 		String originName = file.getOriginalFilename();
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String ext = originName.substring(originName.lastIndexOf("."));

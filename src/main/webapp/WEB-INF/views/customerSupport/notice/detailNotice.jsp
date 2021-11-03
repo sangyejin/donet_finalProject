@@ -23,31 +23,30 @@
 			margin-right: 5%;
 		}
     
-    	/*footer align left*/
-    	#gotoLEFT{ margin-left : -150px;}
-    
         *{ /*border: 1px red solid;*/
             font-size: 12px;
         }
 
-        /*sidebar*/        
-        .sidebar{
-             width: 150px;
-             height: 400px;
-             margin-left: 3%;
-             padding: 0;
-             float: left;
-             margin-top: 0;
-        }
-        
-        a:hover{ text-decoration: underline; }
-
-        #greenfont1 {margin-right: 45%; text-decoration: none;}
-       #faq { margin-right: 36px; }
-#facetoface { margin-right: 70px; }
-        #wrap{margin-bottom: 7%;}
-
-        #greenfont1, #faq, #facetoface{ font-weight: bolder; }
+        /*sidebar*/
+		.sidebar {
+			width: 150px;
+			height: 400px;
+			margin-left: 60px;
+			padding: 0;
+			float: left;
+			margin-top: 0;
+		}
+		
+		#greenfont1 { margin-right: 45%; text-decoration: none; }
+		
+		#faq { margin-right: 36px; }
+		#facetoface { margin-right: 70px; }
+		
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
 
         /*helper*/
 		.needhelp {
@@ -70,14 +69,14 @@
 		#gethelp { margin-left: 3%; }
 		#gethelp:hover{  color : #000000; text-decoration : underline;}
 		
-#helparrow { margin-left: 48px; margin-top: 0px; }
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
         /* main body */
         #thelist{
             float: left;
             margin-left: 5%;
             margin-top: 0;
-            width: 800px;
+            width: 710px;
         }
 
         #notice{
@@ -85,9 +84,8 @@
             font-weight: bolder;
             margin-left: 360px;
             margin-top: 0px;
-
         }
-        
+                
         #greenfont1, #greenfont2{ color: rgb(30, 154, 40); }
 
         /*writing box*/
@@ -98,43 +96,12 @@
             margin-top: -0.5px;
         }
 
-        #getInThere{
-            margin-top: -545px;
-            margin-left: 35px;
-        }
+        #whole { width: 1050px; margin : auto;}
 
-        #inputTitle{
-            width: 670px;
-            margin-left: 50px;
-        }
-
-        .grayline{
-            margin-top: 2%;
-            margin-bottom: 2%;
-            margin-left: 8.5%;
-
-            width: 700px;
-            height: 0.001cm;
-            border : 0.3px solid grey;
-            background-color: grey;
-        }
-
-        #whole {
-		width: 1050px;
-		margin-left: 140px;
-		}
-
-        span > b { margin-left: 52px; }
-
-        span > p{ 
-            margin-left: 136px;
-            margin-top : -21px;
-        }
-        
         #greenline{
             margin-top: 1%;
             margin-bottom: 0;
-            width: 800px;
+            width: 710px;
             height: 1px;
             border : 1px solid rgb(30, 154, 40);
             background-color: rgb(30, 154, 40);
@@ -147,15 +114,12 @@
 		            border-radius: 7px;
 		            color: white; 
 		            background-color: rgb(66, 178, 115); 
-		            
-		        }
-		        
-		 #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }
+		 }
+		 #goRound:hover{ background-color: rgb(232, 240, 214) ; color : #000000; }      
 		   
-        
         #buttons{
            margin-top: 10px;
-           margin-left: 747px;
+           margin-left: 650px;
            margin-bottom: 3%;
            width : 50px;
            position : absolute;
@@ -165,24 +129,20 @@
 
         td{  border-bottom: 1px solid gray;  height: 25px; }
 
-        .value{width: 350px;}
+        .leftValue{width: 200px;}
+        .value{width: 100px;}
 
-        .head{
-            text-align: center;
-            width: 100px;
-            background-color: rgba(232, 240, 214, 0.5);
-        }
+        .head{  text-align: center;  width: 50px; background-color: rgba(232, 240, 214, 0.5); }
 
-        #yourContent{ margin-left: 25px;  font-size:12px;}
+        #yourContent{ margin-left: 25px;  font-size:12px; margin-right: 25px; }
  
        #support { color: #000000; font-weight: bolder; font-size : 16px; margin-top:0px;}
-       
        
        .thisDetail > .head:hover{font-weight : bold;} 
        .thisDetail > .theDetail:hover{ text-decoration : underline; }
        
        /*사진 불러오는 영역*/
-            #imgArea{ border-radius : 7px; border : none;  margin-left: 25px; margin-bottom: 15px; }
+       #imgArea{ border-radius : 7px; border : none;  margin-left: 25px; margin-bottom: 15px; }
        
     </style>
 
@@ -224,13 +184,13 @@
        <table id="noteDetail">
             <tr>
                 <td class="head">제목</td>
-                <td class="value"> ${ no.noticeTitle }</td>
+                <td class="leftValue"> ${ no.noticeTitle }</td>
                 <td class="head">작성일</td>
                 <td class="value"> ${ no.noticeDate }</td>
             </tr>
             <tr>
                 <td class="head">작성자</td>
-                <td class="value"> ${ no.noticeWriter }</td>
+                <td class="leftValue"> ${ no.noticeWriter }</td>
                 <td class="head">조회수</td>
                 <td class="value"> ${ no.noticeCount }회</td>
             </tr>
@@ -282,15 +242,14 @@
     </script>
 
     <!-- 삭제 -->
-    <!-- **삭제 후 인덱스 정렬 필요 -->
     <script>
     	function adminDelete(){ 
-    		if(confirm(${no.rowNum} + "번 게시글을 삭제합니다."))){
+    		if(confirm("해당 게시글을 삭제합니다.")){
     			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
-    			alert (${no.rowNum} + "번 게시글 삭제가 완료되었습니다. 게시글 목록으로 돌아갑니다.");
+    			alert ("게시글 삭제가 완료되었습니다. 이전 게시글로 돌아갑니다.");
         		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
     		}else{
-    			alert("잘못 누르셨군요? ^^");
+    			alert("삭제를 취소합니다.");
     		}
     			
     	}
@@ -318,10 +277,8 @@
 		$('#imgArea').css({ 'display' : 'none' });
 	}
 	</script> 
-
-	<div id="gotoLEFT">
-	<jsp:include page="../../common/footer.jsp" />
-	</div>
+	
+	<jsp:include page="../../common/footer.jsp" />	
 	
 </body>
 </html>

@@ -3,9 +3,12 @@ package com.pongsung.donet.event.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 
 public interface EventService {
@@ -20,9 +23,7 @@ public interface EventService {
 
 	Event selectEvent(int eno);
 
-	void insertEvent(Event e, List<Attachment> attList);
-
-	void updateEvent(Event ev);
+	void insertEvent(Event e);
 
 	void deleteEvent(int eno);
 
@@ -31,6 +32,13 @@ public interface EventService {
 	int insertReply(EventReply re);
 
 	ArrayList<EventReply> replyList(int eno);
+
+	void updateEvent(Event e, List<Attachment> attList);
+
+	int replyUpdate(EventReply eventReply);
+
+	int deleteReply(int replyNo);
+
 
 
 }

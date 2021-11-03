@@ -1,12 +1,20 @@
 -- FUNDING INSERT
-
-
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'기타');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'동물');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'재난');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'고아');
 
-
+BEGIN
+FOR i in 1..5
+LOOP
+insert into funding_project 
+values (SEQ_FUNDING_PROJECT.NEXTVAL,i||'크아아악','admin',100000000,100000,
+        to_date('2021-9-02'),to_date('2021-10-13'),'난민들의 고통을 어쩌구 <br>도와주세요 <br>', sysdate,
+        3,default,default,'2020.jpg'
+        ,'2020.jpg',default,sysdate);
+END LOOP;
+END;
+/
 BEGIN
 FOR i in 1..20
 LOOP
@@ -18,7 +26,17 @@ values (SEQ_FUNDING_PROJECT.NEXTVAL,'유기견을 향한 마음','admin',1000000
 END LOOP;
 END;
 /
-
+BEGIN
+FOR i in 1..20
+LOOP
+insert into funding_project 
+values (SEQ_FUNDING_PROJECT.NEXTVAL,i||'유기견을 향한 마음','admin',1000000,2400000,
+        to_date('2021-11-22'),to_date('2021-11-30'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
+        3,default,default,'github.png'
+        ,'github.png',default,sysdate);
+END LOOP;
+END;
+/
 BEGIN
 FOR i in 1..20
 LOOP
@@ -90,5 +108,5 @@ values(seq_beneficiary.nextval,'동물협회'||i,'02-1234-3456','서울특별시
 END LOOP;
 END;
 /
-SELECT MAX(PURCHASE_NO) FROM GOODS_PURCHASE WHERE USER_ID='admin';
+
 commit;
