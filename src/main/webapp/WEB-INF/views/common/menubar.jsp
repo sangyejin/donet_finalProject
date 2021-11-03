@@ -27,8 +27,8 @@
 	 
 <style>
 
-*{ font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
+*{ font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 12px ;
     margin: 0;
 	padding: 0;
 }
@@ -49,7 +49,7 @@ ul>li{ list-style-type: none; }
 .greenfont{
     margin-top:0px;
     float: left;
-    width : 140px;
+    width : 130px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
