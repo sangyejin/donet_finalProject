@@ -140,7 +140,7 @@ c {
 		<c:if
 			test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
 		<span><button type="button" id="registration"
-				onclick="location.href='reist.do'">등록하기</button></span>
+				onclick="location.href='supportReviewWrite.me'">후기 작성</button></span>
 		</c:if>
 
 		<div id="greenLine"></div>

@@ -333,11 +333,25 @@ public class MemberController {
 			return "member/memberUserList";
 		}
 		
-		// 후원 프로젝트 댓글로 이동
-		@RequestMapping("supportReply.me")
-			public String selectUserList() {
+		// 후원 후기로 이동
+		@RequestMapping("supportReviewList.me")
+			public String supportReviewList() {
 			
-			return "member/supportReply";
+			return "member/supportReviewList";
+		}
+		
+		// 후원 후기 작성하기로 이동
+		@RequestMapping("supportReviewWrite.me")
+			public String supportReviewWrite() {
+					
+			return "member/supportReviewWrite";
+		}
+		
+		// 후원 후기 상세보기로 이동
+		@RequestMapping("supportReviewDetail.me")
+			public String supportReviewDetail() {
+					
+			return "member/supportReviewDetail";
 		}
 		
 }

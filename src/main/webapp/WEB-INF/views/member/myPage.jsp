@@ -172,7 +172,8 @@
                 <br>
                 
                 <div class="btns" align="center">
-                	<a href="supportReply.me" class="text-primary">후원 후기 게시판</a> &nbsp;
+                	<a href="supportReviewDetail.me" class="text-primary">후원 후기 상세보기</a> &nbsp;
+                	<a href="supportReviewList.me" class="text-primary">후원 후기 게시판</a> &nbsp;
                 	<c:if test="${ loginUser.userId eq 'admin' }">
                 	<a href="userList.me" class="text-primary">회원목록</a> &nbsp;
                 	</c:if>
