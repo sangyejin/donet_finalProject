@@ -36,11 +36,10 @@ import com.pongsung.donet.donation.model.service.DonationService;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportCategory;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 import com.pongsung.donet.donation.model.vo.SupportUsePlanList;
-import com.pongsung.donet.funding.model.vo.FundingImage;
-import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
@@ -100,15 +99,28 @@ public class DonationController {
 	}
 	
 	@RequestMapping("select.ca")
-	public String global(int suCategoryNo, Model model) {
+	public String selectCategory(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(name = "suCategoryName", required = false) String suCategoryName) {
 
-		List<Support> list = donationService.selectCategoryList(suCategoryNo);
-		System.out.println("list"+list);
+		SupportCategory suCategory = new SupportCategory();
+		suCategory.setSuCategoryName(suCategoryName);
+		
+		int listCount = donationService.selectDonationCaListCount(suCategory);
+		System.out.println("listCount"+listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+		System.out.println("pi"+pi);
+		
+		List<Support> list = donationService.selectDonationCaList(pi, suCategory);
+		System.out.println("support"+list);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
 		
-		System.out.println("model "+model);		
-		return "donation/global";
+		System.out.println("model "+model);
+		
+		return "donation/donationMain";
 	}
 	
 	@ResponseBody

@@ -86,26 +86,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT S.SU_NO,
 		S.SU_TITLE, S.SU_WRITER, S.SU_START, S.SU_LAST, S.SU_DATE,
 		S.SU_CONTENT, S.SU_TARGET, S.SU_BSTART, S.SU_BLAST, S.THUMBNAILORIGIN,
-		S.THUMBNAILCHANGE, C.SU_CATEGORY_NAME, S.SU_SATUTS, S.TOTAL,
+		S.THUMBNAILCHANGE, C.SU_CATEGORY_NAME, S.SU_SATUTS, S.TOTAL, S.HITS,
 		S.TOTALAMOUNT,S.GOAL
 		FROM SUPPORT S
 		JOIN
-		SUPPORT_CATEGORY C ON S.SU_CATEGORY = C.SU_CATEGORY_NO
+		SUPPORT_CATEGORY C ON
+		S.SU_CATEGORY = C.SU_CATEGORY_NO
 		WHERE
 		S.SU_SATUTS='Y'
-		ORDER BY SU_NO DESC
+		ORDER BY SU_NO
+		DESC
 	</select>
 
 	<update id="increaseCount" parameterType="_int">
 		UPDATE SUPPORT
-		SET HITS = HITS+1
+		SET HITS
+		= HITS+1
 		WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
 	</update>
 	<select id="selectBoard" parameterType="_int"
 		resultMap="supportResultSet">
-		SELECT SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
+		SELECT
+		SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
 		SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,THUMBNAILCHANGE,
-		SU_CATEGORY,SU_SATUTS,HITS, SU_LAST - SU_START AS DDAY, GOAL,
+		SU_CATEGORY,SU_SATUTS,HITS, ROUND(SU_LAST - SYSDATE) AS DDAY, GOAL,
 		TOTALAMOUNT
 		FROM SUPPORT
 		WHERE SU_NO=#{suNo} AND SU_SATUTS='Y'
@@ -120,12 +124,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="sponsorResultSet">
 		SELECT COUNT(*) COUNT, SUM(PAY_AMOUNT) SUM
 		FROM SPONSOR
-		GROUP BY SU_NO
+		GROUP
+		BY SU_NO
 		HAVING SU_NO=#{suNo}
 	</select>
 	<select id="selectSupporComment" parameterType="_int"
 		resultMap="supporCommentResultSet">
-		SELECT * FROM SUPPORT_COMMENT WHERE SU_NO=#{suNo} ORDER BY 4 DESC
+		SELECT * FROM SUPPORT_COMMENT WHERE SU_NO=#{suNo} ORDER BY 4
+		DESC
 	</select>
 	<select id="selectSponsorList" parameterType="_int"
 		resultMap="sponsorResultSet">
@@ -134,82 +140,117 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE SU_NO=#{suNo}
 	</select>
 
-	<select id="selectImageList" parameterType="_int" resultMap="supportImageResultSet">
+	<select id="selectImageList" parameterType="_int"
+		resultMap="supportImageResultSet">
 		SELECT *
 		FROM SUPPORT_IMAGE
 		WHERE SU_NO=#{suNo}
 	</select>
-	
-	<select id="selectReplyList" resultMap="supporCommentResultSet" parameterType="_int">
-		SELECT * 
-		FROM SUPPORT_COMMENT 
+
+	<select id="selectReplyList" resultMap="supporCommentResultSet"
+		parameterType="_int">
+		SELECT *
+		FROM SUPPORT_COMMENT
 		WHERE SU_NO = #{suNo}
 		AND SC_STATUS='Y'
-		ORDER BY SC_DATE DESC 
+		ORDER BY SC_DATE DESC
 	</select>
 
 	<insert id="insertReply" parameterType="SupporComment">
-		INSERT INTO SUPPORT_COMMENT VALUES(SEQ_SUPPORT_COMMENT.NEXTVAL, #{replyContent}, #{refBoardNo},#{replyWriter}, DEFAULT, DEFAULT) 
+		INSERT INTO
+		SUPPORT_COMMENT VALUES(SEQ_SUPPORT_COMMENT.NEXTVAL, #{replyContent},
+		#{refBoardNo},#{replyWriter}, DEFAULT, DEFAULT)
 	</insert>
-	
+
 	<update id="deleteReply" parameterType="_int">
 		UPDATE SUPPORT_COMMENT
 		SET SC_STATUS='N'
 		WHERE SC_NO=#{replyNo}
 	</update>
-	
+
 	<select id="selectCategoryListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM SUPPORT
 		WHERE SU_SATUTS='Y'
 		AND SU_CATEGORY = #{suCategoryNo}
 	</select>
-	<select id="selectCategoryList" resultMap="supportResultSet" parameterType="_int">
-		SELECT * 
-		FROM SUPPORT 
+	<select id="selectCategoryList" resultMap="supportResultSet"
+		parameterType="_int">
+		SELECT *
+		FROM SUPPORT
 		WHERE SU_CATEGORY = #{suCategoryNo}
 		AND SU_SATUTS='Y'
-        ORDER BY SU_NO DESC
+		ORDER BY SU_NO DESC
 	</select>
-	
+
 	<update id="updateReply" parameterType="SupporComment">
 		UPDATE SUPPORT_COMMENT
 		SET SC_COMMENT=#{replyContent}
 		WHERE SC_NO=#{replyNo}
 	</update>
-	
+
 	<insert id="insertBoard" parameterType="Support">
 		<selectKey keyProperty="suNo" resultType="int" order="AFTER">
-			select seq_support.currval from dual
-			
+			select
+			seq_support.currval from dual
+
 		</selectKey>
 		insert into SUPPORT(
-				SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,
-				SU_CONTENT,SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,
-				THUMBNAILCHANGE,SU_CATEGORY,SU_SATUTS)
+		SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,
+		SU_CONTENT,SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,
+		THUMBNAILCHANGE,SU_CATEGORY,SU_SATUTS)
 		values
-		(	
-			seq_support.nextval, #{suTitle}, #{suWriter}, #{suStart}
-			, #{suLast}, default, #{content}, #{target}
-			, #{bstart}, #{blast}, #{thumbnailOrigin}, #{thumbnailChange}
-			,#{categoryNo} ,default
+		(
+		seq_support.nextval, #{suTitle}, #{suWriter}, #{suStart}
+		, #{suLast}, default, #{content}, #{target}
+		, #{bstart}, #{blast}, #{thumbnailOrigin}, #{thumbnailChange}
+		,#{categoryNo} ,default
 		)
 
 	</insert>
-		
+
 	<insert id="insertImgList" parameterType="java.util.List">
-		insert into SUPPORT_IMAGE(SU_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
+		insert into
+		SUPPORT_IMAGE(SU_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
 		<foreach collection="list" item="item" separator=" UNION ALL ">
-			select #{item.suNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName} from DUAL
+			select
+			#{item.suNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName}
+			from DUAL
 		</foreach>
 	</insert>
-		
+
 	<insert id="insertUsePlan" parameterType="java.util.List">
-		insert into SUPPORT_USE_PLAN(SU_NO,UP_NO,UP_DIVISION,UP_CONTENT,UP_AMOUNT)
+		insert into
+		SUPPORT_USE_PLAN(SU_NO,UP_NO,UP_DIVISION,UP_CONTENT,UP_AMOUNT)
 		<foreach collection="list" item="item" separator=" UNION ALL ">
-			select #{item.suNo},#{item.upNo},#{item.division},#{item.content},#{item.amount} from DUAL
+			select
+			#{item.suNo},#{item.upNo},#{item.division},#{item.content},#{item.amount}
+			from DUAL
 		</foreach>
 	</insert>
+
+	<select id="selectDonationCaListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM SUPPORT A
+		JOIN SUPPORT_CATEGORY B ON A.SU_CATEGORY = B.SU_CATEGORY_NO
+		<if test="suCategoryName != null">
+			WHERE B.SU_CATEGORY_NAME LIKE '%' || #{suCategoryName} ||'%'
+		</if>
+	</select>
 	
+	<select id="selectDonationCaList" resultMap="supportResultSet" parameterType="_int" resultType="SUPPORT">
+		SELECT ROWNUM,SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
+		SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,THUMBNAILCHANGE,
+		SU_CATEGORY,SU_SATUTS,HITS, SU_LAST - SU_START AS DDAY, GOAL,
+		TOTALAMOUNT
+		FROM SUPPORT A
+		JOIN SUPPORT_CATEGORY B ON A.SU_CATEGORY = B.SU_CATEGORY_NO
+		<if test="suCategoryName != null">
+			WHERE B.SU_CATEGORY_NAME LIKE '%' || #{suCategoryName} ||'%'
+		</if>
+		ORDER BY A.SU_NO DESC
+	</select>
+
+
 
 </mapper>
