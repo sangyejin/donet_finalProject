@@ -35,7 +35,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slick.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
-
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <title>도넷닷컴</title>
 <style>
 * {
@@ -212,6 +213,7 @@ select::-ms-expand {
 	position: static;
 }
 </style>
+
 </head>
 
 <body>
