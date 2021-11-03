@@ -27,9 +27,9 @@
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top:0px;
+    margin-top: 18px;
     float: left;
-    width : 130px;
+    width : 115px;
     height : max-content;
     font-weight: bold;
     color : rgb(30, 154, 40);
