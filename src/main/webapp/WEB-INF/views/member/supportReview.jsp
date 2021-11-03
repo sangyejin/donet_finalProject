@@ -135,7 +135,7 @@ c {
 	<div class="outer">
 	
 		<div class="title">
-		<span><c>후원 > 후원 프로젝트</c></span>
+		<span><c>커뮤니티 > 후원 후기</c></span>
 		<span></span>
 		<c:if
 			test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
