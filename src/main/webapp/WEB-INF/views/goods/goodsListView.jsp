@@ -215,9 +215,7 @@ select::-ms-expand {
 </head>
 
 <body>
-
 	<jsp:include page="../common/menubar.jsp" />
-
 	<div class="main">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -248,11 +246,8 @@ select::-ms-expand {
 					<button id="btn-insert"
 						onclick="location.href='${pageContext.servletContext.contextPath}/goods/insertForm';">등록하기</button>
 				</c:if>
-
 			</div>
-
 		</div>
-
 
 		<div class="div-content">
 			<div class="container row" id="goodsListContent" style="margin: 100 auto; width: 1080px;">
