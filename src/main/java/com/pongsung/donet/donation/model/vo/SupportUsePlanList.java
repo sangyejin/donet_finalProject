@@ -14,5 +14,5 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class SupportUsePlanList {
-	private List<SupportUsePlan> SupportUsePlan;
+	private List<SupportUsePlan> supportUsePlan;
 }

@@ -2,12 +2,15 @@ package com.pongsung.donet.goods.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
@@ -137,6 +142,38 @@ public class GoodsController {
 		return "goods/goodsEnrollForm";
 	}
 	
+	// 게시글 content내에 있는 이미지 저장
+	@RequestMapping(value="/goods/contentFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String uploadGoodsSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		JsonObject jsonObject = new JsonObject();
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources  + "/upload_files/goods/";
+		
+	
+		String originalFileName = multipartFile.getOriginalFilename();
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		
+		String saveFileName = UUID.randomUUID()+extension;
+		System.out.println("resources : "+resources+"   "+"resources/upload_files/goods/" + saveFileName);
+			
+		File targetFile = new File(savePath+saveFileName);
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);
+			jsonObject.addProperty("url", "resources/upload_files/goods/" + saveFileName);
+			jsonObject.addProperty("responseCode", "succcess");
+		} catch(IOException e) {
+			FileUtils.deleteQuietly(targetFile);
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}	
+
+		String result = jsonObject.toString();
+		return result;
+	}
+
 	// 구호물품 게시글 등록
 	@RequestMapping("goods/insert")
 	public String insertGoods(Goods goods, HttpServletRequest request, @ModelAttribute RequiredGoodsList requiredGoods,

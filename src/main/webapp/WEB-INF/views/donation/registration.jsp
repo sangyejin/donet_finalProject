@@ -193,7 +193,7 @@
 				</div>
 			</div><br><br><br><br><br><br>
 			<e>기부금 사용계획</e>
-			<button id="addRow"> 행 추가 </button>
+			<button id="addRow" type="button"> 행 추가 </button>
 			<div style="text-align: center;">
 				<table id="useplan">
 				<thead>

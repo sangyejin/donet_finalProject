@@ -16,7 +16,11 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
-
+<!-- 제이쿼리 --> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <title>도넷닷컴</title>
 <style>
@@ -786,13 +790,8 @@ ${s.content}
 		});
 
 		function selectReplyList() {
-			var suNo = $
-			{
-				s.suNo
-			}
-			;
-			$
-					.ajax({
+			var suNo = ${s.suNo};
+			$.ajax({
 						url : "list.re",
 						data : {
 							suNo : suNo
@@ -803,8 +802,7 @@ ${s.content}
 
 							var num = commentList.length
 							var value = "";
-							$
-									.each(
+							$.each(
 											commentList,
 											function(i, obj) {
 

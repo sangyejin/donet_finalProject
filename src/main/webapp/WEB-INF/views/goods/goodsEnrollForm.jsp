@@ -8,25 +8,49 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+
 <!-- font -->
 <link
 	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
 	rel="stylesheet">
+	
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- 부트스트랩 	-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
+<!-- include libraries(jQuery, bootstrap) --> 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+<!-- CSS here -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
+
+
+<!-- CDN 파일 summernote css/js --> 
+<!-- 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+ -->
+<!-- CDN 한글화 --> 
+ <!-- 
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+ -->
+<!-- Summernote -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+	
 <style>
 * {
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-size: 1em !important;
+	font-size: 14px !important;
 }
 #goodsName {
-	width: 800px;
+	width: 1050px;
 }
 
 .div-goodsName{
@@ -40,7 +64,7 @@
 
 #insertForm {
 	text-align: center;
-	width: 800px;
+	width: 1050px;
 	margin: auto;
 }
 
@@ -49,7 +73,7 @@ label {
 }
 
 #content {
-	width: 800px;
+	width: 1050px;
 	height: 700px;
 }
 
@@ -59,19 +83,25 @@ label {
 	border: 1px solid rgb(85, 85, 85);
 }
 
-#category {
+/*
+#category,#addBeneficiary {
 	height: 40px;
 	border-radius: 4px;
-	width: 370px;
+	width: 500px;
 	border: 1px solid rgb(85, 85, 85);
 }
-
-#goal {
-	width: 350px;
+*/
+#category+.nice-select ,#category+.nice-select>.list{
+	float: none;
+	display: block;
+	width:100%;
 }
-
-#startDate, #closeDate {
-	width: 165px;
+#addBeneficiary+.nice-select, #addBeneficiary+.nice-select>.list{
+	float: none;
+	display: inline-block;
+	width:462px;
+	text-align:left;
+	vertical-align:top;
 }
 
 .div-input, #content {
@@ -93,10 +123,12 @@ tbody tr td, thead tr th {
 
 .btnArea {
 	margin-bottom: 100px;
+	clear:both; 
 }
 
 .div-content {
 	padding: 20px 0 20px 0;
+	/*overflow: hidden;*/
 }
 
 .div-left {
@@ -131,18 +163,90 @@ tbody tr td, thead tr th {
 
 .div-thumbImg {
 	margin-left: 0;
-	width: 340px;
-	height: 340px;
+	width: 500px;
+	height: 500px;
 	padding: 0;
 }
+.inputText {
+	border: 1px solid #e8e8e8;
+	height: 42px;
+	width: 400px;
+	padding-left: 20px;
+}
 
-#beneficiaryTable,#beneficiaryTable thead th{
-	border:1px solid black;
+/* select 일정 길이 이상되면 scroll */
+.nice-select .list{
+	overflow:scroll;
+	overflow-x:hidden;
+	max-height:200px;
+}
+/* 후원처 테이블 */
+#beneficiaryTable thead th,#beneficiaryTable tbody td{
+	border:1px solid #e8e8e8;
+	border-collapse: collapse;
+	padding-top:2px;
+	padding-bottom:2px;
 } 
+
+#beneficiaryTable > input{
+	border:none;
+}
+
+/*테이블 헤더 고정 */
+.beneDiv {
+    overflow: auto;
+}
+
+#beneficiaryTable {
+    border-collapse: collapse;
+    border: 1px solid #e8e8e8;
+    width:100%;
+}
+
+#beneficiaryTable thead {
+    position: sticky;
+    top: 0px;
+    background-color:white;
+}
+
+
+
+#btnInsertBeneficiary{
+	width:42px;
+	display: inline-block;
+	height:42px;
+	border: 1px solid #e8e8e8;
+}
+#goodsPrice{
+	width:490px;
+}
+.label-text{
+	margin-top:0.8em;
+}
+#img0{
+	border: 1px solid #e8e8e8;
+	height:450px;
+	width:500px;
+}
+#beneDiv{
+	margin-top:0.8em;
+	overflow:scroll;
+	overflow-x:hidden;
+	width:510px;
+	height:214px;
+	margin-bottom:0;
+	
+}
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
 </style>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -152,38 +256,46 @@ tbody tr td, thead tr th {
 		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data">
 			<div class="div-content">
 				<div class="div-goodsName">
-						<label for="goodsName" style="display: block;">구호물품 이름</label> 
-						<input type="text" placeholder="제목을 입력하세요" id="goodsName" name="goodsName" required>
+						<label for="goodsName" style="display: block;" class="label-text">구호물품 이름</label> 
+						<input type="text" placeholder="제목을 입력하세요"  class="rounded-pill inputText"  aria-describedby="button-addon2" id="goodsName" name="goodsName" required>
 				</div>
 				<div class="div-left col-lg-6 col-xs-12">
-					<label for="thumbImg">대표 사진</label>
+					<label for="thumbImg" class="label-text">대표 사진</label>
 					<div class="div-thumbImg" id="thumbImg">
-						<img id="img0" width="370px" height="340px">
+						<img id="img0">
 					</div>
 				</div>
-				<div class="div-right col-lg-6 col-xs-12">
+				<div class="div-right col-lg-6 col-xs-12" style="padding-right: 0px;">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="goodsCategoryNo"
-							id="category">
+						<label for="cateogry" class="label-text">카테고리</label> 
+						<select name="goodsCategoryNo" id="category">
 							<c:forEach var="category" items="${categoryList}">
 								<option value="${category.goodsCategoryNo}">${category.goodsCategoryName}</option>
 							</c:forEach>
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goodsPrice">가격</label> <input type="text"
-							placeholder="0,000,000" id="goodsPrice" name="goodsPrice" required> <span>원</span>
+						<label for="goodsPrice" class="label-text" >가격</label> 
+						<input type="number" placeholder="0,000,000" step="1000" class="rounded-pill inputText"  id="goodsPrice" name="goodsPrice" required> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="cateogry">후원처 추가</label> 
+						<label for="cateogry" class="label-text">후원처 추가</label> 
+						<div style="height:42px;">
 						<select name="addBeneficiary" id="addBeneficiary">
 							<c:forEach var="beneficiary" items="${beneficiaryList}">
 								<option value="${beneficiary.beNo},${beneficiary.beName}">${beneficiary.beName}</option>
 							</c:forEach>
 						</select>
 						<input id="btnInsertBeneficiary"class="btn btn-default" type="button" value="+">
-						<div style="overflow:scroll; width:350px; height:200px;">
+						</div>
+						<div id="beneDiv">
 							<table id="beneficiaryTable">
+								<colgroup>
+									<col width = "10%">
+									<col width = "20%">
+									<col width = "50%">
+									<col width = "20%">
+								</colgroup>
 								<thead>
 									<th>순번</th>
 									<th>후원처번호</th>
@@ -200,12 +312,11 @@ tbody tr td, thead tr th {
 
 			<div class="div-content col-xs-12"
 				style="width: 800px; margin: auto;">
-				<label for="content">내용</label>
-				<textarea name="content" id="content" cols="140" rows="10"
-					style="resize: none;" required></textarea>
-				<div contentEditable="true">
-					뀨
-				</div>
+				<label for="content" class="label-text" >내용</label>
+				<textarea id="content" name="content" placeholder=""></textarea>
+				
+				<!-- <textarea name="content" id="content" cols="140" rows="10"
+					style="resize: none;" required></textarea> -->
 			</div>
 
 			<div class="btnArea">
@@ -224,17 +335,28 @@ tbody tr td, thead tr th {
 	<script>
 		$("#btnInsertBeneficiary").click(function(){
 			const bene=$("#addBeneficiary").val();
+			const splitData=bene.split(",");
+			
+			//같은 후원처 리스트에 여러개 추가 불가능 처리
+			var size = $("input[class='notInput']").length;
+		    for(i=0;i< size; i++){
+				if($("input[class='notInput']").eq(i).attr("value")==splitData[0]){
+					alert("이미 추가된 후원처입니다.");
+		        	return;
+		        }
+		    }
+		    
             const table = document.getElementById('beneficiaryTable');
 			const len = String(table.tBodies[0].rows.length + 1);
 			
-			const splitData=bene.split(",");
 			const temp=`<tr>
 							<td>`+len+`</td>
-							<td><input class="notInput" name="beneficiaryNo" type="text" value="`+splitData[0]+`" readonly></td>
+							<td><input class="notInput" name="beneficiaryNo" type="text" value="`+splitData[0]+`" style="border:none;" readonly></td>
 							<td>`+splitData[1]+`</td>
-							<td><button class='btn btn-default btnDeletePresent btn-delete' data-action='delete'>-</button></td>
+							<td><button class='btn btn-default btn-delete' data-action='delete'>-</button></td>
 						</tr>`;
 			$("#beneficiaryTable tbody").append(temp);
+			$(".notInput").css({"border":"none","outline": "none","width":"100%","height":"100%","padding":"0","text-align":"center"});
 		});
 	
         $(function () {
@@ -270,8 +392,65 @@ tbody tr td, thead tr th {
             }
         }
         
-		
+		$("#content").summernote({
+			height: 500, 
+			width: 1050,
+	    	minHeight: null,            
+	    	maxHeight: null,            
+	    	focus: true,           
+	    	disableResizeEditor: true,
+	   		callbacks: {
+	    		onImageUpload: function(files, editor, welEditable){
+		    		for(var i = files.length - 1; i>=0; i--){
+		    			sendFile(files[i],this);	  
+		    		}	
+	    		}
+	   			}
+		});
+	
+	
+	function sendFile(file, el){
+			var data = new FormData();
+			data.append("file", file);	
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "contentFile",
+				cache : false,
+				contentType : false,
+				processData : false,
+				enctype : "multipart/form-data",
+				success : function(data){
+					$(el).summernote('editor.insertImage', '${pageContext.request.contextPath}/'+data.url);
+					console.log(data.url);
+				}
+			});
+		}
+
     </script>
+
+	<!-- Jquery Mobile Menu -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
+
+
+	<!-- Nice-select, sticky -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
+
+
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+
 </body>
 
 </html>
