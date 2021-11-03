@@ -111,13 +111,43 @@ c {
 	cursor: pointer;
 	color: black;
 	font-size: 13px;
-	font-weight: 500;
-	background-color: rgb(224, 224, 224);
+	font-weight: 600;
+	background-color: rgb(60, 179, 113);
+	color: white;
 	width: 80px;
 	height: 40px;
 	border-radius: 5px;
-	border-color: rgb(224, 224, 224);
+	border-color: rgb(60, 179, 113);
 }
+.category:hover {
+	margin-top: 2%;
+	margin-left: 2%;
+	cursor: pointer;
+	color: black;
+	font-size: 13px;
+	font-weight: 600;
+	background-color: rgb(170, 240, 209);
+	color: white;
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(170, 240, 209);
+}
+.arr{
+	float: right;
+	margin-top:40px;
+	margin-right:20px;
+}
+select {
+	width: 100px;
+	padding: .5em .2em;
+	background: url('resources/imgs/tri.jpg') no-repeat 95% 50%;
+	border-radius: 5px;
+	-moz-appearance: none;
+	appearance: none;
+	cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -132,12 +162,30 @@ c {
 
 		<div id="greenLine"></div>
 	</div>
+	<form id="searchForm" method="post" action="select.ca">
 	<div class="categoryBox">
-		<span><input type="button" class="category" id="global" value="지구촌" onclick="global()" /></span> 
-		<span><button class="category" id="environment" onclick="environment()">환경</button></span>
-		<span><button class="category" id="animal" onclick="animal()">동물</button></span>
-		<span><button class="category" id="child" onclick="child()">아동/청소년</button></span>
-		<span><button class="category" id="vulnerable" onclick="vulnerable()">취약계층</button></span>
+		<span><input type="submit" class="category" id="global" name="suCategoryName" value="지구촌"/></span> 
+		<span><input type="submit" class="category" id="environment" name="suCategoryName" value="환경"></button></span>
+		<span><input type="submit" class="category" id="animal" name="suCategoryName" value="동물"></button></span>
+		<span><input type="submit" class="category" id="child" name="suCategoryName" value="아동/청소년"></button></span>
+		<span><input type="submit" class="category" id="vulnerable" name="suCategoryName" value="취약계층"></button></span>
+		<div class="arr">
+			<select id="arraylist" name="arraylist" onchange="arraylist(this.value)">
+			    <option value="SU_DATE DESC">최신순</option>
+		        <option value="HITS DESC">조회순</option>
+		        <option value="TOTALAMOUNT DESC">누적금액순</option>
+			</select>
+		</div>
 	</div>
+	</form>
+	
+	<script>
+		function arraylist(value){
+			pageInfo.currentPage=1;
+			arraylist=value;
+			donationList(pageInfo,arraylist);
+		}
+	</script>
+
 </body>
 </html>

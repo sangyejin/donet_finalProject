@@ -7,6 +7,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportCategory;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 import com.pongsung.donet.funding.model.vo.FundingImage;
@@ -45,6 +46,10 @@ public interface DonationService {
 	int updateReply(SupporComment sc);
 
 	void insertBoard(Support support, List<SupportImage> imgList, List<SupportUsePlan> list) throws Exception;
+
+	int selectDonationCaListCount(SupportCategory suCategory);
+
+	List<Support> selectDonationCaList(PageInfo pi, SupportCategory suCategory);
 
 	
 
