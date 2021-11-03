@@ -7,11 +7,11 @@
 <title>도넷닷컴</title>
 <style>
 	/*전체설정*/
-	 #All > *{font-size: 12px; color: gray;   }
+	 #All > *{font-size: 12px; color: gray; }
     
   	#toleft > a{  text-decoration: none; color: gray; }
   	
-  	#All{ width: 100%; 	position : inline;  margin : 0; padding : 0; margin-bottom : 0; border-top: solid 1px rgb(244, 244, 244); }
+  	#All{ width: 100%; 	 margin : 0; padding : 0; margin-bottom : 0; margin-top : 1000px; border-top: solid 1px rgb(244, 244, 244); }
 
 	/*SNS 바*/
     #snstap{  width: 335px;  height: 30px;  margin-top: -5px; }
@@ -38,7 +38,9 @@
     
     #toleft> a:hover{ text-decoration: underline; }
 
-    #footer{ width: 1050px; margin : auto; margin-top : 0; height : 20%;}
+    #footer{ width: 1050px; margin : auto; margin-top : 10px; height : 50px; position : relative; }
+    
+    #rightMiddleFooter{margin-top : 15px; margin-bottom : 15px;}
 
 </style>
 </head>
@@ -58,11 +60,11 @@
 		</div>
 
 		<div id="toright">
-			<p id="informations">
-				<a>사업자등록번호 : 123-45-6789 </a> | <a>서울 강남 제2000-09호</a> | <a>대표자
-					: 허은주</a>
+			<p id="informations"> 사업자등록번호 : 123-45-6789 | 서울 강남 제2000-09호 | 대표자 : 허은주</p>
+			<div id="rightMiddleFooter">
 			<p id="address">주소 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F,3F,4F,5F,6F</p>
 			<p id="telAndFax"> Tel : 1544-9970 | Fax : 02-562-3478 </p>
+			</div>
 			<p id="copyRight">Copyright © 2021 donet.com non-profit company. All Right Reserved</p>
 		</div>
 		
