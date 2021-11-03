@@ -18,8 +18,7 @@
 	type="image/x-icon">
 
 <!-- 부트스트랩 	-->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <style>
 * {
@@ -149,13 +148,6 @@ tbody tr td, thead tr th {
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">후원</a></li>
-			<li class="breadcrumb-item"><a href="#">펀딩 프로젝트</a></li>
-			<li class="breadcrumb-item active" aria-current="page">등록</li>
-		</ol>
-	</nav>
 	<div class="main">
 		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data">
 			<div class="div-content">
@@ -211,7 +203,9 @@ tbody tr td, thead tr th {
 				<label for="content">내용</label>
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
-				
+				<div contentEditable="true">
+					뀨
+				</div>
 			</div>
 
 			<div class="btnArea">
