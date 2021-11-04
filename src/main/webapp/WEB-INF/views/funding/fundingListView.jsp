@@ -36,6 +36,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
 
+<!-- jQuery --> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <title>도넷닷컴</title>
 <style>
 *{
@@ -212,7 +214,7 @@ select::-ms-expand {
 }
 
 .cases-img {
-	position: static;
+	padding-top:20px;
 }
 </style>
 </head>
@@ -240,7 +242,8 @@ select::-ms-expand {
 					<option value="SYSDATE < START_DATE">예정</option>
 					<option value="SYSDATE BETWEEN START_DATE AND CLOSING_DATE">진행중</option>
 					<option value="SYSDATE > CLOSING_DATE">종료</option>
-				</select> <select name="order" id="order"  onchange="selectOrder(this.value);">
+				</select> 
+				<select name="order" id="order"  onchange="selectOrder(this.value);">
 					<option value="FP_WRITE_DATE DESC">최신순</option>
 					<option value="HITS DESC">조회순</option>
 					<option value="NUMBER_SUPPORTER DESC">후원자수순</option>

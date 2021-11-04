@@ -16,7 +16,11 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
-
+<!-- 제이쿼리 --> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <title>도넷닷컴</title>
 <style>
@@ -63,6 +67,7 @@ body.light-theme .top {
 	border-radius: 5px;
 	padding: 7px 5px 7px 7px;
 }
+
 .btn-toggle {
 	height: 35px;
 	cursor: pointer;
@@ -71,7 +76,7 @@ body.light-theme .top {
 	background-color: white;
 	border-radius: 5px;
 	border-color: rgb(60, 179, 113);
-	padding: 7px 5px 7px 7px;	
+	padding: 7px 5px 7px 7px;
 }
 
 #greenLine {
@@ -97,10 +102,9 @@ c {
 	font-weight: 800;
 }
 
-#totalAmount {
-	text-align: right;
+.progressBar{
+	text-align:center;
 }
-
 .progressbar {
 	display: inline-block;
 	width: 260px;
@@ -108,7 +112,6 @@ c {
 	border: 1px solid rgb(85, 85, 85);
 	border-radius: 10px;
 	align: center;
-	margin-left: 13%;
 }
 
 .progressbar>.gauge {
@@ -133,28 +136,24 @@ c {
 	display: inline-block;
 }
 
-#person {
-	flex: 1;
-	float: left;
-	margin-left: 8%;
-	margin-right: 2%;
+#iconImg {
+	float:left;
+	margin-left:50px;
 }
 
 #total {
-	flex: 2;
-	margin-top: 13%;
+	margin-top: 12%;
+	margin-right: 200px;
 }
 
 .totalAmount {
 	text-align: right;
-	margin-top: 8%;
-	margin-right: 5%;
-	font-weight: 800;
+	margin-top: 5%;
+	margin-right: 10%;
 }
 
 #term {
-	margin-top: 3%;
-	margin-left: 8%;
+	margin-top: 5%;
 }
 
 z {
@@ -183,33 +182,33 @@ d {
 	border-radius: 40px;
 	color: white;
 	text-align: center;
-	margin-top: 13%;
-	margin-left: 8%;
+	margin-top: 4%;
+	margin-left: 10%;
 }
 
 #submit {
-	width: 300px;
+	width: 350px;
 	height: 40px;
 	border-radius: 5px;
 	border-color: rgb(60, 179, 113);
 	font-weight: 600;
+	font-size: 15px;
 	color: white;
 	background-color: rgb(60, 179, 113);
-	margin-top: 5%;
-	margin-left: 8%;
+	margin-top: 3%;
 	transition: all 0.5s;
 }
 
 #submit:hover {
-	width: 300px;
+	width: 350px;
 	height: 40px;
 	border-radius: 5px;
 	border-color: rgb(60, 179, 113);
 	font-weight: 600;
+	font-size: 15px;
 	color: rgb(60, 179, 113);
 	background-color: white;
-	margin-top: 5%;
-	margin-left: 8%;
+	margin-top: 3%;
 }
 
 f {
@@ -334,6 +333,7 @@ td {
 	border-bottom: 1px solid #808080;
 	height: 40px;
 }
+
 #replyArea>thead>tr>th {
 	background-color: rgb(224, 224, 224);
 	border-top: 2px solid #808080;
@@ -414,6 +414,47 @@ d {
 	table-layout: fixed;
 	word-break: break-all;
 }
+
+.delArea{
+	float:right;
+}
+
+#deleteBoard {
+	cursor: pointer;
+	color: rgb(60, 179, 113);
+	font-size: 13px;
+	font-weight: 500;
+	background-color: white;
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	float: right;
+	margin-right: 3%;
+	transition: all 0.5s;
+}
+
+#deleteBoard:hover {
+	cursor: pointer;
+	color: white;
+	font-size: 13px;
+	font-weight: 500;
+	background-color: rgb(60, 179, 113);
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	float: right;
+	margin-right: 3%;
+	transition: all 0.5s;
+}
+
+pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+}
 </style>
 </head>
 <body class="dark-theme || light-theme">
@@ -421,7 +462,12 @@ d {
 
 	<div class="outer">
 		<div class="title">
-			<span><f>후원 > 후원 프로젝트</f></span>
+			<span><f>후원 > 후원 프로젝트</f></span> 
+			<span class="delArea"> 
+				<c:if test="${loginUser.userRole eq 'D'}">
+					<input type="button" id="deleteBoard" value="삭제하기">
+				</c:if>
+			</span>
 			<div id="greenLine"></div>
 		</div>
 		<div class="content">
@@ -431,28 +477,20 @@ d {
 					src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}"
 					id="thumbnailImg">
 			</div>
-			<div class="detailInfo">
-				<div style="text-align: center;">
-					<h>${s.suTitle}</h>
-				</div>
-				<div id="writer">
-					<d>${s.suWriter}</d>
-				</div>
+			<div class="detailInfo" style="text-align:center; width:350px;">
+				<div><b style="font-size:25px;">${s.suTitle}</b></div>
+				<div><b style="font-size:18px;">${s.suWriter}</b></div>
 				<div>
 					<div>
-						<img id="person" alt=""
+						<img id="iconImg" alt=""
 							src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 					</div>
 					<c:choose>
 						<c:when test="${empty p}">
-							<div id="total">
-								<z> 0 명 참여</z>
-							</div>
+							<div id="total"><b style="font-size:15px;"> 0 명 참여</b></div>
 						</c:when>
 						<c:when test="${!empty p}">
-							<div id="total">
-								<z>${p.total } 명 참여</z>
-							</div>
+							<div id="total"><b style="font-size:15px;">${p.total } 명 참여</b></div>
 						</c:when>
 					</c:choose>
 				</div>
@@ -474,60 +512,64 @@ d {
 							</c:choose>
 						</c:when>
 						<c:when test="${s.goal eq 0 }">
-							<span class="progressbar"> <span class="gauge"
-								style="width: 0%;"></span>
+							<span class="progressbar"> 
+							<span class="gauge" style="width: 0%;"></span>
 							</span>
 						</c:when>
 					</c:choose>
 				</div>
 				<c:choose>
 					<c:when test="${empty p}">
-						<div class="totalAmount">
-							<d> 0 원</d>
-						</div>
+						<div class="totalAmount"><b style="font-size:20px;">누적 0 원</b></div>
 					</c:when>
 					<c:when test="${!empty p}">
-						<div class="totalAmount">
-							<d>누적 ${p.sum } 원</d>
-						</div>
+						<div class="totalAmount"><b style="font-size:20px;">누적 ${p.sum } 원</b></div>
 					</c:when>
 				</c:choose>
 
 				<div>
 					<div id="term">
-						<fmt:formatDate value="${s.suStart}" var="suStart"
-							pattern="yyyy-MM-dd" />
-						<fmt:formatDate value="${s.suLast}" var="suLast"
-							pattern="yyyy-MM-dd" />
-						<z>${suStart} ~ ${suLast} 까지</z>
+						<fmt:formatDate value="${s.suStart}" var="suStart" pattern="yyyy-MM-dd" />
+						<fmt:formatDate value="${s.suLast}" var="suLast" pattern="yyyy-MM-dd" />
+						<b style="font-size:20px;">${suStart} ~ ${suLast} 까지</b>
 					</div>
 				</div>
-				<div class="dDate">
-					<d>D - ${s.ddate }<d>
-				</div>
-				<div>
-					<input type="submit" value="기부하기" id="submit">
-				</div>
+				<div class="dDate"><b style="font-size:20px;">D - ${s.ddate }<b></div>
+				<div><input type="submit" value="기부하기" id="submit"></div>
 			</div>
-			<div class="description">
-				<pre>
+<div class="description">
+	<pre>
 ${s.content}
-</pre>
-			</div>
+	</pre>
+</div>
 
 			<div class="slider-1">
 				<div class="slides">
 					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
-						<div
-						style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
-					
-					
+						<c:choose>
+							<c:when test="${ status.begin }">
+								<div class="active"
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:when>
+							<c:otherwise>
+								<div
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:otherwise>
+						</c:choose>
+
 					</c:forEach>
 				</div>
 				<div class="page-btns">
-				<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
-					<div></div>
-				</c:forEach>
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
+						<c:choose>
+							<c:when test="${ status.begin }">
+								<div class="active"></div>
+							</c:when>
+							<c:otherwise>
+								<div></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</div>
 				<div class="side-btns">
 					<div>
@@ -598,43 +640,47 @@ ${s.content}
 				<input type="submit" value="기부하기" id="submit"
 					style="margin: 15% 30%;">
 			</div>
+
 		</div>
 		<div style="margin-top: 10%;">
-			<span><a id="comment" href="">댓글&nbsp;&nbsp; </a></span>
+			<span><a id="comment">댓글&nbsp;&nbsp; </a></span>
 			<div id="greenLine" style="margin-bottom: 5%;"></div>
-                    	<c:if test="${ !empty loginUser }">
-					<div>
-						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
-						<span style="margin-left: 3%;"><input type="text"
-							id="replyContent" placeholder="내용을 입력해주세요"></span> <span
-							style=""><input type="submit" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
-					</div>
-                        </c:if>
-                        <c:if test="${ empty loginUser }">
-					<div>
-						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
-						<span style="margin-left: 7%;"><input type="text"
-							id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span> <span
-							style=""><input type="submit" class="btn btn-secondary" id="addReply" style="width:100px;" value="댓글등록" ></span>
-					</div>
-                        </c:if>
-            <table id="replyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>작성일</th>
+			<c:if test="${ !empty loginUser }">
+				<div>
+					<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
+					<span style="margin-left: 3%;"><input type="text"
+						id="replyContent" placeholder="내용을 입력해주세요"></span> <span style=""><input
+						type="submit" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
+				</div>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<div>
+					<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
+					<span style="margin-left: 7%;"><input type="text"
+						id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span>
+					<span style=""><input type="submit"
+						class="btn btn-secondary" id="addReply" style="width: 100px;"
+						value="댓글등록"></span>
+				</div>
+			</c:if>
+			<table id="replyArea" class="table" align="center">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>작성일</th>
 						<th colspan="1">아이디</th>
-						<th colspan="6">댓글(<span id="rcount">0</span>)</th>
-                        <th></th>
+						<th colspan="6">댓글(<span id="rcount">0</span>)
+						</th>
+						<th></th>
 						<th colspan='2'></th>
-                    </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
 			<div style="margin-top: 10%;">
-				<span><a id="partList" href="">참여내역</a></span>
+				<span><a id="partList">참여내역</a></span>
 				<div id="greenLine"></div>
 				<div style="height: 50px;"></div>
 				<table id="commentTable" style="">
@@ -652,7 +698,7 @@ ${s.content}
 							<td>${no }</td>
 							<td>${pList.payDate }</td>
 							<td colspan="2">${pList.userId }</td>
-							<td colspan="8"">${pList.amount }원 참여</td>
+							<td colspan="8"">${pList.amount }원참여</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -661,122 +707,147 @@ ${s.content}
 
 	</div>
 	<!-- 댓글 수정 시 모달 -->
-	<div class="modal fade" id="modifyModal" role="dialog"> 
-		<div class="modal-dialog"> 
-			<div class="modal-content"> 
-				<div class="modal-header"> 
-					<button type="button" class="close" data-dismiss="modal">&times;</button> 
-		 		</div> 
-		 		<div class="modal-body"> 
-		 			<div class="form-group"> 
-		 				<label for="reply_no">댓글 번호</label> 
-		 				<input class="form-control" id="reply_no" name="reply_no" readonly> 
-		 			</div> 
-		 			<div class="form-group"> 
-		 				<label for="reply_date">댓글 작성일</label> 
-		 				<input class="form-control" id="reply_date" name="reply_date" readonly> 
-		 			</div> 
-					<div class="form-group"> 
-						<label for="reply_text">댓글 내용</label>
-		  				<input class="form-control" id="reply_text" name="reply_text" placeholder="댓글 내용을 입력해주세요"> 
-		  			</div> 
-		  			<div class="form-group"> 
-		  				<label for="reply_writer">댓글 작성자</label> 
-		  				<input class="form-control" id="reply_writer" name="reply_writer" readonly> 
-		  			</div>
-		  			<div class="form-group" style="visibility:hidden;"> 
-		  				<label for="reply_rno">댓글 고유번호</label> 
-		  				<input class="form-control" id="reply_rno" name="reply_rno" readonly> 
-		  			</div>
-				</div> 
-				<div class="modal-footer"> 
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button> 
-					<button type="button" class="btn btn-success modalModBtn" onclick="updateReply();">수정</button> 
-				</div> 
-			</div> 
+	<div class="modal fade" id="modifyModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="reply_no">댓글 번호</label> <input class="form-control"
+							id="reply_no" name="reply_no" readonly>
+					</div>
+					<div class="form-group">
+						<label for="reply_date">댓글 작성일</label> <input class="form-control"
+							id="reply_date" name="reply_date" readonly>
+					</div>
+					<div class="form-group">
+						<label for="reply_text">댓글 내용</label> <input class="form-control"
+							id="reply_text" name="reply_text" placeholder="댓글 내용을 입력해주세요">
+					</div>
+					<div class="form-group">
+						<label for="reply_writer">댓글 작성자</label> <input
+							class="form-control" id="reply_writer" name="reply_writer"
+							readonly>
+					</div>
+					<div class="form-group" style="visibility: hidden;">
+						<label for="reply_rno">댓글 고유번호</label> <input class="form-control"
+							id="reply_rno" name="reply_rno" readonly>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-success modalModBtn"
+						onclick="updateReply();">수정</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-     <script>
-   		 <!--ajax 댓글작성-->
-   		$(function(){
-    		selectReplyList();
-    		
-    		$("#addReply").click(function(){
-        		var suNo = ${s.suNo};
 
-    			if($("#replyContent").val().trim().length != 0){
-    				
-    				$.ajax({
-    					url:"insert.re",
-    					type:"post",
-    					data:{replyContent:$("#replyContent").val(),
-    						  refBoardNo:suNo,
-    						  replyWriter:"${loginUser.userId}"},
-    					success:function(result){
-    						if(result > 0){
-    							$("#replyContent").val("");
-    							selectReplyList();
-    							
-    						}else{
-    							alert("댓글등록실패");
-    						}
-    					},error:function(){
-    						console.log("댓글 작성 ajax 통신 실패");
-    					}
-    				});
-    				
-    			}else{
-    				alert("댓글을 입력해주세요");
-    			}
-    			
-    		});
-    	});
-    	
-    	function selectReplyList(){
-    		var suNo = ${s.suNo};
-    		$.ajax({
-    			url:"list.re",
-    			data:{suNo:suNo},
-    			type:"get",
-    			success:function(commentList){
-    				$("#rcount").text(commentList.length);
-    				
-					var num= commentList.length
-    				var value="";
-    				$.each(commentList, function(i, obj){
-    					
-    					value += "<tr>"+
-    								"<td>" + num-- + "</td>" +
-    								"<td>" + obj.createDate + "</td>" +
-    					 		 	"<td colspan='1'>" + obj.replyWriter + "</td>" + 
-   								 	"<td colspan='6' style='text-align:left;'>" + obj.replyContent + "</td>" 
-    								 
-   								 
-   		    					if("${loginUser.userId}" == obj.replyWriter){
-   		    						value += "<td colspan='2' style='border-top: 1px solid #808080;'>"+
-												"<div>"+
-													"<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.replyNo+")'></span>"+
-													"<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"+
-												"</div>"+
-   		    								"</td>";
-   		    					}else{
-   		    						value += "<td></td>";
-   		    					} 								 
-   						value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>" + obj.replyNo + "</td></tr>";
-    				});
-    				$("#replyArea tbody").html(value);
-    			},
-    			error:function(){
-    				console.log("댓글 리스트조회용 ajax 통신 실패");
-    			}
-    		});
-    	}
-    	
-    	function deleteReply(replyNo){
-    		if (confirm("댓글을 삭제하시겠습니까?(Y/N)")) {
+	<script>
+	<!--ajax 댓글작성-->
+		$(function() {
+			selectReplyList();
+
+			$("#addReply").click(function() {
+				var suNo = $
+				{
+					s.suNo
+				}
+				;
+
+				if ($("#replyContent").val().trim().length != 0) {
+
+					$.ajax({
+						url : "insert.re",
+						type : "post",
+						data : {
+							replyContent : $("#replyContent").val(),
+							refBoardNo : suNo,
+							replyWriter : "${loginUser.userId}"
+						},
+						success : function(result) {
+							if (result > 0) {
+								$("#replyContent").val("");
+								selectReplyList();
+
+							} else {
+								alert("댓글등록실패");
+							}
+						},
+						error : function() {
+							console.log("댓글 작성 ajax 통신 실패");
+						}
+					});
+
+				} else {
+					alert("댓글을 입력해주세요");
+				}
+
+			});
+		});
+
+		function selectReplyList() {
+			var suNo = ${s.suNo};
+			$.ajax({
+						url : "list.re",
+						data : {
+							suNo : suNo
+						},
+						type : "get",
+						success : function(commentList) {
+							$("#rcount").text(commentList.length);
+
+							var num = commentList.length
+							var value = "";
+							$.each(
+											commentList,
+											function(i, obj) {
+
+												value += "<tr>"
+														+ "<td>"
+														+ num--
+														+ "</td>"
+														+ "<td>"
+														+ obj.createDate
+														+ "</td>"
+														+ "<td colspan='1'>"
+														+ obj.replyWriter
+														+ "</td>"
+														+ "<td colspan='6' style='text-align:left;'>"
+														+ obj.replyContent
+														+ "</td>"
+
+												if ("${loginUser.userId}" == obj.replyWriter) {
+													value += "<td colspan='2' style='border-top: 1px solid #808080;'>"
+															+ "<div>"
+															+ "<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("
+															+ obj.replyNo
+															+ ")'></span>"
+															+ "<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"
+															+ "</div>"
+															+ "</td>";
+												} else {
+													value += "<td></td>";
+												}
+												value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>"
+														+ obj.replyNo
+														+ "</td></tr>";
+											});
+							$("#replyArea tbody").html(value);
+						},
+						error : function() {
+							console.log("댓글 리스트조회용 ajax 통신 실패");
+						}
+					});
+		}
+
+		function deleteReply(replyNo) {
+			if (confirm("댓글을 삭제하시겠습니까?(Y/N)")) {
 				$.ajax({
-					url : "delete.re/"+replyNo,
+					url : "delete.re/" + replyNo,
 					type : "get",
 					success : function() {
 						alert("댓글이 삭제되었습니다");
@@ -788,54 +859,53 @@ ${s.content}
 				});
 			} else {
 				alert("댓글 삭제가 취소되었습니다");
-			}	
-    	}
-    	
-    	$(document).on("click", "#update", function () { 
-    		var row = $(this).parent().parent().parent().parent();
-    		var tr = row.children();
-    		
-    		var replyNo = tr.eq(0).text();
-    		var createDate = tr.eq(1).text();
-    		var replyWriter = tr.eq(2).text();
-    		var replyContent = tr.eq(3).text();
-    		var replyRno = tr.eq(5).text();
-    		
-    		$(".modal-body #reply_no").val( replyNo ); 
-    		$(".modal-body #reply_date").val( createDate ); 
-    		$(".modal-body #reply_writer").val( replyWriter ); 
-    		$(".modal-body #reply_text").val( replyContent ); 
-    		$(".modal-body #reply_rno").val( replyRno ); 
-		 });
-    	
-    	function updateReply(){
-    		if(confirm("댓글을 수정하시겠습니까?(Y/N)")){
-    		const suNo = "${s.suNo}";
-    		console.log(suNo);
-    		const content=$('#reply_text').val();
-    		console.log(content);
-    		const replyNo=$('#reply_rno').val();
-    		console.log(replyNo);
-    		
-    		$.ajax({
-    			url : "update.re/"+suNo+"/"+replyNo,
-    			type : "post",
-    			data:{
-    				replyContent:content
-    			},
-    			success : function() {
-    				alert("댓글이 수정되었습니다");
-    				selectReplyList();
-    			},
-    			error : function() {
-    				console.log("댓글 리스트조회용 ajax 통신 실패");
-    			}
-    		});
-    	}
-    		
-    }
+			}
+		}
 
-    </script>
+		$(document).on("click", "#update", function() {
+			var row = $(this).parent().parent().parent().parent();
+			var tr = row.children();
+
+			var replyNo = tr.eq(0).text();
+			var createDate = tr.eq(1).text();
+			var replyWriter = tr.eq(2).text();
+			var replyContent = tr.eq(3).text();
+			var replyRno = tr.eq(5).text();
+
+			$(".modal-body #reply_no").val(replyNo);
+			$(".modal-body #reply_date").val(createDate);
+			$(".modal-body #reply_writer").val(replyWriter);
+			$(".modal-body #reply_text").val(replyContent);
+			$(".modal-body #reply_rno").val(replyRno);
+		});
+
+		function updateReply() {
+			if (confirm("댓글을 수정하시겠습니까?(Y/N)")) {
+				const suNo = "${s.suNo}";
+				console.log(suNo);
+				const content = $('#reply_text').val();
+				console.log(content);
+				const replyNo = $('#reply_rno').val();
+				console.log(replyNo);
+
+				$.ajax({
+					url : "update.re/" + suNo + "/" + replyNo,
+					type : "post",
+					data : {
+						replyContent : content
+					},
+					success : function() {
+						alert("댓글이 수정되었습니다");
+						selectReplyList();
+					},
+					error : function() {
+						console.log("댓글 리스트조회용 ajax 통신 실패");
+					}
+				});
+			}
+
+		}
+	</script>
 	<script>
 		$('.slider-1 > .page-btns > div').click(function() {
 			var $this = $(this);
@@ -889,15 +959,15 @@ ${s.content}
 		}, 3000);
 	</script>
 	<jsp:include page="../common/footer.jsp" />
-		<div class="subMenu">
-	<div
-		style="display: scroll; position: fixed; bottom: 10px; right: 5px;">
-		<a href="#" class="top">Top▲</a>
-	</div>
-	<div
-		style="display: scroll; position: fixed; bottom: 3px; right: 60px;">
-		<button class="btn-toggle">Dark-Mode</button>
-	</div>
+	<div class="subMenu">
+		<div
+			style="display: scroll; position: fixed; bottom: 10px; right: 5px;">
+			<a href="#" class="top">Top▲</a>
+		</div>
+		<div
+			style="display: scroll; position: fixed; bottom: 3px; right: 60px;">
+			<button class="btn-toggle">Dark-Mode</button>
+		</div>
 	</div>
 	<script type="text/javascript">
 		$(window).scroll(function() {
@@ -920,7 +990,7 @@ ${s.content}
 			document.body.classList.toggle('light-theme');
 		});
 	</script>
-	
+
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>도넷닷컴</title>
 </head>
 <body>
 <jsp:include page="common/menubar.jsp"/>

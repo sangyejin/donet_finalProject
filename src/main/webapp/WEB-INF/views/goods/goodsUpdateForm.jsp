@@ -20,7 +20,8 @@
 <!-- 부트스트랩 	-->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <style>
 * {
 	font-family: 'Nanum Gothic Coding', monospace;
@@ -139,6 +140,12 @@ tbody tr td, thead tr th {
 #beneficiaryTable,#beneficiaryTable thead th{
 	border:1px solid black;
 } 
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 
 <script

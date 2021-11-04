@@ -43,7 +43,7 @@
 		<typeAlias type="com.pongsung.donet.goods.model.vo.RequiredGoods" alias="RequiredGoods" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.Beneficiary" alias="Beneficiary" />
 		<typeAlias type="com.pongsung.donet.goods.model.vo.FilterOrder" alias="FilterOrder" />
-		<typeAlias type="com.pongsung.donet.funding.model.vo.FundingFilterOrder" alias="FundingFilterOrder" />
+		
 		
 		
 		<typeAlias type="com.pongsung.donet.donation.model.vo.Support" alias="Support" />

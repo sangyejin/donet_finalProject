@@ -139,10 +139,16 @@ tbody tr td, thead tr th {
 	height: 340px;
 	padding: 0;
 }
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 </head>
 
 <body>

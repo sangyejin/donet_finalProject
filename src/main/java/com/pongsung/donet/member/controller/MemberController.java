@@ -65,11 +65,12 @@ public class MemberController {
 		@RequestMapping("logout.me")
 		public String logoutMember(SessionStatus status) {
 			
-			status.isComplete(); // 현재 컨트롤러에  @SessionAttributes에 의해 저장된 오브젝트를 제거합니다.
+			status.setComplete(); // 현재 컨트롤러에  @SessionAttributes에 의해 저장된 오브젝트를 제거합니다.
 						
 			return "redirect:/";
 		} 
 		
+
 		// 회원 등록 페이지로 이동
 		@RequestMapping("enrollForm.me")
 		public String enrollForm() {
