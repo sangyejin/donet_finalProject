@@ -67,10 +67,9 @@ h1, h2 {
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="div-main">
-		<h1>펀딩 후원 완료</h1>
+		<h1>구호물품 기부 완료 </h1>
 		<div class="content">
-			<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${funding.thumbnailChangeName}" alt="" width="400px">
-			<h2>구호물품 기부 완료 :)</h2>
+			<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${goods.thumbnailChangeName}" alt="" width="400px">
 			<p>
 				구호물품을 기부해주셔서 감사합니다.<br>
 				더 나은 세상을 위해 노력하겠습니다.

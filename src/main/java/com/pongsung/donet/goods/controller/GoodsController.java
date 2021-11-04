@@ -279,8 +279,8 @@ public class GoodsController {
 		logger.info("insertGoodsPurchase :: goodsPurchase ::"+goodsPurchase);
 		goodsService.insertGoodsPurchase(goodsPurchase);
 		
-		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
-		//model.addAttribute("loginUser", loginUser);
+		Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+		model.addAttribute("loginUser", loginUser);
 		return "redirect:/goods/"+goodsNo+"/complete";
 	}
 	

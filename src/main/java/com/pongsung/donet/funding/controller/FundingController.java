@@ -295,9 +295,8 @@ public class FundingController {
 		fundingSupporter.setFpSupporter(((Member)model.getAttribute("loginUser")).getUserId());
 		fundingSupporter.setFpNo(fpNo);
 		fundingService.insertFundingSupporter(fundingSupporter);
-		
-		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
-		//model.addAttribute("loginUser", loginUser);
+		Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+		model.addAttribute("loginUser", loginUser);
 		return "redirect:/funding/"+fpNo+"/complete";
 	}
 	

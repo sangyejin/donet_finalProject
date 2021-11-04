@@ -51,6 +51,7 @@
 .card {
 	margin-right: 0px !important;
 	padding-left: 30px !important;
+	padding-right: 30px !important;
 }
 
 .cases-caption {
@@ -195,15 +196,14 @@ select::-ms-expand {
 }
 
 .img-text {
-	position: absolute;
 	background-color: rgba(60, 179, 113, 0.6);
 	border-radius: 50%;
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 	position: absolute;
-	top: 50px;
-	left: 130px;
-	padding-top: 35px;
+	top: 45px;
+	left: 100px;
+	padding-top: 60px;
 }
 
 .img-text>p {
@@ -211,10 +211,35 @@ select::-ms-expand {
 	vertical-align: middle;
 	color: white;
 	font-weight: 700;
+	font-size:20px;
 }
 
 .cases-img {
 	padding-top:20px;
+}
+
+
+.progressbar {
+	display: inline-block;
+	width: 278px;
+	height: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: left;
+	background-color: #e8e8e8;
+	box-shadow: inset 0px 1px 0.5px 0.5px #858B94;
+	overflow:hidden;
+}
+
+.progressbar>.gauge {
+	display: inline-block;
+	height: 10px;
+	background-color: rgba(60, 179, 113);
+	border-radius: 10px;
+	padding-top:0px;
+	margin-left: 0px;
+	margin-bottom: 6px;
+	box-shadow: inset 0px 1px 0.5px 0.5px rgba(50, 140, 90);
 }
 </style>
 </head>
@@ -350,13 +375,11 @@ select::-ms-expand {
 												<span>`+list.dDay +`</span>
 											</p>
 										</div>
-										<div class="progress">
-											<div class="progress-bar progress-bar-success"
-												role="progressbar"
-												aria-valuenow="`+goalPersent+`" aria-valuemin="0"
-												aria-valuemax="100"
-												style="width:`+goalPersent+`%">`+goalPersent+`%
-											</div>
+										<div class="progressBar">
+										<span class="progressbar"> 
+											<span class="gauge" style="width: `+goalPersent+`%">
+											</span>	
+										</span>
 										</div>
 										<div class="prices d-flex justify-content-between">
 											<p>

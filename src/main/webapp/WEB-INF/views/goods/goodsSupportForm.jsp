@@ -47,29 +47,7 @@
 		no-repeat 50% 50%/cover;
 }
 
-/*선물*/
-.fundingGoods-card {
-	border: 1px solid black;
-	padding: 10px;
-	margin: 10px;
-}
 
-.presentPrice {
-	font-size: 1.4em;
-	font-weight: 700;
-	margin: 0;
-}
-
-.presentName {
-	font-size: 1.4em;
-	margin: 0;
-}
-
-.presentContent {
-	font-size: 1.4em;
-	color: gray;
-	margin: 0;
-}
 #balance{
 	display:inline-block;
 	margin-right:10px;
@@ -90,20 +68,9 @@ input[type="number"]::-webkit-inner-spin-button {
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
-	<!-- 오늘 날짜 -->
-	<jsp:useBean id="today" class="java.util.Date" />
-	<fmt:formatDate var="nowDate" value="${today}" pattern="yyyyMMdd" />
-
-	<!-- 펀딩 끝 날짜 -->
-	<fmt:parseDate value="${funding.closeDate }" var="closeD"
-		pattern="yyyy-MM-dd" />
-	<fmt:formatDate var="closeDate" value="${closeD}" pattern="yyyyMMdd" />
-
-
 	<div class="wrap">
 		<div class="main-container">
 			<form id="insertForm" action="support/insert" method="post">
-
 				<div id="top-div">
 					<div class="col-md-4">
 						<div id="thumb-img-container"></div>
@@ -152,10 +119,9 @@ input[type="number"]::-webkit-inner-spin-button {
 	<script>
 		$(function() {
 			$("#btn-support").click(function(){
-				console.log(Number("${loginUser.point}"),Number($("#totalAmount").text()),Number("${loginUser.point}")<Number($("#totalAmount").text()));
-				if(Number("${loginUser.point}")<Number($("#totalAmount").text())){
+				if( Number("${loginUser.point}") < Number($("#hiddenTotalPrice").val()) ){
 					$("#message").text("잔여 포인트가 부족합니다.");
-					return false;
+					return;
 				}else{
 					$("#insertForm").submit();
 				}
