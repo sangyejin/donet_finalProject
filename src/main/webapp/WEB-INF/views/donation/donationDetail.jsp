@@ -7,16 +7,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
+<!-- font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
+	rel="stylesheet">
+<!-- 제이쿼리 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <title>도넷닷컴</title>
 <style>
@@ -98,9 +104,10 @@ c {
 	font-weight: 800;
 }
 
-.progressBar{
-	text-align:center;
+.progressBar {
+	text-align: center;
 }
+
 .progressbar {
 	display: inline-block;
 	width: 260px;
@@ -133,8 +140,8 @@ c {
 }
 
 #iconImg {
-	float:left;
-	margin-left:50px;
+	float: left;
+	margin-left: 50px;
 }
 
 #total {
@@ -182,7 +189,7 @@ d {
 	margin-left: 10%;
 }
 
-#submit {
+#supporting {
 	width: 350px;
 	height: 40px;
 	border-radius: 5px;
@@ -195,7 +202,7 @@ d {
 	transition: all 0.5s;
 }
 
-#submit:hover {
+#supporting:hover {
 	width: 350px;
 	height: 40px;
 	border-radius: 5px;
@@ -322,6 +329,7 @@ th {
 	border-top: 2px solid #808080;
 	border-bottom: 2px solid #808080;
 	height: 40px;
+	text-align: center;
 }
 
 td {
@@ -356,7 +364,8 @@ c {
 	font-weight: 600;
 	color: white;
 	background-color: rgb(60, 179, 113);
-	margin-left: 5%;
+	margin-left: 3%;
+	margin-bottom: 0.5%;
 	transition: all 0.5s;
 }
 
@@ -368,7 +377,8 @@ c {
 	font-weight: 600;
 	color: rgb(60, 179, 113);
 	background-color: white;
-	margin-left: 5%;
+	margin-left: 3%;
+	margin-bottom: 0.5%;
 }
 
 #replyContent {
@@ -376,11 +386,6 @@ c {
 	height: 38px;
 	border-radius: 7px;
 	font-size: 15px;
-}
-
-d {
-	font-size: 20px;
-	font-weight: 400;
 }
 
 #update {
@@ -411,8 +416,8 @@ d {
 	word-break: break-all;
 }
 
-.delArea{
-	float:right;
+.delArea {
+	float: right;
 }
 
 #deleteBoard {
@@ -430,6 +435,30 @@ d {
 	transition: all 0.5s;
 }
 
+#btn-delete {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	color: white;
+	font-weight: 600;
+	color: rgb(60, 179, 113);
+	background-color: white;
+	transition: all 0.5s;
+	border: 1px solid rgb(60, 179, 113);
+	margin-left: 650px;
+}
+
+#btn-delete:hover {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	border: 1px solid rgb(60, 179, 113);
+	color: white;
+	font-weight: 600;
+	color: white;
+	background-color: rgb(60, 179, 113);
+}
+
 #deleteBoard:hover {
 	cursor: pointer;
 	color: white;
@@ -444,13 +473,6 @@ d {
 	margin-right: 3%;
 	transition: all 0.5s;
 }
-
-pre {
-  display: block;
-  font-family: monospace;
-  white-space: pre;
-  margin: 1em 0;
-}
 </style>
 </head>
 <body class="dark-theme || light-theme">
@@ -458,13 +480,18 @@ pre {
 
 	<div class="outer">
 		<div class="title">
-			<span><f>후원 > 후원 프로젝트</f></span> 
-			<span class="delArea"> 
-				<c:if test="${loginUser.userRole eq 'D'}">
-					<input type="button" id="deleteBoard" value="삭제하기">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="width: 1050px;">
+					<li class="breadcrumb-item"><a href="list.do">후원</a></li>
+					<li class="breadcrumb-item active" aria-current="page">후원 프로젝트</li>
+				</ol>
+			</nav>
+			<span class="delArea"> <c:if
+					test="${loginUser.userRole eq 'D'}">
+					<span><button type="button" id="btn-delete"
+							onclick="location.href='delete.do'">삭제하기</button></span>
 				</c:if>
 			</span>
-			<div id="greenLine"></div>
 		</div>
 		<div class="content">
 
@@ -473,9 +500,13 @@ pre {
 					src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}"
 					id="thumbnailImg">
 			</div>
-			<div class="detailInfo" style="text-align:center; width:350px;">
-				<div><b style="font-size:25px;">${s.suTitle}</b></div>
-				<div><b style="font-size:18px;">${s.suWriter}</b></div>
+			<div class="detailInfo" style="text-align: center; width: 350px;">
+				<div>
+					<b style="font-size: 25px;">${s.suTitle}</b>
+				</div>
+				<div>
+					<b style="font-size: 18px;">${s.suWriter}</b>
+				</div>
 				<div>
 					<div>
 						<img id="iconImg" alt=""
@@ -483,10 +514,14 @@ pre {
 					</div>
 					<c:choose>
 						<c:when test="${empty p}">
-							<div id="total"><b style="font-size:15px;"> 0 명 참여</b></div>
+							<div id="total">
+								<b style="font-size: 15px;"> 0 명 참여</b>
+							</div>
 						</c:when>
 						<c:when test="${!empty p}">
-							<div id="total"><b style="font-size:15px;">${p.total } 명 참여</b></div>
+							<div id="total">
+								<b style="font-size: 15px;">${p.total } 명 참여</b>
+							</div>
 						</c:when>
 					</c:choose>
 				</div>
@@ -508,36 +543,46 @@ pre {
 							</c:choose>
 						</c:when>
 						<c:when test="${s.goal eq 0 }">
-							<span class="progressbar"> 
-							<span class="gauge" style="width: 0%;"></span>
+							<span class="progressbar"> <span class="gauge"
+								style="width: 0%;"></span>
 							</span>
 						</c:when>
 					</c:choose>
 				</div>
 				<c:choose>
 					<c:when test="${empty p}">
-						<div class="totalAmount"><b style="font-size:20px;">누적 0 원</b></div>
+						<div class="totalAmount">
+							<b style="font-size: 20px;">누적 0 원</b>
+						</div>
 					</c:when>
 					<c:when test="${!empty p}">
-						<div class="totalAmount"><b style="font-size:20px;">누적 ${p.sum } 원</b></div>
+						<div class="totalAmount">
+							<b style="font-size: 20px;">누적 ${p.sum } 원</b>
+						</div>
 					</c:when>
 				</c:choose>
 
 				<div>
 					<div id="term">
-						<fmt:formatDate value="${s.suStart}" var="suStart" pattern="yyyy-MM-dd" />
-						<fmt:formatDate value="${s.suLast}" var="suLast" pattern="yyyy-MM-dd" />
-						<b style="font-size:20px;">${suStart} ~ ${suLast} 까지</b>
+						<fmt:formatDate value="${s.suStart}" var="suStart"
+							pattern="yyyy-MM-dd" />
+						<fmt:formatDate value="${s.suLast}" var="suLast"
+							pattern="yyyy-MM-dd" />
+						<b style="font-size: 20px;">${suStart} ~ ${suLast} 까지</b>
 					</div>
 				</div>
-				<div class="dDate"><b style="font-size:20px;">D - ${s.ddate }<b></div>
-				<div><input type="submit" value="기부하기" id="submit"></div>
+				<div class="dDate">
+					<b style="font-size: 20px;">D - ${s.ddate }<b>
+				</div>
+				<div>
+					<input type="button" value="기부하기" id="supporting">
+				</div>
 			</div>
-<div class="description">
-	<pre>
+			<div class="description">
+				<pre>
 ${s.content}
 	</pre>
-</div>
+			</div>
 
 			<div class="slider-1">
 				<div class="slides">
@@ -633,7 +678,7 @@ ${s.content}
 				</div>
 			</div>
 			<div>
-				<input type="submit" value="기부하기" id="submit"
+				<input type="button" value="기부하기" id="supporting"
 					style="margin: 15% 30%;">
 			</div>
 
@@ -646,7 +691,7 @@ ${s.content}
 					<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 					<span style="margin-left: 3%;"><input type="text"
 						id="replyContent" placeholder="내용을 입력해주세요"></span> <span style=""><input
-						type="submit" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
+						type="button" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
 				</div>
 			</c:if>
 			<c:if test="${ empty loginUser }">
@@ -654,7 +699,7 @@ ${s.content}
 					<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 					<span style="margin-left: 7%;"><input type="text"
 						id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span>
-					<span style=""><input type="submit"
+					<span style=""><input type="button"
 						class="btn btn-secondary" id="addReply" style="width: 100px;"
 						value="댓글등록"></span>
 				</div>
@@ -748,11 +793,7 @@ ${s.content}
 			selectReplyList();
 
 			$("#addReply").click(function() {
-				var suNo = $
-				{
-					s.suNo
-				}
-				;
+				var suNo = "${s.suNo}";
 
 				if ($("#replyContent").val().trim().length != 0) {
 
@@ -786,57 +827,35 @@ ${s.content}
 		});
 
 		function selectReplyList() {
-			var suNo = $
-			{
-				s.suNo
-			}
-			;
-			$
-					.ajax({
+			var suNo = "${s.suNo}";
+			$.ajax({
 						url : "list.re",
-						data : {
-							suNo : suNo
-						},
+						data : {suNo : suNo},
 						type : "get",
 						success : function(commentList) {
-							$("#rcount").text(commentList.length);
+									$("#rcount").text(commentList.length);
 
-							var num = commentList.length
-							var value = "";
-							$
-									.each(
-											commentList,
-											function(i, obj) {
+									var num = commentList.length
+									var value = "";
+									$.each(commentList, function(i, obj) {
 
 												value += "<tr>"
-														+ "<td>"
-														+ num--
-														+ "</td>"
-														+ "<td>"
-														+ obj.createDate
-														+ "</td>"
-														+ "<td colspan='1'>"
-														+ obj.replyWriter
-														+ "</td>"
-														+ "<td colspan='6' style='text-align:left;'>"
-														+ obj.replyContent
-														+ "</td>"
+															+ "<td>"+ num--+ "</td>"
+															+ "<td>"+ obj.createDate+ "</td>"
+															+ "<td colspan='1'>"+ obj.replyWriter+ "</td>"
+															+ "<td colspan='6' style='text-align:left;'>"+ obj.replyContent+ "</td>"
 
 												if ("${loginUser.userId}" == obj.replyWriter) {
 													value += "<td colspan='2' style='border-top: 1px solid #808080;'>"
-															+ "<div>"
-															+ "<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("
-															+ obj.replyNo
-															+ ")'></span>"
-															+ "<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"
-															+ "</div>"
+																+ "<div>"
+																	+ "<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+ obj.replyNo+ ")'></span>"
+																	+ "<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"
+																+ "</div>"
 															+ "</td>";
 												} else {
-													value += "<td></td>";
+													value += "<td></td><td></td>";
 												}
-												value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>"
-														+ obj.replyNo
-														+ "</td></tr>";
+												value += "<td style='visibility:hidden; border-bottom: 1px solid #808080;'>"+ obj.replyNo+ "</td></tr>";
 											});
 							$("#replyArea tbody").html(value);
 						},
@@ -971,6 +990,18 @@ ${s.content}
 			<button class="btn-toggle">Dark-Mode</button>
 		</div>
 	</div>
+	<script>
+		$('#supporting').click(function(){
+			if(${ empty sessionScope.loginUser }){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="loginForm.me";
+				 
+			}else{
+				location.href='supporting?suNo=${s.suNo}';
+				
+			}
+		});
+	</script>
 	<script type="text/javascript">
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 400) {
@@ -992,7 +1023,6 @@ ${s.content}
 			document.body.classList.toggle('light-theme');
 		});
 	</script>
-
-
+	<script src="resources/js/bootstrap.min.js"></script>
 </body>
 </html>

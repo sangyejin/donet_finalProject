@@ -101,10 +101,6 @@
 	margin-bottom: 5px;
 }
 
-.pagination {
-	margin-left: 40%;
-}
-
 .page-link {
 	width: 30px;
 	height: 30px;
@@ -129,6 +125,12 @@
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="outer">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="list.do">후원</a></li>
+				<li class="breadcrumb-item active" aria-current="page">후원 프로젝트</li>
+			</ol>
+		</nav>
 		<jsp:include page="../donation/supportCategory.jsp" />
 
 		<div class="content">
@@ -160,7 +162,7 @@
 										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 								</div>
 								<div id="total">
-									<b style="margin-right:170px; color:black;">후원자수 ${s.total } 명</b>
+									<b style="margin-right:150px; color:black;">후원자수 ${s.total } 명</b>
 								</div>
 							</div>
 							<div class="progressBar">
@@ -196,11 +198,11 @@
 				</c:forEach>
 			</c:if>
 			<div class="pageOuter">
-				<ul class="pagination">
+				<ul class="pagination" style="margin-left:38%;">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+								href="list.do?currentPage=${ pi.currentPage-1 }"><</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link" href=""><</a></li>
@@ -223,7 +225,7 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }"></a></li>
+								href="list.do?currentPage=${ pi.currentPage+1 }">></a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link"
@@ -233,25 +235,11 @@
 				</ul>
 			</div>
 		</div>
-		<script>
-			function global() {
-				location.href = "global?suCategoryNo=1";
-			}
-			function environment() {
-				location.href = "environment?suCategoryNo=2";
-			}
-			function animal() {
-				location.href = "animal?suCategoryNo=3";
-			}
-			function child() {
-				location.href = "child?suCategoryNo=4";
-			}
-			function vulnerable() {
-				location.href = "vulnerable?suCategoryNo=5";
-			}
-		</script>
+
 
 		<jsp:include page="../common/footer.jsp" />
 		<jsp:include page="../donation/subMenu.jsp" />
+		
+
 </body>
 </html>

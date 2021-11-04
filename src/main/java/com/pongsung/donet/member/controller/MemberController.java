@@ -316,6 +316,29 @@ public class MemberController {
 			return "redirect:/myPage.me";
 			
 		}
+		
+		//후원프로젝트 후원 후 포인트 업데이트
+		@RequestMapping("supportAfterPoints")
+		public String supportAfterPoints(int point, HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			System.out.println(point);
+			loginUser.setPoint(point);
+		
+			memberService.updatePoint(loginUser);
+			
+			Member thisUser = memberService.selectThisUser(loginUser);
+			
+			
+			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
+			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
+			
+			model.addAttribute("loginUser", thisUser);
+			
+			return "donation/donationMain";
+			
+		}
 
 		//회원 목록
 		@RequestMapping("userList.me")

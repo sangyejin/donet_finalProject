@@ -16,11 +16,9 @@ import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.donation.model.vo.SupportCategory;
+import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
-import com.pongsung.donet.funding.model.vo.Funding;
-import com.pongsung.donet.funding.model.vo.FundingGoods;
-import com.pongsung.donet.funding.model.vo.FundingImage;
 
 @Service
 public class DonationServiceImpl implements DonationService {
@@ -173,6 +171,44 @@ public class DonationServiceImpl implements DonationService {
 	public List<Support> selectDonationCaList(PageInfo pi, SupportCategory suCategory) {
 		return supportDao.selectDonationCaList(sqlSession, pi, suCategory);
 	}
+
+	@Override
+	public int selectDonationOrListCount(SupportFilter supportFilter) {
+		return supportDao.selectDonationOrListCount(sqlSession, supportFilter);
+	}
+
+	@Override
+	public List<Support> selectDonationOrList(PageInfo pi, SupportFilter supportFilter) {
+		return supportDao.selectDonationOrList(sqlSession, pi, supportFilter);
+	}
+
+	@Override
+	public Support selectSupport(int suNo) {
+		return supportDao.selectSupport(sqlSession,suNo);
+	}
+
+	@Override
+	public int insertSupportCharity(Sponsor s) {
+		int result = supportDao.insertSupportCharity(sqlSession, s);
+
+		if (result < 0) {
+			throw new CommException("후원자 추가 실패");
+		}
+		
+		return result;
+		
+	}
+
+	@Override
+	public int updatePoints(int points) {
+		int result = supportDao.updatePoints(sqlSession,points);
+		if(result<0) {
+			throw new CommException("포인트 수정 실패");
+		}
+		return result;
+	}
+
+
 
 
 

@@ -1,19 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+<title>도넷닷컴</title>
 
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
+
+
+<!-- include libraries(jQuery, bootstrap) --> 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+
+<!-- CDN 한글화 --> 
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+
+
 
 <title>도넷닷컴</title>
 <style>
@@ -130,7 +142,7 @@
 </style>
 </style>
 </head>
-<body id="pageTop">
+<body>
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
@@ -193,7 +205,7 @@
 				</div>
 			</div><br><br><br><br><br><br>
 			<e>기부금 사용계획</e>
-			<button id="addRow"> 행 추가 </button>
+			<button id="addRow" type="button"> 행 추가 </button>
 			<div style="text-align: center;">
 				<table id="useplan">
 				<thead>
@@ -358,5 +370,7 @@
 
 	<jsp:include page="../common/footer.jsp" />
 	<jsp:include page="../donation/subMenu.jsp" />
+	
+
 </body>
 </html>

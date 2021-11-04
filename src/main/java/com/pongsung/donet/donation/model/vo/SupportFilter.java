@@ -12,9 +12,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class SupportFilter {
-	private String global;
-	private String environment;	
-	private String animal;	
-	private String child;
-	private String vulnerable;	
+	private String search;	
+	private int order;	
 }
