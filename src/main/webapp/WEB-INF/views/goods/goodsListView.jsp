@@ -237,7 +237,8 @@ select::-ms-expand {
 				<p id="searchText"></p>
 				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2"
 				onkeyup="if(window.event.keyCode==13){searchText(this.value);}" />
-				</select> <select name="filter2" id="filter1" onchange="selectOrder(this.value);">
+				</select> 
+				<select name="filter2" id="filter1" onchange="selectOrder(this.value);">
 					<option value="CREATE_DATE DESC">최신순</option>
 					<option value="HITS DESC">인기순</option>
 					<option value="GOODS_PRICE ASC">낮은가격순</option>

@@ -15,8 +15,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 제이쿼리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <style>
 * {
 	font-family: 'Nanum Gothic Coding', monospace;
@@ -48,29 +47,7 @@
 		no-repeat 50% 50%/cover;
 }
 
-/*선물*/
-.fundingGoods-card {
-	border: 1px solid black;
-	padding: 10px;
-	margin: 10px;
-}
 
-.presentPrice {
-	font-size: 1.4em;
-	font-weight: 700;
-	margin: 0;
-}
-
-.presentName {
-	font-size: 1.4em;
-	margin: 0;
-}
-
-.presentContent {
-	font-size: 1.4em;
-	color: gray;
-	margin: 0;
-}
 #balance{
 	display:inline-block;
 	margin-right:10px;
@@ -79,26 +56,21 @@
 	display:inline-block;
 	color:red;
 }
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 </head>
 
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
-	<!-- 오늘 날짜 -->
-	<jsp:useBean id="today" class="java.util.Date" />
-	<fmt:formatDate var="nowDate" value="${today}" pattern="yyyyMMdd" />
-
-	<!-- 펀딩 끝 날짜 -->
-	<fmt:parseDate value="${funding.closeDate }" var="closeD"
-		pattern="yyyy-MM-dd" />
-	<fmt:formatDate var="closeDate" value="${closeD}" pattern="yyyyMMdd" />
-
-
 	<div class="wrap">
 		<div class="main-container">
 			<form id="insertForm" action="support/insert" method="post">
-
 				<div id="top-div">
 					<div class="col-md-4">
 						<div id="thumb-img-container"></div>
@@ -147,10 +119,9 @@
 	<script>
 		$(function() {
 			$("#btn-support").click(function(){
-				console.log(Number("${loginUser.point}"),Number($("#totalAmount").text()),Number("${loginUser.point}")<Number($("#totalAmount").text()));
-				if(Number("${loginUser.point}")<Number($("#totalAmount").text())){
+				if( Number("${loginUser.point}") < Number($("#hiddenTotalPrice").val()) ){
 					$("#message").text("잔여 포인트가 부족합니다.");
-					return false;
+					return;
 				}else{
 					$("#insertForm").submit();
 				}

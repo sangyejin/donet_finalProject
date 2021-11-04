@@ -9,7 +9,7 @@
 <title>도넷닷컴</title>
 
 <style>
- *{ font-size: 12px;  }
+  *{ font-size: 10px;  }
 
        /*sidebar*/
 		.sidebar {
@@ -20,6 +20,7 @@
 			float: left;
 			margin-top: 0;
 		}
+
 
 
 #greenfont1 { margin-right: 45%; }
@@ -84,18 +85,14 @@
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
-#sideGreenbar {
-	background-color: rgba(232, 240, 214, 0.5);
-	height: 615px;
-	width: 100px;
-}
+#sideGreenbar { background-color: rgba(232, 240, 214, 0.5); height: 940px; width: 100px;}
 
-#getInThere { margin-top: -605px; margin-left: 35px; }
+#getInThere { margin-top: -930px; margin-left: 35px; }
 
 /*div lines*/
 .grayline{
-            margin-top: 2%;
-            margin-bottom: 2%;
+            margin-top: 10px;
+            margin-bottom:10px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
@@ -108,11 +105,7 @@
 #whole{  width: 1050px;  margin: auto; }
 
 /*head*/
-#support {
-	color: #000000;
-	font-weight: bolder;
-	font-size: 16px;
-}
+#support { color: #000000; font-weight: bolder; font-size: 16px; }
 
 /*button*/
 .goRound {
@@ -125,24 +118,18 @@
 	margin-right: 7px;
 }
 
-.goRound:hover {
-	background-color: rgb(232, 240, 214);
-	color: #000000;
-}
-#buttons{  margin-top: 2%;  margin-left: 530px; margin-bottom: 3%;  }
-#buttonSecondPart{ margin-top: -46px; margin-left: 600px; }
-
-/*content div*/
-#askTitle {
-            width: 580px;
-            height : 25px;
-            margin-left: 80px;
-            border-radius : 7px;
-            border : 1px solid rgb(206,212,218);
-        }
-
-/*img*/
-
+.goRound:hover { background-color: rgb(232, 240, 214); color: #000000; }
+#buttons{  margin-top: 2%;  margin-left: 470px; margin-bottom: 3%;  }
+#backToList{ margin-top: -25px; margin-left: 600px; }
+#deleteOne{margin-left: 535px; margin-top: -46px;}
+		/*content div*/ 
+		#questionType{ margin-left: 78px; margin-top : -31px;}       
+		#titleDiv{margin-top : -24px; margin-bottom : -5px; width: 580px; height : 25px; margin-left: 77px;}
+		#qTypeLabel{margin-top : -10px;}
+		#askContent{ width : 580px; margin-left: 78px; margin-top : 20px; }
+		#answered{ width : 580px; height :230px; margin-left: 78px; margin-top : -10px;}
+		
+		/*img*/
 		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
 				
 		.clickable{display : flex;}
@@ -155,17 +142,7 @@
         
         #imgLabel{margin-top : 5px;}
 
-/*radio style*/
-.radioAlign { margin-right: 20px; }
-#radioType { margin-right: 20px; }
-
-#radios {
-	margin-left: 80px;
-	margin-top: -15px;
-	margin-bottom: -3px;
-}
-
-/* img sneak*/	 	    
+	/* img sneak*/	 	    
     #imgViewArea{ 
     		margin-top: -36px;
             width: 580px;
@@ -179,14 +156,10 @@
       /*사진 전부 정사각형으로 만들기*/
      #imgArea{ border-radius : 7px; border : none; }		
      
-     .imgWrapper { position: relative; width: 200px; height: 200px; } 
+     .imgWrapper { position: relative; width: 200px; height: 200px; margin-left : 80px; margin-top : -40px;} 
      .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
      
-     /*content div*/
-	 #titleDiv{margin-top : -25px; margin-left : -5px;}
-     
-    /*푸터 tlqkfTHING*/
-    #footerAdjust{ margin : 0; padding : 0; position : absolute;}
+    
 </style>
 
 
@@ -221,6 +194,7 @@
 			</div>
 		</div>
 
+<!-- ------------------------------------------------------------ -->
 
 		<div id="thelist">
 			<span id="notice">1:1문의 답변</span>
@@ -235,48 +209,41 @@
 					<span id="headTitle"><label for="askTitle">질문</label> <input
 						type="text" id="askNo" name="askNo" value="${ask.askNo}"
 						hidden="true">
-						<p id="askTitle">${ask.askTitle}</p>
+						
+							<div id="titleDiv">${ask.askTitle}</div>
+							
 						<div class="grayline"></div>
 
-						<div id="headjustify">
-							<label>질문<br>구분
-							</label>
+							<label id="qTypeLabel">질문<br>구분 </label>
 							<div id="questionType">${ask.askTypeName}</div>
-						</div>
 
-						<div class="grayline"></div> <span> <label
-							class="askContent" for="askContent">문의<br>내용
-						</label>
-					</span>
+						<div class="grayline"></div> 
+						
+						<label class="askContent" for="askContent">문의<br>내용</label>
 
 
-						<div id="imgBox">
 							<c:if test="${ ! empty ask.askNewImg  }">
-								<img id="imgArea"
-									src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
-									style="width: 200px; height: 200px;" onerror="imgAreaError()" />
+								<div class="imgWrapper">
+									<img id="imgArea" src="${ pageContext.servletContext.contextPath }/resources/notice_uploadFiles/${ask.askNewImg}"
+										style="width: 200px; height: 200px;" onerror="imgAreaError()" />
+									</div>
 							</c:if>
 
-							<p id="askContent">${ask.askContent}</p>
+							<div id="askContent">${ask.askContent}</div>
 
-						</div>
+							<div class="grayline"></div> 
 
-						<div class="contentLine"></div> <span> <label
-							class="askContent" for="answered">답변</label>
-					</span> <textarea class="form-control" id="answered" name="answered"
-							rows="10" style="resize: none;" maxlength="1000" wrap="on"
-							required>${ask.answered}</textarea>
+
+						
+							<label class="askContent" for="answered">답변</label>
+							
+							<textarea class="form-control" id="answered" name="answered" rows="10" style="resize: none;" maxlength="1000" wrap="on" required>${ask.answered}</textarea>
 
 
 						<div id="buttons">
 							<button class="goRound" type="submit">답변</button>
 						</div>
 			</form>
-
-
-
-
-			
 			
 				<form id="deleteOne" method="post" action="delete.one">
 					<input type="text" id="askNo" name="askNo" value="${ask.askNo}"
@@ -284,23 +251,15 @@
 					<button class="goRound" type="submit">삭제</button>
 				</form>
 				
-				<div id="buttonSecondPart">
-				<button id="backToList"class="goRound" onclick="backToList();">목록</button>
-				</div>
-
+				<form id="backToList" method="post" action="list.one">
+					<button class="goRound" onclick="backToList();">목록</button>
+				</form>
 		</div>
 
 		<div id="gotoLEFT">
 			<jsp:include page="../../common/footer.jsp" />
 		</div>
-
-		<script>
-			function backToList() {
-				location.href = "list.one";
-			}
-		</script>
-
-
+		
 		<!-- 파일 첨부 여부 스타일 -->
 		<script type="text/javascript">
 			// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기

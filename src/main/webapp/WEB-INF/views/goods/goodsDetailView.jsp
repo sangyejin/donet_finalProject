@@ -266,7 +266,7 @@
 						<span id=numberSupporter"><span name="numberSupporter">${goods.numberSupporter}</span>명이 기부했습니다.</span>
 					</div>
 					<div id="btn-area">
-						<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}/support';" id="btn-support" value="기부하기" /> <input
+						<input type="button" id="btn-support" value="기부하기" /> <input
 							type="button" id="btn-share" value="  "/>
 					</div>
 				</div>
@@ -289,6 +289,14 @@
 		$("#btn-delete").click(function(){
 			if(confirm("정말로 삭제하시겠습니까?")){
 				location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}/delete';
+			}
+		});
+		$("#btn-support").click(function(){
+			console.log("${loginUser}");
+			if("${loginUser}"!=""){
+				location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}/support';
+			}else{
+				alert("로그인이 필요한 서비스입니다.");
 			}
 		});
 	</script>

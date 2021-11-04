@@ -827,7 +827,9 @@ ${s.content}
 		});
 
 		function selectReplyList() {
+
 			var suNo = "${s.suNo}";
+
 			$.ajax({
 						url : "list.re",
 						data : {suNo : suNo},
@@ -835,9 +837,11 @@ ${s.content}
 						success : function(commentList) {
 									$("#rcount").text(commentList.length);
 
+
 									var num = commentList.length
 									var value = "";
 									$.each(commentList, function(i, obj) {
+
 
 												value += "<tr>"
 															+ "<td>"+ num--+ "</td>"

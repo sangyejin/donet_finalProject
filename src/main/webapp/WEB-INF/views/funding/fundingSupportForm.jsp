@@ -15,15 +15,14 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 제이쿼리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <style>
 *{
 	font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     margin: 0;
 	padding: 0;
-}
+
 }
 
 .main-container {
@@ -73,6 +72,12 @@
 	font-size: 1.4em;
 	color: gray;
 	margin: 0;
+}
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 </style>
 </head>
@@ -183,12 +188,13 @@
 			});
 			
 			$("#btn-support").click(function(){
+				console.log($("#totalSupport").text());
 				console.log(Number("${loginUser.point}"),Number($("#totalSupport").text()),Number("${loginUser.point}")<Number($("#totalSupport").text()));
 				if(document.getElementById("tempFgNo").value=="0"){
 					alert("선물이 선택되지않았습니다.");
 					return;
 				}
-				else if(Number("${loginUser.point}")>Number($("#totalSupport").text())){
+				else if(Number("${loginUser.point}")<Number($("#totalSupport").text())){
 					return;
 				}
 				else{
