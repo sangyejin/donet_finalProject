@@ -90,8 +90,12 @@
        				<th><label for="datepickerLast">이벤트 종료</label>
        				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly"></td>
        			</tr>
-       			
-       			</table>
+       			<tr>
+       				<th><labeL for="">썸네일 이미지</labeL>
+       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
+       				<td><img id="thum" src=""></td>
+       			</tr>
+       		</table>
        		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7"></textarea>
        				
        		<br>
@@ -106,28 +110,19 @@
  </div>
 
  <script>
- /*
- $(document).ready(function(){
-	 $("#summernote").summernote({
-			height: 500,                 
-	    	minHeight: null,            
-	    	maxHeight: null,            
-	    	focus: true,           
-	    	disableResizeEditor: true,
-   		callbacks: {
-	    		onImageUpload : function(files, editor, welEditable){
-		    		for(var i = files.length - 1; i>=0; i--){
-		    			uploadFile(files[i],this);	  
-		    			
-		    			}
-		    	 }
-			}	
-		});
- });
- */
  
  
-	
+	function loadImg(){
+		if(inputFile.files.length == 1){
+			var reader = new FileReader();
+			
+			reader.onload = function(e){
+				$("#thum").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(inputFile.files[0]);
+		}
+	}
+ 
 			$("#summernote").summernote({
 				height: 500, 
 				width: 1000,
@@ -143,9 +138,6 @@
 		    		}
    	   			}
 			});
-		
-
-			
 		
 		function sendFile(file, el){
 				var data = new FormData();
@@ -164,8 +156,6 @@
 					}
 				});
 			}
-
- 
 	
   	$(document).ready(function () {
           $.datepicker.setDefaults($.datepicker.regional['ko']); 
@@ -212,4 +202,4 @@
 
 <jsp:include page="../common/footer.jsp" />
 </body>
-</html>
+</html> 

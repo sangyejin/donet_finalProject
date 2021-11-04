@@ -8,16 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id column="EVENT_NO" property="eventNo" />
 		<result column="EVENT_TITLE" property="eventTitle" />
 		<result column="EVENT_CONTENT" property="eventContent" />
+		<result column="EVENT_ORIGIN" property="eventOrigin" />
+		<result column="EVENT_CHANGE" property="eventChange" />
 		<result column="EVENT_START_DATE" property="eventStart" />
 		<result column="EVENT_LAST_DATE" property="eventLast" />
 		<result column="EVENT_STATUS" property="eventStatus" />
 	</resultMap>
-	<resultMap id="eventAttachResultMap" type="Attachment">
-		<id column="EV_AT_FILENO" property="fileNo" />
-		<result column="EV_AT_REF_NO" property="refEventNo" />
-		<result column="EV_AT_ORIGIN" property="originName" />
-		<result column="EV_AT_NEWNAME" property="changeName" />
-	</resultMap>
+	
 	<resultMap id="eventReplyResultMap" type="EventReply">
 		<id column="EV_REPLY_NO" property="eventReplyNo" />
 		<result column="EV_REF_NO" property="refEventNo" />
@@ -56,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    <insert id="insertEvent" parameterType="Event">
    		INSERT INTO EVENT
-   		VALUES(SEQ_EV.NEXTVAL, #{eventTitle}, #{eventContent}, #{eventStart}, #{eventLast}, DEFAULT)
+   		VALUES(SEQ_EV.NEXTVAL, #{eventTitle}, #{eventContent}, #{eventOrigin}, #{eventChange}, #{eventStart}, #{eventLast}, DEFAULT)
    </insert>
    
 	<select id="selectEvent" parameterType="_int" resultMap="eventResultMap">
@@ -74,33 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateEvent" parameterType="Event">
 		UPDATE EVENT
 		SET EVENT_TITLE=#{eventTitle}, EVENT_CONTENT=#{eventContent}, 
+			EVENT_ORIGIN=#{eventOrigin}, EVENT_CHANGE=${eventChange},
 			EVENT_START_DATE=#{eventStart}, EVENT_LAST_DATE=#{eventLast}
 		WHERE EVENT_NO=#{eventNo}
 	</update>
 	
-   <!-- attachment -->
-   <select id="selectEventAttach" parameterType="_int" resultMap="eventAttachResultMap">
-   		SELECT *
-    	FROM EVENT_ATTACHMENT
-    	WHERE EV_AT_REF_NO=#{eno}
-   </select>
    
-   <insert id="insertEventAttach" parameterType="java.util.List" >
-   		insert into EVENT_ATTACHMENT(EV_AT_FILENO, EV_AT_REF_NO, EV_AT_ORIGIN, EV_AT_NEWNAME )
-   		SELECT SEQ_EV_ATTA.NEXTVAL, SEQ_EV.CURRVAL, A.* 
-   		FROM (<foreach collection="list" item="item" separator=" UNION ALL ">
-   		 SELECT (to_clob(#{item.originName})), (to_clob(#{item.changeName})) from DUAL
-   		</foreach>)	A
-   </insert>
-   
-   <update id="updateEventAttach" parameterType="java.util.List">
-		UPDATE EVENT_ATTACHMENT
-		<foreach collection="list" item="item" separator=" UNION ALL ">
-		SET EV_AT_ORIGIN=#{item.originName}, EV_AT_NEWNAME=#{item.changeName}
-		WHERE EV_AT_FILENO=#{item.fileNo}
-		</foreach>
-	</update>
-  
 	
 	<!-- Reply -->
 	<insert id="insertReply" parameterType="EventReply">

@@ -200,12 +200,6 @@
 	                <div class="contentArea">
 	               		${vo.volContent }
 	                	
-	                	<!-- <c:if test="${ not empty at }">
-	                	<c:forEach var="vat" items="${ at }" >
-	                			
-	                		<br><br>
-	                		</c:forEach>
-	                	</c:if>-->
 	                	</div>
 	                	<br>
                    
@@ -275,14 +269,14 @@
    $(function(){
 	   selectReplyList();
    		$("#addReply").click(function(){
-   			var eno = ${ev.eventNo};
+   			var vno = "${vo.volNo}";
    			
    			if($("#replyContent").val().trim().length != 0){
    				$.ajax({
-   					url:"rinsert.ev",
+   					url:"rinsert.vo",
    					type:"post",
    					data:{eventReplyContent:$("#replyContent").val(),
-   							refEventNo:eno,
+   							volRefNo : vno,
    							eventReplyWriter:"${loginUser.userId}"   							
    					},
    					success:function(result){
@@ -304,10 +298,10 @@
    });
    
    function selectReplyList(){
-	   var eno = "${ev.eventNo}";
+	   var eno = "${vo.volNo}";
 	   $.ajax({
-		   url:"rlist.ev",
-		   data:{eno:eno},
+		   url:"rlist.vo",
+		   data:{vno:vno},
 		   type:"get",
 		   success:function(list){
 			   $("#rcount").text(list.length);
@@ -316,11 +310,11 @@
 			   
 			   $.each(list, function(i, er){
 				   value += "<tr>"
-					    "<th>" + er.eventReplyWriter + "</th>" +
-			   			"<td>" + er.eventReplyContent + "</td>" + 
-			   			"<td>" + er.eventReplyDate + "</td>" ;
+					    "<th>" + vr.volReplyWriter + "</th>" +
+			   			"<td>" + vr.volReplyContent + "</td>" + 
+			   			"<td>" + vr.volReplyDate + "</td>" ;
 				   
-				   if("${loginUser.userId}" == obj.eventReplyWriter){
+				   if("${loginUser.userId}" == obj.volReplyWriter){
 				   	value += "<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
 							"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
 						   	"</tr>";
@@ -335,6 +329,7 @@
 		   }
 	   });
    };
+   
   
    </script>
          

@@ -94,11 +94,29 @@
        				<th><label for="title">제목</label></th>
        				<td><input type="text" id="title" class="form-control" name="volTitle"></td>
        			</tr>
+       			<tr>
+       				<th><labeL for="">썸네일 이미지</labeL>
+       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
+       				<td><img id="thum" src=""></td>
+       			</tr>
        			</table>
        			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7"></textarea>
        			
        			<script type="text/javascript">
 
+
+       			function loadImg(){
+       				if(inputFile.files.length == 1){
+       					var reader = new FileReader();
+       					
+       					reader.onload = function(e){
+       						$("#thum").attr("src", e.target.result);
+       					}
+       					reader.readAsDataURL(inputFile.files[0]);
+       				}
+       			}
+       			
+       			
     			$("#summernote").summernote({
     				height: 500, 
     				width: 1000,

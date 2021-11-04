@@ -169,9 +169,8 @@
             <div class="col-md-6 col-lg-3 col-xl-3" id="boardCard">
             	<p style="display:none" > ${ vo.volNo } </p>
                 <div class="card ">
-                    <div class="card-img">
-                    	<img src="#" alt="NoImage" >
-                     
+                    <div class="card-img-top">
+                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${vo.volChange}"  alt="" class="content-img">
                     </div> 
                     <div class="card-content">
 	       	        	<p class="card-title mt-3 mb-3">${ vo.volTitle }</p>

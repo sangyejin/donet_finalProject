@@ -109,7 +109,7 @@ public class VolunteerController {
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
-		String resources = request.getSession().getServletContext().getRealPath("/resources");
+		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources  + "/upload_files/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();
@@ -122,7 +122,7 @@ public class VolunteerController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
-			jsonObject.addProperty("url", "/summernoteImg/"+saveFileName);
+			jsonObject.addProperty("url", "resources/upload_files/" + saveFileName);
 			jsonObject.addProperty("responseCode", "succcess");
 		} catch(IOException e) {
 			FileUtils.deleteQuietly(targetFile);
@@ -130,6 +130,7 @@ public class VolunteerController {
 			e.printStackTrace();
 		}	
 
+		
 		String result = jsonObject.toString();
 		return result;
 	}

@@ -40,9 +40,9 @@ public class EventDao {
 		return sqlSession.update("eventMapper.deleteEvent", eno);
 	}
 
-	public int updateEvent(SqlSessionTemplate sqlSession, Event ev) {
+	public int updateEvent(SqlSessionTemplate sqlSession, Event e) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("eventMapper.updateEvent", ev);
+		return sqlSession.update("eventMapper.updateEvent", e);
 	}
 
 	public int afterListCount(SqlSessionTemplate sqlSession) {

@@ -27,13 +27,13 @@ public interface EventService {
 
 	void deleteEvent(int eno);
 
-	List<Attachment> selectEventAttach(int eno);
+	
 
 	int insertReply(EventReply re);
 
 	ArrayList<EventReply> replyList(int eno);
 
-	void updateEvent(Event e, List<Attachment> attList);
+	void updateEvent(Event e);
 
 	int replyUpdate(EventReply eventReply);
 

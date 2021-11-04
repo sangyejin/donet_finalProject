@@ -6,13 +6,9 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -89,10 +85,9 @@ public class EventController {
 		System.out.println("디테일 체크 : " + eno );
 		
 		Event ev = eventService.selectEvent(eno);
-		List<Attachment> at = eventService.selectEventAttach(eno);
+
 		
 		mv.addAttribute("ev", ev);
-		mv.addAttribute("at", at);
 		
 		return "event/eventDetail";
 	}
@@ -134,10 +129,17 @@ public class EventController {
 
 	
 	@RequestMapping(value="insert.ev")
-	public String insertEvent(Event e, MultipartHttpServletRequest request) {
+	public String insertEvent(Event e, MultipartHttpServletRequest request,
+			@RequestParam(name="file", required=false) MultipartFile file) {
 		
 		e.setEventContent( (e.getEventContent()).replace("\n", "<br>"));
-		
+		if(!file.getOriginalFilename().equals("")) {
+			String changeName = saveFile(file, request);
+			if(changeName != null) {
+				e.setEventOrigin(file.getOriginalFilename());
+				e.setEventChange(changeName);
+			}
+		}
 		
 		eventService.insertEvent(e);
 		
@@ -159,11 +161,11 @@ public class EventController {
 	@RequestMapping("updateForm.ev")
 	public ModelAndView updateEventForm(int eno, ModelAndView mv) {
 		Event ev = eventService.selectEvent(eno);
-		List<Attachment> at = eventService.selectEventAttach(eno);
+		
 		System.out.println("update 넘기기값 확인 : "+ev);
-		System.out.println("update 넘기기 첨부파일 확인 : "+at);
+		
 		mv.addObject("ev", ev).setViewName("event/eventUpdate");
-		mv.addObject("at", at).setViewName("event/eventUpdate");
+		
 		return mv;
 	}
 
@@ -172,36 +174,20 @@ public class EventController {
 			@RequestParam(value="reUploadFile", required=false) MultipartFile file, MultipartHttpServletRequest multiRequest) {
 		
 		e.setEventContent( (e.getEventContent()).replace("\n", "<br>"));
-		Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
-		List<Attachment> attList = new ArrayList<>();
 		
-		Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
-		for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
-			List<MultipartFile> fileList = entry.getValue();
+		if(!file.getOriginalFilename().equals("")) {
 			
-			for(int i=0; i<fileList.size(); i++) {
-				String fileName = fileList.get(i).getOriginalFilename();
-				
-				if(fileName != "") {
-					
-					String originName = fileList.get(i).getOriginalFilename();
-					String changeName = saveFile(fileList.get(i), request);	
-					
-					if((entry.getKey()).equals("thumFile")) {
-					
-					}
-					else{ 
-						at.setOriginName(originName);
-						at.setChangeName(changeName);
-						at.setRefEventNo(e.getEventNo());
-						attList.add(at);
-					}
-				}
+			if(e.getEventChange() != null) {
+				deleteFile(e.getEventChange(), request);
 			}
+			
+			String changeName = saveFile(file, request);
+			e.setEventOrigin(file.getOriginalFilename());
+			e.setEventChange(changeName);
+			
 		}
-		//
-		System.out.println("update 중 event 객체확인중 : "+e);
-		eventService.updateEvent(e, attList);
+		
+		eventService.updateEvent(e);
 		mv.addObject("eno", e.getEventNo()).setViewName("redirect:detail.ev");
 		return mv;
 	}
