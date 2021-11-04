@@ -53,6 +53,7 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportUsePlan" alias="SupportUsePlan" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportImage" alias="SupportImage" />
+		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportFilter" alias="SupportFilter" />
 	</typeAliases>
 
 	<mappers>

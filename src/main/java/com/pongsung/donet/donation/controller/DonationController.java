@@ -37,9 +37,12 @@ import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.donation.model.vo.SupportCategory;
+import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 import com.pongsung.donet.donation.model.vo.SupportUsePlanList;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
+import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
@@ -119,6 +122,29 @@ public class DonationController {
 		model.addAttribute("pi", pi);
 		
 		System.out.println("model "+model);
+		
+		return "donation/donationMain";
+	}
+	
+	@RequestMapping("select.or")
+	public String selectOrder(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value = "order", required = false) int order) {
+		
+		SupportFilter supportFilter = new SupportFilter();
+		supportFilter.setOrder(order);
+		
+		int listCount = donationService.selectDonationListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+		
+		List<Support> list = donationService.selectDonationOrList(pi, supportFilter);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		System.out.println("order "+order);
+		System.out.println("supportFilter "+supportFilter);
 		
 		return "donation/donationMain";
 	}
@@ -223,6 +249,32 @@ public class DonationController {
 			}
 			return changeName;
 		}
-	
+		
+		@RequestMapping(value="supporting")
+		public ModelAndView SupportPurchase(int suNo, ModelAndView mv){
+			Support p = donationService.selectDonation(suNo);
+			
+			mv.addObject("p", p).setViewName("donation/supporting");
+
+			System.out.println("p "+p);
+			System.out.println("suNo "+suNo);
+			return mv;
+		}
+		
+		@RequestMapping("select.pop")
+		public String showPop(){
+		
+			return "donation/pop";
+		}
+		
+		@ResponseBody
+		@RequestMapping("supportCharity")
+		public String insertSupportCharity(Sponsor s) {
+			int result = donationService.insertSupportCharity(s);
+			System.out.println("s "+s);
+			
+			return String.valueOf(result);
+		}
+
 
 }

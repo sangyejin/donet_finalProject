@@ -8,9 +8,9 @@ import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.donation.model.vo.SupportCategory;
+import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
-import com.pongsung.donet.funding.model.vo.FundingImage;
 
 public interface DonationService {
 
@@ -50,6 +50,18 @@ public interface DonationService {
 	int selectDonationCaListCount(SupportCategory suCategory);
 
 	List<Support> selectDonationCaList(PageInfo pi, SupportCategory suCategory);
+
+	int selectDonationOrListCount(SupportFilter supportFilter);
+
+	List<Support> selectDonationOrList(PageInfo pi, SupportFilter supportFilter);
+
+	Support selectSupport(int suNo);
+
+	int insertSupportCharity(Sponsor sponsor);
+
+	int updatePoints(int points);
+
+	
 
 	
 
