@@ -241,7 +241,10 @@ public class MemberController {
 		}
 		
 		@RequestMapping("insertCard.me")
-		public String insertCard(@RequestParam(name = "cardNumber") String cardNumber,
+		public String insertCard(@RequestParam(name = "cardNumber1") String cardNumber1,
+								@RequestParam(name = "cardNumber2") String cardNumber2,
+								@RequestParam(name = "cardNumber3") String cardNumber3,
+								@RequestParam(name = "cardNumber4") String cardNumber4,
 								@RequestParam(name = "expireM") String expireM,
 								@RequestParam(name = "expireY") String expireY,
 								@RequestParam(name = "cvcNum") int cvcNum,
@@ -253,8 +256,9 @@ public class MemberController {
 								) {
 			
 			System.out.println("카드결제 인서트 : 컨트롤러"); //결제내역 기록
-			System.out.println("cardNumber : " + cardNumber + ", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
-			
+			System.out.println(", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
+			System.out.println("cardNumber1: " + cardNumber1 + " cardNumber2 : " + cardNumber2 + ", cardNumber3 : " + cardNumber3 + ", cardNumber4 : " + cardNumber4);
+
 			Payment payment = new Payment();
 			
 			//로그인 유저 가져오기
@@ -263,6 +267,7 @@ public class MemberController {
 			
 			String expireDate = expireM+expireY; //유효기간
 			String fullName = surname+fstname; //이름
+			String cardNumber = cardNumber1 + cardNumber2 + cardNumber3 + cardNumber4;
 			
 			payment.setUserId(loginUser.getUserId());
 			payment.setCardNo(cardNumber);
