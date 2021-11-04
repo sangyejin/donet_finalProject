@@ -140,6 +140,12 @@ tbody tr td, thead tr th {
 #beneficiaryTable,#beneficiaryTable thead th{
 	border:1px solid black;
 } 
+/* input number의 증가감소 버튼 안보이게 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 
 <script
