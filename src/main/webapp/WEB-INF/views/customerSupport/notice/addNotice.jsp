@@ -22,26 +22,25 @@
 			margin-top: 0;
 		}
 		
-		#greenfont1 { margin-right: 45%; text-decoration: none; }
-		
-		#faq { margin-right: 36px; }
-		#facetoface { margin-right: 70px; }
-		
-		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
-		
-		#wrap { margin-bottom: 7%; }
-		
-		#greenfont1, #faq, #facetoface { font-weight: bold; }
-		
-		/*helper*/		
-		.needhelp {
-			margin-top: 50px;
-			border: 1px solid rgb(244, 244, 244);
-			background-color: rgb(244, 244, 244);
-			width: 140px;
-			height: 40px;
-			border-radius: 10px;
-		}
+	#greenfont1 { margin-right: 69px; text-decoration: none; }
+	#faq { margin-right: 41px; }
+	#facetoface { margin-right: 68px; }
+	
+	#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+	
+	#wrap { margin-bottom: 7%; }
+	
+	#greenfont1, #faq, #facetoface { font-weight: bold; }
+	
+	/*helper*/
+	.needhelp {
+		margin-top: 50px;
+		border: 1px solid rgb(244, 244, 244);
+		background-color: rgb(244, 244, 244);
+		width: 130px;
+		height: 30px;
+		border-radius: 10px;
+	}
 		
 		#help {
 			font-weight: bolder;
@@ -71,11 +70,11 @@
             margin-top: -0.5px;
         }
 
-        #getInThere{ margin-top: -540px;  margin-left: 35px; }
+        #getInThere{ margin-top: -530px;  margin-left: 35px; }
 
         .grayline{
-            margin-top: 2%;
-            margin-bottom: 2%;
+            margin-top: 10px;
+            margin-bottom: 10px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
@@ -84,8 +83,8 @@
         }
         
         .overContentGrayLine{
-            margin-top: 5px;
-            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-bottom: 30px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
