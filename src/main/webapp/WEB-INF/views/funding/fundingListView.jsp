@@ -8,10 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
 
 <!-- favicon -->
 <link rel="icon"
@@ -40,12 +37,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <title>도넷닷컴</title>
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
 
 
 .card {
@@ -149,10 +140,16 @@ select::-ms-expand {
 }
 
 #title {
+
+}
+.title{
 	display: block;
 	font-size: 18px;
-}
+overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
+}
 .div-title {
 	height: 50px;
 }
@@ -363,7 +360,7 @@ select::-ms-expand {
 											<div class="cases-caption">
 												<div class="cases-info">
 													<div class="div-title">
-												<a href="${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`" id="title">`+list.fpName+`</a>
+												<a href="${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`" class="title">`+list.fpName+`</a>
 											</div>
 											<p class="category-hostName">
 												<span>`+list.categoryName+`</span> | <span>`+list.hostName+`</span>

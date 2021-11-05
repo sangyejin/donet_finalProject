@@ -66,8 +66,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 #userinfo{ margin-left: 700px; margin-top : -35px; }
 
-#secondLine{  margin-top : -7px; }
-
+#secondLine{  margin-top : -7px;overflow:auto;  }
+#secondLine > ul{overflow:auto; }
 .thisuser{ font-size : 10px; }
 
 .noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }

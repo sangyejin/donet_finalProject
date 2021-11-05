@@ -46,12 +46,11 @@
 
 .card {
 	margin-right: 0px !important;
-	padding-left: 30px !important;
+	padding-left: 15px !important;
 }
 
 .cases-caption {
 	text-align: center;
-	width: 278px !important;
 }
 
 .div-top {
@@ -145,11 +144,11 @@ select::-ms-expand {
 
 .title {
 	display: block;
-	font-size: 18px;
+	font-size: 24px;
 }
 
 .div-title {
-	height: 50px;
+	height: 60px;
 }
 
 #btn-insert {
@@ -210,7 +209,8 @@ select::-ms-expand {
 }
 
 .cases-img {
-	position: static;
+	margin-top:30px;
+	margin-bottom:20px;
 }
 </style>
 

@@ -10,11 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-	
+
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
@@ -47,12 +43,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
 
 
 #fpName {
@@ -127,7 +117,8 @@ tbody tr td, thead tr th {
 }
 
 .div-content {
-	padding: 20px 0 20px 0;
+	padding-top: 0;
+
 }
 
 .div-left {
@@ -290,10 +281,10 @@ enctype="multipart/form-data">
 
 
 			<div id="fileArea">
-				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 0);"> 
-					<input type="file"name="file1" id="file1" onchange="loadImg(this, 1);"> 
-					<inputb type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
-				<input type="file" name="file3" id="file3" onchange="loadImg(this, 3);">
+				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 1);"> 
+					<input type="file"name="file1" id="file1" onchange="loadImg(this, 2);"> 
+					<input type="file" name="file2" id="file2" onchange="loadImg(this, 3);">
+				<input type="file" name="file3" id="file3" onchange="loadImg(this, 4);">
 			</div>
 			<div id="imgArea" style="display:none;">
 				
@@ -337,22 +328,23 @@ enctype="multipart/form-data">
         });
 
         function loadImg(inputFile, num) {
+        	console.log(inputFile.files.length );
             if (inputFile.files.length == 1) { //파일 존재하면
                 var reader = new FileReader();
                 reader.readAsDataURL(inputFile.files[0]);
 				console.log(inputFile.files[0]);
                 reader.onload = function (e) {
                     switch (num) {
-                        case 0:
+                        case 1:
                             $("#img0").attr("src", e.target.result);
                             break;
-                        case 1:
+                        case 2:
                             $("#img1").attr("src", e.target.result);
                             break;
-                        case 2:
+                        case 3:
                             $("#img2").attr("src", e.target.result);
                             break;
-                        case 3:
+                        case 4:
                             $("#img3").attr("src", e.target.result);
                             break;
                     }
