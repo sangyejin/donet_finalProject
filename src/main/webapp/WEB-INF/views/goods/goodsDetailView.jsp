@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,17 +10,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+<!-- favicon -->
+<link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" type="image/x-icon">
+<!-- 제이쿼리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 <!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 제이쿼리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+<!-- CSS here -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
+
+
 <style>
 * {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -43,7 +48,10 @@
 	margin-bottom: 100px;
 }
 
-
+#btn-area{
+	position : absolute;
+	bottom : 0;
+}
 #idx_top #category, #idx_top #fpName {
 	position: relative;
 	color: black;
@@ -120,21 +128,35 @@
 	font-size: 24px;
 	font-weight: 700;
 }
-
-.data label {
-	font-size: 18px;
+.data{
+	margin-bottom:10px;
 }
-
+.data .goodsPrice{
+	font-weight:700;
+	color: #a60707;
+	font-size: 24px;
+}
 .data span {
 	font-size: 18px;
 }
-
+.div-numberSupporter{
+	margin-top:80px;
+}
+#goodsName{
+	font-size:24px;
+	font-weight:700;
+}
 /* 내용작성 칸 */
 #content-container {
 	overflow:auto;
 }
+.btnArea {
+	padding-top: 100px;
+	padding-bottom:50px;
+	text-align:right;
+}
 
-#btn-support {
+#btn-support{
 	width: 200px;
 	height: 40px;
 	border-radius: 5px;
@@ -163,7 +185,7 @@
 		url("${ pageContext.servletContext.contextPath }/resources/imgs/share_green.png")
 		no-repeat white;
 	border: 1px solid rgb(60, 179, 113);
-	background-size: 60%;
+	background-size: 38%;
 	background-position: center;
 }
 
@@ -174,14 +196,48 @@
 	background:
 		url("${ pageContext.servletContext.contextPath }/resources/imgs/share_white.png")
 		no-repeat rgb(60, 179, 113);
-	background-size: 60%;
+	background-size: 38%;
 	background-position: center;
 }
 
 .btnArea {
 	padding-top: 10px;
 	text-align:right;
+	margin-top:50px;
 }
+#btn-delete{
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	font-weight: 600;
+	color:rgb(60, 179, 113); 
+	transition: all 0.5s;
+	background-color:white;
+	border: 1px solid rgb(60, 179, 113);
+}
+#btn-update{
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	font-weight: 600;
+	color:white;
+	transition: all 0.5s;
+	background-color:rgb(60, 179, 113);
+	border: 1px solid rgb(60, 179, 113);
+}
+
+#btn-delete:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color: white;
+	background:  rgb(60, 179, 113);
+}
+
+#btn-update:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color:  rgb(60, 179, 113);
+	background: white;
+}
+
 
 /*펀딩 굿즈*/
 .funding-card {
@@ -208,20 +264,18 @@
 .aArea{
 	text-align:right;
 }
+
+/* sns 공유 */
+.link-icon { position: relative; display: inline-block; width: auto; font-size: 14px; font-weight: 500; color: #333; margin-right: 10px; padding-top: 50px; }
+.link-icon.twitter { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/icon-twitter.png); background-position: center top; min-width:50px;background-repeat: no-repeat;text-align:center;}
+.link-icon.kakao { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/icon-kakao.png);background-position: center top; min-width:50px;background-repeat: no-repeat;text-align:center; }
+.link-icon.shareLinkIcon { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/link.png); background-repeat: no-repeat; background-position: center top; min-width:50px; text-align:center;}
+
+
+.modal-backdrop {display: none;}
 </style>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
 
-<!-- favicon -->
-<link rel="icon"
-	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
-	type="image/x-icon">
-<!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- CSS here -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/owl.carousel.min.css">
@@ -239,8 +293,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slick.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
-<!-- 제이쿼리 -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+
 </head>
 
 <body>
@@ -249,30 +302,35 @@
 	<div id="wrap">
 		<div id="div-container">
 			<div id="info-container" class="container">
+			<div class="row">
 				<div id="info-left-container" class="col-md-6">
 					<div id="thumb-img-container"></div>
 				</div>
 				<div id="info-right-container" class="col-md-6">
 					<div class="data">
-						<span name="goodsName">${goods.goodsName}</span>
+						<span name="goodsName" id="goodsName">${goods.goodsName}</span>
 					</div>
+					<hr>
 					<div class="data">
 						<span name="goodsCategoryName">${goods.goodsCategoryName}</span>
 					</div>
 					<div class="data">
-						<span id="goodsPrice"><span name="goodsPrice">${goods.goodsPrice}</span>원</span>
+						<span class="goodsPrice"><span name="goodsPrice"  class="goodsPrice">${goods.goodsPrice}</span>원</span>
 					</div>
-					<div class="data">
+					<div class="data div-numberSupporter">
 						<span id=numberSupporter"><span name="numberSupporter">${goods.numberSupporter}</span>명이 기부했습니다.</span>
 					</div>
-					<div id="btn-area">
-						<input type="button" id="btn-support" value="기부하기" /> <input
-							type="button" id="btn-share" value="  "/>
+					<div id="btn-area" class="container">
+						<div class="row">
+						<input type="button" id="btn-support" class="col-md-9" value="기부하기" /> 
+						<input type="button" id="btn-share" value="  " class="col-md-2 offset-md-1" data-toggle="modal" data-target="#shareModal"/>
+						</div>
 					</div>
 				</div>
 			</div>
+			</div>
 			<div id="content-container">
-				<div id="content">
+				<div id="content" style="min-height:500px;">
 					<p>${goods.content}</p>
 				</div>
 				<div style="clear:both; display:none;"></div>
@@ -284,7 +342,37 @@
 				</div>
 			</c:if>
 		</div>
+		
+			<!-- 공유 버튼 시 뜨는 모달  -->
+    <div class="modal fade" id="shareModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">공유하기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                	<label for="userId" class="mr-sm-2">link:</label>
+                    <c:set var="req" value="${pageContext.request}" />
+					<c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, '')}" />
+					<c:set var="params" value="${requestScope['javax.servlet.forward.query_string']}"/>
+					<c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+					<c:set var="pageUrl" value="${ baseURL }${ requestPath }${ not empty params?'?'+=params:'' }"/>
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="" id="shareLink" name="shareLink" value="${pageUrl}" readOnly> <br>
+                    <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>   
+					<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>    
+					<a id="btnKakao" class="link-icon shareLinkIcon" href="javascript:copyLink();">링크</a>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
 	</div>
+	<jsp:include page="../common/footer.jsp" />
 	<script>
 		$("#btn-delete").click(function(){
 			if(confirm("정말로 삭제하시겠습니까?")){
@@ -299,7 +387,42 @@
 				alert("로그인이 필요한 서비스입니다.");
 			}
 		});
+
+		function shareTwitter() {
+			const sendUrl = document.getElementById('shareLink').value;
+		    var sendText = "도넷 구호물품 기부 링크"; // 전달할 텍스트
+		    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+		}
+
+		function shareKakao() {
+			const sendUrl = document.getElementById('shareLink').value;
+			  // 사용할 앱의 JavaScript 키 설정
+			  Kakao.init('9bf0e988c5aa295ea817ecabec533f27');
+			 
+			  // 카카오링크 버튼 생성
+			  Kakao.Link.createDefaultButton({
+			    container: '#btnKakao', // 카카오공유버튼ID
+			    objectType: 'feed',
+			    content: {
+			      title: "도넷닷컴", // 보여질 제목
+			      description: "도넷닷컴 구호물품 기부 링크", // 보여질 설명
+			      imageUrl: sendUrl, // 콘텐츠 URL
+			      link: {
+			         mobileWebUrl: sendUrl,
+			         webUrl: sendUrl
+			      }
+			    }
+			  });
+			}
+			function copyLink(){
+				const copyText = document.getElementById('shareLink');
+				copyText.select();
+				copyText.setSelectionRange(0, 99999);
+				document.execCommand("Copy");
+				alert('링크가 복사되었습니다.');
+			}
 	</script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<!-- JS here -->
 	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->

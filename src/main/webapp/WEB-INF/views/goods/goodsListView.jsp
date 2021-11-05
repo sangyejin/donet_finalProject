@@ -144,13 +144,21 @@ select::-ms-expand {
 
 .title {
 	display: block;
-	font-size: 24px;
+	font-size: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .div-title {
 	height: 60px;
 }
 
+.goodsPrice{
+	font-weight:700;
+}
 #btn-insert {
 	width: 200px;
 	height: 40px;
@@ -318,7 +326,7 @@ select::-ms-expand {
 					$.each(map.goodsList,function(i, list){	
 						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
 									<div class="single-cases mb-40">
-										<div class="cases-img">
+										<div class="cases-img"  onclick="location.href='${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`';">
 											<img src="${pageContext.request.contextPath}/resources/upload_files/goods/`+list.thumbnailChangeName+`" alt="`+list.goodsName+`"
 														width="278px" height="200px">
 										</div>
@@ -328,7 +336,7 @@ select::-ms-expand {
 													<a href="${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`" class="title">`+list.goodsName+`</a>
 												</div>
 												<p class="goodsPrice">
-													`+list.goodsPrice+`
+													`+list.goodsPrice+`원
 												</p>
 											</div>
 										</div>
