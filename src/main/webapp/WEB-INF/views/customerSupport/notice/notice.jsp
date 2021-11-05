@@ -8,6 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
 * {font-size: 10px;}
 
@@ -21,10 +23,9 @@
 	margin-top: 0;
 }
 
-#greenfont1 { margin-right: 45%; text-decoration: none; }
-
-#faq { margin-right: 36px; }
-#facetoface { margin-right: 70px; }
+#greenfont1 { margin-right: 69px; text-decoration: none; }
+#faq { margin-right: 41px; }
+#facetoface { margin-right: 68px; }
 
 #faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
@@ -37,8 +38,8 @@
 	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
 	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
+	width: 130px;
+	height: 30px;
 	border-radius: 10px;
 }
 

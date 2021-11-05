@@ -7,6 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <style>
   *{ font-size: 10px;  }
@@ -23,47 +24,39 @@
 
 
 
-#greenfont1 { margin-right: 45%; }
+#greenfont1 { margin-right: 69px; }
+		#faq { margin-right: 41px;}
+		#facetoface { margin-right: 68px; color: rgb(30, 154, 40); text-decoration: none;  }
+		
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
+		
+		/*helper*/
+		.needhelp {
+			margin-top: 50px;
+			border: 1px solid rgb(244, 244, 244);
+			background-color: rgb(244, 244, 244);
+			width: 130px;
+			height: 30px;
+			border-radius: 10px;
+		}
+				#gethelp:hover{ text-decoration : underline;}
 
-#faq { margin-right: 36px; }
-
-#facetoface {
-	margin-right: 70px;
-	color: rgb(30, 154, 40);
-	text-decoration: none;
-}
-
-#greenfont1:hover #facetoface:hover { text-decoration: underline; color: #000000; }
-
-#wrap { margin-bottom: 7%; }
-
-#greenfont1, #faq, #facetoface { font-weight: bold; }
-
-/*helper*/
-#gethelp:hover { text-decoration: underline; }
-
-.needhelp {
-	margin-top: 50px;
-	border: 1px solid rgb(244, 244, 244);
-	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
-	border-radius: 10px;
-}
-
-#help {
-	font-weight: bolder;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	width: 140px;
-	margin-left: 3%;
-}
-
-#gethelp { margin-left: 3%; }
-
-#gethelp:hover { color: #000000; text-decoration: underline; }
-
-#helparrow { margin-left: 48px; margin-top: 0px; }
+		#help {
+			font-weight: bolder;
+			margin-bottom: 0px;
+			margin-top: 0px;
+			width: 140px;
+			margin-left: 3%;
+		}
+		
+		#gethelp { margin-left: 3%; }
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
+		
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
 		/* main main */
         #thelist{  float: left; margin-left: 5%;  width: 710px; }
@@ -85,14 +78,23 @@
 #greenfont2 { color: rgb(30, 154, 40); }
 
 /*writing box*/
-#sideGreenbar { background-color: rgba(232, 240, 214, 0.5); height: 940px; width: 100px;}
+#sideGreenbar { background-color: rgba(232, 240, 214, 0.5); height: 960px; width: 100px;}
 
-#getInThere { margin-top: -930px; margin-left: 35px; }
+#getInThere { margin-top: -945px; margin-left: 35px; }
 
 /*div lines*/
 .grayline{
             margin-top: 10px;
-            margin-bottom:10px;
+            margin-bottom:15px;
+            margin-left: 65px;
+            width: 610px;
+            height: 0.001cm;
+            border : 0.3px solid grey;
+            background-color: grey;
+        }
+.typeDivLine{
+            margin-top: 15px;
+            margin-bottom:15px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
@@ -122,26 +124,21 @@
 #buttons{  margin-top: 2%;  margin-left: 470px; margin-bottom: 3%;  }
 #backToList{ margin-top: -25px; margin-left: 600px; }
 #deleteOne{margin-left: 535px; margin-top: -46px;}
+		
 		/*content div*/ 
-		#questionType{ margin-left: 78px; margin-top : -31px;}       
-		#titleDiv{margin-top : -24px; margin-bottom : -5px; width: 580px; height : 25px; margin-left: 77px;}
+		#questionType{ margin-left: 78px; margin-top : -15px;}       
+		#titleDiv{margin-top : -15px; margin-bottom : -5px; width: 580px; height : 25px; margin-left: 77px;}
 		#qTypeLabel{margin-top : -10px;}
-		#askContent{ width : 580px; margin-left: 78px; margin-top : 20px; }
-		#answered{ width : 580px; height :230px; margin-left: 78px; margin-top : -10px;}
+		#askContent{ width : 580px; margin-left: 78px; margin-top : 10px; height : 285px;}
+		#answered{
+		 border : 1px solid rgb(206,212,218);
+ 		 border-radius : 7px; 
+ 		 width : 580px; 
+ 		 height :320px; 
+ 		 margin-left: 78px; 
+ 		 margin-top : -10px;
+ 		 } 		 
 		
-		/*img*/
-		#forThisImage{cursor:pointer; font-size:8px; color:rgb(187,187,187);}
-				
-		.clickable{display : flex;}
-		
-        .biggerimg{  width: 20px;  height: 20px; }
-        
-        #differ{/*img*/ margin-left: 80px; margin-top: -25px; margin-bottom: -5px}
-
-        #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
-        
-        #imgLabel{margin-top : 5px;}
-
 	/* img sneak*/	 	    
     #imgViewArea{ 
     		margin-top: -36px;
@@ -156,7 +153,7 @@
       /*사진 전부 정사각형으로 만들기*/
      #imgArea{ border-radius : 7px; border : none; }		
      
-     .imgWrapper { position: relative; width: 200px; height: 200px; margin-left : 80px; margin-top : -40px;} 
+     .imgWrapper { position: relative; width: 200px; height: 200px; margin-left : 80px; margin-top : -30px;} 
      .imgWrapper img { position: absolute; top: 0; left: 0; transform: translate(20, 20); width: 100%; height: 100%; object-fit: cover; margin: auto; }
      
     
@@ -206,18 +203,17 @@
 			<form id="UpdateOne" method="post" action="update.one"
 				enctype="multipart/form-data">
 				<div id="getInThere">
-					<span id="headTitle"><label for="askTitle">질문</label> <input
-						type="text" id="askNo" name="askNo" value="${ask.askNo}"
-						hidden="true">
+					<label id="askTitleLabel">질문</label>
+					<input type="text" id="askNo" name="askNo" value="${ask.askNo}" hidden="true">
 						
 							<div id="titleDiv">${ask.askTitle}</div>
 							
 						<div class="grayline"></div>
 
-							<label id="qTypeLabel">질문<br>구분 </label>
+							<label id="qTypeLabel" >구분</label>
 							<div id="questionType">${ask.askTypeName}</div>
 
-						<div class="grayline"></div> 
+						<div class="typeDivLine"></div> 
 						
 						<label class="askContent" for="askContent">문의<br>내용</label>
 
@@ -230,6 +226,8 @@
 							</c:if>
 
 							<div id="askContent">${ask.askContent}</div>
+
+
 
 							<div class="grayline"></div> 
 

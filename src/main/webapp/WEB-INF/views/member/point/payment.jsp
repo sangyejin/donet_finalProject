@@ -225,8 +225,8 @@
 				<br> <label id="expireMLabel" for="expireM">만료 월</label> <label
 					id="expireYLabel" for="expireY">만료 년</label> <br> 
 				<!-- 연/월 -->
-				<input type="text" name="expireM" id="expireM" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
-				/ <input type="text" name="expireY" id="expireY" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+				<input type="number" name="expireM" id="expireM" min="1" max="12" step = "1" placeholder="예 : 11" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+				/ <input type="number" name="expireY" id="expireY" min="2021" step = "1"  placeholder="예 : 2021" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 				 <br> 
 				 <label id="cvcNumLabel" for="cvcNum">CVC번호</label>
 				<!-- 보안코드 -->
