@@ -60,16 +60,17 @@ import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
 
-@SessionAttributes("loginUser") 
+@SessionAttributes("loginUser")
 @Controller
 public class FundingController {
 	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
 
 	@Autowired
 	private FundingService fundingService;
+	
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -166,7 +167,7 @@ public class FundingController {
 			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
 			
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
-			
+			int cnt=1;
 			//파일을 저장, 파일이름 변경
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
@@ -182,14 +183,15 @@ public class FundingController {
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
-						//img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
-						img.setImgNo(i);
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1)));
 						imgList.add(img);
 					}
 				}
 			}
 			
 		}
+		logger.info("funding :: imgList :: "+ imgList);
 		
 		
 		fundingService.insertFunding(funding,imgList,fgList);
@@ -299,7 +301,6 @@ public class FundingController {
 		model.addAttribute("loginUser", loginUser);
 		return "redirect:/funding/"+fpNo+"/complete";
 	}
-	
 	// 펀딩프로젝트 후원완료창
 	@RequestMapping("funding/{fpNo}/complete")
 	public String completeFunding(@PathVariable("fpNo") int fpNo,Model model) {

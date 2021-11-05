@@ -7,23 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
 
-}
 
 .main-container {
 	margin: 0 auto;

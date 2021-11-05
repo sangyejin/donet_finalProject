@@ -76,4 +76,25 @@ public class GoodsDao {
 		return sqlSession.insert("goodsMapper.insertGoodsPurchase",goodsPurchase);
 	}
 
+	public List<Beneficiary> selectBeneficiaryListByGoodsNo(SqlSessionTemplate sqlSession, int goodsNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("goodsMapper.selectBeneficiaryListByGoodsNo",goodsNo);
+	}
+
+	public int insertNewRequiredGoods(SqlSessionTemplate sqlSession, List<RequiredGoods> insertRequiredBeneficiary) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("goodsMapper.insertNewRequiredGoods",insertRequiredBeneficiary);
+	}
+
+	public int deleteOldequiredGoods(SqlSessionTemplate sqlSession, List<RequiredGoods> deleteRequiredBeneficiary) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("goodsMapper.deleteOldequiredGoods",deleteRequiredBeneficiary);
+
+	}
+
+	public List<RequiredGoods> selectRequiredGoodsListByGoodsNo(SqlSessionTemplate sqlSession, int goodsNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("goodsMapper.selectRequiredGoodsListByGoodsNo",goodsNo);
+	}
+
 }

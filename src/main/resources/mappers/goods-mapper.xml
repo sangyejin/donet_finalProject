@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="beRegistration" column="BE_REGISTRATION" />
 	</resultMap>
 	
+	<resultMap id="requiredGoodsResultSet" type="RequiredGoods">
+		<id property="goodsNo" column="GOODS_NO" />
+		<result property="beneficiaryNo" column="BENEFICIARY_NO" />
+	</resultMap>
+	
 
 	<select id="selectGoodsListCount" parameterType="FilterOrder" resultType="_int">
 		select COUNT(*)
@@ -98,6 +103,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from BENEFICIARY
 	</select>
 	
+	<select id="selectBeneficiaryListByGoodsNo" parameterType="_int" resultMap="beneficiaryResultSet">
+		select BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION
+		from BENEFICIARY A
+		inner join REQUIRED_GOODS B on A.BE_NO=B.BENEFICIARY_NO
+		where GOODS_NO=#{goodsNo}
+	</select>
+	
+	<select id="selectRequiredGoodsListByGoodsNo" parameterType="_int" resultMap="requiredGoodsResultSet">
+		select GOODS_NO, BENEFICIARY_NO
+		from REQUIRED_GOODS
+		where GOODS_NO=#{goodsNo}
+	</select>
 	<insert id="insertGoods" parameterType="Goods">
 		<selectKey keyProperty="goodsNo" resultType="_int" order="AFTER">
 			select SEQ_GOODS.currval from dual
@@ -115,6 +132,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select #{item.goodsNo},#{item.beneficiaryNo} from DUAL
 		</foreach>
 	</insert>
+	
+	<insert id="insertNewRequiredGoods" parameterType="java.util.List">
+		insert into REQUIRED_GOODS(GOODS_NO,BENEFICIARY_NO)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.goodsNo},#{item.beneficiaryNo} from DUAL
+		</foreach>
+	</insert>
+	<delete id="deleteOldequiredGoods" parameterType="java.util.List">
+		delete from REQUIRED_GOODS
+		<where>
+			<foreach collection="list" item="item" separator=" OR ">
+				BENEFICIARY_NO=#{item.beneficiaryNo} and GOODS_NO=#{item.goodsNo}
+			</foreach>
+		</where>
+	</delete>
+	
 	
 	<update id="updateGoods" parameterType="Goods">
 		UPDATE GOODS 
