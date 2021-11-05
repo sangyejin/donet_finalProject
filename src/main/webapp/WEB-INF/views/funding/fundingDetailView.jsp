@@ -17,9 +17,6 @@
 <link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" type="image/x-icon">
 <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- font -->
-<link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -407,9 +404,6 @@
 .link-icon.kakao { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/icon-kakao.png);background-position: center top; min-width:50px;background-repeat: no-repeat;text-align:center; }
 .link-icon.shareLinkIcon { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/link.png); background-repeat: no-repeat; background-position: center top; min-width:50px; text-align:center;}
 
-#shareSNSModal{
-	z-index:99999;
-}
 .modal-backdrop {display: none;}
 </style>
 
@@ -546,7 +540,7 @@
 		</c:if>
 			<div id="content-container ">
 				<div class="row">
-				<div id="content" class="col-8">
+				<div id="content" class="col-8" style="min-height:500px;">
 					<p>${funding.content}</p>
 				</div>
 				<div id="funding-goods" class="col-4">

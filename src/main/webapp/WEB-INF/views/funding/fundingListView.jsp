@@ -139,21 +139,16 @@ select::-ms-expand {
 	padding-top: 10px;
 }
 
-#title {
-
+.div-title{
+	height:70px;	
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .title{
 	display: block;
-	font-size: 18px;
-overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
+	font-size: 16px;
 }
-.div-title {
-	height: 50px;
-}
-
 #btn-insert {
 	width: 200px;
 	height: 40px;
@@ -348,7 +343,7 @@ overflow: hidden;
 						let goalPersent = list.raised/list.goal*100;
 						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
 										<div class="single-cases mb-40">
-											<div class="cases-img">
+											<div class="cases-img" onclick="location.href='${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`'">
 												<img src="${pageContext.request.contextPath}/resources/upload_files/funding/`+list.thumbnailChangeName+`" alt="`+list.fpName+`"
 													width="278px" height="200px">`;
 						if(goalPersent>=100){
