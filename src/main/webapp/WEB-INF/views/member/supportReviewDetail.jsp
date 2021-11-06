@@ -16,7 +16,7 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
-
+	
 <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -96,7 +96,7 @@ body.light-theme .top {
 }
 
 .content {
-	margin-left: 9%;
+	margin-left: 0%;
 	margin-top: 10%;
 }
 
@@ -137,8 +137,8 @@ c {
 }
 
 .detailInfo {
-	width: 350px;
-	height: 350px;
+	width: 1050px;
+	height: 100px;
 	display: inline-block;
 }
 
@@ -182,7 +182,7 @@ d {
 }
 
 #writer {
-	margin-left: 30%;
+	margin-left: 0%;
 }
 
 .dDate {
@@ -366,6 +366,7 @@ c {
 	color: white;
 	background-color: rgb(60, 179, 113);
 	margin-left: 5%;
+	float: right;
 	transition: all 0.5s;
 }
 
@@ -434,7 +435,12 @@ d {
 	margin-right: 3%;
 	transition: all 0.5s;
 }
-
+.event_view_info{
+	min-width: 800px;
+	min-height: 800px;
+	background-color: rgb(241, 241, 241);
+	float: center;
+}
 
 
 </style>
@@ -443,48 +449,64 @@ d {
 	<jsp:include page="../common/menubar.jsp" />
 	
 	<div class="outer">
-			<div class="title">
-		<span><c>후원 > 후원 프로젝트</c></span>
-		<span></span>
+		<div class="title">
+		<span><c>후원 후기> 상세 보기</c></span>
+		
 		<c:if
 			test="${loginUser.userRole eq 'A'||loginUser.userRole eq 'B'||loginUser.userRole eq 'C'}">
 		<span><button type="button" id="registration"
 				onclick="location.href='supportReviewWrite.me'">후기 작성</button></span>
 		</c:if>
+		
 
+		
 		<div id="greenLine"></div>
 	</div>
 		<div class="content">
 
-			<div>
-				<img alt=""
-					src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}"
-					id="thumbnailImg">
-			</div>
 			<div class="detailInfo">
-				<div style="text-align: center;">
-					<h>제목 : ${s.suTitle}</h>
+			
+				<div class="flaot-right" id="reCount" style="float:right;">
+					<d>조회수 : ${ rv.reCount }</d>
 				</div>
-				<div id="writer">
-					<d>작성자 : ${s.suWriter}</d>
+				
+				<div class="flaot-right" id="reComentCount" style="float:right;">
+					<d>댓글수 : </d>
+				</div>	
+			
+				<div class="text" id="reTitle">
+					<h>제목 : ${ rv.reTitle } </h>
 				</div>
-				<div id="">
-					<d>후기 작성할 날짜</d>
+							
+				<div id="userId">
+					<d>작성자 : ${ rv.userId } </d>
+				</div>
+						
+				<div class="title" id="reDate">
+					<span><d>후기 작성할 날짜 : ${ rv.reDate } </d></span>
+				
+
 				</div>		
 			
-			<span><button type="button" id="toEdit"
-				onclick="location.href='supportReviewWrite.me'">수정하기</button></span>
+					<span><button type="button" id="toEdit"
+						onclick="location.href='supportReviewWrite.me'">수정하기</button></span>
 				
-			<span><button type="button" id="delete"
-				onclick="location.href='supportReviewWrite.me'">삭제하기</button></span>
-				
-				
+					<span><button type="button" id="delete"
+						onclick="location.href='supportReviewWrite.me'">삭제하기</button></span>			
 				
 			</div>
 			<div class="description">
-				<pre>
-				${s.content} 안녕하세요.
-				</pre>
+				
+				                <div class="event_view_info">
+	                <div class="contentArea">
+	               	<p> ${ rv.reContent} </p>
+	                	</div>
+	                	<br>
+                    <!-- image -->
+                    
+                </div>
+				
+				
 			</div>
 
 
@@ -577,16 +599,16 @@ d {
     		selectReplyList();
     		
     		$("#addReply").click(function(){
-        		var suNo = ${s.suNo};
+        		var rno = ${r.reNo};
 
     			if($("#replyContent").val().trim().length != 0){
     				
     				$.ajax({
-    					url:"insert.re",
+    					url:"insertReComent.me",
     					type:"post",
     					data:{replyContent:$("#replyContent").val(),
-    						  refBoardNo:suNo,
-    						  replyWriter:"${loginUser.userId}"},
+    						  reBno:reNo,
+    						  reWriter:"${loginUser.userId}"},
     					success:function(result){
     						if(result > 0){
     							$("#replyContent").val("");
@@ -608,10 +630,10 @@ d {
     	});
     	
     	function selectReplyList(){
-    		var suNo = ${s.suNo};
+    		var rno = ${r.reNo};
     		$.ajax({
-    			url:"list.re",
-    			data:{suNo:suNo},
+    			url:"reList.me",
+    			data:{reNo:reNo},
     			type:"get",
     			success:function(commentList){
     				$("#rcount").text(commentList.length);
@@ -622,22 +644,22 @@ d {
     					
     					value += "<tr>"+
     								"<td>" + num-- + "</td>" +
-    								"<td>" + obj.createDate + "</td>" +
-    					 		 	"<td colspan='1'>" + obj.replyWriter + "</td>" + 
-   								 	"<td colspan='6' style='text-align:left;'>" + obj.replyContent + "</td>" 
+    								"<td>" + obj.reCreateDate + "</td>" +
+    					 		 	"<td colspan='1'>" + obj.reWriter + "</td>" + 
+   								 	"<td colspan='6' style='text-align:left;'>" + obj.reContent + "</td>" 
     								 
    								 
-   		    					if("${loginUser.userId}" == obj.replyWriter){
+   		    					if("${loginUser.userId}" == obj.reWriter){
    		    						value += "<td colspan='2' style='border-top: 1px solid #808080;'>"+
 												"<div>"+
-													"<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.replyNo+")'></span>"+
+													"<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.reNo+")'></span>"+
 													"<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"+
 												"</div>"+
    		    								"</td>";
    		    					}else{
    		    						value += "<td></td>";
    		    					} 								 
-   						value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>" + obj.replyNo + "</td></tr>";
+   						value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>" + obj.reNo + "</td></tr>";
     				});
     				$("#replyArea tbody").html(value);
     			},
@@ -647,10 +669,10 @@ d {
     		});
     	}
     	
-    	function deleteReply(replyNo){
+    	function deleteReply(reNo){
     		if (confirm("댓글을 삭제하시겠습니까?(Y/N)")) {
 				$.ajax({
-					url : "delete.re/"+replyNo,
+					url : "delete.re/"+reNo,
 					type : "get",
 					success : function() {
 						alert("댓글이 삭제되었습니다");
@@ -669,27 +691,27 @@ d {
     		var row = $(this).parent().parent().parent().parent();
     		var tr = row.children();
     		
-    		var replyNo = tr.eq(0).text();
-    		var createDate = tr.eq(1).text();
-    		var replyWriter = tr.eq(2).text();
-    		var replyContent = tr.eq(3).text();
-    		var replyRno = tr.eq(5).text();
+    		var reNo = tr.eq(0).text();
+    		var reCreateDate = tr.eq(1).text();
+    		var reWriter = tr.eq(2).text();
+    		var reContent = tr.eq(3).text();
+    		var reBno = tr.eq(5).text();
     		
-    		$(".modal-body #reply_no").val( replyNo ); 
-    		$(".modal-body #reply_date").val( createDate ); 
-    		$(".modal-body #reply_writer").val( replyWriter ); 
-    		$(".modal-body #reply_text").val( replyContent ); 
-    		$(".modal-body #reply_rno").val( replyRno ); 
+    		$(".modal-body #reply_no").val( reNo ); 
+    		$(".modal-body #reply_date").val( reCreateDate ); 
+    		$(".modal-body #reply_writer").val( reWriter ); 
+    		$(".modal-body #reply_text").val( reContent ); 
+    		$(".modal-body #reply_rno").val( reBno ); 
 		 });
     	
     	function updateReply(){
     		if(confirm("댓글을 수정하시겠습니까?(Y/N)")){
-    		const suNo = "${s.suNo}";
-    		console.log(suNo);
+    		const reNo = "${r.reNo}";
+    		console.log(reNo);
     		const content=$('#reply_text').val();
     		console.log(content);
-    		const replyNo=$('#reply_rno').val();
-    		console.log(replyNo);
+    		const reBno=$('#reply_rno').val();
+    		console.log(reBno);
     		
     		$.ajax({
     			url : "update.re/"+suNo+"/"+replyNo,

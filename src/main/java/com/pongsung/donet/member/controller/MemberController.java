@@ -1,10 +1,17 @@
 package com.pongsung.donet.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +20,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
+import com.pongsung.donet.donation.model.vo.Sponsor;
+import com.pongsung.donet.donation.model.vo.SupporComment;
+import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
+import com.pongsung.donet.member.model.vo.Review;
+import com.pongsung.donet.member.model.vo.ReviewComment;
+import com.pongsung.donet.member.model.vo.ReviewImage;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -333,25 +353,95 @@ public class MemberController {
 			return "member/memberUserList";
 		}
 		
+//===========================================================================
 		// 후원 후기로 이동
-		@RequestMapping("supportReviewList.me")
-			public String supportReviewList() {
-			
-			return "member/supportReviewList";
-		}
+//		@RequestMapping("supportReviewList.me")
+//			public String supportReviewList() {
+//			
+//			return "member/supportReviewList";
+//		}
 		
-		// 후원 후기 작성하기로 이동
+		//후원 후기 작성하기로 이동
 		@RequestMapping("supportReviewWrite.me")
-			public String supportReviewWrite() {
+			public String supportReviewWrite(Support support, Model model) {
 					
+			List<Sponsor> list = memberService.selectSupportList(support);
+			System.out.println("list의 값 : " + list);
+			
+			model.addAttribute("list", list);
+			
+			System.out.println("model의 값 : " + model );
+			
 			return "member/supportReviewWrite";
 		}
 		
 		// 후원 후기 상세보기로 이동
 		@RequestMapping("supportReviewDetail.me")
-			public String supportReviewDetail() {
-					
-			return "member/supportReviewDetail";
+			public ModelAndView supportReviewDetail(int rno, ModelAndView mv) {
+				System.out.println("선택한 후기 번호" + rno);
+				
+				Review rv = memberService.selectReview(rno);
+				List<ReviewImage> at = memberService.selectReviewImage(rno);
+				
+				
+				mv.addObject("rv", rv).setViewName("member/supportReviewDetail");
+				mv.addObject("at", at).setViewName("member/supportReviewDetail");;
+			
+			return mv;
 		}
 		
-}
+		// 일단 맴버안에서 만든다음 기능이 잘 될 경우 도네이션으로 코드를 옮기자
+		
+		@RequestMapping("supportReviewList.me")
+		public String donationReviewList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
+			
+			int listCount = memberService.seletDonationReviewListCount();
+			System.out.println("listCount의 값 : " + listCount);
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+			System.out.println("pi"+pi);
+			
+			List<Support> list = memberService.selectDonationReviewList(pi);
+			System.out.println("support 의 값 : "+list);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			System.out.println("model 의 값 : "+model);
+			
+			return "member/supportReviewList";
+			
+		}
+
+		
+		@RequestMapping(value="insertReview.me")
+		public String insertReview(Review review, MultipartHttpServletRequest request) {
+			
+			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+			System.out.println("작성된 후기를 등록중입니다.");
+			memberService.insertReview(review);
+			
+			return "redirect:supportReviewList.me";
+			
+		}
+		
+		// 후원 후기 댓글 목록
+		@ResponseBody
+		@RequestMapping(value ="rvlist.me", produces = "application/json; charset=utf-8")
+		public String selectReviewReplyList(int reNo) {
+			
+			ArrayList<ReviewComment> reviewCommentList = memberService.selectReviewReplyList(reNo);
+			System.out.println("reviewCommentList의 값 : " + reviewCommentList);
+			
+			return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(reviewCommentList);
+		}
+		
+		@ResponseBody
+		@RequestMapping("insertReComent.me")
+		public String insertReviewReply(ReviewComment rc) {
+			int result = memberService.insertReviewReply(rc);
+			
+			return String.valueOf(result);
+			
+		}
+}			

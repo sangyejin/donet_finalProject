@@ -16,6 +16,15 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 	
 
 <!-- CSS here -->
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
@@ -138,7 +147,7 @@ c {
 		<span><c>커뮤니티 > 후원 후기</c></span>
 		<span></span>
 		<c:if
-			test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
+			test="${loginUser.userRole eq 'A'||loginUser.userRole eq 'B'||loginUser.userRole eq 'C'}">
 		<span><button type="button" id="registration"
 				onclick="location.href='supportReviewWrite.me'">후기 작성</button></span>
 		</c:if>
@@ -148,19 +157,20 @@ c {
 
 		<div class="content">
 			<c:if test="${!empty list}">
-				<c:forEach items="${ list }" var="s" varStatus="status">
+				<c:forEach items="${ list }" var="r" varStatus="status">
 					<div class="supportList"
-						onclick="location.href = 'detail.do?suNo=${s.suNo}'">
+						onclick="location.href = 'supportReviewDetail.me?rno=${r.reNo}'">
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
-									src="${ pageContext.servletContext.contextPath}/resources/imgs/${s.thumbnailChange}">
+									src="">
+									<%-- ${ pageContext.servletContext.contextPath}/resources/imgs/${r.imgChangeName} --%>
 							</div>
 							<div class="supportTitle">
-								<h3>${s.suTitle}</h3>
+								<h3>제목 : ${r.reTitle}</h3>
 							</div>
 							<div class="supportWriter">
-								<h6>${s.suWriter}</h6>
+								<h6>작성자 : ${r.userId}</h6>
 							</div>
 							<div class="participation">
 								<div>
@@ -168,36 +178,13 @@ c {
 										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 								</div>
 								<div id="total">
-									<h6>${s.total }명</h6>
+									<h6>${r.reCount }조회수</h6>
 								</div>
 							</div>
-							<div class="progressBar">
-								<c:choose>
-									<c:when test="${s.goal ne 0 }">
-										<c:set var="cul" value="${(s.totalamount/s.goal)*100 }" />
-										<c:choose>
-											<c:when test="${cul>=100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: 101%;"></span>
-												</span>
-											</c:when>
-											<c:when test="${cul<100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: ${cul}%;"></span>
-												</span>
-											</c:when>
-										</c:choose>
-									</c:when>
-									<c:when test="${s.goal eq 0 }">
-										<span class="progressbar"> <span class="gauge"
-											style="width: 0%;"></span>
-										</span>
-									</c:when>
-								</c:choose>
-							</div>
+							
 							<div class="totalAmount">
 								<h3>
-									<b>누적 ${s.totalamount } 원</b>
+									<b>후기 작성일 ${r.reDate }</b>
 								</h3>
 							</div>
 						</span>

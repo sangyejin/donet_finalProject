@@ -1,34 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-
-<!-- favicon -->
-<link rel="icon"
-	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
-	type="image/x-icon">
-
 <title>도넷닷컴</title>
 <style>
     .outer{
         width: 1050px;
         margin: auto;
     }
-	.topTotop{
-	    cursor: pointer;
-	    color: white;
-	    font-size: 14px;
-	    background-color: rgb(60, 179, 113);
-	    border-radius: 5px;
-	    padding: 7px 5px 7px 7px;
-	}
 	c{
 		font-weight: 600;
 		font-size: 15px;
@@ -42,20 +27,9 @@
 		text-align: center;
 		box-shadow: 10px 10px 10px;
 	}
-	#detailCategory{
+	#reviewList{
 		width:300px;
 		height:40px;
-	}
-	.attach{
-		width:150px; 
-		height:150px;
-		border: 1px solid grey;
-		border-radius: 20%;
-		text-align: center;
-		box-shadow: 10px 10px 10px;
-		margin-top: 1%;
-		margin-left:5%;
-		display:inline-block;		
 	}
 	#files{
 		margin-left: 20%;
@@ -128,180 +102,162 @@
 
 
 </style>
-</style>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
+	rel="stylesheet">
+
+<!-- favicon -->
+<link rel="icon"
+	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
+	type="image/x-icon">
+
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
+	 <!-- 썸머 솔트 -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+	<!-- 썸머노트 css, js -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/summernote-lite.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/summernote-lite.css"> 
+	
+	
+
+
+
 </head>
 <body id="pageTop">
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
-		<form id="insertForm" action="insert.bo" method="post" enctype="multipart/form-data">
+		<form id="insertForm" action="insertReview.me" method="post" enctype="multipart/form-data">
 			<div style="text-align: center;">
 			
 			<span style="float:right; margin-right:15%;">
 				<br><br>
 					<c>후원한 프로젝트 목록</c>
 					<div>
-						<select id="detailCategory" name="categoryNo">
-						    <option value="1">지구촌</option>
-					        <option value="2">환경</option>
-					        <option value="3">동물</option>
-						    <option value="4">아동/청소년</option>
-						    <option value="5">취약계층</option>
+						<select id="reSuTitle" name="reSuTitle">
+						<c:forEach items="${ list }" var="r">
+						    <option value="${r.suTitle}">${r.suTitle}</option>			
+						</c:forEach>
 						</select> <br><br><br>
 			
-			<c>후원 프로젝트 제목</c>
-			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px" id="suTitle" name="suTitle"></div><br><br><br>
-			<div>
-				
-				
-					</div><br>					
-				</span>
+			<c>후원 후기 제목</c>
+			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px" id="reTitle" name="reTitle"></div><br><br><br>
+			
 			</div></div><br><br><br>
 			<e>내  용</e>
-			<div style="text-align: center;"><textarea id=content name="content" placeholder=" 내용을 입력하세요" style="width:800px; height:400px; resize: none;"></textarea></div><br><br><br><br>
-			<e>첨부 이미지</e><br>
-			<div style="text-align: center;">
-				<span class="attach" style="margin-left:0;">
-					<img id="img1" style="width:150px; height:150px;border-radius: 20%;"/>
-				</span>
-				<span class="attach">
-					<img id="img2" style="width:150px; height:150px;border-radius: 20%;"/>
-				</span>
-				<span class="attach">
-					<img id="img3" style="width:150px; height:150px;border-radius: 20%;"/>
-				</span>
-				<span class="attach">
-					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
-				</span>
-				<div  style="margin-top:1%; width:1000px;">
-					<span><input type="file" id="attach1" name="file1" class="attachFileLoad" style="margin-left:8%;"/></span>
-					<span><input type="file" id="attach2" name="file2" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach3" name="file3" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach4" name="file4" class="attachFileLoad" /></span>
-				</div>
-			</div><br><br><br><br><br><br>
-
 			
+  				<textarea id="summernote" class="form-control" name="reContent" placeholder="content" maxlength="140" rows="7"></textarea>    
+						
+				
+				<input type="hidden" class="form-control" name="userId" value="${ loginUser.userId }" >
+				
+				<br><br><br><br>	
 			<input type="submit" value="등록하기" id="submit">	
 		</form>
 	</div>
 	
-	<script type="text/javascript">
-        $('#addRow').click(function () {
-            const table = document.getElementById('useplan');
-            const totalRowCnt = table.rows.length;
-            const len = String(table.tBodies[0].rows.length + 1);
-           	
-            var html = `<tr>
-            			<td name='tdUpNo' style='vertical-align:middle'>`+len+`<input class='useplanTd' type='hidden' name='upNo' value=`+len+`>
-            			</td><td><input class='useplanTd' type='text' name='division' placeholder='구분' required></td>
-                    	<td><input class='useplanTd' type='text' name='content' placeholder='상세내용' required></td>
-                    	<td><input class='useplanTd' type='number' name='amount' min='1000' step='100' placeholder='사용금액' required></td>
-                    	<td><button class='btnDelete'  name='btnDelete'>삭제</button></td>
-                		</tr>`;
-              
-            $("#useplan tbody").append(html);
-            
-        });
-	 	
-	    
-	    //삭제 버튼
-	    $(document).on("click","button[name=btnDelete]",function(){
-	        
-	        var trHtml = $(this).parent().parent();
-	        
-	        trHtml.remove();
-	        
-	    });
+	<!-- 이미지 업로드를 위한 콜백 함수  -->
+	<script>
+	// 툴바생략
+	
+/* 	$('.summernote').summernote({
+					  height: 600,
+					  lang: "ko-KR"
+					});
+			 */
+        
+       /*  $("#summernote").summernote({
+			height: 600, 
+	    	minHeight: null,            
+	    	maxHeight: null,            
+	    	focus: true,
+	    	lang : 'ko-KR',
+	    	disableResizeEditor: true,
+	   		callbacks: {
+	    		onImageUpload: function(files, editor, welEditable){
+		    		for(var i = files.length - 1; i>=0; i--){
+		    			sendFile(files[i],this);	  
+		    		}	
+	    		}
+	   			}
+		});
+			 
+			 function sendFile(file, el){
+					var data = new FormData();
+					data.append("file", file);	
+					$.ajax({
+						data : data,
+						dataType : "json",
+						type : "POST",
+						url : "reviewImage.me",
+						cache : false,
+						contentType : false,
+						processData : false,
+						enctype : "multipart/form-data",
+						success : function(data){
+							alert(data)
+							$(el).summernote('editor.insertImage', data.url);
+							
+						},
+						error:function(data){
+							console.log(data);
+						}
+					});
+				} */
+				
+				 $("#summernote").summernote({
+						height: 500, 
+						width: 1000,
+				    	minHeight: null,            
+				    	maxHeight: null,            
+				    	focus: true,           
+				    	disableResizeEditor: true,
+		   	   		callbacks: {
+				    		onImageUpload: function(files, editor, welEditable){
+					    		for(var i = files.length - 1; i>=0; i--){
+					    			sendFile(files[i],this);	  
+					    		}	
+				    		}
+		   	   			}
+					});
+				
+
+					
+				
+				function sendFile(file, el){
+						var data = new FormData();
+						data.append("file", file);	
+						$.ajax({
+							data : data,
+							type : "POST",
+							url : "imageFile.ev",
+							cache : false,
+							contentType : false,
+							processData : false,
+							enctype : "multipart/form-data",
+							success : function(data){
+								console.log(data);
+								$(el).summernote('editor.insertImage', data.url);
+								
+							}
+						});
+					}
 	</script>
-	<script> 
-	document.getElementById("files").onchange = function () {
-	    var reader = new FileReader();
-
-	    reader.onload = function (e) {
-	        document.getElementById("image").src = e.target.result;
-	    };
-
-	    reader.readAsDataURL(this.files[0]);
-	};
 	
-	document.getElementById("attach1").onchange = function () {
-	    var reader = new FileReader();
-
-	    reader.onload = function (e) {
-	        document.getElementById("img1").src = e.target.result;
-	    };
-
-	    reader.readAsDataURL(this.files[0]);
-	};
 	
-	document.getElementById("attach2").onchange = function () {
-	    var reader = new FileReader();
-
-	    reader.onload = function (e) {
-	        document.getElementById("img2").src = e.target.result;
-	    };
-
-	    reader.readAsDataURL(this.files[0]);
-	};
-	
-	document.getElementById("attach3").onchange = function () {
-	    var reader = new FileReader();
-
-	    reader.onload = function (e) {
-	        document.getElementById("img3").src = e.target.result;
-	    };
-
-	    reader.readAsDataURL(this.files[0]);
-	};
-	
-	document.getElementById("attach4").onchange = function () {
-	    var reader = new FileReader();
-
-	    reader.onload = function (e) {
-	        document.getElementById("img4").src = e.target.result;
-	    };
-
-	    reader.readAsDataURL(this.files[0]);
-	};
-	
-	$("#submit").click(function(){
-		$("#useplan tbody tr").each( function (index) {
-	        $(this).find("input[name=upNo]").attr("name", "supportUsePlan[" + index + "].upNo");
-	        $(this).find("input[name=division]").attr("name", "supportUsePlan[" + index + "].division");
-	        $(this).find("input[name=content]").attr("name", "supportUsePlan[" + index + "].content");
-	        $(this).find("input[name=amount]").attr("name", "supportUsePlan[" + index + "].amount");
-	        console.log(index);
-	    });
-		$("#insertForm").submit();
-	});
-	</script>
-    <script>
-	    var start1 = document.getElementById('start');
-	    var end1 = document.getElementById('end');
-	
-	    start1.addEventListener('change', function() {
-	        if (start1.value)
-	            end1.min = start1.value;
-	    }, false);
-	    end1.addEventLiseter('change', function() {
-	        if (end1.value)
-	            start1.max = end1.value;
-	    }, false);
-   </script>
-    <script>
-	    var start2 = document.getElementById('bstart');
-	    var end2 = document.getElementById('bend');
-	
-	    start2.addEventListener('change', function() {
-	        if (start2.value)
-	            end2.min = start2.value;
-	    }, false);
-	    end2.addEventLiseter('change', function() {
-	        if (end2.value)
-	            start2.max = end2.value;
-	    }, false);
-   </script>		
+    	
 
 	<jsp:include page="../common/footer.jsp" />
 	<jsp:include page="../donation/subMenu.jsp" />

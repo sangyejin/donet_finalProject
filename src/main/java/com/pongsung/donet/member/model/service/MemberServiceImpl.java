@@ -1,6 +1,7 @@
 package com.pongsung.donet.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.donation.model.vo.Sponsor;
+import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.member.model.dao.MemberDao;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
+import com.pongsung.donet.member.model.vo.Review;
+import com.pongsung.donet.member.model.vo.ReviewComment;
+import com.pongsung.donet.member.model.vo.ReviewImage;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -188,6 +194,75 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> selectUserList(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return memberDao.selectUserList(sqlSession, pi);
+	}
+
+
+//=====================================================================
+	// 후원 후기
+	
+	@Override
+	public int seletDonationReviewListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectDonationReviewListCount(sqlSession);
+	}
+
+
+	@Override
+	public List<Support> selectDonationReviewList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return memberDao.selectDonationReviewList(sqlSession, pi);
+	}
+
+
+	@Override
+	public List<Sponsor> selectSupportList(Support support) {
+		// TODO Auto-generated method stub
+		return memberDao.selectSupportList(sqlSession, support);
+	}
+
+
+	@Override
+	public void insertReview(Review review) {
+		
+		int result = memberDao.insertReview(sqlSession, review);
+		
+		if(result <0) {
+			throw new CommException("후기 등록 실패");
+		}
+		
+	}
+
+	// 후기 상세 보기
+	@Override
+	public Review selectReview(int rno) {
+		// TODO Auto-generated method stub
+		return memberDao.selectReview(sqlSession, rno);
+	}
+
+
+	@Override
+	public List<ReviewImage> selectReviewImage(int rno) {
+		// TODO Auto-generated method stub
+		return memberDao.selectReviewImage(sqlSession, rno);
+	}
+
+
+	@Override
+	public ArrayList<ReviewComment> selectReviewReplyList(int reNo) {
+		// TODO Auto-generated method stub
+		return memberDao.selectReviewReplyList(sqlSession, reNo);
+	}
+
+
+	@Override
+	public int insertReviewReply(ReviewComment rc) {
+		int result = memberDao.insertReviewReply(sqlSession, rc);
+		
+		if(result < 0) {
+			throw new CommException("후기 댓글 작성 실패");
+		}
+
+		return result;
 	}
 	
 }
