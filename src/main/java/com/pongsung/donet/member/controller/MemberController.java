@@ -261,7 +261,10 @@ public class MemberController {
 		}
 		
 		@RequestMapping("insertCard.me")
-		public String insertCard(@RequestParam(name = "cardNumber") String cardNumber,
+		public String insertCard(@RequestParam(name = "cardNumber1") String cardNumber1,
+								@RequestParam(name = "cardNumber2") String cardNumber2,
+								@RequestParam(name = "cardNumber3") String cardNumber3,
+								@RequestParam(name = "cardNumber4") String cardNumber4,
 								@RequestParam(name = "expireM") String expireM,
 								@RequestParam(name = "expireY") String expireY,
 								@RequestParam(name = "cvcNum") int cvcNum,
@@ -273,8 +276,9 @@ public class MemberController {
 								) {
 			
 			System.out.println("카드결제 인서트 : 컨트롤러"); //결제내역 기록
-			System.out.println("cardNumber : " + cardNumber + ", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
-			
+			System.out.println(", expireM : " + expireM + " , expireY : " + expireY + ", cvcNum : " + cvcNum + ", cardBankName : " + cardBankName + ", surname : " + surname + " ,fstname :  " + fstname);
+			System.out.println("cardNumber1: " + cardNumber1 + " cardNumber2 : " + cardNumber2 + ", cardNumber3 : " + cardNumber3 + ", cardNumber4 : " + cardNumber4);
+
 			Payment payment = new Payment();
 			
 			//로그인 유저 가져오기
@@ -283,6 +287,7 @@ public class MemberController {
 			
 			String expireDate = expireM+expireY; //유효기간
 			String fullName = surname+fstname; //이름
+			String cardNumber = cardNumber1 + cardNumber2 + cardNumber3 + cardNumber4;
 			
 			payment.setUserId(loginUser.getUserId());
 			payment.setCardNo(cardNumber);
@@ -334,6 +339,29 @@ public class MemberController {
 			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
 			
 			return "redirect:/myPage.me";
+			
+		}
+		
+		//후원프로젝트 후원 후 포인트 업데이트
+		@RequestMapping("supportAfterPoints")
+		public String supportAfterPoints(int point, HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			System.out.println(point);
+			loginUser.setPoint(point);
+		
+			memberService.updatePoint(loginUser);
+			
+			Member thisUser = memberService.selectThisUser(loginUser);
+			
+			
+			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
+			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
+			
+			model.addAttribute("loginUser", thisUser);
+			
+			return "donation/donationMain";
 			
 		}
 

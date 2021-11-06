@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,12 +13,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
@@ -56,16 +60,17 @@ import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
 
-@SessionAttributes("loginUser") 
+@SessionAttributes("loginUser")
 @Controller
 public class FundingController {
 	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
 
 	@Autowired
 	private FundingService fundingService;
+	
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -162,7 +167,7 @@ public class FundingController {
 			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
 			
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
-			
+			int cnt=1;
 			//파일을 저장, 파일이름 변경
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
@@ -178,14 +183,15 @@ public class FundingController {
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
-						//img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
-						img.setImgNo(i);
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1)));
 						imgList.add(img);
 					}
 				}
 			}
 			
 		}
+		logger.info("funding :: imgList :: "+ imgList);
 		
 		
 		fundingService.insertFunding(funding,imgList,fgList);
@@ -193,7 +199,37 @@ public class FundingController {
 		return "redirect:/funding";
 	}
 
+	// 게시글 content내에 있는 이미지 저장
+	@RequestMapping(value="/funding/contentFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String uploadFundingSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		JsonObject jsonObject = new JsonObject();
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources  + "/upload_files/funding/";
+		
+	
+		String originalFileName = multipartFile.getOriginalFilename();
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		
+		String saveFileName = UUID.randomUUID()+extension;
+		System.out.println("resources : "+resources+"   "+"resources/upload_files/funding/" + saveFileName);
+			
+		File targetFile = new File(savePath+saveFileName);
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);
+			jsonObject.addProperty("url", "resources/upload_files/funding/" + saveFileName);
+			jsonObject.addProperty("responseCode", "succcess");
+		} catch(IOException e) {
+			FileUtils.deleteQuietly(targetFile);
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}	
 
+		String result = jsonObject.toString();
+		return result;
+	}
 	// 펀딩 디테일
 	@RequestMapping(value="funding/{fpNo}")
 	public String selectFundingDetail(@PathVariable("fpNo") int fpNo, Model model) {
@@ -261,12 +297,10 @@ public class FundingController {
 		fundingSupporter.setFpSupporter(((Member)model.getAttribute("loginUser")).getUserId());
 		fundingSupporter.setFpNo(fpNo);
 		fundingService.insertFundingSupporter(fundingSupporter);
-		
-		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
-		//model.addAttribute("loginUser", loginUser);
+		Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+		model.addAttribute("loginUser", loginUser);
 		return "redirect:/funding/"+fpNo+"/complete";
 	}
-	
 	// 펀딩프로젝트 후원완료창
 	@RequestMapping("funding/{fpNo}/complete")
 	public String completeFunding(@PathVariable("fpNo") int fpNo,Model model) {

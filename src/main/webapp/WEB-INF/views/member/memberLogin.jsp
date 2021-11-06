@@ -34,11 +34,13 @@
     }
     
     
+    
 	</style>
 </head>
 <body>
     
 	<jsp:include page="../common/menubar.jsp"/>
+	
 	<div class="col-xs-12" style="width: 30%; float:none; margin:0 auto">
 	<div class="content">
 		    <div class="container-fluid">

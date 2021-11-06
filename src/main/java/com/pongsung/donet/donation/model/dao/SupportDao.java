@@ -11,6 +11,8 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportCategory;
+import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 
@@ -99,22 +101,46 @@ public class SupportDao {
 		return sqlSession.insert("supportMapper.insertUsePlan",list);
 	}
 
+	public int selectDonationCaListCount(SqlSessionTemplate sqlSession, SupportCategory suCategory) {
+		return sqlSession.selectOne("supportMapper.selectDonationCaListCount", suCategory);
+	}
+
+	public List<Support> selectDonationCaList(SqlSessionTemplate sqlSession, PageInfo pi, SupportCategory suCategory) {
+		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (List)sqlSession.selectList("supportMapper.selectDonationCaList", suCategory, rowBounds);
+	}
+
+	public int selectDonationOrListCount(SqlSessionTemplate sqlSession, SupportFilter supportFilter) {
+		return sqlSession.selectOne("supportMapper.selectDonationOrListCount", supportFilter);
+	}
+
+	public List<Support> selectDonationOrList(SqlSessionTemplate sqlSession, PageInfo pi, SupportFilter supportFilter) {
+		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (List)sqlSession.selectList("supportMapper.selectDonationOrList", supportFilter, rowBounds);
+	}
+
+	public Support selectSupport(SqlSessionTemplate sqlSession, int suNo) {
+		return sqlSession.selectOne("supportMapper.selectSupport",suNo);
+	}
+
+	public int insertSupportCharity(SqlSessionTemplate sqlSession, Sponsor s) {
+		return sqlSession.insert("supportMapper.insertSupportCharity", s);
+	}
+
+	public int updatePoints(SqlSessionTemplate sqlSession, int points) {
+		return sqlSession.update("memberMapper.updatePoints",points);
+	}
 
 
 
 
 
-
-//	public int selectGolbalListCount(SqlSessionTemplate sqlSession, int categoryNo) {
-//		return sqlSession.selectOne("supportMapper.selectGolbalListCount");
-//	}
-//
-//	public List<Support> selectGlobalList(SqlSessionTemplate sqlSession, PageInfo pi,int categoryNo) {
-//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		
-//		return (List)sqlSession.selectList("supportMapper.selectGlobalList",null,rowBounds,categoryNo);
-//	}
 	
 	
 

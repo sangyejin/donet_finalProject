@@ -8,10 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
 
 <!-- favicon -->
 <link rel="icon"
@@ -40,17 +37,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <title>도넷닷컴</title>
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
 
 
 .card {
 	margin-right: 0px !important;
 	padding-left: 30px !important;
+	padding-right: 30px !important;
 }
 
 .cases-caption {
@@ -147,15 +139,16 @@ select::-ms-expand {
 	padding-top: 10px;
 }
 
-#title {
+.div-title{
+	height:70px;	
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.title{
 	display: block;
-	font-size: 18px;
+	font-size: 16px;
 }
-
-.div-title {
-	height: 50px;
-}
-
 #btn-insert {
 	width: 200px;
 	height: 40px;
@@ -195,15 +188,14 @@ select::-ms-expand {
 }
 
 .img-text {
-	position: absolute;
 	background-color: rgba(60, 179, 113, 0.6);
 	border-radius: 50%;
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 	position: absolute;
-	top: 50px;
-	left: 130px;
-	padding-top: 35px;
+	top: 45px;
+	left: 100px;
+	padding-top: 60px;
 }
 
 .img-text>p {
@@ -211,10 +203,35 @@ select::-ms-expand {
 	vertical-align: middle;
 	color: white;
 	font-weight: 700;
+	font-size:20px;
 }
 
 .cases-img {
-	position: static;
+	padding-top:20px;
+}
+
+
+.progressbar {
+	display: inline-block;
+	width: 278px;
+	height: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: left;
+	background-color: #e8e8e8;
+	box-shadow: inset 0px 1px 0.5px 0.5px #858B94;
+	overflow:hidden;
+}
+
+.progressbar>.gauge {
+	display: inline-block;
+	height: 10px;
+	background-color: rgba(60, 179, 113);
+	border-radius: 10px;
+	padding-top:0px;
+	margin-left: 0px;
+	margin-bottom: 6px;
+	box-shadow: inset 0px 1px 0.5px 0.5px rgba(50, 140, 90);
 }
 </style>
 </head>
@@ -242,7 +259,8 @@ select::-ms-expand {
 					<option value="SYSDATE < START_DATE">예정</option>
 					<option value="SYSDATE BETWEEN START_DATE AND CLOSING_DATE">진행중</option>
 					<option value="SYSDATE > CLOSING_DATE">종료</option>
-				</select> <select name="order" id="order"  onchange="selectOrder(this.value);">
+				</select> 
+				<select name="order" id="order"  onchange="selectOrder(this.value);">
 					<option value="FP_WRITE_DATE DESC">최신순</option>
 					<option value="HITS DESC">조회순</option>
 					<option value="NUMBER_SUPPORTER DESC">후원자수순</option>
@@ -325,7 +343,7 @@ select::-ms-expand {
 						let goalPersent = list.raised/list.goal*100;
 						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
 										<div class="single-cases mb-40">
-											<div class="cases-img">
+											<div class="cases-img" onclick="location.href='${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`'">
 												<img src="${pageContext.request.contextPath}/resources/upload_files/funding/`+list.thumbnailChangeName+`" alt="`+list.fpName+`"
 													width="278px" height="200px">`;
 						if(goalPersent>=100){
@@ -337,7 +355,7 @@ select::-ms-expand {
 											<div class="cases-caption">
 												<div class="cases-info">
 													<div class="div-title">
-												<a href="${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`" id="title">`+list.fpName+`</a>
+												<a href="${pageContext.servletContext.contextPath}/funding/`+list.fpNo+`" class="title">`+list.fpName+`</a>
 											</div>
 											<p class="category-hostName">
 												<span>`+list.categoryName+`</span> | <span>`+list.hostName+`</span>
@@ -349,13 +367,11 @@ select::-ms-expand {
 												<span>`+list.dDay +`</span>
 											</p>
 										</div>
-										<div class="progress">
-											<div class="progress-bar progress-bar-success"
-												role="progressbar"
-												aria-valuenow="`+goalPersent+`" aria-valuemin="0"
-												aria-valuemax="100"
-												style="width:`+goalPersent+`%">`+goalPersent+`%
-											</div>
+										<div class="progressBar">
+										<span class="progressbar"> 
+											<span class="gauge" style="width: `+goalPersent+`%">
+											</span>	
+										</span>
 										</div>
 										<div class="prices d-flex justify-content-between">
 											<p>

@@ -15,11 +15,10 @@ import com.pongsung.donet.donation.model.dao.SupportDao;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.donation.model.vo.SupportCategory;
+import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
-import com.pongsung.donet.funding.model.vo.Funding;
-import com.pongsung.donet.funding.model.vo.FundingGoods;
-import com.pongsung.donet.funding.model.vo.FundingImage;
 
 @Service
 public class DonationServiceImpl implements DonationService {
@@ -137,45 +136,81 @@ public class DonationServiceImpl implements DonationService {
 	public void insertBoard(Support support, List<SupportImage> imgList, List<SupportUsePlan> list) throws Exception{
 		int suNo=supportDao.insertBoard(sqlSession,support);
 		if(suNo>0) {
-			if(!imgList.isEmpty()) { //추가 사진이 있으면
+			if(!imgList.isEmpty()) { 
 				for(SupportImage fi: imgList) {
 					fi.setSuNo(suNo);
 				}
 				int resultInsertImg=supportDao.insertImgList(sqlSession,imgList);
-				if(resultInsertImg<0) { //추가사진 db insert 실패
+				if(resultInsertImg<0) { 
 					throw new CommException("게시글 이미지 등록 실패");
 				}
 			}
-			if(!list.isEmpty()) { //선물이 있으면
+			if(!list.isEmpty()) { 
 				for(SupportUsePlan up: list) {
 					up.setSuNo(suNo);
 				}
 				int resultInsertUsePlan=supportDao.insertUsePlan(sqlSession, list);
-				if(resultInsertUsePlan<0) { //선물 db insert 실패
+				if(resultInsertUsePlan<0) { 
 					throw new CommException("게시글 기부계획서 등록 실패");
 				}
 			}
 			
 		}
-		else { //펀딩 db insert 실패
+		else { 
 			throw new CommException("게시글 DB 등록 실패");
 		}
 		
 	}
 
+	@Override
+	public int selectDonationCaListCount(SupportCategory suCategory) {
+		return supportDao.selectDonationCaListCount(sqlSession, suCategory);
+	}
 
-	
-	
+	@Override
+	public List<Support> selectDonationCaList(PageInfo pi, SupportCategory suCategory) {
+		return supportDao.selectDonationCaList(sqlSession, pi, suCategory);
+	}
 
-//	@Override
-//	public int selectGolbalListCount(int categoryNo) {
-//		return supportDao.selectGolbalListCount(sqlSession, categoryNo);
-//	}
-//
-//	@Override
-//	public List<Support> selectGlobalList(PageInfo pi, int categoryNo) {
-//		return supportDao.selectGlobalList(sqlSession,pi,categoryNo);
-//	}
+	@Override
+	public int selectDonationOrListCount(SupportFilter supportFilter) {
+		return supportDao.selectDonationOrListCount(sqlSession, supportFilter);
+	}
+
+	@Override
+	public List<Support> selectDonationOrList(PageInfo pi, SupportFilter supportFilter) {
+		return supportDao.selectDonationOrList(sqlSession, pi, supportFilter);
+	}
+
+	@Override
+	public Support selectSupport(int suNo) {
+		return supportDao.selectSupport(sqlSession,suNo);
+	}
+
+	@Override
+	public int insertSupportCharity(Sponsor s) {
+		int result = supportDao.insertSupportCharity(sqlSession, s);
+
+		if (result < 0) {
+			throw new CommException("후원자 추가 실패");
+		}
+		
+		return result;
+		
+	}
+
+	@Override
+	public int updatePoints(int points) {
+		int result = supportDao.updatePoints(sqlSession,points);
+		if(result<0) {
+			throw new CommException("포인트 수정 실패");
+		}
+		return result;
+	}
+
+
+
+
 
 
 

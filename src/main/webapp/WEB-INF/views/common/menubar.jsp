@@ -7,8 +7,8 @@
     
 <style>
 
-*{ font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
+*{ font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 12px ;
     margin: 0;
 	padding: 0;
 }
@@ -27,7 +27,7 @@
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top:0px;
+    margin-top: 20px;
     float: left;
     width : 115px;
     height : max-content;
@@ -66,8 +66,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 #userinfo{ margin-left: 700px; margin-top : -35px; }
 
-#secondLine{  margin-top : -7px; }
-
+#secondLine{  margin-top : -7px;overflow:auto;  }
+#secondLine > ul{overflow:auto; }
 .thisuser{ font-size : 10px; }
 
 .noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }

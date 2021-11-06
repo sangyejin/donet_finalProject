@@ -19,9 +19,7 @@
 
 
 <style>
-#myPerks:hover {
-	text-decoration: underline;
-}
+#myPerks:hover { text-decoration: underline; }
 
 #divideLine {
 	border: 0.5px solid gray;
@@ -30,14 +28,10 @@
 	margin-bottom: 10px;
 }
 
-#paymentBox, #moneyBox {
-	float: left;
-}
+#paymentBox, #moneyBox { float: left; }
 
 /*div aligns*/
-#paymentBox, #pointPayment, #divideLine {
-	margin-left: 210px;
-}
+#paymentBox, #pointPayment, #divideLine { margin-left: 180px; }
 
 /*box decorations*/
 #moneyBox {
@@ -46,8 +40,8 @@
 	border-radius: 7px;
 	padding: 10px;
 	margin-left: 600px;
-	margin-top: -425px;
-	width: 250px;
+	margin-top: -350px;
+	width: 220px;
 	position: absolute;
 }
 
@@ -57,18 +51,18 @@
 	border-radius: 7px;
 	padding: 10px;
 	position: absolute;
-	width: 250px;
+	width: 220px;
 }
 
 #kakaoMoneyBox {
 	margin-left: 660px;
-	margin-top: -90px;
+	margin-top: -70px;
 	display: none;
 }
 
 #tossMoneyBox {
 	margin-left: 660px;
-	margin-top: -120.5px;
+	margin-top: -100px;
 	display: none;
 }
 
@@ -84,8 +78,8 @@
 }
 
 /*inside of cardBox*/
-#cardNumber {
-	width: 225px;
+#cardNumber1,#cardNumber2,#cardNumber3,#cardNumber4 {
+	width: 51px;
 	margin-bottom: 20px;
 }
 
@@ -138,22 +132,16 @@
 	font-weight: bolder;
 }
 
-#paymentTotal {
-	margin-bottom: 20px;
-}
+#paymentTotal {margin-bottom: 20px;}
 
 #paymentBox>* {
 	font-size: 14px;
 	margin-bottom: 10px;
 }
 
-#accountlessLabel, #creditCardLabel {
-	margin-left: 52px;
-}
+#creditCardLabel {margin-left: 53px;}
 
-#paymentBox>label {
-	margin-right: 10px;
-}
+#paymentBox>label {margin-right: 10px;}
 
 /*those imgs*/
 #kkoImg, #tssImg {
@@ -163,8 +151,9 @@
 }
 
 #amount, #kakaoAmount, #tossAmount {
-	width: 200px;
+	width: 180px;
 	margin-right: 10px;
+	margin-top : 10px;
 }
 
 /*button*/
@@ -175,7 +164,7 @@
 	border-style: none;
 	background-color: rgb(66, 178, 115);
 	color: #ffffff;
-	margin-left: 173px;
+	margin-left: 160px;
 	margin-top: 20px;
 }
 
@@ -190,7 +179,8 @@
 
 	<jsp:include page="../../common/menubar.jsp" />
 
-	<span><label id="pointPayment">포인트 충전</label> </span>
+	<label id="pointPayment">포인트 충전</label>
+	
 	<div id="divideLine"></div>
 
 	<div id="paymentBox">
@@ -201,7 +191,7 @@
 		
 		<div id="kakaoMoneyBox">
 			<label id="paymentTotal" for="amount">결제금액</label> <br> <input
-				type="number" name="kakaoAmount" id="kakaoAmount" required> 원
+				type="text" name="kakaoAmount" id="kakaoAmount"  onkeyup="inputNumberFormat(this)"required> 원
 			<button type="submit" class="goRound" id="kakaoPayButton">결제</button>
 		</div>
 		
@@ -213,27 +203,35 @@
 		</label> <input type="radio" name="payment" id="toss" required>
 		<div id="tossMoneyBox">
 			<label id="paymentTotal" for="amount">결제금액</label> <br> <input
-				type="number" name="tossAmount" id="tossAmount" required> 원
+				type="text" name="tossAmount" id="tossAmount" onkeyup="inputNumberFormat(this)" required> 원
 			<button type="submit" class="goRound" id="tossPayButton">결제</button>
 		</div>
 		<br>
 
 		<!-- 카드결제 -->
-		<label id="creditCardLabel" for="payment"> 신용카드/직불카드 </label> <input
-			type="radio" name="payment" id="creditCard" required> <br>
+		<label id="creditCardLabel" for="payment"> 신용카드/직불카드 </label> 
+		<input type="radio" name="payment" id="creditCard" required> <br>
 
 		<div id="cardBox">
 			<form id="insertCard" method="post" action="insertCard.me">
 				<label id="cardNumberLabel" for="cardNumber">신용카드/직불카드 번호</label> <br>
-				<input type="text" name="cardNumber" id="cardNumber" required>
+				
+				<!-- 4자리수마다 공백, 앞자리 수에따라 카드 타입 선별 -->
+				<input type="text" name="cardNumber1" id="cardNumber1"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" required>
+				<input type="text" name="cardNumber2" id="cardNumber2"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" required>
+				<input type="text" name="cardNumber3" id="cardNumber3"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" required>
+				<input type="text" name="cardNumber4" id="cardNumber4"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" required>
+
 				<br> <label id="expireMLabel" for="expireM">만료 월</label> <label
-					id="expireYLabel" for="expireY">만료 년</label> <br> <input
-					type="text" name="expireM" id="expireM" maxlength="2" required>
-				/ <input type="text" name="expireY" id="expireY" maxlength="2"
-					required> <br> <label id="cvcNumLabel" for="cvcNum">CVC번호</label>
+					id="expireYLabel" for="expireY">만료 년</label> <br> 
+				<!-- 연/월 -->
+				<input type="number" name="expireM" id="expireM" min="1" max="12" step = "1" placeholder="예 : 11" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+				/ <input type="number" name="expireY" id="expireY" min="2021" step = "1"  placeholder="예 : 2021" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+				 <br> 
+				 <label id="cvcNumLabel" for="cvcNum">CVC번호</label>
 				<!-- 보안코드 -->
-				<label id="cardNameLabel" for="bankName">은행명</label> <br> <input
-					type="text" name="cvcNum" id="cvcNum" required> <select
+				<label id="cardNameLabel" for="bankName">은행명</label> <br> 
+				<input type="text" name="cvcNum" id="cvcNum" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required> <select
 					name="cardBankName" id="cardBankName">
 					<c:if test="${!empty bkList}">
 						<c:forEach items="${ bkList }" var="bk" varStatus="status">
@@ -247,7 +245,7 @@
 
 				<div id="moneyBox">
 					<label id="paymentTotal" for="amount">결제금액</label> <br> <input
-						type="number" name="amount" id="amount" required> 원
+						type="text" name="amount" id="amount"  onkeyup="inputNumberFormat(this)" required> 원
 					<button type="submit" class="goRound">결제</button>
 				</div>
 
@@ -262,7 +260,25 @@
 
 
 	<jsp:include page="../../common/footer.jsp" />
-
+	
+	<!-- 3자리 콤마 + 숫자만! -->
+	<script>
+	function inputNumberFormat(obj) {
+	     obj.value = comma(uncomma(obj.value));
+	 }
+	
+	 function comma(str) {
+	     str = String(str);
+	     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	 }
+	
+	 function uncomma(str) {
+	     str = String(str);
+	     return str.replace(/[^\d]+/g, '');
+	 }
+	 </script>	
+	 
+	 
 	<!-- 카드 결제창 숨김 보임 -->
 	<script>
 		$(document).ready(function(){
@@ -352,7 +368,7 @@
 			       buyer_tel :   '개인정보보호',	// 구매자 전화번호
 			       buyer_addr :   '개인정보보호',	// 구매자 주소
 			       buyer_postcode : '개인정보보호',	// 구매자 우편번호
-			       
+			       			       
 			   }, function(rsp) {
 				if ( rsp.success ) { // 성공시
 					var msg = '결제가 완료되었습니다.';
@@ -369,7 +385,7 @@
 			});
 			   setTimeout(function(){
 				   location.href="updatePoint.me?amount=" + amount;
-			   }, 20000)
+			   }, 30000)
 			   
 			})
 			

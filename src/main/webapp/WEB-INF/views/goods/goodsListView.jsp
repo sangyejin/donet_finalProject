@@ -46,12 +46,11 @@
 
 .card {
 	margin-right: 0px !important;
-	padding-left: 30px !important;
+	padding-left: 15px !important;
 }
 
 .cases-caption {
 	text-align: center;
-	width: 278px !important;
 }
 
 .div-top {
@@ -145,13 +144,21 @@ select::-ms-expand {
 
 .title {
 	display: block;
-	font-size: 18px;
+	font-size: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .div-title {
-	height: 50px;
+	height: 60px;
 }
 
+.goodsPrice{
+	font-weight:700;
+}
 #btn-insert {
 	width: 200px;
 	height: 40px;
@@ -210,7 +217,8 @@ select::-ms-expand {
 }
 
 .cases-img {
-	position: static;
+	margin-top:30px;
+	margin-bottom:20px;
 }
 </style>
 
@@ -237,7 +245,8 @@ select::-ms-expand {
 				<p id="searchText"></p>
 				<input id="search" name="search" type="text" class="rounded-pill" placeholder="검색" aria-describedby="button-addon2"
 				onkeyup="if(window.event.keyCode==13){searchText(this.value);}" />
-				</select> <select name="filter2" id="filter1" onchange="selectOrder(this.value);">
+				</select> 
+				<select name="filter2" id="filter1" onchange="selectOrder(this.value);">
 					<option value="CREATE_DATE DESC">최신순</option>
 					<option value="HITS DESC">인기순</option>
 					<option value="GOODS_PRICE ASC">낮은가격순</option>
@@ -317,7 +326,7 @@ select::-ms-expand {
 					$.each(map.goodsList,function(i, list){	
 						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
 									<div class="single-cases mb-40">
-										<div class="cases-img">
+										<div class="cases-img"  onclick="location.href='${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`';">
 											<img src="${pageContext.request.contextPath}/resources/upload_files/goods/`+list.thumbnailChangeName+`" alt="`+list.goodsName+`"
 														width="278px" height="200px">
 										</div>
@@ -327,7 +336,7 @@ select::-ms-expand {
 													<a href="${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`" class="title">`+list.goodsName+`</a>
 												</div>
 												<p class="goodsPrice">
-													`+list.goodsPrice+`
+													`+list.goodsPrice+`원
 												</p>
 											</div>
 										</div>

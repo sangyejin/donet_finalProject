@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,12 +43,15 @@
 }
 
 .supportList {
-	width: 260px;
-	height: 250px;
+	width: 265px;
+	height: 280px;
 	margin-bottom: 10%;
 	margin-left: 5%;
 	display: inline-block;
 	transition: all 0.5s;
+	border: 1px solid #808080;
+	border-radius: 5px;
+	text-align: center;
 }
 
 .supportList:hover {
@@ -57,7 +61,7 @@
 
 #thumbnailImg {
 	width: 260px;
-	height: 130px;
+	height: 135px;
 }
 
 .participation {
@@ -97,23 +101,36 @@
 	margin-bottom: 5px;
 }
 
-.pagination {
-	margin-left: 40%;
-}
-
 .page-link {
-	
+	width: 30px;
+	height: 30px;
 }
 
 .page-item {
-	
+	cursor: pointer;
+	margin-left: 3%;
+	text-align: center;
 }
+
+.page-link:hover {
+	cursor: pointer;
+	margin-left: 3%;
+	text-align: center;
+	background-color: grey;
+}
+
 </style>
 </head>
 <body id="pageTop">
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="outer">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="list.do">후원</a></li>
+				<li class="breadcrumb-item active" aria-current="page">후원 프로젝트</li>
+			</ol>
+		</nav>
 		<jsp:include page="../donation/supportCategory.jsp" />
 
 		<div class="content">
@@ -122,15 +139,22 @@
 					<div class="supportList"
 						onclick="location.href = 'detail.do?suNo=${s.suNo}'">
 						<span class="supportOne">
+							<div>
+								<fmt:formatDate value="${s.suDate}" var="suDate"
+									pattern="yyyy-MM-dd" />
+								<span style="float: left; margin-left: 2%; color:black;"><b>작성일 ㅣ
+										${suDate }</b></span> <span style="float: right; margin-right: 2%; color:black;"><b>조회수
+										ㅣ ${s.hits }</b></span>
+							</div>
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
 									src="${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${s.thumbnailChange}">
 							</div>
 							<div class="supportTitle">
-								<h3>${s.suTitle}</h3>
+								<b style="font-size:20px;color:black;">${s.suTitle}</b>
 							</div>
 							<div class="supportWriter">
-								<h6>${s.suWriter}</h6>
+								<b style="font-size:15px;color:black;">${s.suWriter}</b>
 							</div>
 							<div class="participation">
 								<div>
@@ -138,7 +162,7 @@
 										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 								</div>
 								<div id="total">
-									<h6>${s.total }명</h6>
+									<b style="margin-right:150px; color:black;">후원자수 ${s.total } 명</b>
 								</div>
 							</div>
 							<div class="progressBar">
@@ -166,23 +190,22 @@
 								</c:choose>
 							</div>
 							<div class="totalAmount">
-								<h3>
-									<b>누적 ${s.totalamount } 원</b>
-								</h3>
+								<b style="margin-right:2%; font-size:18px;color:black;">누적 ${s.totalamount } 원</b>
 							</div>
+
 						</span>
 					</div>
 				</c:forEach>
 			</c:if>
 			<div class="pageOuter">
-				<ul class="pagination">
+				<ul class="pagination" style="margin-left:38%;">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+								href="list.do?currentPage=${ pi.currentPage-1 }"><</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+							<li class="page-item disabled"><a class="page-link" href=""><</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -202,35 +225,21 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="list.do?currentPage=${ pi.currentPage+1 }">></a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="list.do?currentPage=${ pi.currentPage+1 }">></a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
 		</div>
-		<script>
-			function global() {
-				location.href = "global?suCategoryNo=1";
-			}
-			function environment() {
-				location.href = "environment?suCategoryNo=2";
-			}
-			function animal() {
-				location.href = "animal?suCategoryNo=3";
-			}
-			function child() {
-				location.href = "child?suCategoryNo=4";
-			}
-			function vulnerable() {
-				location.href = "vulnerable?suCategoryNo=5";
-			}
-		</script>
+
 
 		<jsp:include page="../common/footer.jsp" />
 		<jsp:include page="../donation/subMenu.jsp" />
+		
+
 </body>
 </html>
