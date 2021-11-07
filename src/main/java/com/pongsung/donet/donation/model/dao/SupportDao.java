@@ -137,6 +137,11 @@ public class SupportDao {
 		return sqlSession.update("memberMapper.updatePoints",points);
 	}
 
+	public List<Support> selectTopDonationList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("supportMapper.selectTopDonationList");
+	}
+
 
 
 

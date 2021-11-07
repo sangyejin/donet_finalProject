@@ -136,6 +136,12 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 
+	@Override
+	public List<Event> selectTopEventList() {
+		// TODO Auto-generated method stub
+		return eventDao.selectTopEventList(sqlSession);
+	}
+
 	
 
 	

@@ -124,4 +124,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EV_REPLY_NO=#{replyNo}
 	</update>
 	
+	<select id="selectTopEventList" resultMap="eventResultMap">
+		<![CDATA[		
+			select A.*
+			 from (select * from event
+					where event_status='Y'
+					order by event_last_date DESC) A
+			where ROWNUM<3
+		]]>
+	</select>
+	
 </mapper>

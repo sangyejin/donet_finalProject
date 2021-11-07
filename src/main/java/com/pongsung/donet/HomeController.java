@@ -60,17 +60,17 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
 		
-		//List<Event> eventList = eventService.selectTopEventList();
+		List<Event> eventList = eventService.selectTopEventList();
 		List<Goods> goodsList = goodsService.selectTopGoodsList();
-		//List<Notice> noticeList = noticeService.selectTopNoticeList();
+		List<Notice> noticeList = noticeService.selectTopNoticeList();
 		List<Funding> fundingList = fundingService.selectTopFundingList();
-		//List<Support> supportList = donationService.selectTopDonationList();
+		List<Support> supportList = donationService.selectTopDonationList();
 		
-		//model.addAttribute("eventList",eventList);
+		model.addAttribute("eventList",eventList);
 		model.addAttribute("goodsList",goodsList);
-		//model.addAttribute("noticeList",noticeList);
+		model.addAttribute("noticeList",noticeList);
 		model.addAttribute("fundingList",fundingList);
-		//model.addAttribute("supportList",supportList);
+		model.addAttribute("supportList",supportList);
 		
 		return "main";
 	}

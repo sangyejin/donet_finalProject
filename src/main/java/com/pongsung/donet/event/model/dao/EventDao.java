@@ -92,4 +92,9 @@ public class EventDao {
 		return sqlSession.update("eventMapper.deleteReply", replyNo);
 	}
 
+	public List<Event> selectTopEventList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("eventMapper.selectTopEventList");
+	}
+
 }
