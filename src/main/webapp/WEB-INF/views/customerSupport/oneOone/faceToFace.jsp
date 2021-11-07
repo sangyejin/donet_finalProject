@@ -221,6 +221,10 @@
         #emptyAnswer{color : gray;}
         #question{color : rgb(66, 178, 115);}
        
+       	/*pagination*/
+		.pagination{margin-top : 10px;}
+        
+       
         </style>
 
 </head>
@@ -310,9 +314,7 @@
 				</c:if>
            </table>
 
-
-           <div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -355,8 +357,6 @@
 						</c:otherwise>
 					</c:choose>
 				</ul>
-			</div>
-			
 			  
            <div id="grayline"></div>
            

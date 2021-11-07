@@ -158,7 +158,7 @@
 #searchmark {
 	width: 30px;
 	height: 25px;
-	margin-top:-1px;
+	margin-top:0px;
 	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
@@ -203,6 +203,9 @@
         <c:if test="${ loginUser.userRole eq 'D' }">
         .hidFirst:hover{background-color: rgba(232, 240, 214, 0.5);}	 
     	</c:if>
+    	
+    	/*pagination*/
+.pagination{margin-top : 10px;}
         
     </style>
 
@@ -278,8 +281,7 @@
            </table>
 
 
-           <div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -321,9 +323,7 @@
 							</button>
 						</c:otherwise>
 					</c:choose>
-				</ul>
-			</div>
-			
+				</ul>			
 			  
            <div id="grayline"></div>
            
