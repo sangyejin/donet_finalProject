@@ -154,6 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET GOODS_NAME=#{goodsName}
 		,GOODS_CATEGORY_NO=#{goodsCategoryNo}
 		,CONTENT=#{content}
+		,GOODS_PRICE=#{goodsPrice}
 		<if test="thumbnailOriginName != null">
 			,THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
 			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}

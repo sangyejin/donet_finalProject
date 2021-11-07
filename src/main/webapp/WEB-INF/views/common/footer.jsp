@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>도넷닷컴</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
 	/*전체설정*/	
 	*{margin: 0; padding: 0;}
@@ -83,15 +83,18 @@
 	</div>
 	
 	<script>
-		$(function(){
-			$("#noVacancy").on('click', function(){
-				alert("현재 도넷닷컴은 채용중이 아닙니다.")
-			})
+	window.onload = function(){
+			let noVacancy= document.querySelector("#noVacancy");
+			noVacancy.addEventListener("click",function(){
+				alert("현재 도넷닷컴은 채용중이 아닙니다.");
+			});
 			
-			$("#snstap").on('click', function(){
-				alert("준비중입니다.")
-			})
-		})
+			let snstap= document.querySelector("#snstap");
+			snstap.addEventListener("click",function(){
+				alert("준비중입니다.");
+			});
+
+	}
 	</script>
 </body>
 </html>

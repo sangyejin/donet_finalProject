@@ -226,4 +226,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ROWNUM <= 4
 	]]>
 	</select>
+	
+	<update id="updateFunding" parameterType="Funding">
+		update FUNDING_PROJECT
+		set FP_NAME=#{fpName},GOAL=#{goal},CONTENT=#{content}
+			,CATEGORY_NO=#{categoryNo},THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
+			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}
+		where FP_NO=#{fpNo}
+	</update>
+	
+	<update id="newFundingImageList"  parameterType="java.util.List">
+		MERGE INTO FUNDING_IMAGE A
+    	USING (
+    			<foreach  collection="list" item="item" open="" close="" separator="union">
+                    SELECT #{item.fpNo} AS fpNo
+                         , #{item.imgNo} AS imgNo
+                         , #{item.imgOriginName} AS imgOriginName
+                         , #{item.imgChangeName} AS imgChangeName
+                     FROM SYS.DUAL
+                </foreach>
+           ) B ON (A.IMG_NO=B.imgNo AND A.FP_NO=B.fpNo)
+   		WHEN MATCHED THEN UPDATE 
+        <set>
+        A.IMG_ORIGIN_NAME=B.imgOriginName, A.IMG_CHANGE_NAME=B.imgChangeName
+        </set>
+    	WHEN NOT MATCHED THEN INSERT 
+    	<trim prefix="(" suffix=")" suffixOverrides="," > 
+        A.FP_NO, A.IMG_NO, A.IMG_ORIGIN_NAME, A.IMG_CHANGE_NAME
+        </trim>
+        <trim  prefix="values (" suffix=")" suffixOverrides=",">
+        B.fpNo, B.imgNo, B.imgOriginName, B.imgChangeName
+        </trim>   	
+	</update>
 </mapper>

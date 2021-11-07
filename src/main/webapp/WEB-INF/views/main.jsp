@@ -343,8 +343,9 @@
 							<c:forEach var="funding" items="${fundingList}">
 								<div class="card col-md-6 col-sm-6">
 										<div class="single-cases mb-40" style="margin-bottom: 20px;">
-											<div class="cases-img" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}">
+											<div class="cases-img">
 												<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${ funding.thumbnailChangeName}" alt="${ funding.thumbnailOriginName}"
+													onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}';"
 													width="220px" height="200px"></div>
 											<div class="cases-caption">
 												<div class="cases-info">
@@ -378,8 +379,9 @@
 							<c:forEach var="goods" items="${goodsList}">
 								<div class="card col-md-6 col-sm-12">
 									<div class="single-cases mb-40">
-										<div class="cases-img"  onclick="location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo};">
+										<div class="cases-img"  >
 											<img src="${pageContext.request.contextPath}/resources/upload_files/goods/${goods.thumbnailChangeName}" alt="${goods.thumbnailOriginName }"
+														onclick="location.href='${pageContext.servletContext.contextPath}/goods/${goods.goodsNo}';"
 														width="220px" height="200px">
 										</div>
 										<div class="cases-caption">
