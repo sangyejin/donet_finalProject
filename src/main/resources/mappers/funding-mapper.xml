@@ -215,15 +215,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where FP_NO=#{fpNo}
 	</update>
 		
-	<select id="selectTopFundingList" resultMap="fundingReplyResultSet">
+	<select id="selectTopFundingList" resultMap="fundingResultSet">
 			<![CDATA[
-		select A.FP_NO ,A.FP_NAME, A.GOAL, A.RAISED 
-		from(select FP_NO ,FP_NAME, GOAL, RAISED 
+		select A.FP_NO ,A.FP_NAME, A.GOAL, A.RAISED, A.THUMBNAIL_CHANGE_NAME,A.THUMBNAIL_ORIGIN_NAME,A.START_DATE, A.CLOSING_DATE
+		from(select FP_NO ,FP_NAME, GOAL, RAISED, THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME,START_DATE, CLOSING_DATE
 				from FUNDING_PROJECT
 				where status='Y'
 				order by hits
 			) A
-		where ROWNUM < 3
+		where ROWNUM <= 4
 	]]>
 	</select>
 </mapper>

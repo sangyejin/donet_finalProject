@@ -1,6 +1,7 @@
 package com.pongsung.donet.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.member.model.vo.Member;
@@ -60,6 +61,8 @@ public interface NoticeService {
 	void updateOne(Ask ask);
 
 	void deleteOne(int askNo);
+
+	List<Notice> selectTopNoticeList();
 
 
 }

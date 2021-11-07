@@ -39,6 +39,8 @@ public interface EventService {
 
 	int deleteReply(int replyNo);
 
+	List<Event> selectTopEventList();
+
 
 
 }

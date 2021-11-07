@@ -172,13 +172,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectTopGoodsList" resultMap="goodsResultSet">
 	<![CDATA[
-		select A.GOODS_NO , A.GOODS_NAME, A.GOODS_PRICE
-		from(select GOODS_NO ,GOODS_NAME, GOODS_PRICE 
+		select A.GOODS_NO , A.GOODS_NAME, A.GOODS_PRICE, A.THUMBNAIL_CHANGE_NAME,A.THUMBNAIL_ORIGIN_NAME
+		from(select GOODS_NO ,GOODS_NAME, GOODS_PRICE , THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME
 				from goods 
 				where status='Y'
 				order by hits
 			) A
-		where ROWNUM < 3
+		where ROWNUM <= 4
 	]]>
 	</select>
 </mapper>

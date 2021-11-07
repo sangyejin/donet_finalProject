@@ -61,6 +61,8 @@ public interface DonationService {
 
 	int updatePoints(int points);
 
+	List<Support> selectTopDonationList();
+
 	
 
 	
