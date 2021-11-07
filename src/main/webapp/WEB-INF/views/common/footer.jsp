@@ -5,16 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>도넷닷컴</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
-	/*전체설정*/
+	/*전체설정*/	
+	*{margin: 0; padding: 0;}
 	
-	#topMarginDiv{margin-top : 300px; }
-	
-	 #All > *{font-size: 12px; color: gray; }
+	#All > *{font-size: 12px; color: gray; }
     
-  	#toleft > a{  text-decoration: none; color: gray; }
+  	#toleft > a{ text-decoration: none; color: gray; }
   	
-  	#All{ width: 100%; 	display : flex;  margin : 0; padding : 0; margin-bottom : 0;  /*margin-top : 1000px;*/ border-top: solid 1px rgb(244, 244, 244); }
+  	#All{ width: 100%; 	
+   			position :flex;
+  			margin : 0; 
+  			padding : 0; 
+  			margin-top : 80%; 
+  			border-top: solid 1px rgb(244, 244, 244); 
+  			height : 110px;
+  		}
+  		
+   	#footer{ width: 1050px; margin : auto; position : relative;}
+   	
 
 	/*SNS 바*/
     #snstap{  width: 335px;  height: 30px;  margin-top: -5px; }
@@ -28,7 +38,6 @@
        float: left;
        margin-left: 9%;
        margin-top: 0;
-
     }
 
     #toright{ margin-left: 14%; }
@@ -41,14 +50,12 @@
     
     #toleft> a:hover{ text-decoration: underline; }
 
-    #footer{ width: 1050px; margin : auto; margin-top : 10px; height : 100px; position : relative; }
     
     #rightMiddleFooter{margin-top : 15px; margin-bottom : 15px;}
 
 </style>
 </head>
 <body>
-	<div id="topMarginDiv"></div>
 	<div id="All">
 	<div id="footer">
 		<div id="toleft" align="left"> <a href="#">회사소개</a> | <a

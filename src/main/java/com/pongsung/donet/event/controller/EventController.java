@@ -239,6 +239,12 @@ public class EventController {
 	}
 	
 	
+	/*얼굴인식 API 이벤트*/
+	@RequestMapping("faceRecognition.ev")
+	public String faceRecognition() {
+		return "event/faceRecognition";
+	}
+	
 	/* 
 	 * =============== private ====================
 	 */
