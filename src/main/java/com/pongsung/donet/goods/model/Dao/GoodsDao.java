@@ -97,4 +97,9 @@ public class GoodsDao {
 		return sqlSession.selectList("goodsMapper.selectRequiredGoodsListByGoodsNo",goodsNo);
 	}
 
+	public List<Goods> selectTopGoodsList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("goodsMapper.selectTopGoodsList");
+	}
+
 }

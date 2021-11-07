@@ -214,5 +214,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set HITS=HITS+1
 		where FP_NO=#{fpNo}
 	</update>
-	
+		
+	<select id="selectTopFundingList" resultMap="fundingReplyResultSet">
+			<![CDATA[
+		select A.FP_NO ,A.FP_NAME, A.GOAL, A.RAISED 
+		from(select FP_NO ,FP_NAME, GOAL, RAISED 
+				from FUNDING_PROJECT
+				where status='Y'
+				order by hits
+			) A
+		where ROWNUM < 3
+	]]>
+	</select>
 </mapper>
