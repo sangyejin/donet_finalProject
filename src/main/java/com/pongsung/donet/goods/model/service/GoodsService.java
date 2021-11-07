@@ -40,4 +40,6 @@ public interface GoodsService {
 
 	List<RequiredGoods> selectRequiredGoodsListByGoodsNo(int goodsNo);
 
+	List<Goods> selectTopGoodsList();
+
 }

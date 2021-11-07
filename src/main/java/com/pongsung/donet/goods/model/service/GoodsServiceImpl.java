@@ -139,6 +139,12 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.selectRequiredGoodsListByGoodsNo(sqlSession,goodsNo);
 	}
 
+	@Override
+	public List<Goods> selectTopGoodsList() {
+		// TODO Auto-generated method stub
+		return goodsDao.selectTopGoodsList(sqlSession);
+	}
+
 
 	
 }

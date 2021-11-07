@@ -103,4 +103,9 @@ public class FundingDao {
 		return sqlSession.insert("fundingMapper.updateFundingHitsCount",fpNo);
 	}
 
+	public List<Funding> selectTopFundingList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("fundingMapper.selectTopFundingList");
+	}
+
 }

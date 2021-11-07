@@ -147,6 +147,12 @@ public class FundingServiceImpl implements FundingService {
 		}
 	}
 
+	@Override
+	public List<Funding> selectTopFundingList() {
+		// TODO Auto-generated method stub
+		return fundingDao.selectTopFundingList(sqlSession);
+	}
+
 
 
 }
