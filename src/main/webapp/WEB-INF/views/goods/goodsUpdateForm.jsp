@@ -299,7 +299,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 					<div class="div-input">
 						<label for="goodsPrice">가격</label> <input type="number"
 							placeholder="0,000,000" step="1000"
-							class="rounded-pill inputText" id="goodsPrice" readOnly
+							class="rounded-pill inputText" id="goodsPrice"
 							value="${goods.goodsPrice }"> <span>원</span>
 					</div>
 					<div class="div-input">

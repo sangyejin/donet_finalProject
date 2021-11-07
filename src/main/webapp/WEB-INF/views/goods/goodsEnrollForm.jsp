@@ -9,11 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-	
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
@@ -23,8 +18,8 @@
 <!-- include libraries(jQuery, bootstrap) --> 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
-</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <!-- CSS here -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">

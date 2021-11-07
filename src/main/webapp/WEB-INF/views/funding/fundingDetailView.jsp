@@ -561,7 +561,7 @@
 			
 			<c:if test="${loginUser.userId == funding.hostId }">
 				<div class="btnArea">
-					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" id="btn-update" value="수정">
+					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>

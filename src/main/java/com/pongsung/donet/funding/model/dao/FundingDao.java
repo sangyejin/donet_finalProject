@@ -108,4 +108,14 @@ public class FundingDao {
 		return sqlSession.selectList("fundingMapper.selectTopFundingList");
 	}
 
+	public int updateFunding(SqlSessionTemplate sqlSession, Funding funding) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("fundingMapper.updateFunding",funding);
+	}
+
+	public int newFundingImageList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("fundingMapper.newFundingImageList",imgList);
+	}
+
 }
