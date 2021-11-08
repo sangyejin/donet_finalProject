@@ -255,6 +255,7 @@
         </div>
     </div>
 </div>
+<br>
     <script>
     function selectSort(){
     	var sort = document.getElementById("selectBox");
