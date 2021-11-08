@@ -7,6 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 <style>
  *{ font-size: 12px;  }
@@ -22,47 +24,39 @@
 		}
 
 
-#greenfont1 { margin-right: 45%; }
+#greenfont1 { margin-right: 69px; }
+		#faq { margin-right: 41px;}
+		#facetoface { margin-right: 68px; color: rgb(30, 154, 40); text-decoration: none;  }
+		
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
+		
+		/*helper*/
+		.needhelp {
+			margin-top: 50px;
+			border: 1px solid rgb(244, 244, 244);
+			background-color: rgb(244, 244, 244);
+			width: 130px;
+			height: 30px;
+			border-radius: 10px;
+		}
+				#gethelp:hover{ text-decoration : underline;}
 
-#faq { margin-right: 36px; }
-
-#facetoface {
-	margin-right: 70px;
-	color: rgb(30, 154, 40);
-	text-decoration: none;
-}
-
-#greenfont1:hover #facetoface:hover { text-decoration: underline; color: #000000; }
-
-#wrap { margin-bottom: 7%; }
-
-#greenfont1, #faq, #facetoface { font-weight: bold; }
-
-/*helper*/
-#gethelp:hover { text-decoration: underline; }
-
-.needhelp {
-	margin-top: 50px;
-	border: 1px solid rgb(244, 244, 244);
-	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
-	border-radius: 10px;
-}
-
-#help {
-	font-weight: bolder;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	width: 140px;
-	margin-left: 3%;
-}
-
-#gethelp { margin-left: 3%; }
-
-#gethelp:hover { color: #000000; text-decoration: underline; }
-
-#helparrow { margin-left: 48px; margin-top: 0px; }
+		#help {
+			font-weight: bolder;
+			margin-bottom: 0px;
+			margin-top: 0px;
+			width: 140px;
+			margin-left: 3%;
+		}
+		
+		#gethelp { margin-left: 3%; }
+		#gethelp:hover{  color : #000000; text-decoration : underline;}
+		
+		#helparrow { margin-left: 48px; margin-top: 0px; }
 
 		/* main main */
         #thelist{  float: left; margin-left: 5%;  width: 710px; }
@@ -90,7 +84,7 @@
 	width: 100px;
 }
 
-#getInThere { margin-top: -605px; margin-left: 35px; }
+#getInThere { margin-top: -595px; margin-left: 35px; }
 
 /*div lines*/
 .grayline{
@@ -149,32 +143,31 @@
 		
         .biggerimg{  width: 20px;  height: 20px; }
         
-        #differ{/*img*/ margin-left: 80px; margin-top: -25px; margin-bottom: -5px}
+        #differ{/*img*/ margin-left: 80px; margin-top: -15px; margin-bottom: 15px}
 
         #aLine{ /*span*/  margin-left: 265px;  margin-top: -17.5px; }
         
         #imgLabel{margin-top : 5px;}
 
 /*radio style*/
-.radioAlign { margin-right: 20px; }
-#radioType { margin-right: 20px; }
+.radioAlign { margin-right: 20px; } #radioType { margin-right: 20px; }
 
 #radios {
 	margin-left: 80px;
-	margin-top: -15px;
-	margin-bottom: -3px;
+	margin-top: -10px;
+	margin-bottom: 10px;
 }
 
 /* img sneak*/	 	    
     #imgViewArea{ 
-    		margin-top: -36px;
+    		margin-top: -21px;
             width: 580px;
             margin-left: 80px;
             height: 440px;
             border : 1px solid rgb(206,212,218);
             border-radius : 7px;
      }
-     #asktag{height : 234px;  margin-top: 2.5px; border : none;}
+     #asktag{width : 580px; height : 234px;  margin-top: 3px; border : none; border-radius : 7px;}
      
       /*사진 전부 정사각형으로 만들기*/
      #imgArea{ border-radius : 7px; border : none; }		
@@ -251,19 +244,16 @@
 					
 					<div class="grayline"></div>
 
-					<div id="headjustify">
 						<label id="imgLabel" id="askOriginImg">사진</label>
 						<div class="clickable" id="differ">
-							<label for="askOriginImg" id="forThisImage" > <img
-								class="biggerimg"
-								src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
-								업로드된 사진은 하단에서 확인 가능합니다.
+							<label for="askOriginImg" id="forThisImage" > 
+								<img class="biggerimg" src="${ pageContext.servletContext.contextPath }/resources/imgs/imgIcon.png">
+									업로드된 사진은 하단에서 확인 가능합니다.
 							</label>
 						</div>
 						<input type="file" id="askOriginImg" name="askOriginImg"
 							hidden="true" accept="image/*">
 
-					</div>
 
 					<div class="grayline"></div>
 

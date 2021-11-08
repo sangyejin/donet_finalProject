@@ -7,33 +7,73 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
 
-}
 
 .main-container {
 	margin: 0 auto;
 	width: 1050px;
-	background-color: antiquewhite;
 	margin-bottom: 100px;
 }
 
 #top-div {
-	height: 200px;
+	clear:both;
+	padding:40px;
+	overflow: auto;
+	display: flex; 
+}
+.div-right{
+	flex:1;
+	display: table;
+	
+}
+.inner-container{
+  display: table-cell;
+    vertical-align: middle;
+}
+.categoryName{
+	font-size:20px;
+	margin-bottom:0;
+}
+.fpName{
+	margin-top:14px;
+	word-break:break-all;
+	word-wrap:break-word;
+	font-size:34px;
+}
+.dDay{
+	font-size:24px;
+}
+.content-container{
+	padding:30px;
+}
+.presentPrice {
+	font-size: 20px;
+	font-weight: 700;
+	margin: 0;
+}
+.presentName {
+	font-size: 24px;
+	margin: 0;
+}
+.presentContent {
+	font-size: 1.4em;
+	color: gray;
+	margin: 0;
+}
+.inputText {
+	border: 1px solid #e8e8e8;
+	height: 42px;
+	width: 400px;
+	padding-left: 20px;
+	margin-bottom:10px;
+	margin-top:10px;
 }
 
 .main-container hr {
@@ -52,32 +92,74 @@
 
 /*선물*/
 .fundingGoods-card {
-	border: 1px solid black;
-	padding: 10px;
-	margin: 10px;
+	border: 1px solid #c8c8c8;
+	padding: 20px;
+	margin: 0px;
 }
 
-.presentPrice {
-	font-size: 1.4em;
-	font-weight: 700;
-	margin: 0;
-}
-
-.presentName {
-	font-size: 1.4em;
-	margin: 0;
-}
-
-.presentContent {
-	font-size: 1.4em;
-	color: gray;
-	margin: 0;
-}
 /* input number의 증가감소 버튼 안보이게 */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* 총 후원 */
+.total{
+	text-align:center;
+	font-size:40px;
+}
+.total span{
+	font-size:40px;
+}
+.addSupport-container p, .addSupport-container p span {
+	font-size:16px;
+	margin-top:10px;
+}
+/* 버튼 */
+#btnArea{
+	margin-top:50px;
+	text-align:center;
+}
+#btn-support {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	color: white;
+	font-weight: 600;
+	background-color: rgb(60, 179, 113);
+	transition: all 0.5s;
+	border: 1px solid rgb(60, 179, 113);
+}
+
+#btn-support:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color: rgb(60, 179, 113);
+	font-weight: 600;
+	background-color: white;
+}
+#btn-back {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	color: rgb(60, 179, 113);
+	font-weight: 600;
+	background-color:  white;
+	transition: all 0.5s;
+	border: 1px solid rgb(60, 179, 113);
+}
+
+#btn-back:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color:white;
+	font-weight: 600;
+	background-color:  rgb(60, 179, 113);
+}
+
+#support-div{
+	padding: 10px 10px 10px 20px;
+	border:1px solid #e8e8e8;
+	margin-top:10px;
 }
 </style>
 </head>
@@ -101,10 +183,12 @@ input[type="number"]::-webkit-inner-spin-button {
 				<div class="col-md-4">
 					<div id="thumb-img-container"></div>
 				</div>
-				<div class="col-md-offset-1 col-md-7">
-					<p>${funding.categoryName}</p>
-					<p>${funding.fpName}</p>
-					<p>마감까지 ${closeDate-nowDate }일</p>
+				<div class="col-md-offset-1 col-md-7 div-right">
+					<div class="inner-container">
+					<p class="categoryName">${funding.categoryName}</p>
+					<p class="fpName">${funding.fpName}</p>
+					<p class="dDay">마감까지 ${closeDate-nowDate}일</p>
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -129,8 +213,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					<label for="addSupport-container">추가 후원하기</label>
 					<div class="addSupport-container">
 						<input name="addPrice" id="addPrice" type="number"
-							placeHolder="0,000,000"><span>원</span>
-						<button type="button" id="btn-setting">입력</button>
+							placeHolder="0,000,000" class="rounded-pill inputText" onchange="changeInput();"><span style="font-size: 16px;">원</span>
 					</div>
 				</div>
 				<div class="content-container">
@@ -138,38 +221,42 @@ input[type="number"]::-webkit-inner-spin-button {
 					<div class="addSupport-container">
 						<div class="inputArea">
 							<label for="takeName"></label><input name="takeName" type="text"
-								placeHolder="이름을 입력해주세요.">
+								 class="rounded-pill inputText" placeHolder="이름을 입력해주세요.">
 						</div>
 						<div class="inputArea">
 							<label for="takePostCode"></label><input name="takePostCode"
-								type="text" placeHolder="우편번호를 입력해주세요">
+								type="text" class="rounded-pill inputText"  placeHolder="우편번호를 입력해주세요">
 						</div>
 						<div class="inputArea">
 							<label for="takeAddress"></label><input name="takeAddress"
-								type="text" placeHolder="주소를 입력해주세요.">
+								type="text" class="rounded-pill inputText"  placeHolder="주소를 입력해주세요.">
 						</div>
 						<div class="inputArea">
 							<label for="takePhone"></label><input name="takePhone"
-								type="text" placeHolder="전화번호를 입력해주세요.">
+								type="text"  class="rounded-pill inputText" placeHolder="전화번호를 입력해주세요.">
 						</div>
+					</div>
+				</div>
+				<div class="content-container">
+				<label for="addSupport-container">잔여 포인트</label>
+					
+					<div id="support-div">
+					<div class="addSupport-container">
+						<p>
+							<span>${loginUser.point}</span> point
+						</p>
+						<p id="message"></p>
+					</div>
 					</div>
 				</div>
 				<hr>
 				<div>
-					<p>
-						총 <span id="totalSupport"></span>원 후원하기
-					</p>
+					<div class="total">
+						총 <span id="totalSupport">0</span>원 후원하기
+					</div>
 					<input type="hidden" name="fpPrice" id="hiddenPrice">
 				</div>
-				<div class="content-container">
-					<label for="support-info-container">후원</label>
-					<div class="addSupport-container">
-						<p id="">
-							잔여 포인트 : <span>${loginUser.point}</span>
-						</p>
-						<p id="message"></p>
-					</div>
-				</div>
+				
 				<div id="btnArea">
 					<button id="btn-support" type="button">후원하기</button>
 					<button id="btn-back" type="button">목록으로 돌아가기</button>
@@ -179,14 +266,14 @@ input[type="number"]::-webkit-inner-spin-button {
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 	<script>
+	function changeInput(){
+		var temp=document.getElementById("tempPrice").value;
+		var addPrice=document.getElementById("addPrice").value;
+		$("#totalSupport").text(Number(temp)+Number(addPrice));
+		$("#hiddenPrice").val(Number(temp)+Number(addPrice));
+	};
 		$(function(){
-			$("#btn-setting").click(function(){
-				var temp=document.getElementById("tempPrice").value;
-				var addPrice=document.getElementById("addPrice").value;
-				$("#totalSupport").text(Number(temp)+Number(addPrice));
-				$("#hiddenPrice").val(Number(temp)+Number(addPrice));
-			});
-			
+
 			$("#btn-support").click(function(){
 				console.log($("#totalSupport").text());
 				console.log(Number("${loginUser.point}"),Number($("#totalSupport").text()),Number("${loginUser.point}")<Number($("#totalSupport").text()));
@@ -215,8 +302,29 @@ input[type="number"]::-webkit-inner-spin-button {
 			$("#hiddenPrice").val(tempPrice);
 			console.log(event.target);
 			$(".fundingGoods-card").css("background-color","");
-			event.currentTarget.style.background="#c7c7c7";
+			event.currentTarget.style.background="#e8e8e8";
 		}
 	</script>
+	<!-- Jquery Mobile Menu -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
+
+
+	<!-- Nice-select, sticky -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
+
+
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.pongsung.donet.goods.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.goods.model.service.GoodsService;
 import com.pongsung.donet.goods.model.vo.Beneficiary;
+import com.pongsung.donet.goods.model.vo.BeneficiaryList;
 import com.pongsung.donet.goods.model.vo.FilterOrder;
 import com.pongsung.donet.goods.model.vo.Goods;
 import com.pongsung.donet.goods.model.vo.GoodsCategory;
@@ -201,19 +203,45 @@ public class GoodsController {
 	public String updateGoodsForm(@PathVariable("goodsNo") int goodsNo, Model model) {
 		Goods goods=goodsService.selectGoods(goodsNo);
 		List<GoodsCategory> goodsCategoryList= goodsService.selectGoodsCategoryList();
-		goods.setContent( goods.getContent().replace("<br>", "\n") );
+		List<Beneficiary> oldBeneficiaryList= goodsService.selectBeneficiaryListByGoodsNo(goodsNo);
+		List<Beneficiary> beneficiaryList= goodsService.selectBeneficiaryList();
+		
 		model.addAttribute("goods", goods);
+		model.addAttribute("beneficiaryList",beneficiaryList);
+		model.addAttribute("oldBeneficiaryList", oldBeneficiaryList);
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		return "goods/goodsUpdateForm";
 	}
 	
 	//구호물품 게시글 수정
 	@RequestMapping(value="goods/{goodsNo}/update")
-	public String updateGoods(@PathVariable("goodsNo") int goodsNo,Goods goods
+	public String updateGoods(@PathVariable("goodsNo") int goodsNo,Goods goods,@ModelAttribute RequiredGoodsList rgList
 			 ,HttpServletRequest request,@RequestParam(name="thumbFile",required=false) MultipartFile file
 			 , Model model) {
-		goods.setContent(goods.getContent().replace("\n", "<br>"));
+		List<RequiredGoods> oldBeneficiaryList= goodsService.selectRequiredGoodsListByGoodsNo(goodsNo);
+		List<RequiredGoods> newBeneficiaryList= rgList.getRequiredGoods();
 		
+		for(int i=0; i<newBeneficiaryList.size();i++) {
+			newBeneficiaryList.get(i).setGoodsNo(goodsNo);
+		}
+
+		
+		//후원처 변경 
+		List<RequiredGoods> temp= new ArrayList<>();
+		temp.addAll(newBeneficiaryList); //리스트 복사
+		temp.retainAll(oldBeneficiaryList); //이전것과 현재의것 교집합
+		newBeneficiaryList.removeAll(temp); //새로추가된것만 있는 리스트
+		oldBeneficiaryList.removeAll(temp); //삭제된것만 있는 리스트
+		logger.info("updateGoods ::: 삭제될 후원처 : "+oldBeneficiaryList);
+		logger.info("updateGoods ::: 추가될 후원처 : "+newBeneficiaryList);
+		if(!oldBeneficiaryList.isEmpty()) {
+			goodsService.deleteOldequiredGoods(oldBeneficiaryList);
+		}
+		if(!newBeneficiaryList.isEmpty()) {
+			goodsService.insertNewRequiredGoods(newBeneficiaryList);	
+		}
+		
+		// 섬네일 파일 변경 
 		if(!file.getOriginalFilename().equals("")) {
 			if(goods.getThumbnailChangeName()!=null) {
 				deleteFile(goods.getThumbnailChangeName(),request);
@@ -223,8 +251,9 @@ public class GoodsController {
 			goods.setThumbnailOriginName(file.getOriginalFilename());
 			goods.setThumbnailChangeName(changeName);
 		}
-		
+
 		goodsService.updateGoods(goods);
+		
 		return "redirect:/goods/"+goodsNo;
 	}
 	
@@ -265,7 +294,7 @@ public class GoodsController {
 	@RequestMapping(value="goods/{goodsNo}/support")
 	public String supportGoodsForm(@PathVariable("goodsNo") int goodsNo, Model model) {
 		Goods goods =goodsService.selectGoods(goodsNo);
-		List<Beneficiary> beneficiaryList = goodsService.selectBeneficiaryList();
+		List<Beneficiary> beneficiaryList = goodsService.selectBeneficiaryListByGoodsNo(goodsNo);
 		
 		model.addAttribute("goods", goods);
 		model.addAttribute("beneficiaryList", beneficiaryList);
@@ -279,8 +308,8 @@ public class GoodsController {
 		logger.info("insertGoodsPurchase :: goodsPurchase ::"+goodsPurchase);
 		goodsService.insertGoodsPurchase(goodsPurchase);
 		
-		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
-		//model.addAttribute("loginUser", loginUser);
+		Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+		model.addAttribute("loginUser", loginUser);
 		return "redirect:/goods/"+goodsNo+"/complete";
 	}
 	

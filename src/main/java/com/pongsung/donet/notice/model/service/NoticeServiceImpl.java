@@ -1,6 +1,7 @@
 package com.pongsung.donet.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +194,11 @@ public class NoticeServiceImpl implements NoticeService {
 		if(result < 0) {
 			throw new CommException("문의 삭제 실패");
 		}
+	}
+
+	@Override
+	public List<Notice> selectTopNoticeList() {
+		return NoDao.selectTopNoticeList(sqlSession);
 	}
 
 }

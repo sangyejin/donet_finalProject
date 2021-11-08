@@ -32,4 +32,14 @@ public interface GoodsService {
 
 	void insertGoodsPurchase(GoodsPurchase goodsPurchase);
 
+	List<Beneficiary> selectBeneficiaryListByGoodsNo(int goodsNo);
+
+	void insertNewRequiredGoods(List<RequiredGoods> insertRequiredBeneficiary);
+
+	void deleteOldequiredGoods(List<RequiredGoods> deleteRequiredBeneficiary);
+
+	List<RequiredGoods> selectRequiredGoodsListByGoodsNo(int goodsNo);
+
+	List<Goods> selectTopGoodsList();
+
 }

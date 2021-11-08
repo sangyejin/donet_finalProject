@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,30 +9,40 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
+
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
 
-<!-- 부트스트랩 	-->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- include libraries(jQuery, bootstrap) --> 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+<!-- CSS here -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
+
+
+<!-- CDN 파일 summernote css/js --> 
+<!-- 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+ -->
+<!-- CDN 한글화 --> 
+ <!-- 
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+ -->
+<!-- Summernote -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
-
-#fpName {
-	width: 800px;
-}
 
 .div-fpName {
 	text-align: center;
@@ -42,18 +53,18 @@
 	/* margin: 20px; */
 }
 
-#insertForm {
+#updateForm {
 	text-align: center;
-	width: 800px;
+	width: 1050px;
 	margin: auto;
 }
 
 label {
-	display: block;
+	display: block !important;
 }
 
 #content {
-	width: 800px;
+	width: 1050px;
 	height: 700px;
 }
 
@@ -63,19 +74,12 @@ label {
 	border: 1px solid rgb(85, 85, 85);
 }
 
-#category {
-	height: 40px;
-	border-radius: 4px;
-	width: 370px;
-	border: 1px solid rgb(85, 85, 85);
-}
-
 #goal {
 	width: 350px;
 }
 
 #startDate, #closeDate {
-	width: 165px;
+	width: 244px;
 }
 
 .div-input, #content {
@@ -97,10 +101,12 @@ tbody tr td, thead tr th {
 
 .btnArea {
 	margin-bottom: 100px;
+	clear:both; 
 }
 
 .div-content {
-	padding: 20px 0 20px 0;
+	padding-top: 0;
+
 }
 
 .div-left {
@@ -116,27 +122,26 @@ tbody tr td, thead tr th {
 }
 
 .div-contentImg {
-	width: 100px;
-	height: 100px;
+	width: 30%;
+	height: 100%;
 	display: inline-block;
-	border: 1px solid rgb(85, 85, 85);
+	border: 1px solid #c8c8c8;
 	padding: 0;
-	margin-left: 17.5px;
-	margin-right: 17.5px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .group-img {
 	margin: auto;
 	padding: 0;
-	width: 370px;
-	height: 120px;
-	width: 370px
+	width: 100%;
+	height: 160px;
 }
 
 .div-thumbImg {
 	margin-left: 0;
-	width: 340px;
-	height: 340px;
+	width: 500px;
+	height: 500px;
 	padding: 0;
 }
 /* input number의 증가감소 버튼 안보이게 */
@@ -145,62 +150,96 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+#category+.nice-select ,#category+.nice-select>.list{
+	float: none;
+	display: block;
+	width:100%;
+}
+.inputText {
+	border: 1px solid #e8e8e8;
+	height: 42px;
+	width: 400px;
+	padding-left: 20px;
+}
+#fpName {
+	width: 1050px;
+}
+#div-fpName,#div-content{
+	margin-bottom:50px;
+}
+.label-text{
+	margin-top:0.8em;
+}
+#paymentDate{
+	width:100%;
+}
+#goal{
+	width:500px;
+}
 </style>
 
-<!-- 제이쿼리 -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+
 </head>
 
 <body>
+	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
-		<form id="insertForm" action="insert" method="post"
-			enctype="multipart/form-data">
+		<form id="updateForm" action="update" method="post"
+enctype="multipart/form-data">
 			<div class="div-fpName">
-				<label for="fpName" style="display: block;">펀딩 프로젝트 제목</label> <input
-					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
+				<label for="fpName" style="display: block;" class="label-text">펀딩 프로젝트 제목</label> <input
+					type="text" class="inputText" placeholder="제목을 입력하세요" id="fpName" name="fpName" value="${funding.fpName }" required>
 			</div>
 			<div class="div-content">
 				<div class="div-left col-lg-6 col-xs-12">
-					<label for="thumbImg">대표 사진</label>
+					<label for="thumbImg" class="label-text">대표 사진</label>
 					<div class="div-thumbImg" id="thumbImg">
-						<img id="img0" width="370px" height="340px">
+						<img id="img0" width="500px" height="500px" src="${pageContext.request.contextPath}/resources/upload_files/funding/${funding.thumbnailChangeName}">
 					</div>
 				</div>
-				<div class="div-right col-lg-6 col-xs-12">
+				<div class="div-right col-lg-6 col-xs-12" style="padding-left: 0px; padding-right: 0px;">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="categoryNo"
+						<label for="cateogry" class="label-text">카테고리</label> <select name="categoryNo"
 							id="category">
 							<c:forEach var="category" items="${category}">
-								<option value="${category.categoryNo}">${category.categoryName}</option>
+								<c:choose>
+								<c:when test="${funding.categoryNo eq category.categoryNo}">
+									<option value="${category.categoryNo}" selected>${category.categoryName}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${category.categoryNo}">${category.categoryName}</option>
+								</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goal">목표 금액</label> <input type="number"
-							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
+						<label for="goal" class="label-text">목표 금액</label> <input type="text"class="inputText" 
+							placeholder="0,000,000" id="goal" name="goal" value="${funding.goal }" readonly> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="startDate">펀딩 기간</label> <input type="Date"
-							placeholder="0000-00-00" id="startDate" name="startDate" disabled>
-						<span style="margin: 0 10px;">~</span> <input type="Date"
-							placeholder="0000-00-00" id="closeDate" name="closeDate" disabled>
+						<label for="startDate" class="label-text">펀딩 기간</label> <input type="Date" class="inputText" 
+							placeholder="0000-00-00" id="startDate" name="startDate" value="${funding.startDate }" readonly>
+						<span style="margin: 0 10px;">~</span> <input type="Date" class="inputText" 
+							placeholder="0000-00-00" id="closeDate" name="closeDate"  value="${funding.closeDate }" readonly>
 					</div>
 					<div class="div-input">
-						<label for="">결제 예정 날짜</label> <input type="Date"
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate" disabled>
+						<label for="" class="label-text">결제 예정 날짜</label> <input type="Date" class="inputText" 
+							placeholder="0000-00-00" id="paymentDate" name="paymentDate" value="${funding.paymentDate }" readonly>
 					</div>
 					<div class="div-input">
-						<label for="">추가사진</label>
-						<div class="group-img container-fluid">
+						<label for="" class="label-text">추가사진</label>
+						<div class="group-img">
 							<div class="div-contentImg col-xs-4" id="contentImg1">
-								<img class="contentImg" width="100px" id="img1">
+								<img class="contentImg"  id="img1">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg2">
-								<img class="contentImg" width="100px" id="img2">
+								<img class="contentImg" id="img2">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg3">
-								<img class="contentImg" width="100px" id="img3">
+								<img class="contentImg" id="img3">
 							</div>
 						</div>
 					</div>
@@ -208,12 +247,12 @@ input[type="number"]::-webkit-inner-spin-button {
 			</div>
 
 			<div class="div-content col-xs-12"
-				style="width: 800px; margin: auto;">
-				<label for="content">내용</label>
-				<textarea name="content" id="content" cols="140" rows="10"
-					style="resize: none;" required></textarea>
-				<label for="present">선물 <input id="btnInsertPresent"
-					class="btn btn-default" type="button" value="+"></label>
+				style="width: 1050px;margin: auto;padding-left: 0px;">
+				<label for="content" class="label-text">내용</label>
+			
+  				<textarea id="content" name="content" placeholder="">${funding.content}</textarea>
+
+				<label for="present">선물 </label>
 				<table id="tablePresent" class="table table-hover">
 					<thead>
 						<tr>
@@ -221,48 +260,39 @@ input[type="number"]::-webkit-inner-spin-button {
 							<th scope="col">이름</th>
 							<th scope="col">가격</th>
 							<th scope="col">내용</th>
-							<th scope="col">삭제</th>
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach var="f" items="${fundingGoodsList}" varStatus="status">
 						<tr>
-							<td style="vertical-align: middle">1
-								<input type='hidden' name='fgNo' value="1">
-							</td>
-							<td>
-							<input class='input-text' type='text' name='fgName' required>
-							</td>
-							<td>
-							<input class='input-text' type='text' name='fgPrice' required>
-							</td>
-							<td>
-							<input class='input-text' type='text' name='fgContent' required>
-							</td>
-							<td>
-							<button class="btn btn-default btnDeletePresent btn-delete" data-action="delete">-</button>
-							</td>
+							<td style="vertical-align: middle">${status.count }</td>
+							<td>${f.fgName}</td>
+							<td>${f.fgPrice}</td>
+							<td>${f.fgContent}</td>
 						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 
 			<div class="btnArea">
-				<button type="submit" id="btn-insert" class="btn btn-success">등록하기</button>
-				<button type="button" id="btn-back" class="btn btn-default">돌아가기</button>
+				<button type="submit" id="btn-update" class="btn btn-success">수정</button>
+				<button type="button" id="btn-delete" class="btn btn-default">삭제</button>
 			</div>
 
 
 			<div id="fileArea">
-				<input type="file" name="thumbFile" id="thumbFile"
-					onchange="loadImg(this, 0);"> <input type="file"
-					name="file1" id="file1" onchange="loadImg(this, 1);"> <input
-					type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
-				<input type="file" name="file3" id="file3"
-					onchange="loadImg(this, 3);">
+				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 1);"> 
+					<input type="file"name="file1" id="file1" onchange="loadImg(this, 2);"> 
+					<input type="file" name="file2" id="file2" onchange="loadImg(this, 3);">
+				<input type="file" name="file3" id="file3" onchange="loadImg(this, 4);">
+			</div>
+			<div id="imgArea" style="display:none;">
+				
 			</div>
 		</form>
 	</div>
-
+<jsp:include page="../common/footer.jsp" />
 	<script>
         $(function () {
             $("#fileArea").hide();
@@ -282,39 +312,33 @@ input[type="number"]::-webkit-inner-spin-button {
             });
             
             
-    		$("#btn-back").click(function(){
-    			location.href="${pageContext.servletContext.contextPath}/funding";
+    		$("#btn-delete").click(function(){
+    			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/delete";
     		});
-    		$("#btn-insert").click(function(){
-    			$("#tablePresent tbody tr").each( function (index) {
-    		        $(this).find("input[name=fgNo]").attr("name", "fundingGoods[" + index + "].fgNo");
-    		        $(this).find("input[name=fgName]").attr("name", "fundingGoods[" + index + "].fgName");
-    		        $(this).find("input[name=fgContent]").attr("name", "fundingGoods[" + index + "].fgContent");
-    		        $(this).find("input[name=fgPrice]").attr("name", "fundingGoods[" + index + "].fgPrice");
-    		        console.log(index);
-    		    });
-    			$("#insertForm").submit();
+    		$("#btn-update").click(function(){
+    			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/update";
     		});
 
         });
 
         function loadImg(inputFile, num) {
+        	console.log(inputFile.files.length );
             if (inputFile.files.length == 1) { //파일 존재하면
                 var reader = new FileReader();
                 reader.readAsDataURL(inputFile.files[0]);
 				console.log(inputFile.files[0]);
                 reader.onload = function (e) {
                     switch (num) {
-                        case 0:
+                        case 1:
                             $("#img0").attr("src", e.target.result);
                             break;
-                        case 1:
+                        case 2:
                             $("#img1").attr("src", e.target.result);
                             break;
-                        case 2:
+                        case 3:
                             $("#img2").attr("src", e.target.result);
                             break;
-                        case 3:
+                        case 4:
                             $("#img3").attr("src", e.target.result);
                             break;
                     }
@@ -322,44 +346,73 @@ input[type="number"]::-webkit-inner-spin-button {
             }
         }
         
-        //선물 항목에서 + 버튼 누르면 row 추가
-        $('#btnInsertPresent').click(function () {
-            const table = document.getElementById('tablePresent');
-            const totalRowCnt = table.rows.length;
-            const len = String(table.tBodies[0].rows.length + 1);
-           	
-            var html = `<tr>
-            			<td name='tdFgNo' style='vertical-align:middle'>`+len+`<input class='input-text' type='hidden' name='fgNo' value=`+len+`>
-            			</td><td><input class='input-text' type='text' name='fgName' required></td>
-                    	<td><input class='input-text' type='text' name='fgPrice' required></td>
-                    	<td><input class='input-text' type='text' name='fgContent' required></td>
-                    	<td><button class='btn btn-default btnDeletePresent btn-delete' data-action='delete'>-</button></td>
-                		</tr>`;
-              
-            $("#tablePresent tbody").append(html);
-            
-        })
+		$("#content").summernote({
+			placeholder: '',
+			height: 500, 
+			width: 1050,
+	    	minHeight: null,            
+	    	maxHeight: null,            
+	    	focus: true,           
+	    	disableResizeEditor: true,
+	    	toolbar: [
+	              ['style', ['style']],
+	              ['font', ['bold', 'underline', 'clear']],
+	              ['color', ['color']],
+	              ['para', ['ul', 'ol', 'paragraph']],
+	              ['table', ['table']],
+	              ['insert', ['link', 'picture', 'video']],
+	              ['view', ['fullscreen', 'codeview', 'help']]
+	            ],
+	   		callbacks: {
+	    		onImageUpload: function(files, editor, welEditable){
+		    		for(var i = files.length - 1; i>=0; i--){
+		    			sendFile(files[i],this);	  
+		    		}	
+	    		}
+	   			}
+		});
 	
-        //선물 항목에서 - 버튼 누르면 해당 row 삭제
-        $('#tablePresent').on('click', function (event) {
-            const totalRowCnt = document.getElementById('tablePresent').rows.length;
-            if (event.target.tagName != 'BUTTON') return false; //-버튼누른게 아니면 return
-            if (totalRowCnt <= 2) return false; //행이 한줄 이하면 return; 무조건 한줄이상이게 만들기위해서
-            
-            event.target.parentElement.parentElement.remove();
-
-            const table = document.getElementById('tablePresent');
-            console.log((document.getElementsByName("fgNo")));
-            for (let i = 1; i < totalRowCnt - 1; i++) { //순번 재정렬 (삭제로 인한 빠진 순번 정리)
-                table.rows[i].cells[0].innerHTML = i+`<input class='input-text' type='hidden' name='fgNo' value=`+i+`>`;
-				
-                (document.getElementsByName("fgNo"))[i-1]=i;
- 
-            }
-
-        });
-
+	
+	function sendFile(file, el){
+			var data = new FormData();
+			data.append("file", file);	
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "contentFile",
+				cache : false,
+				contentType : false,
+				processData : false,
+				enctype : "multipart/form-data",
+				success : function(data){
+					$(el).summernote('editor.insertImage', '${pageContext.request.contextPath}/'+data.url);
+					console.log(data.url);
+				}
+			});
+		}
+        
     </script>
+	<!-- Jquery Mobile Menu -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
+
+
+	<!-- Nice-select, sticky -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
+
+
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 </body>
 
 </html>

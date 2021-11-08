@@ -109,6 +109,42 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 	}
 
+	@Override
+	public List<Beneficiary> selectBeneficiaryListByGoodsNo(int goodsNo) {
+		// TODO Auto-generated method stub
+		return goodsDao.selectBeneficiaryListByGoodsNo(sqlSession,goodsNo);
+	}
+
+	@Override
+	public void insertNewRequiredGoods(List<RequiredGoods> insertRequiredBeneficiary) {
+		// TODO Auto-generated method stub
+		int result=goodsDao.insertNewRequiredGoods(sqlSession,insertRequiredBeneficiary);
+		if(result<0) {
+			throw new CommException("구호물품 삭제 실패");		
+		}
+	}
+
+	@Override
+	public void deleteOldequiredGoods(List<RequiredGoods> deleteRequiredBeneficiary) {
+		// TODO Auto-generated method stub
+		int result=goodsDao.deleteOldequiredGoods(sqlSession,deleteRequiredBeneficiary);
+		if(result<0) {
+			throw new CommException("구호물품 삭제 실패");		
+		}
+	}
+
+	@Override
+	public List<RequiredGoods> selectRequiredGoodsListByGoodsNo(int goodsNo) {
+		// TODO Auto-generated method stub
+		return goodsDao.selectRequiredGoodsListByGoodsNo(sqlSession,goodsNo);
+	}
+
+	@Override
+	public List<Goods> selectTopGoodsList() {
+		// TODO Auto-generated method stub
+		return goodsDao.selectTopGoodsList(sqlSession);
+	}
+
 
 	
 }

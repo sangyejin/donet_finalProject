@@ -21,37 +21,29 @@
 			margin-top: 0;
 		}
 
-#greenfont1 { margin-right: 45%; }
-
-#faq {
-	margin-right: 36px;
-	color: rgb(30, 154, 40);
-	text-decoration: none;
-}
-
-#facetoface { margin-right: 70px; }
-
-#greenfont1:hover #facetoface:hover {
-	text-decoration: underline;
-	color: #000000;
-}
-
-#wrap { margin-bottom: 7%; }
-
-#greenfont1, #faq, #facetoface { font-weight: bold; }
-
-/*helper*/
-		#gethelp:hover{ text-decoration : underline;}
+	#greenfont1 { margin-right: 69px; }
+		#faq { margin-right: 41px; color: rgb(30, 154, 40); }
+		#facetoface { margin-right: 68px; }
 		
+		#faq:hover {text-decoration: none;}
+		#facetoface:hover{ text-decoration : underline;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
+		
+		/*helper*/
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
 			background-color: rgb(244, 244, 244);
-			width: 140px;
-			height: 40px;
+			width: 130px;
+			height: 30px;
 			border-radius: 10px;
 		}
 		
+				#gethelp:hover{ text-decoration : underline;}
+
 		#help {
 			font-weight: bolder;
 			margin-bottom: 0px;
@@ -79,12 +71,12 @@
 	width: 100px;
 }
 
-     #getInThere{ margin-top: -540px;  margin-left: 35px; }
+     #getInThere{ margin-top: -530px;  margin-left: 35px; }
 
 /*div lines*/
 .grayline{
-            margin-top: 2%;
-            margin-bottom: 2%;
+            margin-top: 10px;
+            margin-bottom: 20px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
@@ -92,7 +84,7 @@
             background-color: grey;
         }
          
-   #greenline{ margin-top: 4px; margin-bottom: 0; width: 710px; height: 1px; border : 1px solid rgb(30, 154, 40); background-color: rgb(30, 154, 40);}
+#greenline{ margin-top: 4px; margin-bottom: 0; width: 710px; height: 1px; border : 1px solid rgb(30, 154, 40); background-color: rgb(30, 154, 40);}
         
         
  #whole{  width: 1050px;  margin: auto; }
@@ -137,7 +129,7 @@
         }
 
 #faqAnswered { 
-    		margin-top: -25px;
+    		margin-top: -15px;
             width: 580px;
             margin-left: 80px;
             height: 440px;
@@ -234,7 +226,7 @@
 				<button class="goRound" onclick="backToList();">목록</button>
 			</div>
 		</div>
-
+	<br>
 			<jsp:include page="../../common/footer.jsp" />
 		
 		<script>

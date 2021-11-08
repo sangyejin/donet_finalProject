@@ -9,11 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-	
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
@@ -23,8 +18,8 @@
 <!-- include libraries(jQuery, bootstrap) --> 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
-</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <!-- CSS here -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
@@ -46,9 +41,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 	
 <style>
-* {
-	font-size: 14px !important;
-}
+
 #goodsName {
 	width: 1050px;
 }
@@ -164,7 +157,7 @@ tbody tr td, thead tr th {
 .div-thumbImg {
 	margin-left: 0;
 	width: 500px;
-	height: 500px;
+	height: 450px;
 	padding: 0;
 }
 .inputText {
@@ -223,19 +216,19 @@ tbody tr td, thead tr th {
 .label-text{
 	margin-top:0.8em;
 }
-#img0{
+#img0 {
 	border: 1px solid #e8e8e8;
-	height:450px;
-	width:500px;
+	height: 500px;
+	width: 500px;
 }
-#beneDiv{
-	margin-top:0.8em;
-	overflow:scroll;
-	overflow-x:hidden;
-	width:510px;
-	height:214px;
-	margin-bottom:0;
-	
+
+#beneDiv {
+	margin-top: 2em;
+	overflow: scroll;
+	overflow-x: hidden;
+	width: 510px;
+	height: 256px;
+	margin-bottom: 0;
 }
 /* input number의 증가감소 버튼 안보이게 */
 input[type="number"]::-webkit-outer-spin-button,
@@ -279,7 +272,7 @@ input[type="number"]::-webkit-inner-spin-button {
 						<input type="number" placeholder="0,000,000" step="1000" class="rounded-pill inputText"  id="goodsPrice" name="goodsPrice" required> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="cateogry" class="label-text">후원처 추가</label> 
+						<label for="cateogry" class="label-text">후원처</label> 
 						<div style="height:42px;">
 						<select name="addBeneficiary" id="addBeneficiary">
 							<c:forEach var="beneficiary" items="${beneficiaryList}">
@@ -311,7 +304,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			</div>
 
 			<div class="div-content col-xs-12"
-				style="width: 800px; margin: auto;">
+				style="width:100%; margin: auto;">
 				<label for="content" class="label-text" >내용</label>
 				<textarea id="content" name="content" placeholder=""></textarea>
 				
@@ -333,6 +326,21 @@ input[type="number"]::-webkit-inner-spin-button {
 	<jsp:include page="../common/footer.jsp" />
 
 	<script>
+    $('#beneficiaryTable').on('click', function (event) {
+        const totalRowCnt = document.getElementById('beneficiaryTable').rows.length;
+        if (event.target.tagName != 'BUTTON') return false; //-버튼누른게 아니면 return
+        if (totalRowCnt <= 2) return false; //행이 한줄 이하면 return; 무조건 한줄이상이게 만들기위해서
+        
+        event.target.parentElement.parentElement.remove();
+
+        const table = document.getElementById('beneficiaryTable');
+        for (let i = 1; i < totalRowCnt - 1; i++) { //순번 재정렬 (삭제로 인한 빠진 순번 정리)
+            table.rows[i].cells[0].innerHTML = i;
+			
+            (document.getElementsByName("fgNo"))[i-1]=i;
+
+        }
+    });
 		$("#btnInsertBeneficiary").click(function(){
 			const bene=$("#addBeneficiary").val();
 			const splitData=bene.split(",");

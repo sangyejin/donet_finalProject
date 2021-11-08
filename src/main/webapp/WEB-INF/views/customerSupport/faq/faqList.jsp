@@ -9,6 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <style>
        * {font-size: 10px;}
 
@@ -21,26 +23,24 @@
 			float: left;
 			margin-top: 0;
 		}
-		#greenfont1 { margin-right: 45%;}
 		
-		#faq { margin-right: 36px; color: rgb(30, 154, 40); text-decoration: none; }
-		#facetoface { margin-right: 70px; }
-		
-		#greenfont1:hover #facetoface:hover{ text-decoration : underline; color : #000000;}
+		#greenfont1 { margin-right: 69px; }
+		#faq { margin-right: 41px; color: rgb(30, 154, 40); text-decoration: none; }
+		#facetoface { margin-right: 68px; }
+		#faq:hover {text-decoration: none;}
+		#greenfont1:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 		
 		#wrap { margin-bottom: 7%; }
 		
 		#greenfont1, #faq, #facetoface { font-weight: bold; }
 		
 		/*helper*/
-		#gethelp:hover{ text-decoration : underline;}
-		
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
 			background-color: rgb(244, 244, 244);
-			width: 140px;
-			height: 40px;
+			width: 130px;
+			height: 30px;
 			border-radius: 10px;
 		}
 		
@@ -143,10 +143,7 @@
 
         #rightmargin{ margin-right: 5%; }
 
-        pre{ 
-            margin-left: -100px;
-            text-align: left;
-        }
+        pre{  margin-left: -100px; text-align: left;}
 
 /*searchbox*/
 #searchbox {
@@ -161,7 +158,7 @@
 #searchmark {
 	width: 30px;
 	height: 25px;
-	margin-top:-1px;
+	margin-top:0px;
 	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
@@ -191,12 +188,9 @@
 }
 
 		
-			/*admin*/
-			#administratorOption>button { width: 50px; height: 20px; }
-			
-			#administratorLabel { font-weight: bold; margin-right: 52px; }
-			
-			#administratorOption{margin-left : 262px;}
+/*admin*/
+#administratorOption>button { width: 50px; height: 20px; }
+#administratorLabel { font-weight: bold; margin-right: 45px; margin-left : 262px;}
 			
 		        
         /*head*/
@@ -209,6 +203,9 @@
         <c:if test="${ loginUser.userRole eq 'D' }">
         .hidFirst:hover{background-color: rgba(232, 240, 214, 0.5);}	 
     	</c:if>
+    	
+    	/*pagination*/
+.pagination{margin-top : 10px;}
         
     </style>
 
@@ -284,8 +281,7 @@
            </table>
 
 
-           <div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -327,9 +323,7 @@
 							</button>
 						</c:otherwise>
 					</c:choose>
-				</ul>
-			</div>
-			
+				</ul>			
 			  
            <div id="grayline"></div>
            
@@ -356,7 +350,7 @@
 			</div>
 			</form>
     </div>
-	<!-- admin menu -->
+    <!-- admin menu -->
 			<c:if test="${ loginUser.userRole eq 'D' }">
 				<div id="administratorOption">
 					<label id="administratorLabel">관리자</label>
@@ -364,6 +358,7 @@
 				</div>
 			</c:if>
 </div>
+
 
 			
 			

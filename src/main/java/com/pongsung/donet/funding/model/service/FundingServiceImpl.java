@@ -147,6 +147,28 @@ public class FundingServiceImpl implements FundingService {
 		}
 	}
 
+	@Override
+	public List<Funding> selectTopFundingList() {
+		// TODO Auto-generated method stub
+		return fundingDao.selectTopFundingList(sqlSession);
+	}
+
+	@Override
+	public void updateFunding(Funding funding) {
+		int result=fundingDao.updateFunding(sqlSession,funding);
+		if(result<0) {
+			throw new CommException("펀딩 프로젝트 update 실패");
+		}
+	}
+
+	@Override
+	public void newFundingImageList( List<FundingImage> imgList) {
+		int result=fundingDao.newFundingImageList(sqlSession,imgList);
+		if(result<0) {
+			throw new CommException("펀딩 프로젝트 사진 update 실패");
+		}
+	}
+
 
 
 }

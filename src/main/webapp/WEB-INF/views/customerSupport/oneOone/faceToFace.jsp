@@ -9,6 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도넷닷컴</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <style>
         * {font-size: 10px;}
 
@@ -21,29 +23,28 @@
 			float: left;
 			margin-top: 0;
 		}
-		#greenfont1 { margin-right: 45%;}
 		
-		#faq { margin-right: 36px; }
-		#facetoface { margin-right: 70px; color: rgb(30, 154, 40); text-decoration: none; }
+		#greenfont1 { margin-right: 69px; }
+		#faq { margin-right: 41px;}
+		#facetoface { margin-right: 68px; color: rgb(30, 154, 40); text-decoration: none;  }
 		
-		#greenfont1:hover #facetoface:hover{ text-decoration : underline; color : #000000;}
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 		
 		#wrap { margin-bottom: 7%; }
 		
 		#greenfont1, #faq, #facetoface { font-weight: bold; }
 		
 		/*helper*/
-		#gethelp:hover{ text-decoration : underline;}
-		
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
 			background-color: rgb(244, 244, 244);
-			width: 140px;
-			height: 40px;
+			width: 130px;
+			height: 30px;
 			border-radius: 10px;
 		}
-		
+				#gethelp:hover{ text-decoration : underline;}
+
 		#help {
 			font-weight: bolder;
 			margin-bottom: 0px;
@@ -219,12 +220,12 @@
         
         #emptyAnswer{color : gray;}
         #question{color : rgb(66, 178, 115);}
-        /*#answer{color : b;}*/
        
+       	/*pagination*/
+		.pagination{margin-top : 10px;}
         
-        /*footer*/
-        #footerBox{margin-left:-150px;}
-    </style>
+       
+        </style>
 
 </head>
 <body>
@@ -313,9 +314,7 @@
 				</c:if>
            </table>
 
-
-           <div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -358,8 +357,6 @@
 						</c:otherwise>
 					</c:choose>
 				</ul>
-			</div>
-			
 			  
            <div id="grayline"></div>
            
@@ -367,11 +364,9 @@
            <button id="goRound" onclick="goAsk();">문의하기</button>
           </c:if> 
 </div>
-
+<br>
 			
-<div id="footerBox">			
 	<jsp:include page="../../common/footer.jsp" />
-</div>
     
  <script>
     	$(function(){

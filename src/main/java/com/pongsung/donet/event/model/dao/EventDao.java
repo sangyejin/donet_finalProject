@@ -97,5 +97,10 @@ public class EventDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("eventMapper.searchList", keyword);
 	}
+	public List<Event> selectTopEventList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("eventMapper.selectTopEventList");
+
+	}
 
 }

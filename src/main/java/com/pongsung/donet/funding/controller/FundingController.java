@@ -60,16 +60,17 @@ import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
 
-@SessionAttributes("loginUser") 
+@SessionAttributes("loginUser")
 @Controller
 public class FundingController {
 	private static final Logger logger = LoggerFactory.getLogger(FundingController.class);
 
 	@Autowired
 	private FundingService fundingService;
+	
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -86,11 +87,6 @@ public class FundingController {
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
 			,Model model) {
 		
-//		@RequestParam(value = "categoryNo", required = false, defaultValue = "0") int categoryNo,
-//		@RequestParam(value = "order", required = false, defaultValue = "CREATE_DATE DESC") String order,
-//		@RequestParam(value = "period", required = false, defaultValue = "") String period,
-//		@RequestParam(value = "search", required = false, defaultValue = "") String search,
-//		FundingFilterOrder filterOrder= new FundingFilterOrder(categoryNo,period,order,search);
 		FundingFilterOrder filterOrder= new FundingFilterOrder(0,null,"FP_WRITE_DATE",null);
 		
 		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
@@ -150,8 +146,6 @@ public class FundingController {
 	public String insertFunding(Funding funding, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
 			,@ModelAttribute FundingGoodsList fundingGoods, Model model)
 			throws Exception {
-		//multipartRequest.setCharacterEncoding("utf-8");
-		//funding.setContent( (funding.getContent()).replace("\n", "<br>"));  
 		funding.setHostId(((Member)model.getAttribute("loginUser")).getUserId()); //funding 누가 작성하는지 userId 넣어주기
 		List<FundingGoods> fgList=fundingGoods.getFundingGoods();
 		System.out.println("funding:::"+funding);
@@ -166,7 +160,7 @@ public class FundingController {
 			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
 			
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
-			
+			int cnt=1;
 			//파일을 저장, 파일이름 변경
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
@@ -182,15 +176,15 @@ public class FundingController {
 						FundingImage img=new FundingImage();
 						img.setImgChangeName(changeName);
 						img.setImgOriginName(originName); 
-						//img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
-						img.setImgNo(i);
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1) );
 						imgList.add(img);
 					}
 				}
 			}
 			
 		}
-		
+		logger.info("funding :: imgList :: "+ imgList);
 		
 		fundingService.insertFunding(funding,imgList,fgList);
 		
@@ -264,11 +258,63 @@ public class FundingController {
 		return String.valueOf(result);
 	}
 	
+	
+	// 펀딩프로젝트 update 폼으로 이동
+	@RequestMapping("funding/{fpNo}/updateForm")
+	public String enrollForm(@PathVariable("fpNo")int fpNo,Model model) {
+		List<FundingCategory> categoryList = fundingService.selectFundingCategoryList();
+		Funding funding= fundingService.selectFunding(fpNo);
+		List<FundingGoods>fundingGoodsList = fundingService.selectFundingGoodsList(fpNo);
+		model.addAttribute("category", categoryList);
+		model.addAttribute("funding", funding);
+		model.addAttribute("fundingGoodsList", fundingGoodsList);
+		return "funding/fundingUpdateForm";
+	}
+	
 	//펀딩 업데이트
 	@RequestMapping(value="funding/{fpNo}/update")
-	public String updateFunding(@PathVariable("fpNo")int fpNo) {
-		//fundingService.updateFunding();
-		return "";
+	public String updateFunding(@PathVariable("fpNo")int fpNo,Funding funding, Model model,
+			HttpServletRequest request, MultipartHttpServletRequest multipartRequest) {
+		logger.info("updateFunding::: "+funding);
+
+		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
+		List<FundingImage> imgList = new ArrayList<>(); //추가 img 저장하는 리스트
+		
+		Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
+		for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
+			
+			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
+			
+			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
+			int cnt=1;
+			//파일을 저장, 파일이름 변경
+			for(int i=0; i<fileList.size();i++) {
+				String fileName=fileList.get(i).getOriginalFilename();
+				if(fileName!="") { 
+					String originName = fileList.get(i).getOriginalFilename();
+					String changeName = saveFile(fileList.get(i),request);
+					System.out.println("change::"+changeName);
+					if( (entry.getKey()).equals("thumbFile")) { //현재 tag가 대표사진이면 funding에 setting
+						funding.setThumbnailOriginName(originName);
+						funding.setThumbnailChangeName(changeName);
+					}
+					else { //아니면 추가사진
+						FundingImage img=new FundingImage();
+						img.setFpNo(fpNo);
+						img.setImgChangeName(changeName);
+						img.setImgOriginName(originName); 
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1) );
+						imgList.add(img);
+					}
+				}
+			}
+		}
+		
+		fundingService.updateFunding(funding);
+		
+		fundingService.newFundingImageList(imgList);
+		return "redirect:/funding/"+fpNo;
 	}
 	
 	//펀딩 삭제
@@ -295,12 +341,10 @@ public class FundingController {
 		fundingSupporter.setFpSupporter(((Member)model.getAttribute("loginUser")).getUserId());
 		fundingSupporter.setFpNo(fpNo);
 		fundingService.insertFundingSupporter(fundingSupporter);
-		
-		//Member loginUser = memberService.selectMember((Member)model.getAttribute("loginUser"));
-		//model.addAttribute("loginUser", loginUser);
+		Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+		model.addAttribute("loginUser", loginUser);
 		return "redirect:/funding/"+fpNo+"/complete";
 	}
-	
 	// 펀딩프로젝트 후원완료창
 	@RequestMapping("funding/{fpNo}/complete")
 	public String completeFunding(@PathVariable("fpNo") int fpNo,Model model) {

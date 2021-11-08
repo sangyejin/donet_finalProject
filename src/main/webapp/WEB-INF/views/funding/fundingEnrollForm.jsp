@@ -10,11 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-	
+
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
@@ -47,17 +43,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
-
-
-#fpName {
-	width: 1050px;
-}
 
 .div-fpName {
 	text-align: center;
@@ -89,19 +74,12 @@ label {
 	border: 1px solid rgb(85, 85, 85);
 }
 
-#category {
-	height: 40px;
-	border-radius: 4px;
-	width: 370px;
-	border: 1px solid rgb(85, 85, 85);
-}
-
 #goal {
 	width: 350px;
 }
 
 #startDate, #closeDate {
-	width: 165px;
+	width: 244px;
 }
 
 .div-input, #content {
@@ -127,7 +105,8 @@ tbody tr td, thead tr th {
 }
 
 .div-content {
-	padding: 20px 0 20px 0;
+	padding-top: 0;
+
 }
 
 .div-left {
@@ -143,27 +122,26 @@ tbody tr td, thead tr th {
 }
 
 .div-contentImg {
-	width: 100px;
-	height: 100px;
+	width: 30%;
+	height: 100%;
 	display: inline-block;
-	border: 1px solid rgb(85, 85, 85);
+	border: 1px solid #c8c8c8;
 	padding: 0;
-	margin-left: 17.5px;
-	margin-right: 17.5px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .group-img {
 	margin: auto;
 	padding: 0;
-	width: 370px;
-	height: 120px;
-	width: 370px
+	width: 100%;
+	height: 160px;
 }
 
 .div-thumbImg {
 	margin-left: 0;
-	width: 340px;
-	height: 340px;
+	width: 500px;
+	height: 500px;
 	padding: 0;
 }
 /* input number의 증가감소 버튼 안보이게 */
@@ -178,6 +156,30 @@ input[type="number"]::-webkit-inner-spin-button {
 	display: block;
 	width:100%;
 }
+.inputText {
+	border: 1px solid #e8e8e8;
+	height: 42px;
+	width: 400px;
+	padding-left: 20px;
+}
+#fpName {
+	width: 1050px;
+}
+#div-fpName,#div-content{
+	margin-bottom:50px;
+}
+.label-text{
+	margin-top:0.8em;
+}
+#paymentDate{
+	width:100%;
+}
+#goal{
+	width:500px;
+}
+#startDate,#closingDate{
+	
+}
 </style>
 
 
@@ -190,19 +192,19 @@ input[type="number"]::-webkit-inner-spin-button {
 		<form id="insertForm" action="insert" method="post"
 enctype="multipart/form-data">
 			<div class="div-fpName">
-				<label for="fpName" style="display: block;">펀딩 프로젝트 제목</label> <input
-					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
+				<label for="fpName" style="display: block;" class="label-text">펀딩 프로젝트 제목</label> <input
+					type="text" class="inputText" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
 			</div>
 			<div class="div-content">
 				<div class="div-left col-lg-6 col-xs-12">
-					<label for="thumbImg">대표 사진</label>
+					<label for="thumbImg" class="label-text">대표 사진</label>
 					<div class="div-thumbImg" id="thumbImg">
-						<img id="img0" width="370px" height="340px">
+						<img id="img0" width="500px" height="500px">
 					</div>
 				</div>
-				<div class="div-right col-lg-6 col-xs-12">
+				<div class="div-right col-lg-6 col-xs-12" style="padding-left: 0px; padding-right: 0px;">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="categoryNo"
+						<label for="cateogry" class="label-text">카테고리</label> <select name="categoryNo"
 							id="category">
 							<c:forEach var="category" items="${category}">
 								<option value="${category.categoryNo}">${category.categoryName}</option>
@@ -210,30 +212,30 @@ enctype="multipart/form-data">
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goal">목표 금액</label> <input type="text"
+						<label for="goal" class="label-text">목표 금액</label> <input type="text"class="inputText" 
 							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="startDate">펀딩 기간</label> <input type="Date"
+						<label for="startDate" class="label-text">펀딩 기간</label> <input type="Date" class="inputText" 
 							placeholder="0000-00-00" id="startDate" name="startDate" required>
-						<span style="margin: 0 10px;">~</span> <input type="Date"
+						<span style="margin: 0 10px;">~</span> <input type="Date" class="inputText" 
 							placeholder="0000-00-00" id="closeDate" name="closeDate" required>
 					</div>
 					<div class="div-input">
-						<label for="">결제 예정 날짜</label> <input type="Date"
+						<label for="" class="label-text">결제 예정 날짜</label> <input type="Date" class="inputText" 
 							placeholder="0000-00-00" id="paymentDate" name="paymentDate" required>
 					</div>
 					<div class="div-input">
-						<label for="">추가사진</label>
+						<label for="" class="label-text">추가사진</label>
 						<div class="group-img">
 							<div class="div-contentImg col-xs-4" id="contentImg1">
-								<img class="contentImg" width="100px" id="img1">
+								<img class="contentImg" width="150px" id="img1">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg2">
-								<img class="contentImg" width="100px" id="img2">
+								<img class="contentImg" width="150px" id="img2">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg3">
-								<img class="contentImg" width="100px" id="img3">
+								<img class="contentImg" width="150px" id="img3">
 							</div>
 						</div>
 					</div>
@@ -241,8 +243,8 @@ enctype="multipart/form-data">
 			</div>
 
 			<div class="div-content col-xs-12"
-				style="width: 1050px; margin: auto;">
-				<label for="content">내용</label>
+				style="width: 1050px;margin: auto;padding-left: 0px;">
+				<label for="content" class="label-text">내용</label>
 				<!-- 
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
@@ -290,10 +292,10 @@ enctype="multipart/form-data">
 
 
 			<div id="fileArea">
-				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 0);"> 
-					<input type="file"name="file1" id="file1" onchange="loadImg(this, 1);"> 
-					<inputb type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
-				<input type="file" name="file3" id="file3" onchange="loadImg(this, 3);">
+				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 1);"> 
+					<input type="file"name="file1" id="file1" onchange="loadImg(this, 2);"> 
+					<input type="file" name="file2" id="file2" onchange="loadImg(this, 3);">
+				<input type="file" name="file3" id="file3" onchange="loadImg(this, 4);">
 			</div>
 			<div id="imgArea" style="display:none;">
 				
@@ -337,22 +339,23 @@ enctype="multipart/form-data">
         });
 
         function loadImg(inputFile, num) {
+        	console.log(inputFile.files.length );
             if (inputFile.files.length == 1) { //파일 존재하면
                 var reader = new FileReader();
                 reader.readAsDataURL(inputFile.files[0]);
 				console.log(inputFile.files[0]);
                 reader.onload = function (e) {
                     switch (num) {
-                        case 0:
+                        case 1:
                             $("#img0").attr("src", e.target.result);
                             break;
-                        case 1:
+                        case 2:
                             $("#img1").attr("src", e.target.result);
                             break;
-                        case 2:
+                        case 3:
                             $("#img2").attr("src", e.target.result);
                             break;
-                        case 3:
+                        case 4:
                             $("#img3").attr("src", e.target.result);
                             break;
                     }

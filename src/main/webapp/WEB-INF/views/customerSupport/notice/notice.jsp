@@ -8,6 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
 * {font-size: 10px;}
 
@@ -21,10 +23,9 @@
 	margin-top: 0;
 }
 
-#greenfont1 { margin-right: 45%; text-decoration: none; }
-
-#faq { margin-right: 36px; }
-#facetoface { margin-right: 70px; }
+#greenfont1 { margin-right: 69px; text-decoration: none; }
+#faq { margin-right: 41px; }
+#facetoface { margin-right: 68px; }
 
 #faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
@@ -37,8 +38,8 @@
 	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
 	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
+	width: 130px;
+	height: 30px;
 	border-radius: 10px;
 }
 
@@ -115,7 +116,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 
 .viewed { width: 100px; }
 
-#whole { width: 1050px; margin : auto;}
+#whole { width: 1050px; margin : auto; }
 
 /*button style*/
        	button{
@@ -168,7 +169,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #searchmark {
 	width: 30px;
 	height: 25px;
-	margin-top:-1px;
+	margin-top:0px;
 	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
@@ -200,6 +201,9 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
 .radioAlign{margin-right : 20px;}
+
+/*pagination*/
+.pagination{margin-top : 10px;}
 </style>
 
 </head>
@@ -272,8 +276,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 				
 			</table>
 
-			<div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -316,7 +319,6 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 						</c:otherwise>
 					</c:choose>
 				</ul>
-			</div>
 
 			<div id="grayline"></div>
 			

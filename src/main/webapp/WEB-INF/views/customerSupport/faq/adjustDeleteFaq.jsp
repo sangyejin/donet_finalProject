@@ -7,6 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
  *{ font-size: 10px;  }
 
@@ -20,33 +22,27 @@
 			margin-top: 0;
 		}
 
-#greenfont1 { margin-right: 45%; }
-
-#faq {
-	margin-right: 36px;
-	color: rgb(30, 154, 40);
-	text-decoration: none;
-}
-
-#facetoface { margin-right: 70px; }
-
-#greenfont1:hover #facetoface:hover { text-decoration: underline; color: #000000;}
-
-#wrap { margin-bottom: 7%; }
-
-#greenfont1, #faq, #facetoface { font-weight: bold; }
-
-/*helper*/
-		#gethelp:hover{ text-decoration : underline;}
+		#greenfont1 { margin-right: 69px;}
+		#faq { margin-right: 41px; color: rgb(30, 154, 40); }
+		#facetoface { margin-right: 68px; }
 		
+		#faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
+		
+		#wrap { margin-bottom: 7%; }
+		
+		#greenfont1, #faq, #facetoface { font-weight: bold; }
+		
+		/*helper*/
 		.needhelp {
 			margin-top: 50px;
 			border: 1px solid rgb(244, 244, 244);
 			background-color: rgb(244, 244, 244);
-			width: 140px;
-			height: 40px;
+			width: 130px;
+			height: 30px;
 			border-radius: 10px;
 		}
+		
+		#gethelp:hover{ text-decoration : underline;}
 		
 		#help {
 			font-weight: bolder;
@@ -71,12 +67,12 @@
 /*writing box*/
 #sideGreenbar {background-color: rgba(232, 240, 214, 0.5); height: 500px; width: 100px;}
 
-     #getInThere{ margin-top: -490px;  margin-left: 35px; }
+     #getInThere{ margin-top: -480px;  margin-left: 35px; }
 
 /*div lines*/
 .grayline{
-            margin-top: 2%;
-            margin-bottom: 2%;
+            margin-top: 10px;
+            margin-bottom: 20px;
             margin-left: 65px;
             width: 610px;
             height: 0.001cm;
@@ -171,9 +167,6 @@
 		<div id="thelist">
 			<span id="notice">자주 묻는 질문 수정</span>
 
-
-
-			<!--관리자 메뉴 -->
 			<div id="greenline"></div>
 
 			<div id="sideGreenbar"></div>
@@ -205,6 +198,7 @@
 					</div>
 			</div>
 		</div>
+		<br>
 
 			
 				<jsp:include page="../../common/footer.jsp" />

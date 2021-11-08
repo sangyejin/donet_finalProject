@@ -40,7 +40,11 @@ public interface EventService {
 
 	int deleteReply(int replyNo);
 
+
 	ArrayList<Volunteer> searchList(PageInfo pi, String keyword);
+
+	List<Event> selectTopEventList();
+
 
 
 

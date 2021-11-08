@@ -12,23 +12,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
+
+<!-- favicon -->
+<link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" type="image/x-icon">
+<!-- 제이쿼리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 제이쿼리 -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 <style>
-* {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-size: 12px;
-	margin: 0;
-	padding: 0;
-}
+
 
 #div-container {
 	width: 1050px;
@@ -42,15 +36,15 @@
 	height: 180px;
 	padding: 50px;
 	text-align: center;
-	margin-bottom: 100px;
+	margin-bottom: 60px;
+	
 }
 
 #idx_top::before {
 	content: "";
-	background:
-		url("${pageContext.request.contextPath}/resources/upload_files/funding/${funding.thumbnailChangeName}")
+	background: linear-gradient(to bottom, rgba(255, 255, 255,0.8), rgba(255, 255, 255,0.3) 10%),linear-gradient(to top, rgba(255, 255, 255,0.8), rgba(255, 255, 255,0.3) 10%),url("${pageContext.request.contextPath}/resources/upload_files/funding/${funding.thumbnailChangeName}")
 		no-repeat 50% 50%/cover;
-	opacity: 0.4;
+	opacity: 0.6;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -67,11 +61,13 @@
 	font-size: 30px;
 	font-weight: 800;
 }
-
+#fpName{
+	word-break:break-all;word-wrap:break-word;
+}
 /* 섬네일 & 기본 정보 */
 #thumb-img-container {
-	width: 450px;
-	height: 400px;
+	width: 500px;
+	height: 500px;
 	/* background-color: rgb(196, 171, 163); */
 	display: inline-block;
 	background:
@@ -88,38 +84,63 @@
 
 #info-right-container {
 	margin-right: 0px;
-	padding-left: 0;
+	margin-left:0px;
+	padding-left: 0px;
 	padding-right: 0;
+	flex:1;
+	position : relative;
 }
-
+#btn-area{
+	position : absolute;
+	bottom : 0;
+}
 #info-right-container p, #goalPersent {
-	font-size: 34px;
+	font-size: 30px;
 	line-height: 50px;
+	font-weight:600;
 	padding-left: 0;
 	padding-right: 0;
 }
 
+/* label style */
+.data label {
+	font-size: 24px;
+}
+
+.data span {
+	font-size: 20px;
+}
+.data .data-span{
+	margin-left:10px;
+}
 .info-label {
 	display: block;
+	font-weight:700;
+	margin-top:0.8em;
+	margin-bottom:0.1em;
 }
-
+.raised{
+	font-size:40px !important;
+}
+.prices{
+	padding-left:10px;
+	padding-right:10px;
+}
 #info-container {
-	/* height: 400px; */
 	width: 100%;
 	padding-left: 0;
 	padding-right: 0;
+	display: flex;
+	margin-bottom:100px;
 }
 
+
 /*추가 이미지*/
-#img-container, #content-container {
+#content-container {
 	margin-top: 50px;
 	width: 100%;
 }
 
-#img-container {
-	padding-left: 0px;
-	padding-right: 0px;
-}
 
 .img {
 	padding-left: 20px;
@@ -135,19 +156,12 @@
 	font-weight: 700;
 }
 
-.data label {
-	font-size: 18px;
-}
-
-.data span {
-	font-size: 18px;
-}
-
 /* 내용작성 칸 */
 #content-container {
 	overflow:auto;
 }
 
+/*버튼 style*/
 #btn-funding {
 	width: 200px;
 	height: 40px;
@@ -177,7 +191,7 @@
 		url("${ pageContext.servletContext.contextPath }/resources/imgs/share_green.png")
 		no-repeat white;
 	border: 1px solid rgb(60, 179, 113);
-	background-size: 60%;
+	background-size: 38%;
 	background-position: center;
 }
 
@@ -188,23 +202,79 @@
 	background:
 		url("${ pageContext.servletContext.contextPath }/resources/imgs/share_white.png")
 		no-repeat rgb(60, 179, 113);
-	background-size: 60%;
+	background-size: 38%;
 	background-position: center;
 }
 
 .btnArea {
-	padding-top: 10px;
+	padding-top: 100px;
+	padding-bottom:50px;
 	text-align:right;
 }
 
-/*펀딩 굿즈*/
-.funding-card {
-	border: 1px solid gray;
+.btnArea #btn-delete{
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	font-weight: 600;
+	color:rgb(60, 179, 113);
+	transition: all 0.5s;
+	background-color:white;
+	border: 1px solid rgb(60, 179, 113);
+}
+.btnArea #btn-update{
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	font-weight: 600;
+	color:white;
+	transition: all 0.5s;
+	background-color:rgb(60, 179, 113);
+	border: 1px solid rgb(60, 179, 113);
+}
+#addReply{
+	border-radius: 5px;
+	font-weight: 600;
+	color: rgb(60, 179, 113);
+	transition: all 0.5s;
+	background-color: white;
+	border: 1px solid rgb(60, 179, 113);
+}
+#btn-delete:hover,#addReply:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color: white;
+	background:  rgb(60, 179, 113);
 }
 
+#btn-update:hover {
+	border: 1px solid rgb(60, 179, 113);
+	color:  rgb(60, 179, 113);
+	background: white;
+}
+
+
+/*펀딩 굿즈*/
+.funding-card {
+	border: 1px solid #e8e8e8;
+	padding:14px;
+}
+.fgName{
+	font-size:18px;
+	font-weight:700;
+	margin: 4px 0px 4px 0px;
+}
+.fgContent{
+	font-size:14px;
+	margin: 4px 0px 4px 0px;
+}
+.fgPrice{
+	color:#a6a6a6;
+	font-size:14px;
+	margin: 16px 0 0px 0;
+}
 /*댓글*/
 #replyArea {
-	padding-top: 100px;
+	padding-top: 20px;
 	padding-bottom:100px;
 }
 #replyList{
@@ -222,43 +292,127 @@
 .aArea{
 	text-align:right;
 }
+/* 프로그래스바 */
+.progressBar{
+	margin-bottom:1em;
+} 
+.progressbar {
+	display: inline-block;
+	width: 100%;
+	height: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: left;
+	background-color: #e8e8e8;
+	box-shadow: inset 0px 1px 0.5px 0.5px #858B94;
+	overflow:hidden;
+}
+
+.progressbar>.gauge {
+	display: inline-block;
+	height: 10px;
+	background-color: rgba(60, 179, 113);
+	border-radius: 10px;
+	padding-top:0px;
+	margin-left: 0px;
+	margin-bottom: 6px;
+	box-shadow: inset 0px 1px 0.5px 0.5px rgba(50, 140, 90);
+}
+/*슬라이더*/
+
+.slider-1 {
+	width: 850px;
+	height: 400px;
+	position: relative;
+	margin:5% auto;
+}
+
+/* 슬라이더 1 - 페이지 버튼 */
+.slider-1>.page-btns {
+	text-align: center;
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	width: 100%;
+}
+
+.slider-1>.page-btns>div {
+	width: 20px;
+	height: 20px;
+	background-color: rgba(255, 255, 255, .5);
+	border-radius: 4px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.slider-1>.page-btns>div.active {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+/* 슬라이더 1 - 슬라이드 */
+.slider-1>.slides>div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	transition: opacity 0.3s;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.slider-1>.slides>div.active {
+	opacity: 1;
+}
+
+/* 슬라이더 좌우 버튼 */
+.slider-1>.side-btns>div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 25%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.slider-1>.side-btns>div:last-child {
+	left: auto;
+	right: 0;
+}
+
+.slider-1>.side-btns>div>span {
+	position: absolute;
+	top: 50%;
+	left: 20px;
+	transform: translatey(-50%);
+	background-color: white;
+	opacity: 0.5;
+	padding: 1px 13px;
+	border-radius: 50px;
+	font-size: 25px;
+}
+
+.slider-1>.side-btns>div:last-child>span {
+	left: auto;
+	right: 20px;
+}
+/* sns 공유 */
+.link-icon { position: relative; display: inline-block; width: auto; font-size: 14px; font-weight: 500; color: #333; margin-right: 10px; padding-top: 50px; }
+.link-icon.twitter { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/icon-twitter.png); background-position: center top; min-width:50px;background-repeat: no-repeat;text-align:center;}
+.link-icon.kakao { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/icon-kakao.png);background-position: center top; min-width:50px;background-repeat: no-repeat;text-align:center; }
+.link-icon.shareLinkIcon { background-image: url(${ pageContext.servletContext.contextPath }/resources/imgs/link.png); background-repeat: no-repeat; background-position: center top; min-width:50px; text-align:center;}
+
+.modal-backdrop {display: none;}
 </style>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-
-<!-- favicon -->
-<link rel="icon"
-	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
-	type="image/x-icon">
-<!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- CSS here -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slicknav.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/flaticon.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/gijgo.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/magnific-popup.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/themify-icons.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/slick.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/style.css">
 
 </head>
 
 <body>
-	<jsp:include page="../common/menubar.jsp" />
 
+<jsp:include page="../common/menubar.jsp" />
 	<!-- 오늘 날짜 -->
 	<jsp:useBean id="now" class="java.util.Date" />
 	<fmt:formatDate value="${now}" var="nowDate" pattern="yyyy-MM-dd" />
@@ -312,75 +466,112 @@
 					</div>
 
 					<div id="info">
-						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="${goalPersent }"
-								aria-valuemin="0" aria-valuemax="100"
-								style="width: ${goalPersent }%">
-								${goalPersent }</div>
+						<div class="progressBar">
+							<span class="progressbar"> 
+								<span class="gauge" style="width:${goalPersent}%;">
+								</span>	
+							</span>
 						</div>
 					</div>
 					<div class="data">
-						<label for="raised" class="info-label">모인 금액</label> <span
-							id="raised"><span name="raised">${funding.raised}</span>원</span>
-						/ <span id="goal"> <span name="goal">${funding.goal}</span>원
+						<label for="raised" class="info-label">모인 금액</label> 
+						<span  class="data-span">
+							<span name="raised" class="raised">${funding.raised}</span>
+							<span class="raised">원</span>
+						/ <span id="goal"> <span name="goal">${funding.goal}
+						<span>원</span>
 						</span>
 					</div>
 					<div class="data">
-
-						<label for="Dday" class="info-label">펀딩 진행 기간</label> <span>${funding.startDate}~${funding.closeDate}</span>
+						<label for="Dday" class="info-label">펀딩 진행 기간</label> <span class="data-span">${funding.startDate}~${funding.closeDate}</span>
 					</div>
 					<div class="data">
 
-						<label for="Dday" class="info-label">남은 기간</label> <span id="Dday">D-
-							<spanname="dDay"> <span>${endDate-strDate }</span>
+						<label for="Dday" class="info-label">남은 기간</label> <span id="Dday" class="data-span">D-<spanname="dDay"><span>${endDate-strDate }</span>
 					</div>
 					<div class="data">
 						<label for="supporter" class="info-label">후원자</label> <span
-							id="supporter"><span name="supporter">${funding.numberSupporter}</span>명</span>
+							id="supporter" class="data-span"><span name="supporter" >${funding.numberSupporter}</span>명</span>
 					</div>
-					<div id="btn-area">
-						<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/support';" id="btn-funding" value="후원하기" /> <input
-							type="button" id="btn-share" value="  "/>
+					<div id="btn-area" class="container">
+						<div class="row">
+						<input type="button" id="btn-funding" class="col-md-9" value="후원하기" /> 
+						<input type="button" id="btn-share" value="  " class="col-md-2 offset-md-1" data-toggle="modal" data-target="#shareModal"/>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div id="img-container" class="container">
-				<c:if test="${not empty fundingImageList}">
-				<fmt:parseNumber value = "${12/(fn:length(fundingImageList))} " pattern = "0" var = "num"/>
-					<c:forEach var="img" items="${fundingImageList}">
-						<div class="col-md-${num}  img">
-							<img src="${pageContext.request.contextPath}/resources/upload_files/funding/${img.imgChangeName}" download="${img.imgOriginName}" alt="" class="content-img">
-						</div>
+			<c:if test="${fn:length(fundingImageList) != 0}">
+			<div class="slider-1">
+				<div class="slides">
+				<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
+						<c:choose>
+							<c:when test="${status.begin==0}">
+								<div class="active"
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:when>
+							<c:otherwise>
+								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
-				</c:if>
+				</div>
+				<div class="page-btns">
+					<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
+						<c:choose>
+							<c:when test="${status.begin==0}">
+								<div class="active"></div>
+							</c:when>
+							<c:otherwise>
+								<div></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</div>
+				<div class="side-btns">
+					<div>
+						<span class="fas"><</span>
+					</div>
+					<div>
+						<span class="fas">></span>
+					</div>
+				</div>
 			</div>
-			<div id="content-container">
-				<div id="content" class="col-md-9">
+		</c:if>
+			<div id="content-container ">
+				<div class="row">
+				<div id="content" class="col-8" style="min-height:500px;">
 					<p>${funding.content}</p>
 				</div>
-				<div id="funding-goods" class="col-md-3">
+				<div id="funding-goods" class="col-4">
 					<p>선물</p>
-					<hr>
+					<hr style="margin-top: 0;">
 					<c:forEach var="f" items="${fundingGoodsList}">
 						<div class="funding-card">
 							<div class="fgName">${f.fgName }</div>
+							<div class="fgContent">${f.fgContent}</div>
 							<div class="fgPrice">${f.fgPrice}원</div>
-							<p class="fgContent">${f.fgContent}</p>
 						</div>
 					</c:forEach>
 				</div>
+				</div>
+				
 				<div style="clear:both; display:none;"></div>
 			</div>
+			
 			<c:if test="${loginUser.userId == funding.hostId }">
 				<div class="btnArea">
-					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/supportForm';" id="btn-update" value="수정">
+					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>
+			<div>
+				<span><b>댓글</b></span>
+				<hr>
+			</div>
 			<section id="replyArea" class="reply-container">
 				<div id="reply-insert" class="container">
-					<div id="reply-insert-info">
+					<div id="reply-insert-info" class="row" style="height:60px;">
 						<c:if test="${not empty loginUser}">
 							<textarea type="text" id="replyContent" class="col-md-10"
 								placeholder="댓글을 입력하세요" style="resize: none;"></textarea>
@@ -390,18 +581,50 @@
 								placeholder="로그인한 유저만 사용할 수 있는 서비스 입니다." style="resize: none;"
 								disabled></textarea>
 						</c:if>
-						<div id="reply-insert-btn">
-							<input type="button" id="addReply" class="btn-insert-reply col-md-offset-1 col-md-1" value="등록">
+						<div id="reply-insert-btn" class="col-md-2  col-offset-md-1">
+							<input type="button" id="addReply" class="btn-insert-reply " style="width:100%; height:100%" value="등록">
 						</div>
 					</div>
 				</div>
-				
 				<div id="replyList">
 				
 				</div>
 			</section>
 		</div>
+		
+		
+		<!-- 공유 버튼 시 뜨는 모달  -->
+    <div class="modal fade" id="shareModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">공유하기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                	<label for="userId" class="mr-sm-2">link:</label>
+                    <c:set var="req" value="${pageContext.request}" />
+					<c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, '')}" />
+					<c:set var="params" value="${requestScope['javax.servlet.forward.query_string']}"/>
+					<c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+					<c:set var="pageUrl" value="${ baseURL }${ requestPath }${ not empty params?'?'+=params:'' }"/>
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="" id="shareLink" name="shareLink" value="${pageUrl}" readOnly> <br>
+                    <a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();">트위터</a>   
+					<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();">카카오톡</a>    
+					<a id="btnKakao" class="link-icon shareLinkIcon" href="javascript:copyLink();">링크</a>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+		
 	</div>
+	
+    
 	<script>
 		$(function() {
 			selectReplyList();
@@ -437,6 +660,21 @@
 				}
 
 			});
+		});
+		$("#btn-funding").click(function(){
+			console.log("${loginUser}");
+			if(${ nowDate<startDate || nowDate>closeDate } ){
+				alert("현재는 펀딩기간이 아닙니다.");
+				return;
+			}
+			if("${loginUser}"!=""){
+				location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/support';
+				return;
+			}else{
+				alert("로그인이 필요한 서비스입니다.");
+				return;
+			}
+
 		});
 		function deleteReply(fpNo, replyNo) {
 			if (confirm("댓글을 삭제하시겠습니까? 예: 삭제, 아니오:삭제 취소")) {
@@ -529,49 +767,94 @@
 		}
 		
 	}
-	</script>
-	<!-- JS here -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-	<!-- Jquery, Popper, Bootstrap -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
-	<!-- Jquery Mobile Menu -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.slicknav.min.js"></script>
-
-	<!-- Jquery Slick , Owl-Carousel Plugins -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.carousel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/slick.min.js"></script>
-	<!-- One Page, Animated-HeadLin -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/animated.headline.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.magnific-popup.js"></script>
-
-	<!-- Date Picker -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/gijgo.min.js"></script>
-	<!-- Nice-select, sticky -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.sticky.js"></script>
-	<!-- Progress -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.barfiller.js"></script>
-
-	<!-- counter , waypoint,Hover Direction -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.counterup.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/waypoints.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.countdown.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/hover-direction-snake.min.js"></script>
-
-	<!-- contact js -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/contact.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.form.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.validate.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/mail-script.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.ajaxchimp.min.js"></script>
-
-	<!-- Jquery Plugins, main Jquery -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 	
+	$('.slider-1 > .page-btns > div').click(function() {
+		var $this = $(this);
+		var index = $this.index();
+
+		$this.addClass('active');
+		$this.siblings('.active').removeClass('active');
+
+		var $slider = $this.parent().parent();
+
+		var $current = $slider.find(' > .slides > div.active');
+
+		var $post = $slider.find(' > .slides > div').eq(index);
+
+		$current.removeClass('active');
+		$post.addClass('active');
+	});
+
+	// 좌/우 버튼 추가 슬라이더
+	$('.slider-1 > .side-btns > div').click(function() {
+		var $this = $(this);
+		var $slider = $this.closest('.slider-1');
+
+		var index = $this.index();
+		var isLeft = index == 0;
+
+		var $current = $slider.find(' > .page-btns > div.active');
+		var $post;
+
+		if (isLeft) {
+			$post = $current.prev();
+		} else {
+			$post = $current.next();
+		}
+		;
+
+		if ($post.length == 0) {
+			if (isLeft) {
+				$post = $slider.find(' > .page-btns > div:last-child');
+			} else {
+				$post = $slider.find(' > .page-btns > div:first-child');
+			}
+		}
+		;
+
+		$post.click();
+	});
+
+	setInterval(function() {
+		$('.slider-1 > .side-btns > div').eq(1).click();
+	}, 3000);
+	
+
+	function shareTwitter() {
+		const sendUrl = document.getElementById('shareLink').value;
+	    var sendText = "donet funding project::"; // 전달할 텍스트
+	    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+	}
+
+	function shareKakao() {
+		const sendUrl = document.getElementById('shareLink').value;
+		  // 사용할 앱의 JavaScript 키 설정
+		  Kakao.init('9bf0e988c5aa295ea817ecabec533f27');
+		 
+		  // 카카오링크 버튼 생성
+		  Kakao.Link.createDefaultButton({
+		    container: '#btnKakao', // 카카오공유버튼ID
+		    objectType: 'feed',
+		    content: {
+		      title: "도넷닷컴", // 보여질 제목
+		      description: "donet funding project", // 보여질 설명
+		      imageUrl: sendUrl, // 콘텐츠 URL
+		      link: {
+		         mobileWebUrl: sendUrl,
+		         webUrl: sendUrl
+		      }
+		    }
+		  });
+		}
+		function copyLink(){
+			const copyText = document.getElementById('shareLink');
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("Copy");
+			alert('링크가 복사되었습니다.');
+		}
+	</script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </body>
 
 </html>

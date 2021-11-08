@@ -1,6 +1,7 @@
 package com.pongsung.donet.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -146,6 +147,11 @@ public class NoticeDao {
 	public int deleteOne(SqlSessionTemplate sqlSession, int askNo) {
 		return sqlSession.delete("noticeMapper.deleteOne", askNo);
 
+	}
+
+	public List<Notice> selectTopNoticeList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("noticeMapper.selectTopNoticeList");
 	}
 
 }

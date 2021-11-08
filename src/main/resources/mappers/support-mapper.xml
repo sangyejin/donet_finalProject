@@ -250,7 +250,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		ORDER BY A.SU_NO DESC
 	</select>
+	
+	<select id="selectDonationOrListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM SUPPORT A
+		JOIN SUPPORT_CATEGORY B ON A.SU_CATEGORY = B.SU_CATEGORY_NO
 
+	</select>
+	
+	<select id="selectDonationOrList" resultMap="supportResultSet" parameterType="_int">
+		SELECT ROWNUM,SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
+		SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,THUMBNAILCHANGE,
+		SU_CATEGORY,SU_SATUTS,HITS, SU_LAST - SU_START AS DDAY, GOAL,
+		TOTALAMOUNT
+		FROM SUPPORT A
+		JOIN SUPPORT_CATEGORY B ON A.SU_CATEGORY = B.SU_CATEGORY_NO
+		<if test="order != null">
+			ORDER BY ${order} DESC
+		</if>
+		
+	</select>
+
+	<select id="selectSupport" parameterType="_int" resultMap="supportResultSet">
+		SELECT
+		SU_NO,SU_TITLE,SU_WRITER,SU_START,SU_LAST,SU_DATE,SU_CONTENT,
+		SU_TARGET,SU_BSTART,SU_BLAST,THUMBNAILORIGIN,THUMBNAILCHANGE,
+		SU_CATEGORY,SU_SATUTS,HITS, ROUND(SU_LAST - SYSDATE) AS DDAY, GOAL,
+		TOTALAMOUNT
+		FROM SUPPORT
+		WHERE SU_NO=#{suNo}
+		AND STATUS='Y'
+	</select>
+
+	<insert id="insertSupportCharity" parameterType="Sponsor">
+		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, NVL((SELECT MAX(PAY_NO) FROM SPONSOR WHERE SU_NO=${suNo}),0)+1, ${amount}, DEFAULT)
+	</insert>
+	
+
+	<select id="selectTopDonationList" resultMap="supportResultSet">
+		<![CDATA[
+		select rownum, a.*
+			from(select * from support
+        			where SU_SATUTS='Y'
+       				order by SU_LAST desc
+    		) a
+			where rownum<=4
+		]]>
+	</select>
 
 
 </mapper>

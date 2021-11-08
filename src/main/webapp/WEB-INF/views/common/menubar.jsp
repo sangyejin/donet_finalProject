@@ -27,7 +27,7 @@
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: 18px;
+    margin-top: 20px;
     float: left;
     width : 115px;
     height : max-content;
@@ -66,8 +66,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 #userinfo{ margin-left: 700px; margin-top : -35px; }
 
-#secondLine{  margin-top : -7px; }
-
+#secondLine{  margin-top : -7px;overflow:auto;  }
+#secondLine > ul{overflow:auto; }
 .thisuser{ font-size : 10px; }
 
 .noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }
@@ -77,6 +77,42 @@ a{ color : #000000;  text-decoration: none; }
 .smallerFonts{ color : rgb(30, 154, 40);   text-decoration: none; font-size : 10px; }
 .loginDiv{ color : rgb(30, 154, 40); width : 300px; height : 30px; }
 
+
+/*event*/
+#eventBox{z-index : 1; position : fixed}
+
+#eventLocation{ margin-left : 93%; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
+
+.room-list-empty-room{
+	display : none;
+    background: rgb(98, 191, 139);
+    color: #fff;
+    padding: 13px;
+    border-radius: 7px;
+    top: 255px;
+    right: 45px;
+    font-size: 10pt;
+    box-shadow: 2px 2px 3px #d1d1d1;
+    height : 10px;
+    margin-top : -48px;
+    position : fixed;
+}
+.room-list-empty-room:after{
+    bottom: 100%;
+    transform: translate(-1px, 3px);
+    left: 190px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(56, 77, 157, 0);
+    border-bottom-color: rgb(98, 191, 139);
+    border-width: 11px;
+    margin-left: -20px;
+    
+}
 </style>
 </head>
 <body>
@@ -175,6 +211,15 @@ a{ color : #000000;  text-decoration: none; }
             </div>
     </div>
     
+   
+    <!-- 이벤트 박스 -->
+    <div id="eventBox">
+   		 <img id="eventLocation" src="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" alt="">
+	    <div id ="eventToolTip" class="room-list-empty-room">
+		  불멍하러 가실래요? 
+		</div>
+    </div>
+    
      <!-- 로그인 클릭 시 뜨는 모달  -->
     <!-- <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
@@ -211,6 +256,25 @@ a{ color : #000000;  text-decoration: none; }
     	}
 
     </script>
+    
+    <!-- 이벤트 호버 -->
+    <script>
+    	const eventLocation = document.getElementById("eventLocation");
+
+    	eventLocation.addEventListener('mouseover', function() { 
+    		document.getElementById("eventToolTip").style.display=("block");
+    	});
+    	
+    	eventLocation.addEventListener('mouseout', function() {
+    		document.getElementById("eventToolTip").style.display=("none");
+    	});
+    	
+    	eventLocation.onclick = function(){
+    		location.href = "faceRecognition.ev";
+    	}
+
+    </script>
+    
     
 </body>
 </html>

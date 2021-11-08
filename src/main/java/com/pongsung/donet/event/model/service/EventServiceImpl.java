@@ -127,6 +127,13 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return  eventDao.searchList(sqlSession, pi, keyword);
 	}
+	
+	@Override
+	public List<Event> selectTopEventList() {
+		// TODO Auto-generated method stub
+		return eventDao.selectTopEventList(sqlSession);
+
+	}
 
 	
 
