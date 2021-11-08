@@ -140,9 +140,9 @@
         	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        img{
-        	height:200px;
-        	width:230px;
+        #card-img img{
+        	height:100%;
+        	width:100%;
         }
         .card{
         	text-align:center;
@@ -173,7 +173,7 @@
         <div class="row">
             <div class="card-deck">
         	<c:forEach items="${ list }" var="list">
-                <div class="card col-md-4" id="eventCard">
+                <div class="card col-md-8" id="eventCard">
             	<p style="display:none" > ${ list.eventNo } </p>
                     <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img">
                     	<img src="${pageContext.request.contextPath}/resources/upload_files/${list.eventChange}"  alt="" class="content-img">
@@ -232,14 +232,21 @@
         <div class="container_footer">
             <div class="input-group icons">
             
-                <form id="searchBoardForm" class="form-inline">
-                    <div class="input-group text-center mb-3">
-                        <p class="icon-searchBox">
-                            <span id="icon-search" class="glyphicon glyphicon-search" ></span>
-                            <input name="findBoard" type="search" class="form-control" placeholder="이벤트 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
-                        </p>
+           		<div class="header-left">
+                    <div class="input-group icons">
+                    <form id="searchForm" class="form-inline" method="post">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <div class="input-group text-center mb-3">
+                        	<input name="keyword" type="search" class="form-control" placeholder="게시글 검색하기" aria-label="Search Dashboard">
+                        	<div class="input-group-append">
+                        		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
+                        	</div>
+                        </div>
+                    </form>    
                     </div>
-                    <br>
+                </div>
                     
                     <div >
                     	<!--<c:if test="${ loginUser.userRole eq 'D' }">
@@ -255,8 +262,6 @@
                     	</c:if>
                     	
                     </div>  
-                                   
-                </form>    
             </div>
         </div>
     </div>
@@ -267,6 +272,21 @@
 				location.href="detail.ev?eno=" + $(this).children().eq(0).text();
 			});
 		});
+		  function getSearchList(){
+		    	var search = $(this).val();
+		    	$.ajax({
+		    		type: "post",
+		    		url : "search.ev",
+		    		cache: false,
+		    		data: {"search":search},
+		    		success : function(data){
+		    			$("body").html(data);
+		    		},
+		    		error: function(data){
+		    			alert("error");
+		    		}
+		    	});
+		    }
 	</script>
 
     <jsp:include page="../common/footer.jsp" />

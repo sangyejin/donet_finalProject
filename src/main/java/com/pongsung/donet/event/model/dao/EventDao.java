@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.pongsung.donet.common.PageInfo;
 
 @Repository
@@ -90,6 +91,11 @@ public class EventDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("eventMapper.deleteReply", replyNo);
+	}
+
+	public ArrayList<Volunteer> searchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("eventMapper.searchList", keyword);
 	}
 
 }

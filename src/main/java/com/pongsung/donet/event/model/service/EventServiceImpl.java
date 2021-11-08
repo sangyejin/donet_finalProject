@@ -20,6 +20,7 @@ import com.pongsung.donet.event.model.dao.EventDao;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -119,6 +120,12 @@ public class EventServiceImpl implements EventService {
 			throw new CommException("댓글 등록 실패");
 		}
 		return result;
+	}
+
+	@Override
+	public ArrayList<Volunteer> searchList(PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return  eventDao.searchList(sqlSession, pi, keyword);
 	}
 
 	

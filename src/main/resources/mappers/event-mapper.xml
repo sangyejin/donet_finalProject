@@ -71,11 +71,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateEvent" parameterType="Event">
 		UPDATE EVENT
 		SET EVENT_TITLE=#{eventTitle}, EVENT_CONTENT=#{eventContent}, 
-			EVENT_ORIGIN=#{eventOrigin}, EVENT_CHANGE=${eventChange},
+			EVENT_ORIGIN=#{eventOrigin}, EVENT_CHANGE=#{eventChange},
 			EVENT_START_DATE=#{eventStart}, EVENT_LAST_DATE=#{eventLast}
 		WHERE EVENT_NO=#{eventNo}
 	</update>
-	
+	<select id="searchList" resultMap="eventResultMap">
+		SELECT *
+		FROM EVENT
+		WHERE EVENT_STATUS = 'Y' AND EVENT_TITLE LIKE '%'||#{keyword}||'%' 
+	</select>
    
 	
 	<!-- Reply -->
@@ -84,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (SEQ_EV_REPLY.NEXTVAL, #{refEventNo}, #{eventReplyWriter}, #{eventReplyContent}, DEFAULT, SYSDATE)
 	</insert>
 	<select id="replyList" parameterType="_int" resultMap="eventReplyResultMap">
-		SELECT EV_REPLY_NO,EV_REPLY_WRITER, EV_REPLY_CONTENT, EV_REPLY_DATE
+		SELECT *
 		FROM EVENT_REPLY
 		WHERE EV_REF_NO=#{eno} AND EV_REPLY_STATUS='Y'
 		ORDER BY EV_REPLY_NO DESC

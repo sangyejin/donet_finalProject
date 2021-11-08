@@ -164,7 +164,7 @@
        </div>
     </div>
  </div>
-
+<script src="resources/js/bootstrap.min.js"></script>
 <jsp:include page="../common/footer.jsp" />
 </body>
 </html>

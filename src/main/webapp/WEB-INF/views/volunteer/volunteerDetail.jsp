@@ -36,13 +36,9 @@
            
         }
         
-        .eventBox{
-            height: 80px;
-            width: 80%;
-            border: 1px solid black;
-          
+     
         }
-        .event_view_wrap{
+        .statusBox{
             height: 80px;
             width: 80%;
             border: none;
@@ -52,19 +48,16 @@
         .active{
             background-color: rgb(142, 211, 173);
         }
-        input{
+        button{
             transition:0.5s;
             cursor:pointer;
-            margin-top: 18px;
-            margin-right: 30px;
-            margin-left: 30px;
             float: center;
-            width: 400px;
+            width: 50px;
             height: 40px;
             border: none;
-            background-color: rgb(241, 241, 241);
+            
         }
-        input:hover{
+        button:hover{
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
@@ -166,6 +159,9 @@
           		padding-bottom: 30px;
           		padding-left: 20px;
           }
+          .contentArea{
+          		min-height: 400px;
+          }
          
     </style>
 </head>
@@ -212,7 +208,7 @@
                         <span style="padding-right: 10px;">#해쉬태그</span>
                         <span style="padding-right: 10px;">#해쉬태그</span>
                         <button class="w3-button w3-black w3-round" id="likeBtn">
-	                       	<i class="fa fa-heart" style="font-size:15px">&nbsp;</i>
+	                       	<i class="fa fa-heart" style="font-size:15px"></i>
 	                    </button>
                         <!-- 
                         <c:choose>
@@ -237,132 +233,228 @@
                
                 <br>
          
-            <table id="replyArea" class="reply" align="center">
-            	<thead>
-            		<tr>
-            			<c:if test="${ !empty loginUser }">
-            				<th colspan="2" style="width:80%">
-            					<textarea class="form-control" id="replyContent" row="2" style="resize:none; width:100%" ></textarea>
-            					
-            				</th>
-            				<th>
-            					<button class="btn btn-secondary" id="addReply">등록하기</button>
-            				</th>
-            			</c:if>
-            			<c:if test="${ empty loginUser }">
-                        	<th colspan="2" style="width:80%">
-	                            <textarea class="form-control" rows="2" style="resize:none; width:100%" readonly>로그인한 사용자만 사용가능한 서비스입니다. 로그인 후 이용해주세요.</textarea>
-	                        </th>
-	                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
-                        </c:if>
-                    </tr>
-                    <tr>
-                    	<td colspan="3">댓글 (<span id="rcount">0</span>)</td>
-                    	
-                    </tr>
-            	</thead>
-            	<tbody class="replyZone">
-            	
-            	</tbody>
-            </table>
-             <script>
-   $(function(){
-	   selectReplyList();
-   		$("#addReply").click(function(){
-   			var vno = "${vo.volNo}";
-   			
-   			if($("#replyContent").val().trim().length != 0){
-   				$.ajax({
-   					url:"rinsert.vo",
-   					type:"post",
-   					data:{eventReplyContent:$("#replyContent").val(),
-   							volRefNo : vno,
-   							eventReplyWriter:"${loginUser.userId}"   							
-   					},
-   					success:function(result){
-   						if(result > 0){
-   							$("#replyContent").val("");
-   							selectReplyList();
-   						}else{
-   							alert("댓글등록실패 ");
-   						}
-   					},
-   					error:function(){
-   						console.log("댓글 작성 ajax 통신실패");
-   					}
-   				});
-   			}else {
-   				alert("댓글을 등록 하세요");
-   			}
-   		});
-   });
-   
-   function selectReplyList(){
-	   var eno = "${vo.volNo}";
-	   $.ajax({
-		   url:"rlist.vo",
-		   data:{vno:vno},
-		   type:"get",
-		   success:function(list){
-			   $("#rcount").text(list.length);
-			   
-			   var value="";
-			   
-			   $.each(list, function(i, er){
-				   value += "<tr>"
-					    "<th>" + vr.volReplyWriter + "</th>" +
-			   			"<td>" + vr.volReplyContent + "</td>" + 
-			   			"<td>" + vr.volReplyDate + "</td>" ;
-				   
-				   if("${loginUser.userId}" == obj.volReplyWriter){
-				   	value += "<td><input type='button' class='replyBtn' onclick='updateReply();' value='수정'></td>" +
-							"<td><input type='button' class='replyBtn' onclick='deleteReply();' value='삭제'></td>" +
-						   	"</tr>";
-				   }else{
-						value += "</tr>";
-				   }
-			   });
-			   $(".replyZone").html(value);
-		   }, 
-		   error:function(){
-			   console.log("댓글 리스트 조회용 ajax 통신실패 ");
-		   }
-	   });
-   };
-   
-  
-   </script>
-         
+            <section id="replyArea" class="reply-container">
+				<div id="reply-insert" class="container">
+					<div id="reply-insert-info">
+						<c:if test="${not empty loginUser}">
+							<textarea type="text" id="replyContent" class="col-md-10"
+								placeholder="댓글을 입력하세요" style="resize: none;"></textarea>
+								
+							<button type="button" id="addReply" class="btn-insert-reply">등록</button>
+						
+						</c:if>
+						<c:if test="${ empty loginUser}">
+							<textarea type="text" id="replyContent" class="col-md-10"
+								placeholder="로그인한 유저만 사용할 수 있는 서비스 입니다." style="resize: none;"
+								disabled></textarea>
+						</c:if>
+					
+					</div>
+				</div>
+				<br>
+				<br>
+				
+				<div id="replyList">
+				
+				</div>
+			</section>
+         	<br>
+         	<br>
+         	<br>
+         	
             <div class="btn_event_wrap">
             	
 	            	<c:if test="${ !empty loginUser }">
 	            		<div>
-	            			<button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</button>
-	            			<button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</button>
+	            			<button class="btn btn-primary" onclick="updateForm();">수정</button>
+	            			<button class="btn btn-danger" onclick="deleteVol();">삭제</button>
 	            		</div>
 		            	<form id="postForm" method="post" action="">
 	            			<input type="hidden" name="vno" value="${ vo.volNo }">
+	            			<input type="hidden" name="fileName" value="${ vo.volChange }"> 
+					
 						</form>
 						<script>
-	            		function postFormSubmit(n){
-	            			var post = $("#postForm");
-	            			if(n == 1){
-	            				post.attr("action", "updateForm.vo");
-	            			}else{
-	            				post.attr("action", "delete.vo");
-	            			}
+	            		var post = $("#postForm");
+	            		function updateForm(){
+	            			post.attr("action", "updateForm.vo");
 	            			post.submit();
+	            		}
+	            		function deleteVol(){
+	            			swal.fire({
+	        	                title: '확인', 
+	        	                text: "정말 게시글을 삭제하시겠습니까?", 
+	        	                type: 'warning', 
+	        	                confirmButtonText: '삭제', 
+	        	                showCancelButton: true,     
+	        	                cancelButtonText: '취소', 
+	        	                cancelButtonColor: "#f3969a",
+	        	                confirmButtonColor: "#3cb371"
+	        	            }).then(function(result) { 
+	        	                if(result.value) {             
+	        	                
+	        	                	post.attr("action", "delete.vo");
+	        						swal.fire(
+	        							{title: '삭제',
+	        							 text: '성공적으로 삭제되었습니다.',
+	        							 type: 'success',
+	        							 confirmButtonColor: "#78c2ad"}).then(function(result){
+	        			
+	        						$("#postForm").submit();
+	        					});
+	        	                
+	        	            } else if(result.dismiss === 'cancel') { 
+	        	                swal.fire('취소', '삭제가 취소되었습니다.', 'error');
+	        	         
+	        	            }
+	        	        });
 	            		}
 	            		</script>            		
 	            	</c:if>
 	            	
             	
-                <input class="btn_event" type="button" value="목록" onclick="location.href='list.vo'">
+                <input class="btn_vol" type="button" value="목록" onclick="location.href='list.vo'">
             </div>
         </section>  
        
     </div>
    
+<script>
+		$(function() {
+			selectReplyList();
+			
+			$("#addReply").click(function() {
+				var vno = "${vo.volNo}";
+
+				if ($("#replyContent").val().trim().length != 0) {
+					$.ajax({
+						url : vno + "/rinsert.vo",
+						type : "post",
+						data : {
+							volReplyContent : $("#replyContent").val(),
+							volRefNo : vno,
+							volReplyWriter : "${loginUser.userId}"
+						},
+						success : function(result) {
+							if (result > 0) {
+								$("#replyContent").val("");
+								selectReplyList();
+
+							} else {
+								alert("댓글등록실패");
+							}
+						},
+						error : function() {
+							console.log("댓글 작성 ajax 통신 실패");
+						}
+					});
+
+				} else {
+					alert("댓글 내용이 비어있습니다.");
+				}
+
+			});
+		});
+		function deleteReply(vno, replyNo) {
+			if (confirm("댓글을 삭제하시겠습니까? 예: 삭제, 아니오:삭제 취소")) {
+				$.ajax({
+					url : vno + "/volunteer/" + replyNo + "/deleteReply.vo",
+					type : "get",
+					data : {"vno":vno,
+							"replyNo":replyNo},
+					success : function() {
+						alert("댓글이 삭제되었습니다.");
+						selectReplyList();
+					},
+					error : function() {
+						console.log("댓글 리스트조회용 ajax 통신 실패");
+					}
+				});
+			} else {
+				alert("댓글 삭제가 취소되었습니다.");
+			}
+
+		}
+		
+		function selectReplyList() {
+			const vno = "${vo.volNo}";
+			const nowLink = document.location.href;
+			console.log(nowLink);
+			$.ajax({
+						url : vno + "/rlist.vo",
+						type : "get",
+						success : function(volReplyList) {
+							var value = "";
+							$.each(volReplyList,function(i, r) {
+												if("${loginUser.userId}" != r.volReplyWriter){
+													value +=`<div class="reply-group">
+														<input type="hidden" name="replyNo" class="replyNo" value="`+r.volReplyNo+`"/>
+														&emsp;&emsp;<div style="display:inline-block; text-align:left;"><span class="replyWriterNickName">`+r.volReplyWriter+`</span>&emsp; : &emsp;</div>
+														<div style="display:inline-block;" class="replyContent">`+ r.volReplyContent+ `</div>
+													<div style="display:inline-block; text-align:right;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="replyCreateDate">`+ r.volReplyDate+ `</span></div>`;
+												}else if ("${loginUser.userId}" == r.volReplyWriter) {
+													value +=
+														`<div class="reply-group">
+														<input type="hidden" name="replyNo" class="replyNo" value="`+r.volReplyNo+`"/>
+															&emsp;&emsp;<div style="display:inline-block; text-align:left;"><span class="replyWriterNickName">`+r.volReplyWriter+`</span>&emsp; : &emsp;</div>
+															<div style="display:inline-block;" class="replyContent">`+ r.volReplyContent+ `</div>
+														<div style="display:inline-block; text-align:right;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="replyCreateDate">`+ r.volReplyDate+ `</span></div>
+														<div class="aArea" style="display:inline-block;"> <button class="btn-reply" onclick="updateReplyArea();">수정</button>
+														<button class="btn-reply" onclick="deleteReply(`+ vno + `,`	+ r.volReplyNo+ `);">삭제</button></div></div>`;
+												}
+												if(i< volReplyList.length-1){
+													value+=`<hr>`;
+												}
+												value+=`</div>`;
+											});
+							$("#replyList").html(value);
+						},
+						error : function() {
+							console.log("댓글 리스트조회용 ajax 통신 실패");
+						}
+					});
+
+		}
+	function updateReplyArea(){
+		const idx=$(".reply-group").index(event.target.parentElement.parentElement);
+		const content=$('.replyContent').html();
+		console.log(content);
+		
+		$(".reply-group").eq(idx).children('.replyContent').html(`<textArea style='width:100%;padding:4px;'>`+content.replaceAll('<br>','\n')+`</textArea>`);
+		$(".reply-group").eq(idx).children('.aArea').html(`<button class="btn-reply" onclick="updateReply();">저장</button><button class="btn-reply" onclick="selectReplyList();">취소</button>`);
+		
+	}
+	
+	function updateReply(){
+		if(confirm("정말로 수정하시겠습니까?")){
+		const vno = "${vo.volNo}";
+		const idx=$(".reply-group").index(event.target.parentElement.parentElement);
+		console.log(idx);
+		const content=$(".reply-group").eq(idx).children('.replyContent').children("textArea").val().replaceAll('\n','<br>');
+		console.log(content);
+		const replyNo=$(".reply-group").eq(idx).children('.replyNo').val();
+		console.log(replyNo);
+		
+		$.ajax({
+			url : vno + "/volunteer/" + replyNo + "/updateReply.vo",
+			type : "post",
+			data:{
+				volReplyContent:content
+				
+			},
+			success : function() {
+				alert("댓글이 수정되었습니다.");
+				selectReplyList();
+			},
+			error : function() {
+				console.log("댓글 리스트조회용 ajax 통신 실패");
+			}
+		});
+		
+		}
+		
+	}
+	</script>  
   
 
 <jsp:include page="../common/footer.jsp" />

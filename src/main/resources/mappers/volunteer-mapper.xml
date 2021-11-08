@@ -51,9 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
    
    <update id="countVolunteer" parameterType="_int">
-   		UPDATE VOLUNTEER SET
-   		VOL_COUNT = VOL_COUNT+1
-   		WHERE VOL_NO=#{vno}
+   		UPDATE VOLUNTEER 
+   		SET	VOL_COUNT = VOL_COUNT+1
+   		WHERE VOL_NO = #{vno}
    		
    </update>
    <select id="choseList" resultMap="volunteerResultMap">
@@ -72,4 +72,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM VOLUNTEER
 		WHERE VOL_STATUS = 'Y' 
 	</select>
+	<update id="deleteVolunteer" parameterType="_int">
+		UPDATE VOLUNTEER 
+		SET VOL_STATUS = 'N'
+		WHERE  VOL_NO=#{vno}
+	</update>
+	<update id="updateVolunteer" parameterType="Volunteer">
+		UPDATE VOLUNTEER 
+		SET VOL_TITLE=#{volTitle}, VOL_CONTENT=#{volContent}, VOL_ORIGIN=#{volOrigin}, 
+			VOL_CHANGE=#{volChange}, VOL_CATEGORY=#{volCategory}
+		WHERE  VOL_NO=#{volNo}
+	</update>
+	<select id="searchList" resultMap="volunteerResultMap">
+		SELECT *
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' AND VOL_TITLE LIKE '%'||#{keyword}||'%' 
+	</select>
+	
+	<!-- Reply -->
+	<insert id="insertReply" parameterType="VolunteerReply">
+		INSERT INTO VOLUNTEER_REPLY
+		VALUES (SEQ_VOL_REPLY.NEXTVAL, #{volRefNo}, #{volReplyWriter}, #{volReplyContent}, DEFAULT, SYSDATE)
+	</insert>
+	<select id="replyList" parameterType="_int" resultMap="volunteerReplyResultMap">
+		SELECT *
+		FROM VOLUNTEER_REPLY
+		WHERE VOL_REF_NO=#{vno} AND VOL_REPLY_STATUS='Y'
+		ORDER BY VOL_REPLY_NO DESC
+	</select>
+	<update id="replyUpdate" parameterType="VolunteerReply">
+		UPDATE VOLUNTEER_REPLY
+		SET VOL_REPLY_CONTENT=#{volReplyContent}
+		WHERE VOL_REPLY_NO=#{volReplyNo}
+	</update>
+	<update id="deleteReply" parameterType="_int">
+		UPDATE VOLUNTEER_REPLY
+		SET VOL_REPLY_STATUS = 'N'
+		WHERE VOL_REPLY_NO=#{replyNo}
+	</update>
 </mapper>

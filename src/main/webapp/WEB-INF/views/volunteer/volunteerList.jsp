@@ -34,7 +34,7 @@
         .active{
             background-color: rgb(142, 211, 173);
         }
-        input, enrollBtn{
+        button, enrollBtn{
             transition:0.5s;
             cursor:pointer;
             float: center;
@@ -43,13 +43,14 @@
             border: none;
             background-color: rgb(241, 241, 241);
         }
-        input:hover , enrollBtn:hover {
+        button:hover , enrollBtn:hover {
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        .card-img{
+         #card-img{
             height:200px;
             width:100%;
+            padding: 0;
           }
           
           div[class^="col-"]{
@@ -67,22 +68,16 @@
               display: table-cell;
               vertical-align: top;
           }
-          .card{
-            transition:0.5s;
-            cursor:pointer;
-          }
+          
           .card-title{  
-            font-size:18px;
+            font-size:20px;
             transition:1s;
             cursor:pointer;
           }
          
-          .card:hover{
-            transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
+          
           .card-text{
-            height:80px;  
+            height:30px;  
           }
           
           .card::before, .card::after {
@@ -96,6 +91,7 @@
             background: rgba(255, 255, 255, 0.1);
             content: '';
             pointer-events: none;
+            border: none;
           }
           .card::before {
             transform-origin: left top;
@@ -106,7 +102,7 @@
           .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
             transform: scale3d(1, 1, 1);
           }
-
+          
           .container_footer{
               margin-right:220px;
               float:right;
@@ -120,18 +116,33 @@
          	max-width:100px;
          	background-color: rgb(142, 211, 173);
          }
-        #boardCard{
-            max-height:300px;
-            width:100%;
+        #volCard{
         	transition:0.5s;
             cursor:pointer;
-        	background-color: rgb(142, 211, 173);
+        	margin: 50px;
+        	padding: 0;
         }
-        #boardCard:hover {
+        #volCard:hover{
         	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-         
+         #searchBtn{
+         	transition:0.5s;
+         	cursor:pointer;
+            padding: 0;
+         }
+         #searchBtn:hover{
+         	transform: scale(1.05);
+            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+        
+         }
+        #card-img img{
+        	height:100%;
+        	width:100%;
+        }
+        .card{
+        	text-align:center;
+        }
     </style>
 </head>
 <body>
@@ -144,12 +155,12 @@
             <br>
             <form method="post" class="categoryForm">
 	            <div id="statusArea">
-	                <input type="button" id="allBtn" value="전체" class="active" />
-	                <input type="button" id="seaBtn" value="바다" />
-	                <input type="button" id="mountinBtn" value="산" />
-	                <input type="button" id="villageBtn" value="동네" />
-	                <input type="button" id="animalBtn" value="동물" />
-	                <input type="button" id="etcBtn" value="기타" />
+	                <button type="button" id="allBtn" value="전체" class="active" > 전체 </button>
+	                <button type="button" id="seaBtn" value="바다" > 바다 </button>
+	                <button type="button" id="mountinBtn" value="산" > 산 </button>
+	                <button type="button" id="villageBtn" value="동네" > 동네 </button>
+	                <button type="button" id="animalBtn" value="동물" > 동물 </button>
+	                <button type="button" id="etcBtn" value="기타" > 기타 </button>
 	            </div>
             </form> 
             <div>
@@ -165,38 +176,41 @@
         </div>
         <br>
         <div class="row">
+            <div class="card-deck" id="boardCard">
             <c:forEach items="${ list }" var="vo">
-            <div class="col-md-6 col-lg-3 col-xl-3" id="boardCard">
             	<p style="display:none" > ${ vo.volNo } </p>
-                <div class="card ">
-                    <div class="card-img-top">
-                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${vo.volChange}"  alt="" class="content-img">
+                <div class="card col-md-8" id="volCard">
+                    <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img" >
+                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${vo.volChange}"  alt="" class="content-img" >
                     </div> 
-                    <div class="card-content">
+                    <div class="card-body">
 	       	        	<p class="card-title mt-3 mb-3">${ vo.volTitle }</p>
 	                	<p class="card-user">${ vo.volWriter }</p>
 	                	<p class="card-data">조회수 : ${ vo.volCount } <span>좋아요 : 0 </span></p> 
                 	</div>
                 </div>
-            </div>
         	</c:forEach>
-            <br>
-    </div>
-     <hr>
-     <br>
-         <!-- Footer Search Area -->
-        <div class="container_footer">
-            <div class="input-group icons">
-                <form id="searchBoardForm" class="form-inline">
-                    <div class="input-group text-center mb-3">
-                        <p class="icon-searchBox">
-                            <span id="icon-search" class="glyphicon glyphicon-search" ></span>
-                            <input name="findBoard" type="search" class="form-control" placeholder="전체 게시글 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
-                        </p>
-                    </div>                    
-                </form>    
             </div>
-        </div>
+            <br>
+	    </div>
+	     <hr>
+	     <br>
+         <!-- Footer Search Area -->
+        		<div class="header-left">
+                    <div class="input-group icons">
+                    <form id="searchForm" class="form-inline" method="post">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <div class="input-group text-center mb-3">
+                        	<input name="keyword" type="search" class="form-control" placeholder="게시글 검색하기" aria-label="Search Dashboard">
+                        	<div class="input-group-append">
+                        		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
+                        	</div>
+                        </div>
+                    </form>    
+                    </div>
+                </div>
           <!-- ========================= 
             Paging Area 
         ========================= --> 
@@ -279,7 +293,7 @@
     }
     
     
-    $('#statusArea input').click(function(){
+    $('#statusArea button').click(function(){
     	var chose = $(this).val();
     	if(chose == "전체"){
     		$.ajax({
@@ -317,6 +331,22 @@
 			location.href="detail.vo?vno=" + $(this).children().eq(0).text();
 		});
 	});
+    
+    function getSearchList(){
+    	var search = $(this).val();
+    	$.ajax({
+    		type: "post",
+    		url : "search.vo",
+    		cache: false,
+    		data: {"search":search},
+    		success : function(data){
+    			$("body").html(data);
+    		},
+    		error: function(data){
+    			alert("error");
+    		}
+    	});
+    }
     </script>
 
 <jsp:include page="../common/footer.jsp" />

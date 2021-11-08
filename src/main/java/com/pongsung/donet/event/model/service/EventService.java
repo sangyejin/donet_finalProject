@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 
@@ -38,6 +39,8 @@ public interface EventService {
 	int replyUpdate(EventReply eventReply);
 
 	int deleteReply(int replyNo);
+
+	ArrayList<Volunteer> searchList(PageInfo pi, String keyword);
 
 
 

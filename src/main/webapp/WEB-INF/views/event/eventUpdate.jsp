@@ -56,7 +56,7 @@
     .row{
     	min-width:800px;
     }
-    .img{
+    #thumImg{
    		width: 150px;
    		height: 150px;
    		margin: 10px;
@@ -88,75 +88,11 @@
        			</tr>
        			<tr class="form-group">
        				<th><label for="thum">썸네일 이미지</label></th>
-       				<td><img alt="" src="${ pageContext.servletContext.contextPath }/resources/upload_files/event/${ev.eventChange}" id="thumImg" class="img" ></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
+       				<td><img id="thumImg" src="${pageContext.request.contextPath}/resources/upload_files/${ev.eventChange}"  alt="" class="content-img"></td>
        			</tr>
-       			<tr>
-       				<th><label for="">추가 등록</label></th>
-       				<td>
-       				<c:if test="${ !empty at }">
-	       				<c:forEach var="at" items="${ at }">
-	       					<img class="img" id="plusImg1" src="${ pageContext.servletContext.contextPath }/resources/upload_files/event/${at.changeName}" >
-	       				</c:forEach>
-	       			</c:if>
-       				</td>       			
-       			</tr>
-       			
-       			<tr class="form-group">
-       				<th colspan="2"><label for="content">내용</label></th>
-       			</tr>
-       			<tr class="form-group">
-       				<th colspan="2"><textarea rows="10" class="form-control" name="eventContent" id="content" style="resize:none" required>${ ev.eventContent }</textarea></th>
-       			</tr>
-       			<tr class="form-group">
-       				<th><label for="upfile">첨부파일</label></th>
-       				<td><input type="file" id="upfile" class="form-control-file border" name="uploadFile"></td>
-       			</tr>
-       		</table>
-       		<div id="fileArea">
-       				<input type="file" name="thumFile" id="thumFile" onchange="thum(this, 0);">
-       				<input type="file" name="plusFile" id="plusFile1" onchange="thum(this, 1);">
-       				<input type="file" name="plusFile" id="plusFile2" onchange="thum(this, 2);">
-       				<input type="file" name="plusFile" id="plusFile3" onchange="thum(this, 3);">
-       			</div>
-       		<script type="text/javascript">
-	       		$(function(){
-	       			$("#fileArea").hide();
-	       			$("#thumImg").click(function(){
-	       				$("#thumFile").click();
-	       			});
-	       			$("#plusImg1").click(function(){
-	       				$("#plusFile1").click();
-	       			});
-	       			$("#plusImg2").click(function(){
-	       				$("#plusFile2").click();
-	       			});
-	       			$("#plusImg3").click(function(){
-	       				$("#plusFile3").click();
-	       			});
-	       		});
-	       		function thum(inputFile, num){
-	       				if(inputFile.files.length == 1){
-	       					var reader = new FileReader();
-	       					reader.readAsDataURL(inputFile.files[0]);
-	       					reader.onload = function(e){
-	       						switch(num){
-	       							case 0:
-	       								$("#thumImg").attr("src", e.target.result);
-	       								break;
-	       							case 1:
-	       								$("#plusImg1").attr("src", e.target.result);
-	       								break;
-	       							case 2:
-	       								$("#plusImg2").attr("src", e.target.result);
-	       								break;
-	       							case 3:
-	       								$("#plusImg3").attr("src", e.target.result);
-	       								break;
-	       						}
-	       					}
-	       				}
-	       			}
-	       	</script>
+       		</table>       		
+       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7">${ ev.eventContent }</textarea>
        		<br>
        		<div class="submitBtn">
        			<button type="submit" class="btn btn-primary">등록하기</button>
@@ -168,7 +104,51 @@
     </div>
  </div>
   <script>
- 
+
+	function loadImg(){
+		if(inputFile.files.length == 1){
+			var reader = new FileReader();
+			
+			reader.onload = function(e){
+				$("#thum").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(inputFile.files[0]);
+		}
+	}
+
+			$("#summernote").summernote({
+				height: 500, 
+				width: 1000,
+		    	minHeight: null,            
+		    	maxHeight: null,            
+		    	focus: true,           
+		    	disableResizeEditor: true,
+ 	   		callbacks: {
+		    		onImageUpload: function(files, editor, welEditable){
+			    		for(var i = files.length - 1; i>=0; i--){
+			    			sendFile(files[i],this);	  
+			    		}	
+		    		}
+ 	   			}
+			});
+		
+		function sendFile(file, el){
+				var data = new FormData();
+				data.append("file", file);	
+				$.ajax({
+					data : data,
+					type : "POST",
+					url : "imageFile.ev",
+					cache : false,
+					contentType : false,
+					processData : false,
+					enctype : "multipart/form-data",
+					success : function(data){
+						$(el).summernote('editor.insertImage', data.url);
+						
+					}
+				});
+			}
   $(document).ready(function () {
           $.datepicker.setDefaults($.datepicker.regional['ko']); 
           $( "#datepickerStart" ).datepicker({
@@ -208,7 +188,7 @@
   });
 
   </script>
-
+<script src="resources/js/bootstrap.min.js"></script>
 <jsp:include page="../common/footer.jsp" />
 </body>
 </html>
