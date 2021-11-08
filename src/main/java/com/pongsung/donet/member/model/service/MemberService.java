@@ -54,12 +54,20 @@ public interface MemberService {
 
 	void insertReview(Review review);
 
-	Review selectReview(int rno);
+	Review selectReview(int reNo);
 
-	List<ReviewImage> selectReviewImage(int rno);
+	List<ReviewImage> selectReviewImage(int reNo);
 
 	ArrayList<ReviewComment> selectReviewReplyList(int reNo);
 
 	int insertReviewReply(ReviewComment rc);
+
+	int deleteReviewReply(int reNo);
+
+	int updateReviewReply(ReviewComment rc);
+
+	int deleteReview(int reNo);
+
+	void updateReview(Review review, List<ReviewImage> reImgList);
 	
 }

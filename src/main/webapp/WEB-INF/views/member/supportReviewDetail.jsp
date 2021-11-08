@@ -7,17 +7,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
 
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
-	
-<!-- Latest compiled and minified CSS -->
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
+	rel="stylesheet">
+    
+	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
     <!-- jQuery library -->
@@ -25,6 +25,8 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
+	
 	
 
 <title>도넷닷컴</title>
@@ -110,24 +112,6 @@ c {
 	text-align: right;
 }
 
-.progressbar {
-	display: inline-block;
-	width: 260px;
-	height: 13px;
-	border: 1px solid rgb(85, 85, 85);
-	border-radius: 10px;
-	align: center;
-	margin-left: 13%;
-}
-
-.progressbar>.gauge {
-	display: inline-block;
-	height: 13px;
-	background-color: rgb(60, 179, 113);
-	border-radius: 10px;
-	margin-left: -2px;
-	margin-bottom: 5px;
-}
 
 #thumbnailImg {
 	width: 450px;
@@ -140,13 +124,6 @@ c {
 	width: 1050px;
 	height: 100px;
 	display: inline-block;
-}
-
-#person {
-	flex: 1;
-	float: left;
-	margin-left: 8%;
-	margin-right: 2%;
 }
 
 #total {
@@ -381,7 +358,7 @@ c {
 	margin-left: 5%;
 }
 
-#replyContent {
+#reContent {
 	width: 800px;
 	height: 38px;
 	border-radius: 7px;
@@ -421,7 +398,7 @@ d {
 	word-break: break-all;
 }
 
-#registration, #toEdit, #delete {
+#registration, #toEdit, #reviewDelete {
 	cursor: pointer;
 	color: rgb(60, 179, 113);
 	font-size: 13px;
@@ -445,6 +422,8 @@ d {
 
 </style>
 </head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <body class="dark-theme || light-theme">
 	<jsp:include page="../common/menubar.jsp" />
 	
@@ -485,15 +464,32 @@ d {
 				<div class="title" id="reDate">
 					<span><d>후기 작성할 날짜 : ${ rv.reDate } </d></span>
 				
-
-				</div>		
 			
+				</div>		
+				<c:if test="${ !empty loginUser }">
 					<span><button type="button" id="toEdit"
-						onclick="location.href='supportReviewWrite.me'">수정하기</button></span>
+						onclick='reviewInfoPost(1)'>수정하기</button></span>
 				
-					<span><button type="button" id="delete"
-						onclick="location.href='supportReviewWrite.me'">삭제하기</button></span>			
-				
+					<span><button type="button" id="reviewDelete"
+						onclick= 'deleteReview("${rv.reNo}")'>삭제하기</button></span>	
+						
+					<form id="postReviewInfo" method="post" action="">
+						<input type="hidden" name="reviewNum" value="${ rv.reNo }">
+					</form>	
+					
+					<script>
+					function reviewInfoPost(reNo){
+						var postForm = $("#postReviewInfo");
+																							
+						if(reNo == 1){
+							postForm.attr("action", "supportReviewUpdate.me?reNo=${rv.reNo}");
+						}
+						
+						postForm.submit();
+					}
+	            		</script>
+								
+				</c:if>
 			</div>
 			<div class="description">
 				
@@ -522,7 +518,7 @@ d {
 					<div>
 						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 						<span style="margin-left: 3%;"><input type="text"
-							id="replyContent" placeholder="내용을 입력해주세요"></span> <span
+							id="reContent" placeholder="내용을 입력해주세요"></span> <span
 							style=""><input type="submit" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
 					</div>
                         </c:if>
@@ -530,31 +526,32 @@ d {
 					<div>
 						<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
 						<span style="margin-left: 7%;"><input type="text"
-							id="replyContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span> <span
+							id="reContent" placeholder="도넷닷컴의 회원이 되어주세요!" disabled></span> <span
 							style=""><input type="submit" class="btn btn-secondary" id="addReply" style="width:100px;" value="댓글등록" ></span>
 					</div>
                         </c:if>
-            <table id="replyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>작성일</th>
+           <table id="replyArea" class="table" align="center">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>작성일</th>
 						<th colspan="1">아이디</th>
-						<th colspan="6">댓글(<span id="rcount">0</span>)</th>
-                        <th></th>
+						<th colspan="6">댓글(<span id="rcount">0</span>)
+						</th>
+						<th></th>
 						<th colspan='2'></th>
-                    </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
 
 		</div>
 
 	</div>
 	
-	<script src="bootstrap-modal-wrapper-factory.min.js"></script>	
+	
 	<!-- 댓글 수정 시 모달 -->
 	
 	<div class="modal fade" id="modifyModal" role="dialog"> 
@@ -594,85 +591,97 @@ d {
 	</div>
 	
      <script>
-   		 <!--ajax 댓글작성-->
-   		$(function(){
-    		selectReplyList();
-    		
-    		$("#addReply").click(function(){
-        		var rno = ${r.reNo};
+     <!--ajax 댓글작성-->
+		$(function() {
+			selectReplyList();
 
-    			if($("#replyContent").val().trim().length != 0){
-    				
-    				$.ajax({
-    					url:"insertReComent.me",
-    					type:"post",
-    					data:{replyContent:$("#replyContent").val(),
-    						  reBno:reNo,
-    						  reWriter:"${loginUser.userId}"},
-    					success:function(result){
-    						if(result > 0){
-    							$("#replyContent").val("");
-    							selectReplyList();
-    							
-    						}else{
-    							alert("댓글등록실패");
-    						}
-    					},error:function(){
-    						console.log("댓글 작성 ajax 통신 실패");
-    					}
-    				});
-    				
-    			}else{
-    				alert("댓글을 입력해주세요");
-    			}
-    			
-    		});
-    	});
-    	
-    	function selectReplyList(){
-    		var rno = ${r.reNo};
-    		$.ajax({
-    			url:"reList.me",
-    			data:{reNo:reNo},
-    			type:"get",
-    			success:function(commentList){
-    				$("#rcount").text(commentList.length);
-    				
-					var num= commentList.length
-    				var value="";
-    				$.each(commentList, function(i, obj){
-    					
-    					value += "<tr>"+
-    								"<td>" + num-- + "</td>" +
-    								"<td>" + obj.reCreateDate + "</td>" +
-    					 		 	"<td colspan='1'>" + obj.reWriter + "</td>" + 
-   								 	"<td colspan='6' style='text-align:left;'>" + obj.reContent + "</td>" 
-    								 
-   								 
-   		    					if("${loginUser.userId}" == obj.reWriter){
-   		    						value += "<td colspan='2' style='border-top: 1px solid #808080;'>"+
-												"<div>"+
-													"<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+obj.reNo+")'></span>"+
-													"<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"+
-												"</div>"+
-   		    								"</td>";
-   		    					}else{
-   		    						value += "<td></td>";
-   		    					} 								 
-   						value += "<td style='visibility:hidden; border-top: 1px solid #808080;'>" + obj.reNo + "</td></tr>";
-    				});
-    				$("#replyArea tbody").html(value);
-    			},
-    			error:function(){
-    				console.log("댓글 리스트조회용 ajax 통신 실패");
-    			}
-    		});
-    	}
+			$("#addReply").click(function() {
+				var reNo = "${rv.reNo}";
+
+				if ($("#reContent").val().trim().length != 0) {
+
+					$.ajax({
+						url : "insertReComent.me",
+						type : "post",
+						data : {
+							reContent : $("#reContent").val(),
+							reBno : reNo,
+							reWriter : "${loginUser.userId}"
+						},
+						success : function(result) {
+							if (result > 0) {
+								$("#reContent").val("");
+								selectReplyList();
+
+							} else {
+								alert("댓글등록실패");
+							}
+						},
+						error : function() {
+							console.log("댓글 작성 ajax 통신 실패");
+						}
+					});
+
+				} else {
+					alert("댓글을 입력해주세요");
+				}
+
+			});
+		});
+
+		function selectReplyList() {
+
+			var reNo = "${rv.reNo}";
+			console.log(reNo)
+			$.ajax({
+						url : "rvList.me",
+						dataType : "json",
+						contentType: "application/json; charset=utf-8",
+						headers: { 
+						    Accept : "application/json"
+						},
+						data : {reNo : reNo},
+						type : "get",
+						success : function(commentList) {
+									$("#rcount").text(commentList.length);
+
+
+									var num = commentList.length
+									var value = "";
+									$.each(commentList, function(i, obj) {
+
+
+												value += "<tr>"
+															+ "<td>"+ num--+ "</td>"
+															+ "<td>"+ obj.reCreateDate+ "</td>"
+															+ "<td colspan='1'>"+ obj.reWriter+ "</td>"
+															+ "<td colspan='6' style='text-align:left;'>"+ obj.reContent+ "</td>"
+
+												if ("${loginUser.userId}" == obj.reWriter) {
+													value += "<td colspan='2' style='border-top: 1px solid #808080;'>"
+																+ "<div>"
+																	+ "<span style='margin-left:60px;'><input type='submit' id='delete' value='삭제' onclick='deleteReply("+ obj.reNo+ ")'></span>"
+																	+ "<span style='display:inline-block; float:right;'><button id='update' data-toggle='modal' data-target='#modifyModal'>수정</button></span>"
+																+ "</div>"
+															+ "</td>";
+												} else {
+													value += "<td></td><td></td>";
+												}
+												value += "<td style='visibility:hidden; border-bottom: 1px solid #808080;'>"+ obj.reNo+ "</td></tr>";
+											});
+							$("#replyArea tbody").html(value);
+						},
+						error : function() {
+							console.log("댓글 리스트조회용 ajax 통신 실패");
+							console.log(reNo)
+						}
+					});
+		}
     	
     	function deleteReply(reNo){
     		if (confirm("댓글을 삭제하시겠습니까?(Y/N)")) {
 				$.ajax({
-					url : "delete.re/"+reNo,
+					url : "reReplydelete.me/"+reNo,
 					type : "get",
 					success : function() {
 						alert("댓글이 삭제되었습니다");
@@ -706,18 +715,18 @@ d {
     	
     	function updateReply(){
     		if(confirm("댓글을 수정하시겠습니까?(Y/N)")){
-    		const reNo = "${r.reNo}";
-    		console.log(reNo);
-    		const content=$('#reply_text').val();
-    		console.log(content);
+    		const reNo = "${rv.reNo}";
+    		console.log("댓글 번호"+reNo);
+    		const reContent=$('#reply_text').val();
+    		console.log(reContent);
     		const reBno=$('#reply_rno').val();
     		console.log(reBno);
     		
     		$.ajax({
-    			url : "update.re/"+suNo+"/"+replyNo,
+    			url : "reReviewupdate.me/"+reBno+"/"+reNo,
     			type : "post",
     			data:{
-    				replyContent:content
+    				reContent:reContent
     			},
     			success : function() {
     				alert("댓글이 수정되었습니다");
@@ -732,6 +741,48 @@ d {
     }
 
     </script>
+    
+    <script>
+    
+    function deleteReview(reNo){
+		if (confirm("후기을 삭제하시겠습니까?(Y/N)")) {
+			$.ajax({
+				url : "Reviewdelete.me/"+reNo,
+				type : "get",
+				success : function() {
+					alert("후기가 삭제되었습니다");
+					location.href="supportReviewList.me";
+				},
+				error : function() {
+					console.log("댓글 리스트조회용 ajax 통신 실패");
+				}
+			});
+		} else {
+			alert("후기 삭제가 취소되었습니다");
+		}	
+	}
+    
+    
+    function fixReview(reNo){
+		if (confirm("후기을 삭제하시겠습니까?(Y/N)")) {
+			$.ajax({
+				url : "Reviewdelete.me/"+reNo,
+				type : "get",
+				success : function() {
+					alert("후기가 삭제되었습니다");
+					location.href="supportReviewList.me";
+				},
+				error : function() {
+					console.log("댓글 리스트조회용 ajax 통신 실패");
+				}
+			});
+		} else {
+			alert("후기 삭제가 취소되었습니다");
+		}	
+	}
+    
+    </script>
+    
 	<script>
 		$('.slider-1 > .page-btns > div').click(function() {
 			var $this = $(this);
@@ -817,6 +868,6 @@ d {
 		});
 	</script>
 	
-
+	
 </body>
 </html>

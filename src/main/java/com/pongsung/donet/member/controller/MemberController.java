@@ -2,16 +2,16 @@ package com.pongsung.donet.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -30,11 +30,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
+import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.donation.model.vo.Sponsor;
-import com.pongsung.donet.donation.model.vo.SupporComment;
 import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
@@ -405,16 +404,20 @@ public class MemberController {
 		
 		// 후원 후기 상세보기로 이동
 		@RequestMapping("supportReviewDetail.me")
-			public ModelAndView supportReviewDetail(int rno, ModelAndView mv) {
-				System.out.println("선택한 후기 번호" + rno);
+			public ModelAndView supportReviewDetail(int reNo, ModelAndView mv) {
+				System.out.println("선택한 후기 번호" + reNo);
 				
-				Review rv = memberService.selectReview(rno);
-				List<ReviewImage> at = memberService.selectReviewImage(rno);
+				Review rv = memberService.selectReview(reNo);
+				List<ReviewImage> at = memberService.selectReviewImage(reNo);
 				
 				
 				mv.addObject("rv", rv).setViewName("member/supportReviewDetail");
 				mv.addObject("at", at).setViewName("member/supportReviewDetail");;
-			
+				
+				System.out.println("rv의 값 " + rv);
+				System.out.println("at의 값 " + at);
+				System.out.println("mv의 값 " + mv);
+				
 			return mv;
 		}
 		
@@ -455,9 +458,9 @@ public class MemberController {
 		
 		// 후원 후기 댓글 목록
 		@ResponseBody
-		@RequestMapping(value ="rvlist.me", produces = "application/json; charset=utf-8")
+		@RequestMapping(value = "rvList.me", headers="Accept=*/*" , produces = "application/json; charset=utf-8")
 		public String selectReviewReplyList(int reNo) {
-			
+			System.out.println("경로가 잘 가는지 확인");
 			ArrayList<ReviewComment> reviewCommentList = memberService.selectReviewReplyList(reNo);
 			System.out.println("reviewCommentList의 값 : " + reviewCommentList);
 			
@@ -471,5 +474,114 @@ public class MemberController {
 			
 			return String.valueOf(result);
 			
+		}
+		
+		@ResponseBody
+		@RequestMapping(value="reReplydelete.me/{reNo}")
+		public String deleteReviewReply(@PathVariable("reNo") int reNo) {
+			int result = memberService.deleteReviewReply(reNo);
+			System.out.println("reNo의 값 :" + reNo);
+			System.out.println("result의 값 : " + result);
+			
+			return String.valueOf(result);
+			
+		}
+		
+		@ResponseBody
+		@RequestMapping(value="reReviewupdate.me/{reNo}/{reBno}")
+		public String updateReviewReply(@PathVariable("reBno")int suNo, @PathVariable("reNo")int reNo, ReviewComment rc) {
+			rc.setReNo(reNo);
+			int result = memberService.updateReviewReply(rc);
+			return String.valueOf(result);
+		}
+		
+		@ResponseBody
+		@RequestMapping(value="Reviewdelete.me/{reNo}")
+		public String deleteReview(@PathVariable("reNo") int reNo) {
+			int result = memberService.deleteReview(reNo);
+			System.out.println("후기 reNo의 값 :" + reNo);
+			System.out.println("result의 값 : " + result);
+			
+			return String.valueOf(result);
+			
+		}
+		
+		@RequestMapping("updateReview.me")
+		public ModelAndView updateReview(Review review, ReviewImage reImg, ModelAndView mv, HttpServletRequest request, MultipartHttpServletRequest multiRequest, 
+				@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
+			
+			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+			System.out.println("작성된 후기를 수정중입니다.");
+			
+			Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
+			List<ReviewImage> reImgList = new ArrayList<>();
+			
+			Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
+			
+			for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
+				List<MultipartFile> fileList = entry.getValue();
+			
+			for(int i=0; i<fileList.size(); i++) {
+				String fileName = fileList.get(i).getOriginalFilename();
+				
+				if(fileName != "") {
+					
+					String originName = fileList.get(i).getOriginalFilename();
+					String changeName = saveFile(fileList.get(i), request);
+					
+					if((entry.getKey()).equals("thumFile")) {
+						
+					}else {
+						reImg.setImgOriginName(originName);
+						reImg.setImgChangeName(changeName);
+						reImg.setReNo(review.getReNo());
+						reImgList.add(reImg);
+						}
+					}
+				}
+			}			
+			memberService.updateReview(review, reImgList);
+			System.out.println("update 중입니다. 리뷰 객체를 확인 : " + review);
+			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail");
+			System.out.println("후기 업데이트 mv의 값 : " + mv);
+			return mv;
+			
+		}
+				
+		@RequestMapping("supportReviewUpdate.me")
+		public ModelAndView supportReviewUpdate(int reNo, ModelAndView mv) {
+			
+			System.out.println("선택한 후기 번호" + reNo);
+			
+			Review rv = memberService.selectReview(reNo);
+			List<ReviewImage> at = memberService.selectReviewImage(reNo);
+			
+			mv.addObject("rv", rv).setViewName("member/supportReviewUpdate");
+			mv.addObject("at", at).setViewName("member/supportReviewUpdate");;
+			
+			System.out.println("후기 수정 rv의 값 " + rv);
+			System.out.println("후기 수정 at의 값 " + at);
+			System.out.println("후기 수정 mv의 값 " + mv);
+			
+			return mv;
+		}
+		
+		private String saveFile(MultipartFile file, HttpServletRequest request) {
+			
+			String resources = request.getSession().getServletContext().getRealPath("/resources");
+			String savePath = resources  + "/upload_files/";
+			String originName = file.getOriginalFilename();
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String ext = originName.substring(originName.lastIndexOf("."));
+			String changeName = currentTime + ext;
+			
+				try {
+					file.transferTo(new File(savePath+changeName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new CommException("file upload error");
+				}
+			return changeName;
 		}
 }			

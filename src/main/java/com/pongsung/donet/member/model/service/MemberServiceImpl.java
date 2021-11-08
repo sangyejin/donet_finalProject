@@ -234,22 +234,33 @@ public class MemberServiceImpl implements MemberService {
 
 	// 후기 상세 보기
 	@Override
-	public Review selectReview(int rno) {
-		// TODO Auto-generated method stub
-		return memberDao.selectReview(sqlSession, rno);
+	public Review selectReview(int reNo) {
+
+		Review rv = null;
+		int result = memberDao.increaseCount(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("조회수 증가 실패");
+		}else {
+			rv = memberDao.selectReview(sqlSession, reNo);
+		}
+		
+		return rv;
 	}
 
 
 	@Override
-	public List<ReviewImage> selectReviewImage(int rno) {
+	public List<ReviewImage> selectReviewImage(int reNo) {
 		// TODO Auto-generated method stub
-		return memberDao.selectReviewImage(sqlSession, rno);
+		return memberDao.selectReviewImage(sqlSession, reNo);
 	}
 
 
 	@Override
 	public ArrayList<ReviewComment> selectReviewReplyList(int reNo) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("후원 후기 댓글 리스트 서비스 임플 되는지 확인");
+		
 		return memberDao.selectReviewReplyList(sqlSession, reNo);
 	}
 
@@ -264,5 +275,73 @@ public class MemberServiceImpl implements MemberService {
 
 		return result;
 	}
+
+
+	@Override
+	public int deleteReviewReply(int reNo) {
+
+		int result = memberDao.deleteReviewReply(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("댓글 삭제 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public int updateReviewReply(ReviewComment rc) {
+		
+		int result = memberDao.updateReviewReply(sqlSession, rc);
+		
+		if (result < 0) {
+			throw new CommException("댓글 수정 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public int deleteReview(int reNo) {
+		
+		int result = memberDao.deleteReview(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("후기 삭지 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public void updateReview(Review review, List<ReviewImage> reImgList) {
+		
+		int result = memberDao.updateReview(sqlSession, review);
+		if(result > 0) {
+			for(ReviewImage reImg : reImgList) {
+				System.out.println("첨부파일 이미지 임플 부분" + reImg);
+				reImg.setReNo(result);
+			}
+			if(!reImgList.isEmpty()) {
+				int result2 = memberDao.updateReviewImage(sqlSession, reImgList);
+				if(result2 < 0) {
+					throw new CommException("추가 이미지 수정 실패");
+				}
+			}
+		}else {
+			throw new CommException("후원 후기 수정 실패");
+		}
+		
+		
+	}
+
+
+	
+		
+		
+	
 	
 }

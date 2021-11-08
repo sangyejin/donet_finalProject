@@ -214,27 +214,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="selectReview" parameterType="_int" resultMap="supportReviewResultSet">
     	SELECT *
     	FROM REVIEW
-    	WHERE RE_NO=#{rno} AND RE_STATUS = 'Y'
+    	WHERE RE_NO=#{reNo} AND RE_STATUS = 'Y'
    </select>
+	
+   <update id="increaseCount" parameterType="_int">
+		UPDATE REVIEW
+		SET RE_COUNT
+		= RE_COUNT+1
+		WHERE RE_NO=#{reNo} AND RE_STATUS='Y'
+   </update>
 	
    <select id="selectReviewReplyList" resultMap="supporReviewCommentResultSet" parameterType="_int">
 		SELECT * 
 		FROM REVIEW_COMMENT 
-		WHERE RE_NO = #{reNo}
+		WHERE RE_BNO = #{reNo}
 		AND STATUS='Y'
 		ORDER BY RE_CREATE_DATE DESC 
    </select>	
 	
-   <insert id="insertReviewReply" parameterType="SupporComment">
+   <insert id="insertReviewReply" parameterType="ReviewComment">
 		INSERT INTO REVIEW_COMMENT 
-		VALUES(SEQ_REVIEW_COMMENT.NEXTVAL, #{replyContent}, #{reBno},#{reWriter}, DEFAULT, DEFAULT) 
+		VALUES(SEQ_REVIEW_COMMENT.NEXTVAL, #{reContent}, #{reBno},#{reWriter}, SYSDATE, DEFAULT) 
    </insert>
 	
    <!-- attachment -->
    <select id="selectReviewImage" parameterType="_int" resultMap="supportReviewImageResultSet">
    		SELECT *
     	FROM REVIEW_IMAGE
-    	WHERE RE_NO=#{rno}
+    	WHERE RE_NO=#{reNo}
    </select>
   
+   <update id="deleteReviewReply" parameterType="_int">
+		UPDATE REVIEW_COMMENT
+		SET STATUS='N'
+		WHERE RE_NO=#{reNo}
+   </update>
+  	
+   <update id="updateReviewReply" parameterType="ReviewComment">
+		UPDATE REVIEW_COMMENT
+		SET RE_CONTENT=#{reContent}
+		WHERE RE_NO=#{reNo}
+   </update>
+	
+   <update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		SET RE_STATUS='N'
+		WHERE RE_NO=#{reNo}
+   </update>
+   
+   <update id="updateReview" parameterType="Review">
+		UPDATE REVIEW
+		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE
+		WHERE USER_ID=#{userId} AND RE_NO=#{reNo}
+   </update>
+	
+   <select id="reviewInfo" parameterType="Review" resultMap="supportReviewResultSet">
+		SELECT * FROM REVIEW 
+		WHERE RE_NO=#{reNo} and USER_ID=#{userId} and status='Y'
+   </select>
+	
+   <update id="updateReviewImage" parameterType="java.util.List">
+		UPDATE REVIEW_IMAGE
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+		SET IMG_ORIGIN_NAME=#{item.originName}, IMG_CHANGE_NAME=#{item.changeName}
+		WHERE IMG_NO=#{item.fileNo}
+		</foreach>
+	</update>
+	
 </mapper>

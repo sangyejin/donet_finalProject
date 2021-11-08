@@ -144,24 +144,61 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertReview", review);
 	}
 
-	public Review selectReview(SqlSessionTemplate sqlSession, int rno) {
+	public Review selectReview(SqlSessionTemplate sqlSession, int reNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("memberMapper.selectReview", rno);
+		return sqlSession.selectOne("memberMapper.selectReview", reNo);
 	}
 
-	public List<ReviewImage> selectReviewImage(SqlSessionTemplate sqlSession, int rno) {
+	public List<ReviewImage> selectReviewImage(SqlSessionTemplate sqlSession, int reNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("memberMapper.selectReviewImage", rno);
+		return sqlSession.selectList("memberMapper.selectReviewImage", reNo);
 	}
 
 	public ArrayList<ReviewComment> selectReviewReplyList(SqlSessionTemplate sqlSession, int reNo) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("후원 후기 댓글 리스트 다오 되는지 확인");
+		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectReviewReplyList", reNo);
 	}
 
 	public int insertReviewReply(SqlSessionTemplate sqlSession, ReviewComment rc) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("memberMapper.insertReviewReply", rc);
+	}
+
+	public int increaseCount(SqlSessionTemplate sqlSession, int reNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.increaseCount", reNo);
+	}
+
+	public int deleteReviewReply(SqlSessionTemplate sqlSession, int reNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.deleteReviewReply", reNo);
+	}
+
+	public int updateReviewReply(SqlSessionTemplate sqlSession, ReviewComment rc) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateReviewReply", rc);
+	}
+
+	public int deleteReview(SqlSessionTemplate sqlSession, int reNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.deleteReview", reNo);
+	}
+
+	public int updateReview(SqlSessionTemplate sqlSession, Review review) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateReview", review);
+	}
+
+	public Review reviewInfo(SqlSessionTemplate sqlSession, Review review) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.reviewInfo", review);
+	}
+
+	public int updateReviewImage(SqlSessionTemplate sqlSession, List<ReviewImage> reImgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateReviewImage", reImgList);
 	}
 
 }
