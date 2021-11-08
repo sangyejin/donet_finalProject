@@ -27,7 +27,7 @@
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: 20px;
+    margin-top: 15px;
     float: left;
     width : 115px;
     height : max-content;
@@ -80,39 +80,41 @@ a{ color : #000000;  text-decoration: none; }
 
 /*event*/
 #eventBox{z-index : 1; position : fixed}
-
-#eventLocation{ margin-left : 93%; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
-
-.room-list-empty-room{
-	display : none;
-    background: rgb(98, 191, 139);
-    color: #fff;
-    padding: 13px;
-    border-radius: 7px;
-    top: 255px;
-    right: 45px;
-    font-size: 10pt;
-    box-shadow: 2px 2px 3px #d1d1d1;
-    height : 10px;
-    margin-top : -48px;
-    position : fixed;
-}
-.room-list-empty-room:after{
-    bottom: 100%;
-    transform: translate(-1px, 3px);
-    left: 190px;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(56, 77, 157, 0);
-    border-bottom-color: rgb(98, 191, 139);
-    border-width: 11px;
-    margin-left: -20px;
+#eventLocation{ margin-left : 1150px; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
+ 
+ .balloon {
+        position: relative;
+        display: inline-block;
+       margin-left : 1080px;
+       margin-top : -20px;
+       display : none;
+ }
+    .balloon span {
+        display: inline-block;
+        padding: 10px;
+        color: #fff;
+        background: rgb(30, 154, 40);
+        border-radius: 20px;
+    }
+ 
+    .balloon:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+ 
+    .balloon.right:after{
+        border-width: 10px 15px;
+        top: 50%;
+        margin-top: -10px;
+    }
     
-}
+    .balloon.right:after {
+        border-color: transparent transparent transparent rgb(30, 154, 40);
+        right: -25px;
+    }
 </style>
 </head>
 <body>
@@ -215,9 +217,7 @@ a{ color : #000000;  text-decoration: none; }
     <!-- 이벤트 박스 -->
     <div id="eventBox">
    		 <img id="eventLocation" src="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" alt="">
-	    <div id ="eventToolTip" class="room-list-empty-room">
-		  불멍하러 가실래요? 
-		</div>
+	    <div class="balloon right" id="eventToolTip"><span>후원할래?</span></div>
     </div>
     
      <!-- 로그인 클릭 시 뜨는 모달  -->
