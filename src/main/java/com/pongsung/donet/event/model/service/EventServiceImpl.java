@@ -20,6 +20,7 @@ import com.pongsung.donet.event.model.dao.EventDao;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -68,21 +69,11 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void updateEvent(Event ev,  List<Attachment> attList) {
+	public void updateEvent(Event e) {
 		// TODO Auto-generated method stub
 		
-		int result = eventDao.updateEvent(sqlSession, ev);
-		if(result > 0) {
-			for(Attachment at : attList) {
-				at.setRefEventNo(result);
-			}
-			if(!attList.isEmpty()) {
-				int result2 = eventDao.updateEventAttach(sqlSession, attList);
-				if(result2 < 0) {
-					throw new CommException(" 추가 사진 수정실패 ");
-				}
-			}
-		}else {
+		int result = eventDao.updateEvent(sqlSession, e);
+		if(result < 0) {
 			throw new CommException("수정 실패");
 		}
 	}
@@ -99,12 +90,7 @@ public class EventServiceImpl implements EventService {
 		return eventDao.afterListCount(sqlSession);
 	}
 
-	@Override
-	public List<Attachment> selectEventAttach(int eno) {
-		// TODO Auto-generated method stub
-		return eventDao.selectEventAttach(sqlSession, eno);
-	}
-
+	
 	@Override
 	public int insertReply(EventReply re) {
 		// TODO Auto-generated method stub
@@ -137,9 +123,16 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
+	public ArrayList<Volunteer> searchList(PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return  eventDao.searchList(sqlSession, pi, keyword);
+	}
+	
+	@Override
 	public List<Event> selectTopEventList() {
 		// TODO Auto-generated method stub
 		return eventDao.selectTopEventList(sqlSession);
+
 	}
 
 	

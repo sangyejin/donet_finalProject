@@ -61,9 +61,10 @@
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        .card-img{
+        	#card-img{
             height:200px;
             width:100%;
+            padding: 0;
           }
           
           div[class^="col-"]{
@@ -81,20 +82,14 @@
               display: table-cell;
               vertical-align: top;
           }
-          .card{
-            transition:0.5s;
-            cursor:pointer;
-          }
+          
           .card-title{  
             font-size:20px;
             transition:1s;
             cursor:pointer;
           }
          
-          .card:hover{
-            transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
+          
           .card-text{
             height:30px;  
           }
@@ -110,6 +105,7 @@
             background: rgba(255, 255, 255, 0.1);
             content: '';
             pointer-events: none;
+            border: none;
           }
           .card::before {
             transform-origin: left top;
@@ -120,10 +116,7 @@
           .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
             transform: scale3d(1, 1, 1);
           }
-          .boardCard{
-            max-height:300px;
-            width:100%;
-          }
+          
           .container_footer{
               margin-right:220px;
               float:right;
@@ -140,13 +133,20 @@
         #eventCard{
         	transition:0.5s;
             cursor:pointer;
-        	border:1px solid gray;
+        	margin: 50px;
+        	padding: 0;
         }
         #eventCard:hover {
         	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-         
+        #card-img img{
+        	height:100%;
+        	width:100%;
+        }
+        .card{
+        	text-align:center;
+        }
     </style>
 </head>
 <body>
@@ -171,21 +171,23 @@
         ========================= --> 
         
         <div class="row">
+            <div class="card-deck">
         	<c:forEach items="${ list }" var="list">
-            <div class="col-md-6 col-lg-3 col-xl-3" id="eventCard">
+                <div class="card col-md-8" id="eventCard">
             	<p style="display:none" > ${ list.eventNo } </p>
-                <div class="card">
-                    <div class="card-img">
-                    	 <img src="#" alt="NoImage" >
+                    <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img">
+                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${list.eventChange}"  alt="" class="content-img">
                     </div>
-                    <div class="card-content">
+                    <div class="card-body">
                     	<p class="card-title mt-3 mb-3">${ list.eventTitle }</p>
-                        <p class="card-text" style="margin:0 auto" >Start: ${ fn:substring(list.eventStart, 0,10) }  ~  
-                            Goal: ${ fn:substring(list.eventLast, 0,10) } </p>
+                        <p class="card-text" style="margin:0 auto" >
+                        Start: ${ fn:substring(list.eventStart, 0,10) }  ~  
+                            Goal: ${ fn:substring(list.eventLast, 0,10) } 
+                        </p>
                     </div>
                 </div>
-            </div>
             </c:forEach>
+            </div>
         </div>  
         <br>  
         <!-- ========================= 
@@ -230,14 +232,21 @@
         <div class="container_footer">
             <div class="input-group icons">
             
-                <form id="searchBoardForm" class="form-inline">
-                    <div class="input-group text-center mb-3">
-                        <p class="icon-searchBox">
-                            <span id="icon-search" class="glyphicon glyphicon-search" ></span>
-                            <input name="findBoard" type="search" class="form-control" placeholder="이벤트 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
-                        </p>
+           		<div class="header-left">
+                    <div class="input-group icons">
+                    <form id="searchForm" class="form-inline" method="post">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <div class="input-group text-center mb-3">
+                        	<input name="keyword" type="search" class="form-control" placeholder="게시글 검색하기" aria-label="Search Dashboard">
+                        	<div class="input-group-append">
+                        		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
+                        	</div>
+                        </div>
+                    </form>    
                     </div>
-                    <br>
+                </div>
                     
                     <div >
                     	<!--<c:if test="${ loginUser.userRole eq 'D' }">
@@ -253,8 +262,6 @@
                     	</c:if>
                     	
                     </div>  
-                                   
-                </form>    
             </div>
         </div>
     </div>
@@ -265,6 +272,21 @@
 				location.href="detail.ev?eno=" + $(this).children().eq(0).text();
 			});
 		});
+		  function getSearchList(){
+		    	var search = $(this).val();
+		    	$.ajax({
+		    		type: "post",
+		    		url : "search.ev",
+		    		cache: false,
+		    		data: {"search":search},
+		    		success : function(data){
+		    			$("body").html(data);
+		    		},
+		    		error: function(data){
+		    			alert("error");
+		    		}
+		    	});
+		    }
 	</script>
 
     <jsp:include page="../common/footer.jsp" />
