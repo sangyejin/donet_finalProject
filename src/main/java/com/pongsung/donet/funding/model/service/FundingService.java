@@ -42,5 +42,11 @@ public interface FundingService {
 
 	void updateFundingHitsCount(int fpNo);
 
+	List<Funding> selectTopFundingList();
+
+	void updateFunding(Funding funding);
+
+	void newFundingImageList(List<FundingImage> imgList);
+
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 
@@ -27,17 +28,23 @@ public interface EventService {
 
 	void deleteEvent(int eno);
 
-	List<Attachment> selectEventAttach(int eno);
+	
 
 	int insertReply(EventReply re);
 
 	ArrayList<EventReply> replyList(int eno);
 
-	void updateEvent(Event e, List<Attachment> attList);
+	void updateEvent(Event e);
 
 	int replyUpdate(EventReply eventReply);
 
 	int deleteReply(int replyNo);
+
+
+	ArrayList<Volunteer> searchList(PageInfo pi, String keyword);
+
+	List<Event> selectTopEventList();
+
 
 
 

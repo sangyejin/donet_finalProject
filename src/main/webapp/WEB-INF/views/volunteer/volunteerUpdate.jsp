@@ -68,95 +68,87 @@
 <div class="container">
 	<div class="row text-center">
 		<div class="col-md-12" style="float:none; margin:0 auto; " id="eForm">
-        <h1>이벤트 수정</h1>
+        <h1>선행활동 게시글 수정</h1>
         <br>
        	
-       	<form id="updateForm" method="post" action="update.ev" enctype="multipart/form-data">
-       		<input type="hidden" name="eventNo" value="${ ev.eventNo }">
+       	<form id="updateForm" method="post" action="update.vo" enctype="multipart/form-data">
+       		<input type="hidden" name="volNo" value="${ vo.volNo }">
        		<table align="center" >
+       			<tr class="form-group" >       			
+       				<th><label for="category">카테고리</label></th>
+       				<td>
+       					<select id="category" name="volCategory" class="btn btn-light dropdown-toggle">
+       						<option class="dropdown-item" value="바다">바다</option>
+       						<option class="dropdown-item" value="산">산</option>
+       						<option class="dropdown-item" value="동네">동네</option>
+       						<option class="dropdown-item" value="동물">동물</option>
+       						<option class="dropdown-item" value="기타">기타</option>
+       					</select>
+       				</td>
+       			</tr>
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
-       				<td><input type="text" id="title" class="form-control" name="eventTitle" value="${ ev.eventTitle }" required></td>
-       			</tr>
-       			<tr class="form-group">
-       				<th><label for="datepickerStart">이벤트 시작</label>
-       				<td><input type="text" id="datepickerStart" class="form-control" name="eventStart" autocomlete="off" readonly="readonly" value="${ ev.eventStart }"></td>
-       			</tr>
-       			<tr class="form-group">
-       				<th><label for="datepickerLast">이벤트 종료</label>
-       				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly" value="${ ev.eventLast }"></td>
+       				<td><input type="text" id="title" class="form-control" name="volTitle" value="${ vo.volTitle }" required></td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="thum">썸네일 이미지</label></th>
-       				<td><img alt="" src="${ pageContext.servletContext.contextPath }/resources/upload_files/event/${ev.eventChange}" id="thumImg" class="img" ></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
+       				<td><img alt="" src="${ pageContext.servletContext.contextPath }/resources/upload_files/${vo.volChange}" id="thumImg" class="img" ></td>
        			</tr>
-       			<tr>
-       				<th><label for="">추가 등록</label></th>
-       				<td>
-       				<c:if test="${ !empty at }">
-	       				<c:forEach var="at" items="${ at }">
-	       					<img class="img" id="plusImg1" src="${ pageContext.servletContext.contextPath }/resources/upload_files/event/${at.changeName}" >
-	       				</c:forEach>
-	       			</c:if>
-       				</td>       			
-       			</tr>
-       			
-       			<tr class="form-group">
-       				<th colspan="2"><label for="content">내용</label></th>
-       			</tr>
-       			<tr class="form-group">
-       				<th colspan="2"><textarea rows="10" class="form-control" name="eventContent" id="content" style="resize:none" required>${ ev.eventContent }</textarea></th>
-       			</tr>
-       			<tr class="form-group">
-       				<th><label for="upfile">첨부파일</label></th>
-       				<td><input type="file" id="upfile" class="form-control-file border" name="uploadFile"></td>
-       			</tr>
-       		</table>
-       		<div id="fileArea">
-       				<input type="file" name="thumFile" id="thumFile" onchange="thum(this, 0);">
-       				<input type="file" name="plusFile" id="plusFile1" onchange="thum(this, 1);">
-       				<input type="file" name="plusFile" id="plusFile2" onchange="thum(this, 2);">
-       				<input type="file" name="plusFile" id="plusFile3" onchange="thum(this, 3);">
-       			</div>
+       			</table>
+       			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7">${vo.volContent}</textarea>
        		<script type="text/javascript">
-	       		$(function(){
-	       			$("#fileArea").hide();
-	       			$("#thumImg").click(function(){
-	       				$("#thumFile").click();
-	       			});
-	       			$("#plusImg1").click(function(){
-	       				$("#plusFile1").click();
-	       			});
-	       			$("#plusImg2").click(function(){
-	       				$("#plusFile2").click();
-	       			});
-	       			$("#plusImg3").click(function(){
-	       				$("#plusFile3").click();
-	       			});
-	       		});
-	       		function thum(inputFile, num){
-	       				if(inputFile.files.length == 1){
-	       					var reader = new FileReader();
-	       					reader.readAsDataURL(inputFile.files[0]);
-	       					reader.onload = function(e){
-	       						switch(num){
-	       							case 0:
-	       								$("#thumImg").attr("src", e.target.result);
-	       								break;
-	       							case 1:
-	       								$("#plusImg1").attr("src", e.target.result);
-	       								break;
-	       							case 2:
-	       								$("#plusImg2").attr("src", e.target.result);
-	       								break;
-	       							case 3:
-	       								$("#plusImg3").attr("src", e.target.result);
-	       								break;
-	       						}
-	       					}
-	       				}
-	       			}
-	       	</script>
+
+
+       			function loadImg(){
+       				if(inputFile.files.length == 1){
+       					var reader = new FileReader();
+       					
+       					reader.onload = function(e){
+       						$("#thum").attr("src", e.target.result);
+       					}
+       					reader.readAsDataURL(inputFile.files[0]);
+       				}
+       			}
+       			
+       			
+    			$("#summernote").summernote({
+    				height: 500, 
+    				width: 1000,
+    		    	minHeight: null,            
+    		    	maxHeight: null,            
+    		    	focus: true,           
+    		    	disableResizeEditor: true,
+       	   		callbacks: {
+    		    		onImageUpload: function(files, editor, welEditable){
+    			    		for(var i = files.length - 1; i>=0; i--){
+    			    			sendFile(files[i],this);	  
+    			    		}	
+    		    		}
+       	   			}
+    			});
+    		
+
+    		function sendFile(file, el){
+    				var data = new FormData();
+    				data.append("file", file);	
+    				$.ajax({
+    					data : data,
+    					type : "POST",
+    					url : "imageFile.vo",
+    					cache : false,
+    					contentType : false,
+    					processData : false,
+    					enctype : "multipart/form-data",
+    					success : function(data){
+    						$(el).summernote('editor.insertImage', data.url);
+    						
+    					}
+    				});
+    			}
+
+       			
+       			</script>
        		<br>
        		<div class="submitBtn">
        			<button type="submit" class="btn btn-primary">등록하기</button>
@@ -167,47 +159,7 @@
        </div>
     </div>
  </div>
-  <script>
  
-  $(document).ready(function () {
-          $.datepicker.setDefaults($.datepicker.regional['ko']); 
-          $( "#datepickerStart" ).datepicker({
-               changeMonth: true, 
-               changeYear: true,
-               nextText: '다음 달',
-               prevText: '이전 달', 
-               dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-               dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
-               monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-               monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-               dateFormat: "yy-mm-dd",
-               
-               onClose: function( selectedDate ) {    
-                    //시작일(startDate) datepicker가 닫힐때
-                    //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                   $("#datepickerLast").datepicker( "option", "minDate", selectedDate );
-               }    
-
-          });
-          $( "#datepickerLast" ).datepicker({
-               changeMonth: true, 
-               changeYear: true,
-               nextText: '다음 달',
-               prevText: '이전 달', 
-               dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-               dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
-               monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-               monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-               dateFormat: "yy-mm-dd",
-                                      
-               onClose: function( selectedDate ) {    
-                   $("#datepickerStart").datepicker( "option", "maxDate", selectedDate );
-               }    
-
-          });    
-  });
-
-  </script>
 
 <jsp:include page="../common/footer.jsp" />
 </body>

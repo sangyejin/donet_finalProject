@@ -154,6 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET GOODS_NAME=#{goodsName}
 		,GOODS_CATEGORY_NO=#{goodsCategoryNo}
 		,CONTENT=#{content}
+		,GOODS_PRICE=#{goodsPrice}
 		<if test="thumbnailOriginName != null">
 			,THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
 			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}
@@ -161,13 +162,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE GOODS_NO=#{goodsNo}
 	</update>
 	
-		<insert id="insertGoodsPurchase" parameterType="GoodsPurchase">
+	<insert id="insertGoodsPurchase" parameterType="GoodsPurchase">
 		insert into GOODS_PURCHASE(PURCHASE_NO,USER_ID,GOODS_NO
 									,BENEFICIARY_NO,PURCHASE_PRICE,PURCHASE_AMOUNT,PURCHASE_DATE)
 		values(
 			NVL((SELECT MAX(PURCHASE_NO) FROM GOODS_PURCHASE WHERE USER_ID=#{userId}),0)+1,#{userId},#{goodsNo}
 			,#{beneficiaryNo},#{purchasePrice},#{purchaseAmount},sysdate
 		)
-
 	</insert>
+	
+	<select id="selectTopGoodsList" resultMap="goodsResultSet">
+	<![CDATA[
+		select A.GOODS_NO , A.GOODS_NAME, A.GOODS_PRICE, A.THUMBNAIL_CHANGE_NAME,A.THUMBNAIL_ORIGIN_NAME
+		from(select GOODS_NO ,GOODS_NAME, GOODS_PRICE , THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME
+				from goods 
+				where status='Y'
+				order by hits
+			) A
+		where ROWNUM <= 4
+	]]>
+	</select>
 </mapper>

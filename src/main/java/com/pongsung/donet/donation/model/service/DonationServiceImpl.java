@@ -208,6 +208,12 @@ public class DonationServiceImpl implements DonationService {
 		return result;
 	}
 
+	@Override
+	public List<Support> selectTopDonationList() {
+		// TODO Auto-generated method stub
+		return supportDao.selectTopDonationList(sqlSession);
+	}
+
 
 
 

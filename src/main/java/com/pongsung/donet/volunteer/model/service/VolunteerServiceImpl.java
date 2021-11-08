@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
-import com.pongsung.donet.event.model.vo.Attachment;
-import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.volunteer.model.dao.VolunteerDao;
 import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
+import com.pongsung.donet.volunteer.model.vo.VolunteerReply;
 @Service
 public class VolunteerServiceImpl implements VolunteerService {
 
@@ -49,7 +48,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 	@Override
 	public Volunteer selectVolunteer(int vno) throws Exception{
 		// TODO Auto-generated method stub
-		volunteerDao.countVolunteer(sqlSession, vno);
+		
 		return volunteerDao.selectVolunteer(sqlSession, vno);
 	}
 
@@ -76,6 +75,72 @@ public class VolunteerServiceImpl implements VolunteerService {
 		// TODO Auto-generated method stub
 		return volunteerDao.sortList(sqlSession, pi);
 	}
+	@Override
+	public void countVolunteer(int vno) {
+		// TODO Auto-generated method stub
+		int result =  volunteerDao.countVolunteer(sqlSession, vno);
+		if(result<0) {
+			throw new CommException("조회수 추가  실패");
+		}
+		
+	}
+
+	@Override
+	public void deleteVolunteer(int vno) {
+		int result = volunteerDao.deleteVolunteer(sqlSession, vno);
+		if(result < 0) {
+			throw new CommException("게시글 삭제 실패");
+		
+		}
+	}
+
+	@Override
+	public void updateVolunteer(Volunteer vo) {
+		int result = volunteerDao.updateVolunteer(sqlSession, vo);
+		if(result < 0) {
+			throw new CommException("수정 실패");
+		}
+		
+	}
+
+	@Override
+	public int insertReply(VolunteerReply re) {
+		// TODO Auto-generated method stub
+		return volunteerDao.insertReply(sqlSession, re);
+	}
+
+	@Override
+	public ArrayList<VolunteerReply> replyList(int vno) {
+		// TODO Auto-generated method stub
+		return volunteerDao.replyList(sqlSession, vno);
+	}
+
+	@Override
+	public int replyUpdate(VolunteerReply volReply) {
+		int result = volunteerDao.replyUpdate(sqlSession,volReply);
+		if(result < 0) {
+			throw new CommException("펀딩 댓글 수정 실패");
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		int result = volunteerDao.deleteReply(sqlSession, replyNo);
+		if(result<0) {
+			throw new CommException("댓글 등록 실패");
+		}
+		return result;
+	}
+
+	
+	@Override
+	public ArrayList<Volunteer> searchList(PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return  volunteerDao.searchList(sqlSession, pi, keyword);
+	}
+
+	
 
 	
 

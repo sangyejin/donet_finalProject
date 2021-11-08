@@ -19,6 +19,8 @@ public class Volunteer {
 	private String volTitle;
 	private String volContent;
 	private String volWriter;
+	private String volOrigin;
+	private String volChange;
 	private Date volDate;
 	private int volPoint;
 	private char volStatus;

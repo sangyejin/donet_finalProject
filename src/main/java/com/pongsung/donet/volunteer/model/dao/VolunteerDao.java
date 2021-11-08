@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
+import com.pongsung.donet.volunteer.model.vo.VolunteerReply;
 @Repository
 public class VolunteerDao {
 
@@ -46,9 +47,8 @@ public class VolunteerDao {
 		return  sqlSession.selectList("volunteerMapper.selectVolunteerAttachment", vno);
 	}
 
-	public void countVolunteer(SqlSessionTemplate sqlSession, int vno) {
-		// TODO Auto-generated method stub
-		  sqlSession.selectOne("volunteerMapper.countVolunteer", vno);
+	public int countVolunteer(SqlSessionTemplate sqlSession, int vno) {
+		return sqlSession.update("volunteerMapper.countVolunteer", vno);
 	}
 
 	public int choseListCount(SqlSessionTemplate sqlSession) {
@@ -68,6 +68,41 @@ public class VolunteerDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("volunteerMapper.sortList", null, rowBounds);
+	}
+
+	public int deleteVolunteer(SqlSessionTemplate sqlSession, int vno) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("volunteerMapper.deleteVolunteer", vno);
+	}
+
+	public int updateVolunteer(SqlSessionTemplate sqlSession, Volunteer vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("volunteerMapper.updateVolunteer", vo);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, VolunteerReply re) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("volunteerMapper.insertReply", re);
+	}
+
+	public ArrayList<VolunteerReply> replyList(SqlSessionTemplate sqlSession, int vno) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("volunteerMapper.replyList", vno);
+	}
+
+	public int replyUpdate(SqlSessionTemplate sqlSession, VolunteerReply volReply) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("volunteerMapper.replyUpdate", volReply);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("volunteerMapper.deleteReply", replyNo);
+	}
+
+	public ArrayList<Volunteer> searchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("volunteerMapper.searchList", keyword);
 	}
 
 }

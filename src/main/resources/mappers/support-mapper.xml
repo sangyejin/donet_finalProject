@@ -287,6 +287,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 
+	<select id="selectTopDonationList" resultMap="supportResultSet">
+		<![CDATA[
+		select rownum, a.*
+			from(select * from support
+        			where SU_SATUTS='Y'
+       				order by SU_LAST desc
+    		) a
+			where rownum<=4
+		]]>
+	</select>
 
 
 </mapper>

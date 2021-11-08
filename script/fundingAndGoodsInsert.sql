@@ -110,3 +110,35 @@ END;
 /
 
 commit;
+
+select rownum,a.* from(select * from goods 
+where status='Y'
+order by hits) a
+where rownum<3;
+
+select rownum,a.* from(select * from FUNDING_PROJECT
+where status='Y'
+order by hits) a
+where rownum<=3;
+
+select rownum,a.* from
+(select * from event
+where event_status='Y'
+order by event_last_date)
+a
+where rownum<3;
+
+select rownum, a.* 
+from(select * from NOTICE
+        order by no_date desc) a
+where rownum<3;
+
+select rownum, a.*
+from(select * from support
+        where SU_SATUTS='Y'
+        order by SU_LAST desc
+    ) a
+where rownum<3;
+
+insert into event
+values(seq_event.nextval, '이벤트제목 1','이벤트 내용입니다 <br> 이벤트내용',sysdate,sysdate,default);

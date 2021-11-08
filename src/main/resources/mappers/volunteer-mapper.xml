@@ -8,18 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="VOL_TITLE" property="volTitle"/>
 		<result column="VOL_CONTENT" property="volContent"/>
 		<result column="VOL_WRITER" property="volWriter"/>
+		<result column="VOL_ORIGIN" property="volOrigin"/>
+		<result column="VOL_CHANGE" property="volChange"/>
 		<result column="VOL_DATE" property="volDate"/>
 		<result column="VOL_POINT" property="volPoint"/>
 		<result column="VOL_STATUS" property="volStatus"/>
 		<result column="VOL_CATEGORY" property="volCategory"/>
 		<result column="VOL_COUNT" property="volCount"/>
 	</resultMap>
-	<resultMap id="volunteerAttachResultMap" type="VolAttachment">
-		<id column="VOL_AT_FILENO" property="fileNo" />
-		<result column="VOL_AT_REF_NO" property="refVolunteerNo" />
-		<result column="VOL_AT_ORIGIN" property="originName" />
-		<result column="VOL_AT_NEWNAME" property="changeName" />
-	</resultMap>
+	
 	<resultMap id="volunteerReplyResultMap" type="VolunteerReply">
 		<id column="VOL_REPLY_NO" property="volReplyNo" />
 		<result column="VOL_REF_NO" property="volRefNo" />
@@ -42,32 +39,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 <insert id="insertVolunteer" parameterType="Volunteer">
    		INSERT INTO VOLUNTEER
-   		VALUES(SEQ_VOL.NEXTVAL, #{volTitle}, #{volContent},#{volWriter}, SYSDATE,
-   		DEFAULT ,DEFAULT , #{volCategory}, DEFAULT)
+   		VALUES(
+   		SEQ_VOL.NEXTVAL, #{volTitle}, #{volContent},#{volWriter}, #{volOrigin}, #{volChange}, 
+   		SYSDATE, DEFAULT ,DEFAULT , #{volCategory}, DEFAULT)
    </insert>
-   <insert id="insertVolunteerAttach" parameterType="java.util.List" >
-   		INSERT INTO VOL_ATTACHMENT (VOL_AT_FILENO, VOL_AT_REF_NO, VOL_AT_ORIGIN, VOL_AT_NEWNAME )
-   		SELECT SEQ_VOL_ATTA.NEXTVAL, SEQ_VOL.CURRVAL, A.* 
-   		FROM(
-   		<foreach collection="list" item="item" separator=" UNION ALL ">
-   		 SELECT #{item.originName}, #{item.changeName} FROM DUAL
-   		</foreach>)A
-   </insert>
+  
    <select id="selectVolunteer" parameterType="_int" resultMap="volunteerResultMap">
     	SELECT *
     	FROM VOLUNTEER
     	WHERE VOL_NO=#{vno} AND VOL_STATUS = 'Y'
    </select>
    
-	<select id="selectVolunteerAttachment" parameterType="_int" resultMap="volunteerAttachResultMap">
-   		SELECT *
-    	FROM VOL_ATTACHMENT
-    	WHERE VOL_AT_REF_NO = #{vno}
-   </select>
    <update id="countVolunteer" parameterType="_int">
-   		UPDATE VOLUNTEER SET
-   		VOL_COUNT = VOL_COUNT+1
-   		WHERE VOL_NO=#{vno}
+   		UPDATE VOLUNTEER 
+   		SET	VOL_COUNT = VOL_COUNT+1
+   		WHERE VOL_NO = #{vno}
    		
    </update>
    <select id="choseList" resultMap="volunteerResultMap">
@@ -86,4 +72,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM VOLUNTEER
 		WHERE VOL_STATUS = 'Y' 
 	</select>
+	<update id="deleteVolunteer" parameterType="_int">
+		UPDATE VOLUNTEER 
+		SET VOL_STATUS = 'N'
+		WHERE  VOL_NO=#{vno}
+	</update>
+	<update id="updateVolunteer" parameterType="Volunteer">
+		UPDATE VOLUNTEER 
+		SET VOL_TITLE=#{volTitle}, VOL_CONTENT=#{volContent}, VOL_ORIGIN=#{volOrigin}, 
+			VOL_CHANGE=#{volChange}, VOL_CATEGORY=#{volCategory}
+		WHERE  VOL_NO=#{volNo}
+	</update>
+	<select id="searchList" resultMap="volunteerResultMap">
+		SELECT *
+		FROM VOLUNTEER
+		WHERE VOL_STATUS = 'Y' AND VOL_TITLE LIKE '%'||#{keyword}||'%' 
+	</select>
+	
+	<!-- Reply -->
+	<insert id="insertReply" parameterType="VolunteerReply">
+		INSERT INTO VOLUNTEER_REPLY
+		VALUES (SEQ_VOL_REPLY.NEXTVAL, #{volRefNo}, #{volReplyWriter}, #{volReplyContent}, DEFAULT, SYSDATE)
+	</insert>
+	<select id="replyList" parameterType="_int" resultMap="volunteerReplyResultMap">
+		SELECT *
+		FROM VOLUNTEER_REPLY
+		WHERE VOL_REF_NO=#{vno} AND VOL_REPLY_STATUS='Y'
+		ORDER BY VOL_REPLY_NO DESC
+	</select>
+	<update id="replyUpdate" parameterType="VolunteerReply">
+		UPDATE VOLUNTEER_REPLY
+		SET VOL_REPLY_CONTENT=#{volReplyContent}
+		WHERE VOL_REPLY_NO=#{volReplyNo}
+	</update>
+	<update id="deleteReply" parameterType="_int">
+		UPDATE VOLUNTEER_REPLY
+		SET VOL_REPLY_STATUS = 'N'
+		WHERE VOL_REPLY_NO=#{replyNo}
+	</update>
 </mapper>

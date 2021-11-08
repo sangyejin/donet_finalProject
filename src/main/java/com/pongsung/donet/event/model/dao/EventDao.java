@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
+import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.pongsung.donet.common.PageInfo;
 
 @Repository
@@ -40,9 +41,9 @@ public class EventDao {
 		return sqlSession.update("eventMapper.deleteEvent", eno);
 	}
 
-	public int updateEvent(SqlSessionTemplate sqlSession, Event ev) {
+	public int updateEvent(SqlSessionTemplate sqlSession, Event e) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("eventMapper.updateEvent", ev);
+		return sqlSession.update("eventMapper.updateEvent", e);
 	}
 
 	public int afterListCount(SqlSessionTemplate sqlSession) {
@@ -90,6 +91,16 @@ public class EventDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("eventMapper.deleteReply", replyNo);
+	}
+
+	public ArrayList<Volunteer> searchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("eventMapper.searchList", keyword);
+	}
+	public List<Event> selectTopEventList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("eventMapper.selectTopEventList");
+
 	}
 
 }

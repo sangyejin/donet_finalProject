@@ -116,7 +116,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 
 .viewed { width: 100px; }
 
-#whole { width: 1050px; margin : auto;}
+#whole { width: 1050px; margin : auto; }
 
 /*button style*/
        	button{
@@ -169,7 +169,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #searchmark {
 	width: 30px;
 	height: 25px;
-	margin-top:-1px;
+	margin-top:0px;
 	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
@@ -201,6 +201,9 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
 .radioAlign{margin-right : 20px;}
+
+/*pagination*/
+.pagination{margin-top : 10px;}
 </style>
 
 </head>
@@ -273,8 +276,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 				
 			</table>
 
-			<div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<button class="page-item">
@@ -317,7 +319,6 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 						</c:otherwise>
 					</c:choose>
 				</ul>
-			</div>
 
 			<div id="grayline"></div>
 			
