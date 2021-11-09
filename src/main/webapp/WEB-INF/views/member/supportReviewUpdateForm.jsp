@@ -141,7 +141,7 @@
 	<div class="outer">
 		<form id="insertForm" action="updateReview.me" method="post" enctype="multipart/form-data">
 			<div style="text-align: center;">
-			
+			<input type="hidden" name="reNo" value="${ rv.reNo}">
 			<span style="float:right; margin-right:15%;">
 				<br><br>
 					<c>후원한 프로젝트 </c>
@@ -153,6 +153,10 @@
 			
 			<c>후원 후기 제목</c>
 			<div><input type="text"  style="width:800px; height:40px; text-align:center; " id="reTitle" name="reTitle" value="${rv.reTitle}"></div><br><br><br>
+			
+			<c>썸네일 이미지</c>
+       		<input type="file" id="file" class="form-control-file" name="file"></td>
+       		<img id="thum" src="">
 			
 			</div></div><br><br><br>
 			<e>내  용</e>
@@ -167,7 +171,17 @@
 	
 	<!-- 이미지 업로드를 위한 콜백 함수  -->
 	<script>
-
+	
+	function loadImg(){
+		if(inputFile.files.length == 1){
+			var reader = new FileReader();
+			
+			reader.onload = function(e){
+				$("#thum").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(inputFile.files[0]);
+		}
+	}
 				
 				 $("#reContent").summernote({
 						height: 500, 

@@ -133,6 +133,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="reContent" column="RE_CONTENT" />
 		<result property="reCount" column="RE_COUNT" />
 		<result property="reDate" column="RE_DATE" />
+		<result property="thumbnailOrigin" column="RE_IMG_ORIGINNAME" />
+		<result property="thumbnailChange" column="RE_IMG_CHANGENAME" />
 		<result property="reStatus" column="RE_STATUS" />		
 	</resultMap>
 	
@@ -208,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertReview" parameterType="Review">
    		INSERT INTO REVIEW
-   		VALUES(SEQ_EV.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, DEFAULT)
+   		VALUES(SEQ_EV.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, #{thumbnailOrigin}, #{thumbnailChange},  DEFAULT)
    </insert>
 	
    <select id="selectReview" parameterType="_int" resultMap="supportReviewResultSet">
@@ -264,8 +266,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <update id="updateReview" parameterType="Review">
 		UPDATE REVIEW
-		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE
-		WHERE USER_ID=#{userId} AND RE_NO=#{reNo}
+		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE, RE_IMG_ORIGINNAME=#{thumbnailOrigin}, RE_IMG_CHANGENAME=#{thumbnailChange}
+		WHERE RE_NO=#{reNo}
    </update>
 	
    <select id="reviewInfo" parameterType="Review" resultMap="supportReviewResultSet">

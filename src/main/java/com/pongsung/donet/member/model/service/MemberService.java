@@ -68,6 +68,10 @@ public interface MemberService {
 
 	int deleteReview(int reNo);
 
-	void updateReview(Review review, List<ReviewImage> reImgList);
+	void updateReview(Review review);
+ //마이페이지 목록 관련
+	int selectSponsorListCount();
+
+	ArrayList<Sponsor> selectSponsorList(PageInfo pi);
 	
 }

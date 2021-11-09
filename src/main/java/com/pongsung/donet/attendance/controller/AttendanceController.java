@@ -70,20 +70,20 @@ public class AttendanceController {
 	}
 	
 	//출석체크
-	@GetMapping("checkInsert")
-	public void checkInsert() throws Exception {
-			
-	}
+//	@GetMapping("checkInsert")
+//	public void checkInsert() throws Exception {
+//			
+//	}
 	
 	@ResponseBody
 	@PostMapping("checkInsert")
 	public String checkInsert(Attendance a, Member m, HttpSession session) throws Exception {
-		System.out.println("--------------111111111111");
+		
 		m.setUserId(a.getUserId());
-		System.out.println("22222222222222222222222222222");
+		
 		// 포인트를 가지고 와서
-		m = attendanceService.getMemberPoint(m);
-		System.out.println("33333333333333333333333333333");
+		m = attendanceService.getMemberPoint(m); 
+		
 		// 1500포인트를 더해줍니다.
 		int memberPoint = m.getPoint()+1500;
 		

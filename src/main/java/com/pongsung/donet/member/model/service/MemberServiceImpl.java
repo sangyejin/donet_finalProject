@@ -317,25 +317,28 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public void updateReview(Review review, List<ReviewImage> reImgList) {
+	public void updateReview(Review review) {
 		
 		int result = memberDao.updateReview(sqlSession, review);
-		if(result > 0) {
-			for(ReviewImage reImg : reImgList) {
-				System.out.println("첨부파일 이미지 임플 부분" + reImg);
-				reImg.setReNo(result);
-			}
-			if(!reImgList.isEmpty()) {
-				int result2 = memberDao.updateReviewImage(sqlSession, reImgList);
-				if(result2 < 0) {
-					throw new CommException("추가 이미지 수정 실패");
-				}
-			}
-		}else {
-			throw new CommException("후원 후기 수정 실패");
+		
+		if (result < 0) {
+			throw new CommException("후기 수정 실패");
 		}
 		
-		
+	}
+
+
+	@Override
+	public int selectSponsorListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectSponsorListCount(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Sponsor> selectSponsorList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return memberDao.selectSponsorList(sqlSession, pi);
 	}
 
 

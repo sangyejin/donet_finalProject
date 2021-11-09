@@ -9,9 +9,15 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
-<!-- Custom Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
 <style>
 	#writeBtn {
@@ -77,13 +83,8 @@
                                              </tr>
                                         </thead>
                                         <tbody>
-                                        	<c:forEach items="${ empty list }" var="m">
-                                            <tr>
-                                                <td colspan="8">조회된 회원이 없습니다.</td>                                                
-                                            </tr>
-                                            </c:forEach>
-                                            
-                                            <c:forEach items="${ !empty list }" var="m">
+                                                                                
+                                            <c:forEach items="${list}" var="m" varStatus="status">
                                             <tr>
                                                 <td>${ m.userId }</td>
                                                 <td>${ m.userName }</td> 

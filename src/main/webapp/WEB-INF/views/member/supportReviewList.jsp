@@ -164,7 +164,7 @@ c {
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
-									src="">
+									src="${pageContext.request.contextPath}/resources/upload_files/${r.thumbnailChange}">
 									<%-- ${ pageContext.servletContext.contextPath}/resources/imgs/${r.imgChangeName} --%>
 							</div>
 							<div class="supportTitle">

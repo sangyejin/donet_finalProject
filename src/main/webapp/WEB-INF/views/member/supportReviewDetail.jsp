@@ -446,11 +446,11 @@ d {
 			<div class="detailInfo">
 			
 				<div class="flaot-right" id="reCount" style="float:right;">
-					<d>조회수 : ${ rv.reCount }</d>
+					<d>조회수 : ${ rv.reCount }</d> 
 				</div>
 				
 				<div class="flaot-right" id="reComentCount" style="float:right;">
-					<d>댓글수 : </d>
+					<d>댓글수 : <span id="rcount" style="font-size:20px;">0</span>  &emsp;|&emsp; </d>
 				</div>	
 			
 				<div class="text" id="reTitle">
@@ -482,7 +482,7 @@ d {
 						var postForm = $("#postReviewInfo");
 																							
 						if(reNo == 1){
-							postForm.attr("action", "supportReviewUpdate.me?reNo=${rv.reNo}");
+							postForm.attr("action", "supportReviewUpdateForm.me?reNo=${rv.reNo}");
 						}
 						
 						postForm.submit();

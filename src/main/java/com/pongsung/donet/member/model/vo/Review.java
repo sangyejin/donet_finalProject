@@ -22,6 +22,8 @@ public class Review {
 	private String reContent; // 후기내용
 	private int reCount; // 후기 조회수
 	private Date reDate; // 작성일
+	private String thumbnailOrigin; //썸네일 원본명
+	private String thumbnailChange; //썸네일 변경명 // 변경완료 
 	private String reStatus; // 후기 상태
 	
 }

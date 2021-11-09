@@ -28,6 +28,9 @@
 
 	<context:component-scan
 		base-package="com.pongsung.donet" />
+	
+	<beans:bean id="loginExceptionHandler" class="com.pongsung.donet.common.exception.LoginExceptionHandler" />
+	<beans:bean id="attendanceExceptionHandler" class="com.pongsung.donet.common.exception.AttendanceExceptionHandler" />
 		
 	<interceptors>
 		<interceptor>

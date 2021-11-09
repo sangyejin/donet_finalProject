@@ -155,6 +155,10 @@
 			<c>후원 후기 제목</c>
 			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px" id="reTitle" name="reTitle"></div><br><br><br>
 			
+			<c>썸네일 이미지</c>
+       		<input type="file" id="file" class="form-control-file" name="file"></td>
+       		<img id="thum" src="">
+			
 			</div></div><br><br><br>
 			<e>내  용</e>
 			
@@ -170,52 +174,17 @@
 	
 	<!-- 이미지 업로드를 위한 콜백 함수  -->
 	<script>
-	// 툴바생략
-	
-/* 	$('.summernote').summernote({
-					  height: 600,
-					  lang: "ko-KR"
-					});
-			 */
-        
-       /*  $("#summernote").summernote({
-			height: 600, 
-	    	minHeight: null,            
-	    	maxHeight: null,            
-	    	focus: true,
-	    	lang : 'ko-KR',
-	    	disableResizeEditor: true,
-	   		callbacks: {
-	    		onImageUpload: function(files, editor, welEditable){
-		    		for(var i = files.length - 1; i>=0; i--){
-		    			sendFile(files[i],this);	  
-		    		}	
-	    		}
-	   			}
-		});
-			 
-			 function sendFile(file, el){
-					var data = new FormData();
-					data.append("file", file);	
-					$.ajax({
-						data : data,
-						dataType : "json",
-						type : "POST",
-						url : "reviewImage.me",
-						cache : false,
-						contentType : false,
-						processData : false,
-						enctype : "multipart/form-data",
-						success : function(data){
-							alert(data)
-							$(el).summernote('editor.insertImage', data.url);
-							
-						},
-						error:function(data){
-							console.log(data);
-						}
-					});
-				} */
+
+	function loadImg(){
+		if(inputFile.files.length == 1){
+			var reader = new FileReader();
+			
+			reader.onload = function(e){
+				$("#thum").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(inputFile.files[0]);
+		}
+	}
 				
 				 $("#summernote").summernote({
 						height: 500, 

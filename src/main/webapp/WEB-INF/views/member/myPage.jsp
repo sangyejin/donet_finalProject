@@ -218,7 +218,79 @@
 	  <!-- Default panel contents -->
 	  <div class="panel-heading">Panel heading</div>
 	  <div class="panel-body">
-	    <p>...</p>
+	    <div class="row">               
+                    <div class="col-lg-10 mt-5" style="margin-left: auto; margin-right: auto;">
+                        <div class="card" >
+                            <div class="card-body">
+                                <div class="card-title text-center">
+                                    <h4>회원 목록</h4>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="" class="table table-hover text-center">
+                                        <thead>
+                                            <tr>                                                
+                                                <th>번호</th>
+                                                <th>제목</th>
+                                                <th>금액</th>
+                                                <th>후원 날짜</th>                                              
+                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                                                                
+                                            <c:forEach items="${sponserList}" var="sp" varStatus="status">
+                                            <tr>
+                                                <td>${ sp.userId }</td>
+                                                <td>${ sp.userName }</td> 
+                                                <td>${ sp.userNick }</td>
+                                                <td>${ sp.birthdate }</td>                                                                             
+                                            </tr>
+                                           </c:forEach> 
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div id="pagingArea">
+						                <ul class="pagination">
+						                	<c:choose>
+						                		<c:when test="${ pi.currentPage ne 1 }">
+						                			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+						                		</c:when>
+						                		<c:otherwise>
+						                			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+						                		</c:otherwise>
+						                	</c:choose>
+						                	
+						                    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+						                    	<c:choose>
+							                		<c:when test="${ pi.currentPage ne p }">
+						                    			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+							                		</c:when>
+							                		<c:otherwise>
+							                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
+							                		</c:otherwise>
+							                	</c:choose>
+						                    </c:forEach>
+						                    
+						                    
+						                    <c:choose>
+						                		<c:when test="${ pi.currentPage ne pi.maxPage }">
+						                			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+						                		</c:when>
+						                		<c:otherwise>
+						                			<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+						                		</c:otherwise>
+						                	</c:choose>
+						                </ul>
+						            </div>
+                                </div>
+                             	<div class="general-button" align="right">
+                             		<%--<% if(loginUser != null){ --%>
+                            		<%--<button id="따로 버튼이 필요하지 않음" onclick="location.href='<%= contextPath %>/enrollForm.ca'"  class="btn mb-1 btn-primary">게시판 생성하기</button>
+									<% } --%>
+								</div>
+                            </div>
+                        </div>
+                    </div>                    
+                 </div>
 	  </div>
 	
 	  <!-- Table -->

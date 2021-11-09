@@ -380,6 +380,22 @@ public class MemberController {
 			return "member/memberUserList";
 		}
 		
+		//후원자 목록
+		@RequestMapping("sponsorList.me")
+		public String selectSponsorList(@RequestParam(value="currentPage", required = false , defaultValue ="1") int currentPage, Model model) {
+				
+			int listCount = memberService.selectSponsorListCount();
+			System.out.println("userListCount : " + listCount );
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+					
+			ArrayList<Sponsor> sponsorList = memberService.selectSponsorList(pi);
+			System.out.println("sponsorList의 값 : " + sponsorList);
+			model.addAttribute("sponsorList", sponsorList);
+			model.addAttribute("pi", pi);
+					
+			return "member/myPage";
+		}
+		
 //===========================================================================
 		// 후원 후기로 이동
 //		@RequestMapping("supportReviewList.me")
@@ -404,7 +420,7 @@ public class MemberController {
 		
 		// 후원 후기 상세보기로 이동
 		@RequestMapping("supportReviewDetail.me")
-			public ModelAndView supportReviewDetail(int reNo, ModelAndView mv) {
+			public ModelAndView supportReviewDetail(int reNo,  ModelAndView mv) {
 				System.out.println("선택한 후기 번호" + reNo);
 				
 				Review rv = memberService.selectReview(reNo);
@@ -412,7 +428,7 @@ public class MemberController {
 				
 				
 				mv.addObject("rv", rv).setViewName("member/supportReviewDetail");
-				mv.addObject("at", at).setViewName("member/supportReviewDetail");;
+				mv.addObject("at", at).setViewName("member/supportReviewDetail");
 				
 				System.out.println("rv의 값 " + rv);
 				System.out.println("at의 값 " + at);
@@ -446,10 +462,20 @@ public class MemberController {
 
 		
 		@RequestMapping(value="insertReview.me")
-		public String insertReview(Review review, MultipartHttpServletRequest request) {
+		public String insertReview(Review review, MultipartHttpServletRequest request,
+				@RequestParam(name="file", required=false) MultipartFile file) {
 			
 			review.setReContent((review.getReContent()).replace("\n", "<br>"));
 			System.out.println("작성된 후기를 등록중입니다.");
+			
+			if(!file.getOriginalFilename().equals("")) {
+				String changeName = saveFile(file, request);
+				if(changeName != null) {
+					review.setThumbnailOrigin(file.getOriginalFilename());
+					review.setThumbnailChange(changeName);
+				}
+			}
+			
 			memberService.insertReview(review);
 			
 			return "redirect:supportReviewList.me";
@@ -507,57 +533,41 @@ public class MemberController {
 		}
 		
 		@RequestMapping("updateReview.me")
-		public ModelAndView updateReview(Review review, ReviewImage reImg, ModelAndView mv, HttpServletRequest request, MultipartHttpServletRequest multiRequest, 
-				@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
+		public ModelAndView updateReview(Review review, ModelAndView mv, MultipartHttpServletRequest request, 
+				@RequestParam(value="file", required=false) MultipartFile file) {
 			
 			review.setReContent((review.getReContent()).replace("\n", "<br>"));
 			System.out.println("작성된 후기를 수정중입니다.");
 			
-			Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
-			List<ReviewImage> reImgList = new ArrayList<>();
-			
-			Map<String, List<MultipartFile>> MapList = multiRequest.getMultiFileMap();
-			
-			for(Entry<String, List<MultipartFile>> entry : MapList.entrySet()) {
-				List<MultipartFile> fileList = entry.getValue();
-			
-			for(int i=0; i<fileList.size(); i++) {
-				String fileName = fileList.get(i).getOriginalFilename();
+			if(!file.getOriginalFilename().equals("")) {
 				
-				if(fileName != "") {
-					
-					String originName = fileList.get(i).getOriginalFilename();
-					String changeName = saveFile(fileList.get(i), request);
-					
-					if((entry.getKey()).equals("thumFile")) {
-						
-					}else {
-						reImg.setImgOriginName(originName);
-						reImg.setImgChangeName(changeName);
-						reImg.setReNo(review.getReNo());
-						reImgList.add(reImg);
-						}
-					}
+				if(review.getThumbnailChange() != null) {
+					deleteFile(review.getThumbnailChange(), request);
 				}
-			}			
-			memberService.updateReview(review, reImgList);
+				
+				String changeName = saveFile(file, request);
+				review.setThumbnailOrigin(file.getOriginalFilename());
+				review.setThumbnailChange(changeName);
+			}
+			
+			memberService.updateReview(review);
 			System.out.println("update 중입니다. 리뷰 객체를 확인 : " + review);
-			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail");
+			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail.me");
 			System.out.println("후기 업데이트 mv의 값 : " + mv);
 			return mv;
 			
 		}
 				
-		@RequestMapping("supportReviewUpdate.me")
+		@RequestMapping("supportReviewUpdateForm.me")
 		public ModelAndView supportReviewUpdate(int reNo, ModelAndView mv) {
-			
+			// 수정하는 페이지로 이동하는 코드
 			System.out.println("선택한 후기 번호" + reNo);
 			
 			Review rv = memberService.selectReview(reNo);
 			List<ReviewImage> at = memberService.selectReviewImage(reNo);
 			
-			mv.addObject("rv", rv).setViewName("member/supportReviewUpdate");
-			mv.addObject("at", at).setViewName("member/supportReviewUpdate");;
+			mv.addObject("rv", rv).setViewName("member/supportReviewUpdateForm");
+			mv.addObject("at", at).setViewName("member/supportReviewUpdateForm");;
 			
 			System.out.println("후기 수정 rv의 값 " + rv);
 			System.out.println("후기 수정 at의 값 " + at);
@@ -583,5 +593,13 @@ public class MemberController {
 					throw new CommException("file upload error");
 				}
 			return changeName;
+		}
+		
+		private void deleteFile(String fileName, HttpServletRequest request) {
+			String resources = request.getSession().getServletContext().getRealPath("/resources");
+			String savePath = resources + "/upload_files/" + "event/";
+			File deleteFile = new File(savePath + fileName);
+			deleteFile.delete();
+			
 		}
 }			

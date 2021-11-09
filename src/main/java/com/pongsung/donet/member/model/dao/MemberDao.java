@@ -200,5 +200,15 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.updateReviewImage", reImgList);
 	}
+// 마이페이지 목록 모음
+	public int selectSponsorListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.");
+	}
+
+	public ArrayList<Sponsor> selectSponsorList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
