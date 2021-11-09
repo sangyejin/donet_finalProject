@@ -128,7 +128,7 @@
 		#support { color: #000000; font-weight: bolder; font-size : 16px;}
     
     /* img sneak*/
-     #noticeContent{ margin-top : 7px; border : none;  height: 230px; }
+     #noticeContent{ margin-top : 7px; border : none;  height: 230px; width :580px; }
     
     #imgViewArea{ 
     		margin-top: -25px;

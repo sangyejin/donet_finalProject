@@ -191,7 +191,6 @@
 /*admin*/
 #administratorOption>button { width: 50px; height: 20px; }
 #administratorLabel { font-weight: bold; margin-right: 45px; margin-left : 262px;}
-			
 		        
         /*head*/
         #support { color: #000000; font-weight: bolder; font-size : 16px;}
@@ -205,8 +204,11 @@
     	</c:if>
     	
     	/*pagination*/
-.pagination{margin-top : 10px;}
-        
+		.pagination{margin-top : 10px;}
+		.pagination > button { border-style:none; border-radius: 7px; background : white; }
+		.pagination > button > a { color : rgb(66, 178, 115);}  
+		.pagination > button > a:hover { color : black;}       
+		
     </style>
 
 </head>
@@ -275,7 +277,7 @@
                  
                  <c:if test="${empty list}">
 						<tr>
-							<td colspan="3">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><b>여기</b></a>를 클릭하세요. </td>
+							<td colspan="3">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="list.faq"><b>여기</b></a>를 클릭하세요. </td>
 						</tr> 
 					</c:if>
            </table>
@@ -345,11 +347,13 @@
 						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
 					
-					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="100" value="" required>
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="30" value="" required>
 				</div>
 			</div>
 			</form>
+			<br>
     </div>
+    
     <!-- admin menu -->
 			<c:if test="${ loginUser.userRole eq 'D' }">
 				<div id="administratorOption">
