@@ -8,6 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <style>
 * {font-size: 10px;}
 
@@ -21,10 +23,9 @@
 	margin-top: 0;
 }
 
-#greenfont1 { margin-right: 45%; text-decoration: none; }
-
-#faq { margin-right: 36px; }
-#facetoface { margin-right: 70px; }
+#greenfont1 { margin-right: 69px; text-decoration: none; }
+#faq { margin-right: 41px; }
+#facetoface { margin-right: 68px; }
 
 #faq:hover, #facetoface:hover{ text-decoration : underline; color : #000000;}
 
@@ -37,8 +38,8 @@
 	margin-top: 50px;
 	border: 1px solid rgb(244, 244, 244);
 	background-color: rgb(244, 244, 244);
-	width: 140px;
-	height: 40px;
+	width: 130px;
+	height: 30px;
 	border-radius: 10px;
 }
 
@@ -115,7 +116,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 
 .viewed { width: 100px; }
 
-#whole { width: 1050px; margin : auto;}
+#whole { width: 1050px; margin : auto; }
 
 /*button style*/
        	button{
@@ -168,7 +169,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #searchmark {
 	width: 30px;
 	height: 25px;
-	margin-top:-1px;
+	margin-top:0px;
 	margin-left:-1px;
 	background-color: rgb(66, 178, 115);
 	border-radius: 4px;
@@ -200,6 +201,13 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 #support { color: #000000; font-weight: bolder; font-size : 16px;}
 
 .radioAlign{margin-right : 20px;}
+
+/*pagination*/
+		.pagination{margin-top : 10px;}
+		.pagination > button { border-style:none; border-radius: 7px; background : white; }
+		.pagination > button > a { color : rgb(66, 178, 115);}  
+		.pagination > button > a:hover { color : black;}          
+		
 </style>
 
 </head>
@@ -266,17 +274,16 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 				</tbody>
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="5">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><b>여기</b></a>를 클릭하세요. </td>
+							<td colspan="5">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="list.no"><b>여기</b></a>를 클릭하세요. </td>
 						</tr> 
 					</c:if>
 				
 			</table>
 
-			<div id="buttons" align="center">
-				<ul class="pagination">
+				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
-							<button class="page-item">
+							<button class="page-item" >
 								<a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
 							</button>
 						</c:when>
@@ -316,7 +323,6 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 						</c:otherwise>
 					</c:choose>
 				</ul>
-			</div>
 
 			<div id="grayline"></div>
 			
@@ -340,7 +346,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
 					
-					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="100" value="" required>
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="30" value="" required>
 				</div>
 			</div>
 			</form>

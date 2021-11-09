@@ -27,7 +27,7 @@
 ul>li{ list-style-type: none; }
 
 .greenfont{
-    margin-top: 20px;
+    margin-top: 15px;
     float: left;
     width : 115px;
     height : max-content;
@@ -66,8 +66,8 @@ a:hover{ color : rgb(30, 154, 40);  text-decoration: underline; }
 
 #userinfo{ margin-left: 700px; margin-top : -35px; }
 
-#secondLine{  margin-top : -7px; }
-
+#secondLine{  margin-top : -7px;overflow:auto;  }
+#secondLine > ul{overflow:auto; }
 .thisuser{ font-size : 10px; }
 
 .noDecoration{font-size : 10px;  color : rgb(30, 154, 40);  text-decoration: none; }
@@ -77,6 +77,44 @@ a{ color : #000000;  text-decoration: none; }
 .smallerFonts{ color : rgb(30, 154, 40);   text-decoration: none; font-size : 10px; }
 .loginDiv{ color : rgb(30, 154, 40); width : 300px; height : 30px; }
 
+
+/*event*/
+#eventBox{z-index : 1; position : fixed}
+#eventLocation{ margin-left : 1150px; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
+ 
+ .balloon {
+        position: relative;
+        display: inline-block;
+       margin-left : 1080px;
+       margin-top : -20px;
+       display : none;
+ }
+    .balloon span {
+        display: inline-block;
+        padding: 10px;
+        color: #fff;
+        background: rgb(30, 154, 40);
+        border-radius: 20px;
+    }
+ 
+    .balloon:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+ 
+    .balloon.right:after{
+        border-width: 10px 15px;
+        top: 50%;
+        margin-top: -10px;
+    }
+    
+    .balloon.right:after {
+        border-color: transparent transparent transparent rgb(30, 154, 40);
+        right: -25px;
+    }
 </style>
 </head>
 <body>
@@ -175,6 +213,13 @@ a{ color : #000000;  text-decoration: none; }
             </div>
     </div>
     
+   
+    <!-- 이벤트 박스 -->
+    <div id="eventBox">
+   		 <img id="eventLocation" src="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png" alt="">
+	    <div class="balloon right" id="eventToolTip"><span>후원할래?</span></div>
+    </div>
+    
      <!-- 로그인 클릭 시 뜨는 모달  -->
     <!-- <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
@@ -211,6 +256,25 @@ a{ color : #000000;  text-decoration: none; }
     	}
 
     </script>
+    
+    <!-- 이벤트 호버 -->
+    <script>
+    	const eventLocation = document.getElementById("eventLocation");
+
+    	eventLocation.addEventListener('mouseover', function() { 
+    		document.getElementById("eventToolTip").style.display=("block");
+    	});
+    	
+    	eventLocation.addEventListener('mouseout', function() {
+    		document.getElementById("eventToolTip").style.display=("none");
+    	});
+    	
+    	eventLocation.onclick = function(){
+    		location.href = "faceRecognition.ev";
+    	}
+
+    </script>
+    
     
 </body>
 </html>

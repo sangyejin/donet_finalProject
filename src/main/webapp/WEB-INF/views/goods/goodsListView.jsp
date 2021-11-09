@@ -8,10 +8,6 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
 
 <!-- favicon -->
 <link rel="icon"
@@ -46,12 +42,11 @@
 
 .card {
 	margin-right: 0px !important;
-	padding-left: 30px !important;
+	padding-left: 15px !important;
 }
 
 .cases-caption {
 	text-align: center;
-	width: 278px !important;
 }
 
 .div-top {
@@ -145,13 +140,21 @@ select::-ms-expand {
 
 .title {
 	display: block;
-	font-size: 18px;
+	font-size: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .div-title {
-	height: 50px;
+	height: 60px;
 }
 
+.goodsPrice{
+	font-weight:700;
+}
 #btn-insert {
 	width: 200px;
 	height: 40px;
@@ -210,7 +213,8 @@ select::-ms-expand {
 }
 
 .cases-img {
-	position: static;
+	margin-top:30px;
+	margin-bottom:20px;
 }
 </style>
 
@@ -318,7 +322,7 @@ select::-ms-expand {
 					$.each(map.goodsList,function(i, list){	
 						value += `<div class="card col-lg-4 col-md-6 col-sm-6">
 									<div class="single-cases mb-40">
-										<div class="cases-img">
+										<div class="cases-img"  onclick="location.href='${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`';">
 											<img src="${pageContext.request.contextPath}/resources/upload_files/goods/`+list.thumbnailChangeName+`" alt="`+list.goodsName+`"
 														width="278px" height="200px">
 										</div>
@@ -328,7 +332,7 @@ select::-ms-expand {
 													<a href="${pageContext.servletContext.contextPath}/goods/`+list.goodsNo+`" class="title">`+list.goodsName+`</a>
 												</div>
 												<p class="goodsPrice">
-													`+list.goodsPrice+`
+													`+list.goodsPrice+`원
 												</p>
 											</div>
 										</div>

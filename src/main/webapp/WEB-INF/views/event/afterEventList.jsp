@@ -10,29 +10,28 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+	<!-- Latest compiled JavaScript -->
+
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">    
-   
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
     <!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
     <style>
    		body{
    			width: 100%;
    		}
         .container{
-            width: 80%;
+            width: 100%;
            
         }
         
         .eventBox{
             height: 80px;
-            width: 80%;
+            width: 100%;
             border: none;
           
         }
@@ -62,9 +61,10 @@
             transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        img{
+        	#card-img{
             height:200px;
             width:100%;
+            padding: 0;
           }
           
           div[class^="col-"]{
@@ -82,22 +82,16 @@
               display: table-cell;
               vertical-align: top;
           }
-          .card{
-            transition:0.5s;
-            cursor:pointer;
-          }
+          
           .card-title{  
-            font-size:15px;
+            font-size:20px;
             transition:1s;
             cursor:pointer;
           }
          
-          .card:hover{
-            transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
+          
           .card-text{
-            height:80px;  
+            height:30px;  
           }
           
           .card::before, .card::after {
@@ -111,6 +105,7 @@
             background: rgba(255, 255, 255, 0.1);
             content: '';
             pointer-events: none;
+            border: none;
           }
           .card::before {
             transform-origin: left top;
@@ -121,10 +116,7 @@
           .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
             transform: scale3d(1, 1, 1);
           }
-          .boardCard{
-            max-height:300px;
-            width:100%;
-          }
+          
           .container_footer{
               margin-right:220px;
               float:right;
@@ -141,24 +133,26 @@
         #eventCard{
         	transition:0.5s;
             cursor:pointer;
-        	background-color: rgb(142, 211, 173);
+        	margin: 50px;
+        	padding: 0;
         }
         #eventCard:hover {
         	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-         
+        img{
+        	height:200px;
+        	width:230px;
+        }
+        .card{
+        	text-align:center;
+        }
     </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
-   <div class="container mt-2 ">
-       <div class="container mt-2 ">
-        <!--   <div class="card card-block mb-2">
-            <h4 class="card-title">Card 1</h4>
-            <p class="card-text">Welcom to bootstrap card styles</p>
-            <a href="#" class="btn btn-primary">Submit</a>
-          </div>   -->
+<div class="container mt-2 ">
+	<div class="container mt-2 ">
         <div>
             <div id="titleText"><h1>이벤트</h1></div>
             <br>
@@ -169,9 +163,6 @@
             <br>
             <div class="statusBox">
                 <p style="text-align:left; margin-left:20px; font-size:30px">진행중인 이벤트</p>
-                <c:if test="${ !empty loginUser && m.userId == 'admin' }">
-                	<a class="btn btn-secondary" style="float:right" href="enrollForm.ev">글쓰기</a>
-                </c:if>
             </div>  
         </div>
         <br>
@@ -180,24 +171,25 @@
         ========================= --> 
         
         <div class="row">
+            <div class="card-deck">
         	<c:forEach items="${ list }" var="list">
-            <div class="col-lg-4 col-md-6 col-sm-6" id="eventCard">
+                <div class="card col-md-4" id="eventCard">
             	<p style="display:none" > ${ list.eventNo } </p>
-                <div class="single-cases mb-40">
-                    <div class="cases-img">
-                    	
+                    <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img">
+                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${list.eventChange}"  alt="" class="content-img">
                     </div>
-                    <div class="cases-caption">
-                    	<h2>${ list.eventTitle }</h2>
-                    	<div class="dates d-flex justify-content-between">
-                        	<p>Start:<span> ${ fn:substring(list.eventStart, 0,10) }</span></p>
-                            <p>Goal:<span> ${ fn:substring(list.eventLast, 0,10) }</span></p>
-                        </div>
+                    <div class="card-body">
+                    	<p class="card-title mt-3 mb-3">${ list.eventTitle }</p>
+                        <p class="card-text" style="margin:0 auto" >
+                        Start: ${ fn:substring(list.eventStart, 0,10) }  ~  
+                            Goal: ${ fn:substring(list.eventLast, 0,10) } 
+                        </p>
                     </div>
                 </div>
-            </div>
             </c:forEach>
-        </div>    
+            </div>
+        </div>  
+        <br>  
         <!-- ========================= 
             Paging Area 
         ========================= --> 
@@ -259,7 +251,7 @@
                     	<br>
                     	
                     	<c:if test="${ !empty loginUser }">
-                    		<a class="btn" href="enroll.ev">이벤트 생성</a>
+                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>
                     	
                     </div>  
@@ -268,7 +260,7 @@
             </div>
         </div>
     </div>
-
+</div>
 	<script>
 		$(function() {
 			$(".row #eventCard").click(function(){

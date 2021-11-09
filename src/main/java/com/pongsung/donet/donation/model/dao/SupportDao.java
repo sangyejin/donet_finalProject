@@ -142,6 +142,11 @@ public class SupportDao {
 		return sqlSession.delete("supportMapper.deleteSupport",suNo);
 	}
 
+	public List<Support> selectTopDonationList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("supportMapper.selectTopDonationList");
+	}
+
 
 
 

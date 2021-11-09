@@ -10,11 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 
-<!-- font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic+Coding&family=Song+Myung&display=swap"
-	rel="stylesheet">
-	
+
 <!-- favicon -->
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
@@ -31,7 +27,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 
-
+	<!-- datepicker -->    
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- CDN 파일 summernote css/js --> 
 <!-- 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
@@ -47,17 +46,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 
 <style>
-*{
-	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    margin: 0;
-	padding: 0;
-}
-
-
-#fpName {
-	width: 1050px;
-}
 
 .div-fpName {
 	text-align: center;
@@ -89,19 +77,12 @@ label {
 	border: 1px solid rgb(85, 85, 85);
 }
 
-#category {
-	height: 40px;
-	border-radius: 4px;
-	width: 370px;
-	border: 1px solid rgb(85, 85, 85);
-}
-
 #goal {
 	width: 350px;
 }
 
 #startDate, #closeDate {
-	width: 165px;
+	width: 244px;
 }
 
 .div-input, #content {
@@ -127,7 +108,8 @@ tbody tr td, thead tr th {
 }
 
 .div-content {
-	padding: 20px 0 20px 0;
+	padding-top: 0;
+
 }
 
 .div-left {
@@ -143,27 +125,26 @@ tbody tr td, thead tr th {
 }
 
 .div-contentImg {
-	width: 100px;
-	height: 100px;
+	width: 30%;
+	height: 100%;
 	display: inline-block;
-	border: 1px solid rgb(85, 85, 85);
+	border: 1px solid #c8c8c8;
 	padding: 0;
-	margin-left: 17.5px;
-	margin-right: 17.5px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .group-img {
 	margin: auto;
 	padding: 0;
-	width: 370px;
-	height: 120px;
-	width: 370px
+	width: 100%;
+	height: 160px;
 }
 
 .div-thumbImg {
 	margin-left: 0;
-	width: 340px;
-	height: 340px;
+	width: 500px;
+	height: 500px;
 	padding: 0;
 }
 /* input number의 증가감소 버튼 안보이게 */
@@ -178,6 +159,28 @@ input[type="number"]::-webkit-inner-spin-button {
 	display: block;
 	width:100%;
 }
+.inputText {
+	border: 1px solid #e8e8e8;
+	height: 42px;
+	width: 400px;
+	padding-left: 20px;
+}
+#fpName {
+	width: 1050px;
+}
+#div-fpName,#div-content{
+	margin-bottom:50px;
+}
+.div-right .label-text{
+	margin-top:40px;
+}
+.div-left .label-text{
+	margin-top:20px;
+}
+#goal{
+	width:500px;
+}
+
 </style>
 
 
@@ -187,53 +190,49 @@ input[type="number"]::-webkit-inner-spin-button {
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
-		<form id="insertForm" action="insert" method="post"
-enctype="multipart/form-data">
+		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data" autocomplete="off">
 			<div class="div-fpName">
-				<label for="fpName" style="display: block;">펀딩 프로젝트 제목</label> <input
-					type="text" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
+				<label for="fpName" style="display: block;" class="label-text">펀딩 프로젝트 제목</label> <input
+					type="text" class="inputText" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
 			</div>
 			<div class="div-content">
 				<div class="div-left col-lg-6 col-xs-12">
-					<label for="thumbImg">대표 사진</label>
+					<label for="thumbImg" class="label-text">대표 사진</label>
 					<div class="div-thumbImg" id="thumbImg">
-						<img id="img0" width="370px" height="340px">
+						<img id="img0" width="500px" height="500px">
 					</div>
 				</div>
-				<div class="div-right col-lg-6 col-xs-12">
+				<div class="div-right col-lg-6 col-xs-12" style="padding-left: 0px; padding-right: 0px;">
 					<div class="div-input">
-						<label for="cateogry">카테고리</label> <select name="categoryNo"
-							id="category">
+						<label for="cateogry" class="label-text">카테고리</label> <select name="categoryNo"
+							id="category" >
+							<option value="" selected disabled hidden>선택</option>
 							<c:forEach var="category" items="${category}">
 								<option value="${category.categoryNo}">${category.categoryName}</option>
 							</c:forEach>
 						</select>
 					</div>
 					<div class="div-input">
-						<label for="goal">목표 금액</label> <input type="text"
+						<label for="goal" class="label-text">목표 금액</label> <input type="text"class="inputText" 
 							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="startDate">펀딩 기간</label> <input type="Date"
-							placeholder="0000-00-00" id="startDate" name="startDate" required>
-						<span style="margin: 0 10px;">~</span> <input type="Date"
-							placeholder="0000-00-00" id="closeDate" name="closeDate" required>
+						<label for="datepickerStart" class="label-text">펀딩 기간</label>
+							<input type="text" class="inputText"  id="startDate" name="startDate" placeHolder="yyyy-mm-dd" value="" required>
+						<span style="margin: 0 10px;">~</span>
+						<input type="text" class="inputText"  id="closeDate" name="closeDate" placeHolder="yyyy-mm-dd"  value=""  required>
 					</div>
 					<div class="div-input">
-						<label for="">결제 예정 날짜</label> <input type="Date"
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate" required>
-					</div>
-					<div class="div-input">
-						<label for="">추가사진</label>
+						<label for="" class="label-text">추가사진</label>
 						<div class="group-img">
 							<div class="div-contentImg col-xs-4" id="contentImg1">
-								<img class="contentImg" width="100px" id="img1">
+								<img class="contentImg"  width="100%" height="100%"id="img1">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg2">
-								<img class="contentImg" width="100px" id="img2">
+								<img class="contentImg" width="100%" height="100%" id="img2">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg3">
-								<img class="contentImg" width="100px" id="img3">
+								<img class="contentImg"  width="100%" height="100%" id="img3">
 							</div>
 						</div>
 					</div>
@@ -241,8 +240,8 @@ enctype="multipart/form-data">
 			</div>
 
 			<div class="div-content col-xs-12"
-				style="width: 1050px; margin: auto;">
-				<label for="content">내용</label>
+				style="width: 1050px;margin: auto;padding-left: 0px;">
+				<label for="content" class="label-text">내용</label>
 				<!-- 
 				<textarea name="content" id="content" cols="140" rows="10"
 					style="resize: none;" required></textarea>
@@ -290,10 +289,10 @@ enctype="multipart/form-data">
 
 
 			<div id="fileArea">
-				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 0);"> 
-					<input type="file"name="file1" id="file1" onchange="loadImg(this, 1);"> 
-					<inputb type="file" name="file2" id="file2" onchange="loadImg(this, 2);">
-				<input type="file" name="file3" id="file3" onchange="loadImg(this, 3);">
+				<input type="file" name="thumbFile" id="thumbFile" onchange="loadImg(this, 1);"> 
+					<input type="file"name="file1" id="file1" onchange="loadImg(this, 2);"> 
+					<input type="file" name="file2" id="file2" onchange="loadImg(this, 3);">
+				<input type="file" name="file3" id="file3" onchange="loadImg(this, 4);">
 			</div>
 			<div id="imgArea" style="display:none;">
 				
@@ -302,8 +301,79 @@ enctype="multipart/form-data">
 	</div>
 <jsp:include page="../common/footer.jsp" />
 	<script>
+	function validate(){
+        if (document.getElementById("startDate").value==''){
+        	alert("펀딩 시작날짜가 비었습니다.");
+        	return false;
+        }
+        if (document.getElementById("closeDate").value==''){
+        	alert("펀딩 마감날짜가 비었습니다.");
+        	return false;
+        }
+		var fileCheck = document.getElementById("thumbFile").value;
+        const table = document.getElementById('beneficiaryTable');
+        if (document.getElementById("fpName").value==""){
+        	alert("펀딩프로젝트 제목을 입력해주세요.");
+        	return false;
+        }
+        if(!fileCheck){
+            alert("대표사진을 추가해주세요.");
+            return false;
+        } 
+        if (document.getElementById("category").value==''){
+        	alert("카테고리를 선택해주세요.");
+        	return false;
+        }
+
+        if (document.getElementById("goal").value==""){
+        	alert("목표금액이 비었습니다.");
+        	return false;
+        }
+        if (document.getElementById("content").value==""){
+        	alert("내용이 비었습니다.");
+        	return false;
+        }
+       
+        return true;
+	}
         $(function () {
             $("#fileArea").hide();
+        	  $.datepicker.setDefaults($.datepicker.regional['ko']); 
+              $( "#startDate" ).datepicker({
+                   changeMonth: true, 
+                   changeYear: true,
+                   nextText: '다음 달',
+                   prevText: '이전 달', 
+                   dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                   dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                   monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   dateFormat: "yy-mm-dd",
+                                
+                   onClose: function( selectedDate ) {    
+                        //시작일(startDate) datepicker가 닫힐때
+                        //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                       $("#closeDate").datepicker( "option", "minDate", selectedDate );
+                   }    
+
+              });
+              $( "#closeDate" ).datepicker({
+                   changeMonth: true, 
+                   changeYear: true,
+                   nextText: '다음 달',
+                   prevText: '이전 달', 
+                   dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                   dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                   monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   dateFormat: "yy-mm-dd",
+                                          
+                   onClose: function( selectedDate ) {    
+                       $("#datepickerStart").datepicker( "option", "maxDate", selectedDate );
+                   }    
+
+              });    
+              
             $("#thumbImg").click(function () {
                 $("#thumbFile").click();
             });
@@ -318,12 +388,14 @@ enctype="multipart/form-data">
             $("#contentImg3").click(function () {
                 $("#file3").click();
             });
-            
-            
+       
     		$("#btn-back").click(function(){
     			location.href="${pageContext.servletContext.contextPath}/funding";
     		});
     		$("#btn-insert").click(function(){
+    			if(! validate()){
+    				return false;
+    			}
     			$("#tablePresent tbody tr").each( function (index) {
     		        $(this).find("input[name=fgNo]").attr("name", "fundingGoods[" + index + "].fgNo");
     		        $(this).find("input[name=fgName]").attr("name", "fundingGoods[" + index + "].fgName");
@@ -331,28 +403,31 @@ enctype="multipart/form-data">
     		        $(this).find("input[name=fgPrice]").attr("name", "fundingGoods[" + index + "].fgPrice");
     		        console.log(index);
     		    });
+    			
+
     			$("#insertForm").submit();
     		});
 
         });
 
         function loadImg(inputFile, num) {
+        	console.log(inputFile.files.length );
             if (inputFile.files.length == 1) { //파일 존재하면
                 var reader = new FileReader();
                 reader.readAsDataURL(inputFile.files[0]);
 				console.log(inputFile.files[0]);
                 reader.onload = function (e) {
                     switch (num) {
-                        case 0:
+                        case 1:
                             $("#img0").attr("src", e.target.result);
                             break;
-                        case 1:
+                        case 2:
                             $("#img1").attr("src", e.target.result);
                             break;
-                        case 2:
+                        case 3:
                             $("#img2").attr("src", e.target.result);
                             break;
-                        case 3:
+                        case 4:
                             $("#img3").attr("src", e.target.result);
                             break;
                     }
@@ -430,7 +505,7 @@ enctype="multipart/form-data">
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "contentFile",
+				url : "${pageContext.request.contextPath}/funding/contentFile",
 				cache : false,
 				contentType : false,
 				processData : false,

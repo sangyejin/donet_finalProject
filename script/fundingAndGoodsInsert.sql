@@ -3,7 +3,6 @@ insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'기타');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'동물');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'재난');
 insert into funding_category values(SEQ_FUNDING_CATEGORY.NEXTVAL,'고아');
-
 BEGIN
 FOR i in 1..5
 LOOP
@@ -108,5 +107,43 @@ values(seq_beneficiary.nextval,'동물협회'||i,'02-1234-3456','서울특별시
 END LOOP;
 END;
 /
+
+commit;
+
+select rownum,a.* from(select * from goods 
+where status='Y'
+order by hits) a
+where rownum<3;
+
+select rownum,a.* from(select * from FUNDING_PROJECT
+where status='Y'
+order by hits) a
+where rownum<=3;
+
+select rownum,a.* from
+(select * from event
+where event_status='Y'
+order by event_last_date)
+a
+where rownum<3;
+
+select rownum, a.* 
+from(select * from NOTICE
+        order by no_date desc) a
+where rownum<3;
+
+select rownum, a.*
+from(select * from support
+        where SU_SATUTS='Y'
+        order by SU_LAST desc
+    ) a
+where rownum<3;
+insert into notice
+values(SEQ_NOTICE.nextval,'공지사항2','공지사항 내용입니다2',sysdate,'admin',default,default,default,default);
+insert into event
+values(SEQ_EV.nextval, '이벤트제목 3','이벤트 내용입니다 <br> 이벤트내용',sysdate,sysdate,default);
+delete from support;
+insert into support
+values(seq_support.nextval,'후원프로젝트2','admin',sysdate,sysdate,sysdate,'후원프로젝트내용입니다2','사업대상',sysdate,sysdate,'1636036915241_9063796.jpg','1636036915241_9063796.jpg',1,default,default,default,default,'30000');
 
 commit;

@@ -5,13 +5,30 @@
 <head>
 <meta charset="UTF-8">
 <title>도넷닷컴</title>
+
 <style>
-	/*전체설정*/
-	 #All > *{font-size: 12px; color: gray; }
+	/*전체설정*/	
+	*{margin: 0; padding: 0;}
+	
+	#All > *{font-size: 12px; color: gray; }
     
-  	#toleft > a{  text-decoration: none; color: gray; }
+  	#toleft > a{ text-decoration: none; color: gray; }
   	
-  	#All{ width: 100%; 	 margin : 0; padding : 0; margin-bottom : 0; margin-top : 1000px; border-top: solid 1px rgb(244, 244, 244); }
+  	#toleft > *{font-size: 12px; color: gray; }
+  	#toright > *{font-size: 12px; color: gray; }
+  	
+  	#rightMiddleFooter > *{font-size: 12px; color: gray; }
+  	#All{ width: 100%; 	
+   			position :flex;
+  			margin : 0; 
+  			padding : 0; 
+  			margin-top : 80%; 
+  			border-top: solid 1px rgb(244, 244, 244); 
+  			height : 110px;
+  		}
+  		
+   	#footer{ width: 1050px; margin : auto; position : relative; margin-top : 10px;}
+   	
 
 	/*SNS 바*/
     #snstap{  width: 335px;  height: 30px;  margin-top: -5px; }
@@ -19,13 +36,12 @@
 	/*좌우 짜잘 설정들*/
     #workinghour{ font-size: smaller; }
     
-    #happycustomers{margin-top: -5px;}
+    #happycustomers{margin-top: -5px; font-size: 12px; color: gray; }
 
     #toright, #toleft{
        float: left;
        margin-left: 9%;
        margin-top: 0;
-
     }
 
     #toright{ margin-left: 14%; }
@@ -38,7 +54,6 @@
     
     #toleft> a:hover{ text-decoration: underline; }
 
-    #footer{ width: 1050px; margin : auto; margin-top : 10px; height : 50px; position : relative; }
     
     #rightMiddleFooter{margin-top : 15px; margin-bottom : 15px;}
 
@@ -72,15 +87,18 @@
 	</div>
 	
 	<script>
-		$(function(){
-			$("#noVacancy").on('click', function(){
-				alert("현재 도넷닷컴은 채용중이 아닙니다.")
-			})
+	window.onload = function(){
+			let noVacancy= document.querySelector("#noVacancy");
+			noVacancy.addEventListener("click",function(){
+				alert("현재 도넷닷컴은 채용중이 아닙니다.");
+			});
 			
-			$("#snstap").on('click', function(){
-				alert("준비중입니다.")
-			})
-		})
+			let snstap= document.querySelector("#snstap");
+			snstap.addEventListener("click",function(){
+				alert("준비중입니다.");
+			});
+
+	}
 	</script>
 </body>
 </html>

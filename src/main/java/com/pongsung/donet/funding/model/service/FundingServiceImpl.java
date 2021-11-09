@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pongsung.donet.common.PageInfo;
-import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.dao.FundingDao;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
@@ -44,7 +43,7 @@ public class FundingServiceImpl implements FundingService {
 		return fundingDao.selectFundingCategoryList(sqlSession);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception {
 		int fpNo=fundingDao.insertFunding(sqlSession,funding);
@@ -55,7 +54,7 @@ public class FundingServiceImpl implements FundingService {
 				}
 				int resultInsertImg=fundingDao.insertFundingImgList(sqlSession,imgList);
 				if(resultInsertImg<0) { //추가사진 db insert 실패
-					throw new CommException("펀딩 프로젝트 등록 실패 - 이미지");
+					throw new Exception("펀딩 프로젝트 등록 실패 - 이미지");
 				}
 			}
 			if(!fundingGoodsList.isEmpty()) { //선물이 있으면
@@ -64,13 +63,13 @@ public class FundingServiceImpl implements FundingService {
 				}
 				int resultInsertFundingGoods=fundingDao.insertFundingGoodsList(sqlSession, fundingGoodsList);
 				if(resultInsertFundingGoods<0) { //선물 db insert 실패
-					throw new CommException("펀딩 프로젝트 등록 실패 - 선물");
+					throw new Exception("펀딩 프로젝트 등록 실패 - 선물");
 				}
 			}
 			
 		}
 		else { //펀딩 db insert 실패
-			throw new CommException("펀딩 프로젝트 등록 실패");
+			throw new Exception("펀딩 프로젝트 등록 실패");
 		}
 
 	}
@@ -96,54 +95,83 @@ public class FundingServiceImpl implements FundingService {
 	}
 
 	@Override
-	public int insertFundingReply(FundingReply fundingReply) {
+	public int insertFundingReply(FundingReply fundingReply) throws Exception {
 		int result=fundingDao.insertFundingReply(sqlSession,fundingReply);
 		if(result<0) {
-			throw new CommException("댓글 등록 실패");
+			throw new Exception("댓글 등록 실패");
 		}
 		return result;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public int deleteFundingReply(int replyNo) {
+	public int deleteFundingReply(int replyNo) throws Exception  {
 		int result=fundingDao.deleteFundingReply(sqlSession,replyNo);
 		if(result<0) {
-			throw new CommException("댓글 등록 실패");
+			throw new Exception("댓글 등록 실패");
 		}
 		return result;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void deleteFunding(int fpNo) {
+	public void deleteFunding(int fpNo)  throws Exception {
 		int result=fundingDao.deleteFunding(sqlSession,fpNo);
 		if(result<0) {
-			throw new CommException("펀딩 프로젝트 삭제 실패");
+			throw new Exception("펀딩 프로젝트 삭제 실패");
 		}
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public int updateFundingReply(FundingReply fundingReply) {
+	public int updateFundingReply(FundingReply fundingReply) throws Exception  {
 		// TODO Auto-generated method stub
 		int result=fundingDao.updateFundingReply(sqlSession,fundingReply);
 		if(result<0) {
-			throw new CommException("펀딩 댓글 수정 실패");
+			throw new Exception("펀딩 댓글 수정 실패");
 		}
 		return result;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void insertFundingSupporter(FundingSupporter fundingSupporter) {
+	public void insertFundingSupporter(FundingSupporter fundingSupporter) throws Exception  {
 		int result=fundingDao.insertFundingSupporter(sqlSession,fundingSupporter);
 		if(result<0) {
-			throw new CommException("펀딩 후원 실패");
+			throw new Exception("펀딩 후원 실패");
+		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateFundingHitsCount(int fpNo)  throws Exception {
+		int result=fundingDao.updateFundingHitsCount(sqlSession,fpNo);
+		if(result<0) {
+			throw new Exception("펀딩 프로젝트 조회수 update 실패");
 		}
 	}
 
 	@Override
-	public void updateFundingHitsCount(int fpNo) {
-		int result=fundingDao.updateFundingHitsCount(sqlSession,fpNo);
+	public List<Funding> selectTopFundingList() {
+		// TODO Auto-generated method stub
+		return fundingDao.selectTopFundingList(sqlSession);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateFunding(Funding funding)  throws Exception {
+		int result=fundingDao.updateFunding(sqlSession,funding);
 		if(result<0) {
-			throw new CommException("펀딩 프로젝트 조회수 update 실패");
+			throw new Exception("펀딩 프로젝트 update 실패");
+		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateNewFundingImageList( List<FundingImage> imgList) throws Exception  {
+		int result=fundingDao.updateNewFundingImageList(sqlSession,imgList);
+		if(result<0) {
+			throw new Exception("펀딩 프로젝트 사진 update 실패");
 		}
 	}
 

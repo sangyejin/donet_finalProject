@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="beRegistration" column="BE_REGISTRATION" />
 	</resultMap>
 	
+	<resultMap id="requiredGoodsResultSet" type="RequiredGoods">
+		<id property="goodsNo" column="GOODS_NO" />
+		<result property="beneficiaryNo" column="BENEFICIARY_NO" />
+	</resultMap>
+	
 
 	<select id="selectGoodsListCount" parameterType="FilterOrder" resultType="_int">
 		select COUNT(*)
@@ -98,6 +103,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from BENEFICIARY
 	</select>
 	
+	<select id="selectBeneficiaryListByGoodsNo" parameterType="_int" resultMap="beneficiaryResultSet">
+		select BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION
+		from BENEFICIARY A
+		inner join REQUIRED_GOODS B on A.BE_NO=B.BENEFICIARY_NO
+		where GOODS_NO=#{goodsNo}
+	</select>
+	
+	<select id="selectRequiredGoodsListByGoodsNo" parameterType="_int" resultMap="requiredGoodsResultSet">
+		select GOODS_NO, BENEFICIARY_NO
+		from REQUIRED_GOODS
+		where GOODS_NO=#{goodsNo}
+	</select>
 	<insert id="insertGoods" parameterType="Goods">
 		<selectKey keyProperty="goodsNo" resultType="_int" order="AFTER">
 			select SEQ_GOODS.currval from dual
@@ -116,11 +133,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 	
+	<insert id="insertNewRequiredGoods" parameterType="java.util.List">
+		insert into REQUIRED_GOODS(GOODS_NO,BENEFICIARY_NO)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select #{item.goodsNo},#{item.beneficiaryNo} from DUAL
+		</foreach>
+	</insert>
+	<delete id="deleteOldequiredGoods" parameterType="java.util.List">
+		delete from REQUIRED_GOODS
+		<where>
+			<foreach collection="list" item="item" separator=" OR ">
+				BENEFICIARY_NO=#{item.beneficiaryNo} and GOODS_NO=#{item.goodsNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	
 	<update id="updateGoods" parameterType="Goods">
 		UPDATE GOODS 
 		SET GOODS_NAME=#{goodsName}
 		,GOODS_CATEGORY_NO=#{goodsCategoryNo}
 		,CONTENT=#{content}
+		,GOODS_PRICE=#{goodsPrice}
 		<if test="thumbnailOriginName != null">
 			,THUMBNAIL_ORIGIN_NAME=#{thumbnailOriginName}
 			,THUMBNAIL_CHANGE_NAME=#{thumbnailChangeName}
@@ -128,13 +162,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE GOODS_NO=#{goodsNo}
 	</update>
 	
-		<insert id="insertGoodsPurchase" parameterType="GoodsPurchase">
+	<insert id="insertGoodsPurchase" parameterType="GoodsPurchase">
 		insert into GOODS_PURCHASE(PURCHASE_NO,USER_ID,GOODS_NO
 									,BENEFICIARY_NO,PURCHASE_PRICE,PURCHASE_AMOUNT,PURCHASE_DATE)
 		values(
 			NVL((SELECT MAX(PURCHASE_NO) FROM GOODS_PURCHASE WHERE USER_ID=#{userId}),0)+1,#{userId},#{goodsNo}
 			,#{beneficiaryNo},#{purchasePrice},#{purchaseAmount},sysdate
 		)
-
 	</insert>
+	
+	<select id="selectTopGoodsList" resultMap="goodsResultSet">
+	<![CDATA[
+		select A.GOODS_NO , A.GOODS_NAME, A.GOODS_PRICE, A.THUMBNAIL_CHANGE_NAME,A.THUMBNAIL_ORIGIN_NAME
+		from(select GOODS_NO ,GOODS_NAME, GOODS_PRICE , THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME
+				from goods 
+				where status='Y'
+				order by hits
+			) A
+		where ROWNUM <= 4
+	]]>
+	</select>
 </mapper>

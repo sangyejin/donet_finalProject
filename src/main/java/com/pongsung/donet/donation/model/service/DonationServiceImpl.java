@@ -209,6 +209,7 @@ public class DonationServiceImpl implements DonationService {
 	}
 
 	@Override
+
 	public void deleteSupport(int suNo) {
 		int result=supportDao.deleteSupport(sqlSession,suNo);
 		if(result<0) {
@@ -217,6 +218,10 @@ public class DonationServiceImpl implements DonationService {
 	}
 
 
+	public List<Support> selectTopDonationList() {
+		// TODO Auto-generated method stub
+		return supportDao.selectTopDonationList(sqlSession);
+	}
 
 
 

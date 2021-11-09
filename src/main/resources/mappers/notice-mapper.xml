@@ -276,5 +276,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	<select id="selectTopNoticeList" resultMap="noticeResultMap">
+		<![CDATA[
+		select rownum, a.* 
+		from(   select * from NOTICE
+				where no_save='N'
+        		order by no_date desc) a
+		where rownum<=5
+		]]>
+	</select>
+	
 	
 </mapper>

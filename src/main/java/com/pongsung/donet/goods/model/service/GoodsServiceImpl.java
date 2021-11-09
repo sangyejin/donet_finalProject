@@ -43,10 +43,10 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void updateGoodsHitsCount(int goodsNo) {
+	public void updateGoodsHitsCount(int goodsNo) throws Exception{
 		int result=goodsDao.updateGoodsHitsCount(sqlSession,goodsNo);
 		if(result<0) {
-			throw new CommException("구호물품 조회수 카운트 실패");
+			throw new Exception("구호물품 조회수 카운트 실패");
 		}
 	}
 
@@ -57,11 +57,11 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void deleteGoods(int goodsNo) {
+	public void deleteGoods(int goodsNo) throws Exception {
 		// TODO Auto-generated method stub
 		int result=goodsDao.deleteGoods(sqlSession,goodsNo);
 		if(result<0) {
-			throw new CommException("구호물품 삭제 실패");		
+			throw new Exception("구호물품 삭제 실패");		
 		}
 	}
 
@@ -72,7 +72,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void insertGoods(Goods goods,List<RequiredGoods> requiredGoods) {
+	public void insertGoods(Goods goods,List<RequiredGoods> requiredGoods)throws Exception {
 		int goodsNo=goodsDao.insertGoods(sqlSession,goods);
 		if(goodsNo<0) {
 			throw new CommException("구호물품 등록 실패");		
@@ -86,27 +86,63 @@ public class GoodsServiceImpl implements GoodsService {
 
 			int result=goodsDao.insertRequiredGoods(sqlSession,requiredGoods);
 			if(result<0) {
-				throw new CommException("구호물품 요구 후원처 등록 실패");		
+				throw new Exception("구호물품 요구 후원처 등록 실패");		
 			}	
 		}
 	}
 
 	@Override
-	public void updateGoods(Goods goods) {
+	public void updateGoods(Goods goods) throws Exception{
 		// TODO Auto-generated method stub
 		int result=goodsDao.updateGoods(sqlSession,goods);
 		if(result<0) {
-			throw new CommException("구호물품 삭제 실패");		
+			throw new Exception("구호물품 삭제 실패");		
 		}
 	}
 
 	@Override
-	public void insertGoodsPurchase(GoodsPurchase goodsPurchase) {
+	public void insertGoodsPurchase(GoodsPurchase goodsPurchase)throws Exception {
 		// TODO Auto-generated method stub
 		int result=goodsDao.insertGoodsPurchase(sqlSession,goodsPurchase);
 		if(result<0) {
-			throw new CommException("구호물품 삭제 실패");		
+			throw new Exception("구호물품 삭제 실패");		
 		}
+	}
+
+	@Override
+	public List<Beneficiary> selectBeneficiaryListByGoodsNo(int goodsNo){
+		// TODO Auto-generated method stub
+		return goodsDao.selectBeneficiaryListByGoodsNo(sqlSession,goodsNo);
+	}
+
+	@Override
+	public void insertNewRequiredGoods(List<RequiredGoods> insertRequiredBeneficiary) throws Exception{
+		// TODO Auto-generated method stub
+		int result=goodsDao.insertNewRequiredGoods(sqlSession,insertRequiredBeneficiary);
+		if(result<0) {
+			throw new Exception("구호물품 삭제 실패");		
+		}
+	}
+
+	@Override
+	public void deleteOldequiredGoods(List<RequiredGoods> deleteRequiredBeneficiary) throws Exception{
+		// TODO Auto-generated method stub
+		int result=goodsDao.deleteOldequiredGoods(sqlSession,deleteRequiredBeneficiary);
+		if(result<0) {
+			throw new Exception("구호물품 삭제 실패");		
+		}
+	}
+
+	@Override
+	public List<RequiredGoods> selectRequiredGoodsListByGoodsNo(int goodsNo) {
+		// TODO Auto-generated method stub
+		return goodsDao.selectRequiredGoodsListByGoodsNo(sqlSession,goodsNo);
+	}
+
+	@Override
+	public List<Goods> selectTopGoodsList() {
+		// TODO Auto-generated method stub
+		return goodsDao.selectTopGoodsList(sqlSession);
 	}
 
 

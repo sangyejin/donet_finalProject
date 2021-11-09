@@ -103,4 +103,19 @@ public class FundingDao {
 		return sqlSession.insert("fundingMapper.updateFundingHitsCount",fpNo);
 	}
 
+	public List<Funding> selectTopFundingList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("fundingMapper.selectTopFundingList");
+	}
+
+	public int updateFunding(SqlSessionTemplate sqlSession, Funding funding) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("fundingMapper.updateFunding",funding);
+	}
+
+	public int updateNewFundingImageList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("fundingMapper.updateNewFundingImageList",imgList);
+	}
+
 }

@@ -65,6 +65,8 @@ public interface DonationService {
 
 	void deleteSupport(int suNo);
 
+	List<Support> selectTopDonationList();
+
 	
 
 	
