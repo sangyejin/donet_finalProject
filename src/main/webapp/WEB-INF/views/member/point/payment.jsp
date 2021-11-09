@@ -261,6 +261,7 @@
 
 	<jsp:include page="../../common/footer.jsp" />
 	
+	
 	<!-- 3자리 콤마 + 숫자만! -->
 	<script>
 	function inputNumberFormat(obj) {

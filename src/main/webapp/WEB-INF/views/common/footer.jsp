@@ -14,6 +14,10 @@
     
   	#toleft > a{ text-decoration: none; color: gray; }
   	
+  	#toleft > *{font-size: 12px; color: gray; }
+  	#toright > *{font-size: 12px; color: gray; }
+  	
+  	#rightMiddleFooter > *{font-size: 12px; color: gray; }
   	#All{ width: 100%; 	
    			position :flex;
   			margin : 0; 
@@ -23,7 +27,7 @@
   			height : 110px;
   		}
   		
-   	#footer{ width: 1050px; margin : auto; position : relative;}
+   	#footer{ width: 1050px; margin : auto; position : relative; margin-top : 10px;}
    	
 
 	/*SNS 바*/
@@ -32,7 +36,7 @@
 	/*좌우 짜잘 설정들*/
     #workinghour{ font-size: smaller; }
     
-    #happycustomers{margin-top: -5px;}
+    #happycustomers{margin-top: -5px; font-size: 12px; color: gray; }
 
     #toright, #toleft{
        float: left;

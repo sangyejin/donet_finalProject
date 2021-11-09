@@ -223,8 +223,10 @@
        
        	/*pagination*/
 		.pagination{margin-top : 10px;}
-        
-       
+		.pagination > button { border-style:none; border-radius: 7px; background : white; }
+		.pagination > button > a { color : rgb(66, 178, 115);}  
+		.pagination > button > a:hover { color : black;}        
+		        
         </style>
 
 </head>
