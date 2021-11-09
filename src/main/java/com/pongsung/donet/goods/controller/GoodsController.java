@@ -117,7 +117,7 @@ public class GoodsController {
 
 	// 구호물품 디테일
 	@RequestMapping(value="goods/{goodsNo}")
-	public String selectGoodsDetail(@PathVariable("goodsNo") int goodsNo, Model model) {
+	public String selectGoodsDetail(@PathVariable("goodsNo") int goodsNo, Model model)throws Exception {
 		goodsService.updateGoodsHitsCount(goodsNo);
 		Goods goods= goodsService.selectGoods(goodsNo);
 		System.out.println(goodsNo);
@@ -128,7 +128,7 @@ public class GoodsController {
 	
 	// 구호물품 삭제
 	@RequestMapping(value="goods/{goodsNo}/delete")
-	public String deleteGoods(@PathVariable("goodsNo") int goodsNo, Model model) {
+	public String deleteGoods(@PathVariable("goodsNo") int goodsNo, Model model) throws Exception{
 		goodsService.deleteGoods(goodsNo);
 		return "redirect:/goods";
 	}
@@ -217,7 +217,7 @@ public class GoodsController {
 	@RequestMapping(value="goods/{goodsNo}/update")
 	public String updateGoods(@PathVariable("goodsNo") int goodsNo,Goods goods,@ModelAttribute RequiredGoodsList rgList
 			 ,HttpServletRequest request,@RequestParam(name="thumbFile",required=false) MultipartFile file
-			 , Model model) {
+			 , Model model) throws Exception{
 		List<RequiredGoods> oldBeneficiaryList= goodsService.selectRequiredGoodsListByGoodsNo(goodsNo);
 		List<RequiredGoods> newBeneficiaryList= rgList.getRequiredGoods();
 		
@@ -303,7 +303,7 @@ public class GoodsController {
 	
 	//구호물품 구매
 	@RequestMapping(value="goods/{goodsNo}/support/insert")
-	public String insertGoodsPurchase(@PathVariable("goodsNo") int goodsNo,GoodsPurchase goodsPurchase, Model model) {
+	public String insertGoodsPurchase(@PathVariable("goodsNo") int goodsNo,GoodsPurchase goodsPurchase, Model model) throws Exception{
 		goodsPurchase.setUserId(((Member)model.getAttribute("loginUser")).getUserId());
 		logger.info("insertGoodsPurchase :: goodsPurchase ::"+goodsPurchase);
 		goodsService.insertGoodsPurchase(goodsPurchase);

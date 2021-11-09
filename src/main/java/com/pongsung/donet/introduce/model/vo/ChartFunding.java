@@ -1,4 +1,4 @@
-package com.pongsung.donet.funding.model.vo;
+package com.pongsung.donet.introduce.model.vo;
 
 import java.sql.Date;
 
@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Funding {
+public class ChartFunding {
 	private int fpNo;
 	private String fpName;
 	private String hostName;
@@ -23,6 +23,7 @@ public class Funding {
 	private Date startDate;
 	private Date closeDate;
 	private String content;
+	private Date paymentDate;
 	private String categoryName;
 	private int categoryNo;
 	private int hits;

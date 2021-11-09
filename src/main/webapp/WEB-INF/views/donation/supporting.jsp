@@ -229,7 +229,7 @@
 								var amount = $("#addPrice").val();
 
 									$.ajax({
-										url : "supportCharity",
+										url : "supportCharity?suNo="+suNo,
 										type : "post",
 										data : {
 											amount : amount,
@@ -237,13 +237,9 @@
 											userId : "${loginUser.userId}"
 										},
 										success : function(result) {
-											if (result > 0) {
 												alert("후원 성공!!");
-												location.href="supportAfterPoints?point="+amount;
-
-											} else {
-												alert("후원 실패");
-											}
+												location.href="list.do";
+												
 										},
 										error : function() {
 											console.log("댓글 작성 ajax 통신 실패");

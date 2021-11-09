@@ -246,7 +246,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
-		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data">
+		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data"  autocomplete="off">
 			<div class="div-content">
 				<div class="div-goodsName">
 						<label for="goodsName" style="display: block;" class="label-text">구호물품 이름</label> 
@@ -262,6 +262,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					<div class="div-input">
 						<label for="cateogry" class="label-text">카테고리</label> 
 						<select name="goodsCategoryNo" id="category">
+							<option value="" selected disabled hidden>선택</option>
 							<c:forEach var="category" items="${categoryList}">
 								<option value="${category.goodsCategoryNo}">${category.goodsCategoryName}</option>
 							</c:forEach>
@@ -366,7 +367,37 @@ input[type="number"]::-webkit-inner-spin-button {
 			$("#beneficiaryTable tbody").append(temp);
 			$(".notInput").css({"border":"none","outline": "none","width":"100%","height":"100%","padding":"0","text-align":"center"});
 		});
-	
+		function validate(){
+			var fileCheck = document.getElementById("thumbFile").value;
+            const table = document.getElementById('beneficiaryTable');
+            if (document.getElementById("goodsName").value==""){
+            	alert("구호물품 이름을 입력해주세요.");
+            	return false;
+            }
+            if(!fileCheck){
+                alert("대표사진을 추가해주세요.");
+                return false;
+            } 
+            if (document.getElementById("category").value==""){
+            	alert("카테고리를 선택해주세요.");
+            	return false;
+            }
+            if (document.getElementById("goodsPrice").value==""){
+            	alert("가격이 비었습니다.");
+            	return false;
+            }
+            if (table.tBodies[0].rows.length<=0){
+            	alert("후원처를 추가해주세요.");
+            	return false;
+            }
+            
+            if (document.getElementById("content").value==""){
+            	alert("내용이 비었습니다.");
+            	return false;
+            }
+           
+            return true;
+		}
         $(function () {
             $("#fileArea").hide();
             $("#thumbImg").click(function () {
@@ -377,6 +408,9 @@ input[type="number"]::-webkit-inner-spin-button {
     			location.href="${pageContext.servletContext.contextPath}/goods";
     		});
     		$("#btn-insert").click(function(){
+				if(! validate()){
+					return;
+				}
     			$("#beneficiaryTable tbody tr").each( function (index) {
     		        $(this).find("input[name=beneficiaryNo]").attr("name", "requiredGoods[" + index + "].beneficiaryNo");
     		    });

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chartMapper">
+
+	<resultMap id="chartGoalResultSet"
+		type="ChartGoal">
+		<id property="suTitle" column="SU_TITLE" />
+		<result property="goal" column="GOAL" />
+	</resultMap>
+	
+	<resultMap id="chartSupportResultSet" type="ChartSupport">
+		<id property="suNo" column="SU_NO" />
+		<result property="suTitle" column="SU_TITLE" />
+		<result property="suWriter" column="SU_WRITER" />
+		<result property="suStart" column="SU_START" />
+		<result property="suLast" column="SU_LAST" />
+		<result property="suDate" column="SU_DATE" />
+		<result property="content" column="SU_CONTENT" />
+		<result property="target" column="SU_TARGET" />
+		<result property="bstart" column="SU_BSTART" />
+		<result property="blast" column="SU_BLAST" />
+		<result property="thumbnailOrigin" column="THUMBNAILORIGIN" />
+		<result property="thumbnailChange" column="THUMBNAILCHANGE" />
+		<result property="categoryNo" column="SU_CATEGORY" />
+		<result property="status" column="SU_SATUTS" />
+		<result property="hits" column="HITS" />
+		<result property="ddate" column="DDAY" />
+		<result property="total" column="TOTAL" />
+		<result property="totalamount" column="TOTALAMOUNT" />
+		<result property="goal" column="GOAL" />
+	</resultMap>
+
+
+	<resultMap id="chartsponsorResultSet" type="ChartSponsor">
+		<id property="userId" column="USER_ID" />
+		<result property="suNo" column="SU_NO" />
+		<result property="payNo" column="PAY_NO" />
+		<result property="amount" column="PAY_AMOUNT" />
+		<result property="total" column="COUNT" />
+		<result property="sum" column="SUM" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="title" column="TITLE" />
+	</resultMap>
+	
+	<resultMap id="chartfundingResultSet" type="ChartFunding">
+		<id property="fpNo" column="FP_NO" />
+		<result property="fpName" column="FP_NAME" />
+		<result property="hostName" column="USER_NAME" />
+		<result property="goal" column="GOAL" />
+		<result property="raised" column="RAISED" />
+		<result property="hostId" column="HOST_ID" />
+		<result property="startDate" column="START_DATE" />
+		<result property="closeDate" column="CLOSING_DATE" />
+		<result property="content" column="CONTENT" />
+		<result property="paymentDate" column="PAYMENT_DATE" />
+		<result property="categoryName" column="FUNDING_CATEGORY_NAME" />
+		<result property="categoryNo" column="CATEGORY_NO" />
+		<result property="hits" column="HITS" />
+		<result property="status" column="STATUS" />
+		<result property="thumbnailOriginName" column="THUMBNAIL_ORIGIN_NAME" />
+		<result property="thumbnailChangeName" column="THUMBNAIL_CHANGE_NAME" />
+		<result property="fpWriteDate" column="FP_WRITE_DATE" />
+		<result property="numberSupporter" column="NUMBER_SUPPORTER" />
+		<result property="dDay" column="D_DAY" />
+	</resultMap>
+	
+	<select id="selectDonation" resultMap="chartSupportResultSet">
+		SELECT * FROM SUPPORT ORDER BY GOAL DESC
+	</select>
+	
+	<select id="selectSponsor" resultMap="chartfundingResultSet">
+		SELECT * FROM FUNDING_PROJECT ORDER BY GOAL DESC
+	</select>
+</mapper>

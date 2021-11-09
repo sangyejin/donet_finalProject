@@ -57,6 +57,11 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportImage" alias="SupportImage" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportFilter" alias="SupportFilter" />
+
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartGoal" alias="ChartGoal" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartSupport" alias="ChartSupport" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartSponsor" alias="ChartSponsor" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartFunding" alias="ChartFunding" />
 	</typeAliases>
 
 	<mappers>
@@ -68,6 +73,7 @@
 		<mapper resource="/mappers/support-mapper.xml" />		
 		<mapper resource="/mappers/volunteer-mapper.xml" />
 		<mapper resource="/mappers/attendance-mapper.xml" />
+		<mapper resource="/mappers/chart-mapper.xml" />
 	</mappers>
 
 

@@ -446,17 +446,17 @@
 				<div id="info-right-container" class="col-md-6">
 					<div class="prices d-flex justify-content-between">
 						<p> 
-						<c:if
-								test="${funding.raised/funding.goal<1 &&(nowDate < startDate || nowDate > closeDate)}">
-							펀딩 실패
-						</c:if>
-						<c:if
-								test="${funding.raised/funding.goal>=1 &&(nowDate<startDate || nowDate > closeDate)}">
-							펀딩 성공
-						</c:if>
-						<c:if test="${nowDate>=startDate && nowDate<=closeDate}">
+						<c:choose>
+						<c:when test="${nowDate < startDate}">
+							펀딩 예정
+						</c:when>
+						<c:when test="${nowDate>=startDate && nowDate<=closeDate}">
 							펀딩 진행중
-						</c:if>
+						</c:when>
+						<c:when test="${ nowDate > closeDate}">
+							펀딩 종료
+						</c:when>
+						</c:choose>
 						</p>
 
 						<p>
@@ -519,7 +519,11 @@
 				<div class="page-btns">
 					<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
+
+							<c:when test="${ status.begin==0 }">
+
 							<c:when test="${status.begin==0}">
+
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>
@@ -559,7 +563,7 @@
 				<div style="clear:both; display:none;"></div>
 			</div>
 			
-			<c:if test="${loginUser.userId == funding.hostId }">
+			<c:if test="${loginUser.userId == funding.hostId && nowDate < startDate}">
 				<div class="btnArea">
 					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
