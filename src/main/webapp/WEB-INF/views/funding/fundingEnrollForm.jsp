@@ -27,7 +27,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 
-
+	<!-- datepicker -->    
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- CDN 파일 summernote css/js --> 
 <!-- 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
@@ -168,18 +171,16 @@ input[type="number"]::-webkit-inner-spin-button {
 #div-fpName,#div-content{
 	margin-bottom:50px;
 }
-.label-text{
-	margin-top:0.8em;
+.div-right .label-text{
+	margin-top:40px;
 }
-#paymentDate{
-	width:100%;
+.div-left .label-text{
+	margin-top:20px;
 }
 #goal{
 	width:500px;
 }
-#startDate,#closingDate{
-	
-}
+
 </style>
 
 
@@ -189,8 +190,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
-		<form id="insertForm" action="insert" method="post"
-enctype="multipart/form-data">
+		<form id="insertForm" action="insert" method="post" enctype="multipart/form-data" autocomplete="off">
 			<div class="div-fpName">
 				<label for="fpName" style="display: block;" class="label-text">펀딩 프로젝트 제목</label> <input
 					type="text" class="inputText" placeholder="제목을 입력하세요" id="fpName" name="fpName" required>
@@ -205,7 +205,8 @@ enctype="multipart/form-data">
 				<div class="div-right col-lg-6 col-xs-12" style="padding-left: 0px; padding-right: 0px;">
 					<div class="div-input">
 						<label for="cateogry" class="label-text">카테고리</label> <select name="categoryNo"
-							id="category">
+							id="category" >
+							<option value="" selected disabled hidden>선택</option>
 							<c:forEach var="category" items="${category}">
 								<option value="${category.categoryNo}">${category.categoryName}</option>
 							</c:forEach>
@@ -216,26 +217,22 @@ enctype="multipart/form-data">
 							placeholder="0,000,000" id="goal" name="goal" required> <span>원</span>
 					</div>
 					<div class="div-input">
-						<label for="startDate" class="label-text">펀딩 기간</label> <input type="Date" class="inputText" 
-							placeholder="0000-00-00" id="startDate" name="startDate" required>
-						<span style="margin: 0 10px;">~</span> <input type="Date" class="inputText" 
-							placeholder="0000-00-00" id="closeDate" name="closeDate" required>
-					</div>
-					<div class="div-input">
-						<label for="" class="label-text">결제 예정 날짜</label> <input type="Date" class="inputText" 
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate" required>
+						<label for="datepickerStart" class="label-text">펀딩 기간</label>
+							<input type="text" class="inputText"  id="startDate" name="startDate" placeHolder="yyyy-mm-dd" value="" required>
+						<span style="margin: 0 10px;">~</span>
+						<input type="text" class="inputText"  id="closeDate" name="closeDate" placeHolder="yyyy-mm-dd"  value=""  required>
 					</div>
 					<div class="div-input">
 						<label for="" class="label-text">추가사진</label>
 						<div class="group-img">
 							<div class="div-contentImg col-xs-4" id="contentImg1">
-								<img class="contentImg" width="150px" id="img1">
+								<img class="contentImg"  width="100%" height="100%"id="img1">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg2">
-								<img class="contentImg" width="150px" id="img2">
+								<img class="contentImg" width="100%" height="100%" id="img2">
 							</div>
 							<div class="div-contentImg col-xs-4" id="contentImg3">
-								<img class="contentImg" width="150px" id="img3">
+								<img class="contentImg"  width="100%" height="100%" id="img3">
 							</div>
 						</div>
 					</div>
@@ -304,8 +301,79 @@ enctype="multipart/form-data">
 	</div>
 <jsp:include page="../common/footer.jsp" />
 	<script>
+	function validate(){
+        if (document.getElementById("startDate").value==''){
+        	alert("펀딩 시작날짜가 비었습니다.");
+        	return false;
+        }
+        if (document.getElementById("closeDate").value==''){
+        	alert("펀딩 마감날짜가 비었습니다.");
+        	return false;
+        }
+		var fileCheck = document.getElementById("thumbFile").value;
+        const table = document.getElementById('beneficiaryTable');
+        if (document.getElementById("fpName").value==""){
+        	alert("펀딩프로젝트 제목을 입력해주세요.");
+        	return false;
+        }
+        if(!fileCheck){
+            alert("대표사진을 추가해주세요.");
+            return false;
+        } 
+        if (document.getElementById("category").value==''){
+        	alert("카테고리를 선택해주세요.");
+        	return false;
+        }
+
+        if (document.getElementById("goal").value==""){
+        	alert("목표금액이 비었습니다.");
+        	return false;
+        }
+        if (document.getElementById("content").value==""){
+        	alert("내용이 비었습니다.");
+        	return false;
+        }
+       
+        return true;
+	}
         $(function () {
             $("#fileArea").hide();
+        	  $.datepicker.setDefaults($.datepicker.regional['ko']); 
+              $( "#startDate" ).datepicker({
+                   changeMonth: true, 
+                   changeYear: true,
+                   nextText: '다음 달',
+                   prevText: '이전 달', 
+                   dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                   dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                   monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   dateFormat: "yy-mm-dd",
+                                
+                   onClose: function( selectedDate ) {    
+                        //시작일(startDate) datepicker가 닫힐때
+                        //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                       $("#closeDate").datepicker( "option", "minDate", selectedDate );
+                   }    
+
+              });
+              $( "#closeDate" ).datepicker({
+                   changeMonth: true, 
+                   changeYear: true,
+                   nextText: '다음 달',
+                   prevText: '이전 달', 
+                   dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                   dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+                   monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                   dateFormat: "yy-mm-dd",
+                                          
+                   onClose: function( selectedDate ) {    
+                       $("#datepickerStart").datepicker( "option", "maxDate", selectedDate );
+                   }    
+
+              });    
+              
             $("#thumbImg").click(function () {
                 $("#thumbFile").click();
             });
@@ -320,12 +388,14 @@ enctype="multipart/form-data">
             $("#contentImg3").click(function () {
                 $("#file3").click();
             });
-            
-            
+       
     		$("#btn-back").click(function(){
     			location.href="${pageContext.servletContext.contextPath}/funding";
     		});
     		$("#btn-insert").click(function(){
+    			if(! validate()){
+    				return false;
+    			}
     			$("#tablePresent tbody tr").each( function (index) {
     		        $(this).find("input[name=fgNo]").attr("name", "fundingGoods[" + index + "].fgNo");
     		        $(this).find("input[name=fgName]").attr("name", "fundingGoods[" + index + "].fgName");
@@ -333,6 +403,8 @@ enctype="multipart/form-data">
     		        $(this).find("input[name=fgPrice]").attr("name", "fundingGoods[" + index + "].fgPrice");
     		        console.log(index);
     		    });
+    			
+
     			$("#insertForm").submit();
     		});
 
@@ -433,7 +505,7 @@ enctype="multipart/form-data">
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "contentFile",
+				url : "${pageContext.request.contextPath}/funding/contentFile",
 				cache : false,
 				contentType : false,
 				processData : false,

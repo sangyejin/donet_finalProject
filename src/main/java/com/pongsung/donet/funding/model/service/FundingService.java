@@ -4,6 +4,7 @@ package com.pongsung.donet.funding.model.service;
 import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
+import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingCategory;
 import com.pongsung.donet.funding.model.vo.FundingFilterOrder;
@@ -20,7 +21,7 @@ public interface FundingService {
 
 	List<FundingCategory> selectFundingCategoryList();
 
-	void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList) throws Exception;
+	void insertFunding(Funding funding, List<FundingImage> imgList,List<FundingGoods> fundingGoodsList)  throws Exception;
 
 	Funding selectFunding(int fpNo);
 
@@ -30,23 +31,23 @@ public interface FundingService {
 
 	List<FundingReply> selectFundingReplyList(int fpNo);
 
-	int insertFundingReply(FundingReply fundingReply);
+	int insertFundingReply(FundingReply fundingReply) throws Exception;
 
-	int deleteFundingReply(int replyNo);
+	int deleteFundingReply(int replyNo) throws Exception;
 
-	void deleteFunding(int fpNo);
+	void deleteFunding(int fpNo) throws Exception;
 
-	int updateFundingReply(FundingReply fundingReply);
+	int updateFundingReply(FundingReply fundingReply) throws Exception;
 
-	void insertFundingSupporter(FundingSupporter fundingSupporter);
+	void insertFundingSupporter(FundingSupporter fundingSupporter) throws Exception;
 
-	void updateFundingHitsCount(int fpNo);
+	void updateFundingHitsCount(int fpNo) throws Exception;
 
 	List<Funding> selectTopFundingList();
 
-	void updateFunding(Funding funding);
+	void updateFunding(Funding funding) throws Exception;
 
-	void newFundingImageList(List<FundingImage> imgList);
+	void updateNewFundingImageList(List<FundingImage> imgList) throws Exception;
 
 
 }

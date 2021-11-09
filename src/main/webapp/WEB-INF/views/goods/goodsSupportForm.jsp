@@ -170,7 +170,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 	<div class="wrap">
 		<div class="main-container">
-			<form id="insertForm" action="support/insert" method="post">
+			<form id="insertForm" action="support/insert" method="post" autocomplete="off">
 				<div id="top-div">
 					<div class="col-md-4 div-left">
 						<div id="thumb-img-container"></div>
