@@ -519,7 +519,11 @@
 				<div class="page-btns">
 					<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
+
+							<c:when test="${ status.begin==0 }">
+
 							<c:when test="${status.begin==0}">
+
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>

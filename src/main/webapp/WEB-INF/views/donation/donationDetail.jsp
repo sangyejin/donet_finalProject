@@ -110,20 +110,25 @@ c {
 
 .progressbar {
 	display: inline-block;
-	width: 260px;
-	height: 13px;
-	border: 1px solid rgb(85, 85, 85);
+	width: 100%;
+	height: 10px;
+	border: none;
 	border-radius: 10px;
-	align: center;
+	text-align: left;
+	background-color: #e8e8e8;
+	box-shadow: inset 0px 1px 0.5px 0.5px #858B94;
+	overflow:hidden;
 }
 
 .progressbar>.gauge {
 	display: inline-block;
-	height: 13px;
-	background-color: rgb(60, 179, 113);
+	height: 10px;
+	background-color: rgba(60, 179, 113);
 	border-radius: 10px;
-	margin-left: -2px;
-	margin-bottom: 5px;
+	padding-top:0px;
+	margin-left: 0px;
+	margin-bottom: 6px;
+	box-shadow: inset 0px 1px 0.5px 0.5px rgba(50, 140, 90);
 }
 
 #thumbnailImg {
@@ -141,38 +146,18 @@ c {
 
 #iconImg {
 	float: left;
-	margin-left: 50px;
-}
-
-#total {
-	margin-top: 12%;
-	margin-right: 200px;
 }
 
 .totalAmount {
 	text-align: right;
 	margin-top: 5%;
-	margin-right: 10%;
 }
 
 #term {
 	margin-top: 5%;
 }
 
-z {
-	font-size: 18px;
-	font-weight: 400;
-}
 
-h {
-	font-size: 25px;
-	font-weight: 800;
-}
-
-d {
-	font-size: 22px;
-	font-weight: 600;
-}
 
 #writer {
 	margin-left: 30%;
@@ -185,11 +170,12 @@ d {
 	border-radius: 40px;
 	color: white;
 	text-align: center;
-	margin-top: 4%;
-	margin-left: 10%;
+	margin-top: 8%;
+	margin-bottom: 2%;
+	padding-top:1%;
 }
 
-#supporting {
+.supporting {
 	width: 350px;
 	height: 40px;
 	border-radius: 5px;
@@ -202,7 +188,7 @@ d {
 	transition: all 0.5s;
 }
 
-#supporting:hover {
+.supporting:hover {
 	width: 350px;
 	height: 40px;
 	border-radius: 5px;
@@ -420,23 +406,10 @@ c {
 	float: right;
 }
 
-#deleteBoard {
-	cursor: pointer;
-	color: rgb(60, 179, 113);
-	font-size: 13px;
-	font-weight: 500;
-	background-color: white;
-	width: 80px;
-	height: 40px;
-	border-radius: 5px;
-	border-color: rgb(60, 179, 113);
-	float: right;
-	margin-right: 3%;
-	transition: all 0.5s;
-}
+
 
 #btn-delete {
-	width: 200px;
+	width: 100px;
 	height: 40px;
 	border-radius: 5px;
 	color: white;
@@ -445,11 +418,10 @@ c {
 	background-color: white;
 	transition: all 0.5s;
 	border: 1px solid rgb(60, 179, 113);
-	margin-left: 650px;
 }
 
 #btn-delete:hover {
-	width: 200px;
+	width: 100px;
 	height: 40px;
 	border-radius: 5px;
 	border: 1px solid rgb(60, 179, 113);
@@ -458,6 +430,30 @@ c {
 	color: white;
 	background-color: rgb(60, 179, 113);
 }
+#btn-update {
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	border: 1px solid rgb(60, 179, 113);
+	color: white;
+	font-weight: 600;
+	color: white;
+	background-color: rgb(60, 179, 113);
+	transition: all 0.5s;
+}
+#btn-update:hover {
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	color: white;
+	font-weight: 600;
+	color: rgb(60, 179, 113);
+	background-color: white;
+	border: 1px solid rgb(60, 179, 113);
+	
+}
+
+
 
 #deleteBoard:hover {
 	cursor: pointer;
@@ -488,8 +484,7 @@ c {
 			</nav>
 			<span class="delArea"> <c:if
 					test="${loginUser.userRole eq 'D'}">
-					<span><button type="button" id="btn-delete"
-							onclick="location.href='delete.do'">삭제하기</button></span>
+					<span><button type="button" id="btn-delete" onclick="deleteBoard(${s.suNo});">삭제하기</button></span>
 				</c:if>
 			</span>
 		</div>
@@ -501,54 +496,30 @@ c {
 					id="thumbnailImg">
 			</div>
 			<div class="detailInfo" style="text-align: center; width: 350px;">
-				<div>
+				<div style="text-align:left;">
 					<b style="font-size: 25px;">${s.suTitle}</b>
 				</div>
 				<div>
 					<b style="font-size: 18px;">${s.suWriter}</b>
 				</div>
-				<div>
-					<div>
+				<div style="margin-top:3%;">
+					<span style="float:left; margin-top:5%; width:80px;">
 						<img id="iconImg" alt=""
 							src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
-					</div>
-					<c:choose>
-						<c:when test="${empty p}">
-							<div id="total">
-								<b style="font-size: 15px;"> 0 명 참여</b>
-							</div>
-						</c:when>
-						<c:when test="${!empty p}">
-							<div id="total">
-								<b style="font-size: 15px;">${p.total } 명 참여</b>
-							</div>
-						</c:when>
-					</c:choose>
+						<c:choose>
+							<c:when test="${empty p}"> 0 명 참여</c:when>
+							<c:when test="${!empty p}">${p.total } 명 참여</c:when>
+						</c:choose>
+					</span>
+					
+					<fmt:formatNumber var="goalPersent" value="${(s.totalamount/s.goal)*100 }" pattern="0"/>
+					<span style="float:right; margin-top:5%;">달성률: ${goalPersent} %</span>
 				</div>
-				<div class="progressBar">
-					<c:choose>
-						<c:when test="${s.goal ne 0 }">
-							<c:set var="cul" value="${(s.totalamount/s.goal)*100 }" />
-							<c:choose>
-								<c:when test="${cul>=100 }">
-									<span class="progressbar"> <span class="gauge"
-										style="width: 101%;"></span>
-									</span>
-								</c:when>
-								<c:when test="${cul<100 }">
-									<span class="progressbar"> <span class="gauge"
-										style="width: ${cul}%;"></span>
-									</span>
-								</c:when>
-							</c:choose>
-						</c:when>
-						<c:when test="${s.goal eq 0 }">
-							<span class="progressbar"> <span class="gauge"
-								style="width: 0%;"></span>
+						<div class="progressBar">
+							<span class="progressbar">
+								<span class="gauge" style="width:${goalPersent}%;"></span>	
 							</span>
-						</c:when>
-					</c:choose>
-				</div>
+						</div>
 				<c:choose>
 					<c:when test="${empty p}">
 						<div class="totalAmount">
@@ -561,7 +532,7 @@ c {
 						</div>
 					</c:when>
 				</c:choose>
-
+					
 				<div>
 					<div id="term">
 						<fmt:formatDate value="${s.suStart}" var="suStart"
@@ -574,9 +545,22 @@ c {
 				<div class="dDate">
 					<b style="font-size: 20px;">D - ${s.ddate }<b>
 				</div>
-				<div>
-					<input type="button" value="기부하기" id="supporting">
-				</div>
+				<c:set var="ymd" value="<%=new java.util.Date()%>" /> 
+				<fmt:formatDate value="${ymd}" var="ymd" pattern="yyyy-MM-dd" />
+
+				<c:choose>
+					<c:when test="${suLast>ymd }">
+						<div>
+							<input type="button" value="기부하기" class="supporting">
+						</div>
+					</c:when>
+					<c:when test="${suLast<ymd }">
+						<div>
+							<input type="button" value="모금이 완료된 사연입니다." class="supporting" disabled>
+						</div>
+					</c:when>
+				</c:choose>
+				
 			</div>
 			<div class="description">
 				<pre>
@@ -586,9 +570,9 @@ ${s.content}
 
 			<div class="slider-1">
 				<div class="slides">
-					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-							<c:when test="${ status.begin }">
+							<c:when test="${ status.begin==0 }">
 								<div class="active"
 									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
 							</c:when>
@@ -601,9 +585,9 @@ ${s.content}
 					</c:forEach>
 				</div>
 				<div class="page-btns">
-					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-							<c:when test="${ status.begin }">
+							<c:when test="${ status.begin==0 }">
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>
@@ -677,18 +661,25 @@ ${s.content}
 					</table>
 				</div>
 			</div>
-			<div>
-				<input type="button" value="기부하기" id="supporting"
-					style="margin: 15% 30%;">
-			</div>
-
+				<c:choose>
+					<c:when test="${suLast>ymd }">
+						<div>
+							<input type="button" value="기부하기" class="supporting" style="margin: 15% 30%;">
+						</div>
+					</c:when>
+					<c:when test="${suLast<ymd }">
+						<div>
+							<input type="button" value="모금이 완료된 사연입니다." class="supporting" style="margin: 15% 30%;" disabled>
+						</div>
+					</c:when>
+				</c:choose>
 		</div>
 		<div style="margin-top: 10%;">
 			<span><a id="comment">댓글&nbsp;&nbsp; </a></span>
 			<div id="greenLine" style="margin-bottom: 5%;"></div>
 			<c:if test="${ !empty loginUser }">
 				<div>
-					<span style="margin-top: -5%;"><d>${ sessionScope.loginUser.userId}</d></span>
+					<span style="margin-top: -5%; font-size:25px;">${ sessionScope.loginUser.userId}</span>
 					<span style="margin-left: 3%;"><input type="text"
 						id="replyContent" placeholder="내용을 입력해주세요"></span> <span style=""><input
 						type="button" class="btn btn-secondary" id="addReply" value="댓글등록"></span>
@@ -995,7 +986,7 @@ ${s.content}
 		</div>
 	</div>
 	<script>
-		$('#supporting').click(function(){
+		$('.supporting').click(function(){
 			if(${ empty sessionScope.loginUser }){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="loginForm.me";
@@ -1026,6 +1017,26 @@ ${s.content}
 		btn.addEventListener('click', function() {
 			document.body.classList.toggle('light-theme');
 		});
+	</script>
+	
+	<script>
+		function deleteBoard(suNo) {
+			if (confirm("정말로 게시글을 삭제하시겠습니까?(Y/N)")) {
+				$.ajax({
+					url : "delete.do/" + suNo,
+					type : "get",
+					success : function() {
+						alert("게시글이 삭제되었습니다");
+						document.location.href='delete.do/${s.suNo}';
+					},
+					error : function() {
+						console.log("ajax 통신 실패");
+					}
+				});
+			} else {
+				alert("게시글 삭제가 취소되었습니다");
+			}
+		}	
 	</script>
 	<script src="resources/js/bootstrap.min.js"></script>
 </body>

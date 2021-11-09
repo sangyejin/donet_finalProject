@@ -1,6 +1,7 @@
 package com.pongsung.donet.member.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
+import com.pongsung.donet.donation.model.service.DonationService;
+import com.pongsung.donet.donation.model.vo.Support;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
 import com.pongsung.donet.member.model.vo.Bank;
@@ -343,29 +346,6 @@ public class MemberController {
 			session.setAttribute("msg", "포인트 충전이 완료되었습니다. 잔액은 마이페이지에서 확인 가능합니다.");
 			
 			return "redirect:/myPage.me";
-			
-		}
-		
-		//후원프로젝트 후원 후 포인트 업데이트
-		@RequestMapping("supportAfterPoints")
-		public String supportAfterPoints(int point, HttpServletRequest request, Model model) {
-			HttpSession session = request.getSession();
-			Member loginUser = (Member) session.getAttribute("loginUser");
-			
-			System.out.println(point);
-			loginUser.setPoint(point);
-		
-			memberService.updatePoint(loginUser);
-			
-			Member thisUser = memberService.selectThisUser(loginUser);
-			
-			
-			System.out.println("loginUser.getPoint() : " + loginUser.getPoint());
-			System.out.println("thisUser.getPoint() : " + thisUser.getPoint());
-			
-			model.addAttribute("loginUser", thisUser);
-			
-			return "donation/donationMain";
 			
 		}
 
