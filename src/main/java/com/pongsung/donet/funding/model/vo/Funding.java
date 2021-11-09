@@ -18,8 +18,8 @@ public class Funding {
 	private String fpName;
 	private String hostName;
 	private String hostId;
-	private String goal;
-	private String raised;
+	private int goal;
+	private int raised;
 	private Date startDate;
 	private Date closeDate;
 	private String content;
