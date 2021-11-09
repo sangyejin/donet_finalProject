@@ -489,7 +489,7 @@
 				<div class="slides">
 				<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-							<c:when test="${status.begin}">
+							<c:when test="${status.begin==0}">
 								<div class="active"
 									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName }?auto=compress,format);"></div>
 							</c:when>
@@ -502,7 +502,7 @@
 				<div class="page-btns">
 					<c:forEach items="${fundingImageList }" var="ImgList" varStatus="status">
 						<c:choose>
-							<c:when test="${ status.begin }">
+							<c:when test="${ status.begin==0 }">
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>

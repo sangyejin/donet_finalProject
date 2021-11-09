@@ -57,7 +57,7 @@
 	background-color: white;
 	transition: all 0.5s;
 	border: 1px solid rgb(60, 179, 113);
-	margin-left:650px;
+	float:right;
 }
 #btn-insert:hover {
 	width: 200px;
@@ -68,29 +68,6 @@
 	font-weight: 600;
 	color: white;
 	background-color: rgb(60, 179, 113);
-}
-#btnOrder:hover {
-	width: 70px;
-	height: 40px;
-	border-radius: 5px;
-	border: 1px solid rgb(60, 179, 113);
-	color: white;
-	font-weight: 600;
-	margin-left:1%;
-	color: white;
-	background-color: rgb(60, 179, 113);
-}
-#btnOrder {
-	width: 70px;
-	height: 40px;
-	border-radius: 5px;
-	color: white;
-	font-weight: 600;
-	margin-left:1%;
-	color: rgb(60, 179, 113);
-	background-color: white;
-	transition: all 0.5s;
-	border: 1px solid rgb(60, 179, 113);
 }
 
 
@@ -110,28 +87,28 @@
 					</form>
 				</div>
 			</div>
-			<div class="div-filter">
-				<form id="orderForm" method="post" action="select.or">
+			<div class="div-filter" style="margin-bottom:7%;">
 					<span>
-					<select name="order"> 
+					<select name="order" id="order" onchange="selectOrder(this.value);"> 
 						<option value=7>최신순</option>
 						<option value=16>조회순</option>
 						<option value=19>누적금액순</option>
 						<option value=18>목표금액순</option>
 					</select>
 					</span>
-					<span>
-						<input type="submit" id="btnOrder" value="조회">
-					</span>
 				<c:if test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
 					<span><button type="button" id="btn-insert" onclick="location.href='reist.do'">등록하기</button></span>
 				</c:if>
-				</form>
 			</div>
 		</div>
 		
 
-
+<script>
+    function selectOrder(value){
+    	location.href = 'select.or?order='+value;
+    	$('#order').val(value);
+    }
+</script>
 
 
 

@@ -62,7 +62,7 @@
 			</div>
 			<br>
 			<div>
-				<span><a id="statistics" class="index3"><b>통계 조회<b></b></a></span> 
+				<span><a id="statistics" class="index3" href="introduce.chart"><b>통계 조회</b></a></span> 
 				<span class="arrow"> > </span>
 			</div>
 		</div>

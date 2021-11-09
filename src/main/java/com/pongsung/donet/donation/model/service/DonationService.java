@@ -59,7 +59,11 @@ public interface DonationService {
 
 	int insertSupportCharity(Sponsor sponsor);
 
-	int updatePoints(int points);
+
+
+	void supportAfterPoints(Sponsor s);
+
+	void deleteSupport(int suNo);
 
 	
 

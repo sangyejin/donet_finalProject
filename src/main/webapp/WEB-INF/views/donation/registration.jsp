@@ -87,6 +87,7 @@
 		border-bottom: 1px solid black;
 	}
 	th{
+		text-align: center;
 		background-color: rgb(224, 224, 224);
 		border-top: 2px solid #808080;
 		border-bottom: 2px solid #808080;
@@ -134,8 +135,7 @@
         margin-left: 40%;
 	}
 .attachFileLoad{
-	width:170px;
-	margin-right:3.5%;
+	width:210px;
 }
 
 
@@ -154,9 +154,7 @@
 				<span style="display:inline-block;">
 					<c>대표 사진</c>
 					<div class="thumbnail">
-						<div>
-							<img id="image" style="width:350px; height:350px; border-radius: 20%;"/>
-						</div>
+							<img id="image" style="width:340px; height:340px; border-radius:20%;"/>
 					</div>
 						    <input type="file" id="files" name="thumbFile"/>
 				</span>
@@ -197,11 +195,11 @@
 				<span class="attach">
 					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
 				</span>
-				<div  style="margin-top:1%; width:1000px;">
-					<span><input type="file" id="attach1" name="file1" class="attachFileLoad" style="margin-left:8%;"/></span>
-					<span><input type="file" id="attach2" name="file2" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach3" name="file3" class="attachFileLoad" /></span>
-					<span><input type="file" id="attach4" name="file4" class="attachFileLoad" /></span>
+				<div  style="margin-top:2%; margin-left:11%; width:1000px;">
+					<input type="file" id="attach1" name="file1" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach2" name="file2" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach3" name="file3" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach4" name="file4" class="attachFileLoad" style=""/>
 				</div>
 			</div><br><br><br><br><br><br>
 			<e>기부금 사용계획</e>

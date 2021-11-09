@@ -43,10 +43,11 @@
 }
 
 .supportList {
-	width: 265px;
-	height: 280px;
+	width: 290px;
+	height: 340px;
 	margin-bottom: 10%;
-	margin-left: 5%;
+	margin-left: 3.5%;
+	margin-right: 1%;
 	display: inline-block;
 	transition: all 0.5s;
 	border: 1px solid #808080;
@@ -60,13 +61,16 @@
 }
 
 #thumbnailImg {
-	width: 260px;
-	height: 135px;
+	width: 287px;
+	height: 150px;
+	margin-top:1%;
 }
 
 .participation {
 	margin: auto;
+	margin-top: 5%;
 	display: flex;
+	
 }
 
 #person {
@@ -80,25 +84,35 @@
 }
 
 .totalAmount {
+	margin-top:2%;
 	text-align: right;
+}
+
+.progressBar {
+	text-align: center;
 }
 
 .progressbar {
 	display: inline-block;
-	width: 260px;
+	width: 100%;
 	height: 10px;
-	border: 1px solid rgb(85, 85, 85);
+	border: none;
 	border-radius: 10px;
-	align: center;
+	text-align: left;
+	background-color: #e8e8e8;
+	box-shadow: inset 0px 1px 0.5px 0.5px #858B94;
+	overflow:hidden;
 }
 
 .progressbar>.gauge {
 	display: inline-block;
 	height: 10px;
-	background-color: rgb(60, 179, 113);
+	background-color: rgba(60, 179, 113);
 	border-radius: 10px;
-	margin-left: -2px;
-	margin-bottom: 5px;
+	padding-top:0px;
+	margin-left: 0px;
+	margin-bottom: 6px;
+	box-shadow: inset 0px 1px 0.5px 0.5px rgba(50, 140, 90);
 }
 
 .page-link {
@@ -118,7 +132,13 @@
 	text-align: center;
 	background-color: grey;
 }
-
+.supportTitle{
+	margin-left:5%;
+	width:265px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 </style>
 </head>
 <body id="pageTop">
@@ -156,39 +176,25 @@
 							<div class="supportWriter">
 								<b style="font-size:15px;color:black;">${s.suWriter}</b>
 							</div>
+							<div class="supportTerm">
+								<fmt:formatDate value="${s.suStart}" var="suStart" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${s.suLast}" var="suLast" pattern="yyyy-MM-dd" />
+								<b style="font-size:15px;color:black;">${suStart } ~ ${suLast } </b>
+							</div>
 							<div class="participation">
-								<div>
+								<span>
 									<img alt="" id="person"
-										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
-								</div>
-								<div id="total">
-									<b style="margin-right:150px; color:black;">후원자수 ${s.total } 명</b>
-								</div>
+										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">후원자수 ${s.total } 명
+								</span>
+								<fmt:formatNumber var="goalPersent" value="${(s.totalamount/s.goal)*100 }" pattern="0"/>
+								<span style="float:right; margin-left:35%;">달성률: ${goalPersent} %</span>
 							</div>
-							<div class="progressBar">
-								<c:choose>
-									<c:when test="${s.goal ne 0 }">
-										<c:set var="cul" value="${(s.totalamount/s.goal)*100 }" />
-										<c:choose>
-											<c:when test="${cul>=100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: 101%;"></span>
-												</span>
-											</c:when>
-											<c:when test="${cul<100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: ${cul}%;"></span>
-												</span>
-											</c:when>
-										</c:choose>
-									</c:when>
-									<c:when test="${s.goal eq 0 }">
-										<span class="progressbar"> <span class="gauge"
-											style="width: 0%;"></span>
-										</span>
-									</c:when>
-								</c:choose>
-							</div>
+							
+						<div class="progressBar">
+							<span class="progressbar">
+								<span class="gauge" style="width:${goalPersent}%;"></span>	
+							</span>
+						</div>
 							<div class="totalAmount">
 								<b style="margin-right:2%; font-size:18px;color:black;">누적 ${s.totalamount } 원</b>
 							</div>
@@ -239,7 +245,6 @@
 
 		<jsp:include page="../common/footer.jsp" />
 		<jsp:include page="../donation/subMenu.jsp" />
-		
-
+	
 </body>
 </html>

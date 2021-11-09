@@ -285,8 +285,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertSupportCharity" parameterType="Sponsor">
 		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, NVL((SELECT MAX(PAY_NO) FROM SPONSOR WHERE SU_NO=${suNo}),0)+1, ${amount}, DEFAULT)
 	</insert>
+	<insert id="supportAfterPoints" parameterType="Sponsor">
+		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, NVL((SELECT MAX(PAY_NO) FROM SPONSOR WHERE SU_NO=${suNo}),0)+1, ${amount}, DEFAULT)
+	</insert>
 	
-
+	<update id="deleteSupport" parameterType="_int">
+		update SUPPORT
+		set SU_SATUTS='N'
+		where SU_NO=#{suNo}
+	</update>
 
 
 </mapper>

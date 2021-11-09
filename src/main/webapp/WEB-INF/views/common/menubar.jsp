@@ -126,7 +126,7 @@ a{ color : #000000;  text-decoration: none; }
                     <ul class="arrow_box">
                         <li><a href="${ pageContext.servletContext.contextPath }/introduce.pr">프로젝트 소개</a></li>
                         <li><a href="${ pageContext.servletContext.contextPath }/introduce.how">후원 방법</a></li>
-                        <li><a>통계 조회</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/introduce.chart">통계 조회</a></li>
                     </ul> 
                 </li>
                 <li class="greenfont" id="2"><a href="${ pageContext.servletContext.contextPath }/list.do">후원 프로젝트</a>
