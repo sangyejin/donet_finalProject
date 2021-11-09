@@ -113,9 +113,9 @@ public class FundingDao {
 		return sqlSession.update("fundingMapper.updateFunding",funding);
 	}
 
-	public int newFundingImageList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
+	public int updateNewFundingImageList(SqlSessionTemplate sqlSession, List<FundingImage> imgList) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("fundingMapper.newFundingImageList",imgList);
+		return sqlSession.update("fundingMapper.updateNewFundingImageList",imgList);
 	}
 
 }

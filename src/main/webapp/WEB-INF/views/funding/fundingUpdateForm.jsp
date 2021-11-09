@@ -168,14 +168,20 @@ input[type="number"]::-webkit-inner-spin-button {
 #div-fpName,#div-content{
 	margin-bottom:50px;
 }
-.label-text{
-	margin-top:0.8em;
+.div-right .label-text{
+	margin-top:40px;
+}
+.div-left .label-text{
+	margin-top:20px;
 }
 #paymentDate{
 	width:100%;
 }
 #goal{
 	width:500px;
+}
+img{
+	max-size:100%;
 }
 </style>
 
@@ -187,7 +193,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 	<div class="main">
 		<form id="updateForm" action="update" method="post"
-enctype="multipart/form-data">
+enctype="multipart/form-data" autocomplete="off">
 			<div class="div-fpName">
 				<label for="fpName" style="display: block;" class="label-text">펀딩 프로젝트 제목</label> <input
 					type="text" class="inputText" placeholder="제목을 입력하세요" id="fpName" name="fpName" value="${funding.fpName }" required>
@@ -226,21 +232,22 @@ enctype="multipart/form-data">
 							placeholder="0000-00-00" id="closeDate" name="closeDate"  value="${funding.closeDate }" readonly>
 					</div>
 					<div class="div-input">
-						<label for="" class="label-text">결제 예정 날짜</label> <input type="Date" class="inputText" 
-							placeholder="0000-00-00" id="paymentDate" name="paymentDate" value="${funding.paymentDate }" readonly>
-					</div>
-					<div class="div-input">
 						<label for="" class="label-text">추가사진</label>
 						<div class="group-img">
-							<div class="div-contentImg col-xs-4" id="contentImg1">
-								<img class="contentImg"  id="img1">
+						<c:forEach  varStatus="status" begin="0" end="2">
+						<c:choose>
+							<c:when test="${fundingImageList[status.index].imgNo != null}">
+							<div class="div-contentImg col-xs-4" id="contentImg${fundingImageList[status.index].imgNo}">
+								<img class="contentImg"  width="100%" height="100%" id="img${fundingImageList[status.index].imgNo}" src="${pageContext.request.contextPath}/resources/upload_files/funding/${fundingImageList[status.index].imgChangeName}">
 							</div>
-							<div class="div-contentImg col-xs-4" id="contentImg2">
-								<img class="contentImg" id="img2">
+							</c:when>
+							<c:otherwise>
+							<div class="div-contentImg col-xs-4" id="contentImg${status.count}">
+								<img class="contentImg" width="100%" height="100%" id="img${status.count}">
 							</div>
-							<div class="div-contentImg col-xs-4" id="contentImg3">
-								<img class="contentImg" id="img3">
-							</div>
+							</c:otherwise>
+							</c:choose>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -271,6 +278,7 @@ enctype="multipart/form-data">
 							<td>${f.fgContent}</td>
 						</tr>
 						</c:forEach>
+						
 					</tbody>
 				</table>
 			</div>
@@ -294,6 +302,34 @@ enctype="multipart/form-data">
 	</div>
 <jsp:include page="../common/footer.jsp" />
 	<script>
+	function validate(){
+		var fileCheck = document.getElementById("thumbFile").value;
+        const table = document.getElementById('beneficiaryTable');
+        if (document.getElementById("goodsName").value==""){
+        	alert("구호물품 이름을 입력해주세요.");
+        	return false;
+        }
+        
+        if (document.getElementById("category").value==""){
+        	alert("카테고리를 선택해주세요.");
+        	return false;
+        }
+        if (document.getElementById("goodsPrice").value==""){
+        	alert("가격이 비었습니다.");
+        	return false;
+        }
+        if (table.tBodies[0].rows.length<=0){
+        	alert("후원처를 추가해주세요.");
+        	return false;
+        }
+        
+        if (document.getElementById("content").value==""){
+        	alert("내용이 비었습니다.");
+        	return false;
+        }
+       
+        return true;
+	}
         $(function () {
             $("#fileArea").hide();
             $("#thumbImg").click(function () {
@@ -316,6 +352,9 @@ enctype="multipart/form-data">
     			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/delete";
     		});
     		$("#btn-update").click(function(){
+    			if(! validate()){
+    				return;
+    			}
     			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/update";
     		});
 
@@ -366,7 +405,7 @@ enctype="multipart/form-data">
 	   		callbacks: {
 	    		onImageUpload: function(files, editor, welEditable){
 		    		for(var i = files.length - 1; i>=0; i--){
-		    			sendFile(files[i],this);	  
+		    			sendFile(files[i],this);  
 		    		}	
 	    		}
 	   			}
@@ -379,7 +418,7 @@ enctype="multipart/form-data">
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "contentFile",
+				url : "${pageContext.request.contextPath}/funding/contentFile",
 				cache : false,
 				contentType : false,
 				processData : false,

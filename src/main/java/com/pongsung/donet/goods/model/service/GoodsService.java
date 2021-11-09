@@ -18,25 +18,25 @@ public interface GoodsService {
 
 	List<Goods> selectGoodsList(PageInfo pi, FilterOrder filterOrder);
 
-	void updateGoodsHitsCount(int goodsNo);
+	void updateGoodsHitsCount(int goodsNo) throws Exception;
 
 	Goods selectGoods(int goodsNo);
 
-	void deleteGoods(int goodsNo);
+	void deleteGoods(int goodsNo) throws Exception;
 
 	List<Beneficiary> selectBeneficiaryList();
 
-	void insertGoods(Goods goods,List<RequiredGoods> requiredGoods);
+	void insertGoods(Goods goods,List<RequiredGoods> requiredGoods) throws Exception;
 
-	void updateGoods(Goods goods);
+	void updateGoods(Goods goods) throws Exception;
 
-	void insertGoodsPurchase(GoodsPurchase goodsPurchase);
+	void insertGoodsPurchase(GoodsPurchase goodsPurchase) throws Exception;
 
 	List<Beneficiary> selectBeneficiaryListByGoodsNo(int goodsNo);
 
-	void insertNewRequiredGoods(List<RequiredGoods> insertRequiredBeneficiary);
+	void insertNewRequiredGoods(List<RequiredGoods> insertRequiredBeneficiary) throws Exception;
 
-	void deleteOldequiredGoods(List<RequiredGoods> deleteRequiredBeneficiary);
+	void deleteOldequiredGoods(List<RequiredGoods> deleteRequiredBeneficiary) throws Exception;
 
 	List<RequiredGoods> selectRequiredGoodsListByGoodsNo(int goodsNo);
 

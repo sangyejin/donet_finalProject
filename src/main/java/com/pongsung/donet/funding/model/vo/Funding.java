@@ -23,7 +23,6 @@ public class Funding {
 	private Date startDate;
 	private Date closeDate;
 	private String content;
-	private Date paymentDate;
 	private String categoryName;
 	private int categoryNo;
 	private int hits;

@@ -192,7 +192,7 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 			</div>
 			<hr>
-			<form id="insertForm" action="support/insert" method="post">
+			<form id="insertForm" action="support/insert" method="post" autocomplete="off">
 				<div class="content-container">
 					<label for="fundingGoods-container">선물 선택</label> <input
 						type="hidden" name="tempPrice" id="tempPrice" value="0" /> <input
