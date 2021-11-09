@@ -251,7 +251,7 @@ public class MemberController {
 								@RequestParam(name = "cardBankName") int cardBankName,
 								@RequestParam(name = "surname") String surname,
 								@RequestParam(name = "fstname") String fstname,
-								@RequestParam(name = "amount") int amount,
+								@RequestParam(name = "amount") String amount,
 								HttpServletRequest request, Model model
 								) {
 			
@@ -269,13 +269,24 @@ public class MemberController {
 			String fullName = surname+fstname; //이름
 			String cardNumber = cardNumber1 + cardNumber2 + cardNumber3 + cardNumber4;
 			
+			String amounts[] = amount.split(",");
+			
+			String temp = "";
+			System.out.println("temp 선언");
+			
+			for(String str : amounts) {
+				temp = temp + str ;
+				System.out.println("temp  : " + temp);
+
+			}
+			
 			payment.setUserId(loginUser.getUserId());
 			payment.setCardNo(cardNumber);
 			payment.setPayExpiry(Integer.parseInt(expireDate));
 			payment.setPayCvc(cvcNum);
 			payment.setBNo(cardBankName);
 			payment.setPayName(fullName);
-			payment.setPointAmount(amount);
+			payment.setPointAmount(Integer.parseInt(temp));
 			
 			memberService.insertCard(payment);
 			
@@ -297,12 +308,25 @@ public class MemberController {
 		
 
 		@RequestMapping("updatePoint.me")
-		public String updatePoint(@RequestParam(name = "amount") int amount, HttpServletRequest request, Model model) {
+		public String updatePoint(@RequestParam(name = "amount") String amount, HttpServletRequest request, Model model) {
+			
 			HttpSession session = request.getSession();
 			Member loginUser = (Member) session.getAttribute("loginUser");
 			
+			String amounts[] = amount.split(",");
+			
+			String temp = "";
+			System.out.println("temp 선언");
+			
+			for(String str : amounts) {
+				temp = temp + str ;
+				System.out.println("temp  : " + temp);
+
+			}
+			
+			
 			//포인트 셋
-			loginUser.setPoint(amount);
+			loginUser.setPoint(Integer.parseInt(temp));
 			
 			//포인트 업데이트
 			memberService.updatePoint(loginUser);

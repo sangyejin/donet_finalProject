@@ -203,7 +203,11 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 .radioAlign{margin-right : 20px;}
 
 /*pagination*/
-.pagination{margin-top : 10px;}
+		.pagination{margin-top : 10px;}
+		.pagination > button { border-style:none; border-radius: 7px; background : white; }
+		.pagination > button > a { color : rgb(66, 178, 115);}  
+		.pagination > button > a:hover { color : black;}          
+		
 </style>
 
 </head>
@@ -270,7 +274,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 				</tbody>
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="5">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="${header.referer}"><b>여기</b></a>를 클릭하세요. </td>
+							<td colspan="5">존재하는 공지사항이 없습니다. 이전 화면으로 돌아가시려면 <a href="list.no"><b>여기</b></a>를 클릭하세요. </td>
 						</tr> 
 					</c:if>
 				
@@ -279,7 +283,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 				<ul class="pagination" align="center">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
-							<button class="page-item">
+							<button class="page-item" >
 								<a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }"> < </a>
 							</button>
 						</c:when>
@@ -342,7 +346,7 @@ tr { margin-top: 1%; margin-bottom: 1%;}
 						<img id="magnifier" src="${ pageContext.servletContext.contextPath }/resources/imgs/magnifier.png">
 					</button>
 					
-					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="100" value="" required>
+					<input id="mInput" name="mInput" type="text" placeholder="검색어를 입력하세요" maxlength="30" value="" required>
 				</div>
 			</div>
 			</form>
