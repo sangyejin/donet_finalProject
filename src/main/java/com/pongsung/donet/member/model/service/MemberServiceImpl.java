@@ -12,6 +12,7 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.dao.MemberDao;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
@@ -336,10 +337,27 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public ArrayList<Sponsor> selectSponsorList(PageInfo pi) {
+	public ArrayList<Sponsor> selectSponsorList(String userId) {
 		// TODO Auto-generated method stub
-		return memberDao.selectSponsorList(sqlSession, pi);
+		return memberDao.selectSponsorList(sqlSession, userId);
 	}
+
+
+	@Override
+	public int selectFundingSupporterListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectFundingSupporterListCount(sqlSession);
+	}
+	
+	
+	@Override
+	public ArrayList<FundingSupporter> selectFundingSuppoterList(String userId) {
+		// TODO Auto-generated method stub
+		return memberDao.selectFundingSuppoterList(sqlSession, userId);
+	}
+
+
+	
 
 
 	

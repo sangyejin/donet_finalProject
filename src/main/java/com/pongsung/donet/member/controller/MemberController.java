@@ -35,6 +35,7 @@ import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
 import com.pongsung.donet.member.model.vo.Bank;
@@ -99,10 +100,10 @@ public class MemberController {
 		}
 		
 		// 마이 페이지로 이동
-		@RequestMapping("myPage.me")
-		public String myPage() {
-			return "member/myPage";
-		}
+//		@RequestMapping("myPage.me")
+//		public String myPage() {
+//			return "member/myPage";
+//		}
 		
 		// 출석 체크용 달력으로 이동
 		@RequestMapping("calendar.me")
@@ -404,18 +405,30 @@ public class MemberController {
 			return "member/memberUserList";
 		}
 		
-		//후원자 목록
-		@RequestMapping("sponsorList.me")
-		public String selectSponsorList(@RequestParam(value="currentPage", required = false , defaultValue ="1") int currentPage, Model model) {
-				
+		//마이페이지 이동 및 목록들 모음
+		@RequestMapping("myPage.me")
+		public String selectSponsorList(String userId, Model model) {
+			
+			System.out.println("마이페이지로 넘어온 아이디 : " + userId);
+			
 			int listCount = memberService.selectSponsorListCount();
 			System.out.println("userListCount : " + listCount );
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-					
-			ArrayList<Sponsor> sponsorList = memberService.selectSponsorList(pi);
+			
+			int fdSupListCount = memberService.selectFundingSupporterListCount();
+			System.out.println("fdSupListCount : " + fdSupListCount );
+			
+			
+			// 후원 기부 목록		
+			ArrayList<Sponsor> sponsorList = memberService.selectSponsorList(userId);
+			// 펀딩 기부 목록
+			ArrayList<FundingSupporter> fundingSupporterList = memberService.selectFundingSuppoterList(userId);
+			
+			
 			System.out.println("sponsorList의 값 : " + sponsorList);
+			System.out.println("fundingSupporterList의 값 : " + fundingSupporterList);
+			model.addAttribute("fundingSupporterList", fundingSupporterList);
 			model.addAttribute("sponsorList", sponsorList);
-			model.addAttribute("pi", pi);
+			model.addAttribute("userId", userId);
 					
 			return "member/myPage";
 		}

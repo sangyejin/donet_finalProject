@@ -137,6 +137,21 @@ c {
 	font-weight: 800;
 }
 
+#registration {
+	cursor: pointer;
+	color: rgb(60, 179, 113);
+	font-size: 13px;
+	font-weight: 500;
+	background-color: white;
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	float: right;
+	margin-right: 3%;
+	transition: all 0.5s;
+}
+
 </style>
 </head>
 <body id="pageTop">
@@ -197,7 +212,7 @@ c {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
@@ -208,7 +223,7 @@ c {
 						<c:choose>
 							<c:when test="${ pi.currentPage ne p }">
 								<li class="page-item"><a class="page-link"
-									href="list.do?currentPage=${ p }">${ p }</a></li>
+									href="supportReviewList.me?currentPage=${ p }">${ p }</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -220,11 +235,11 @@ c {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

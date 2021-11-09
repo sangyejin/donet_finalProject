@@ -115,6 +115,9 @@ a{ color : #000000;  text-decoration: none; }
         border-color: transparent transparent transparent rgb(30, 154, 40);
         right: -25px;
     }
+    
+    
+    
 </style>
 </head>
 <body>
@@ -137,9 +140,11 @@ a{ color : #000000;  text-decoration: none; }
        		
        		<!-- 로그인 후  -->
        		<c:if test="${ !empty sessionScope.loginUser }">
-       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/myPage.me">마이페이지</a>  |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/logout.me">로그아웃</a> </div>
+       		<div class="loginDiv" id="userinfo"><label class="smallerFonts" >${ sessionScope.loginUser.userName }님</label> |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/myPage.me?userId=${ loginUser.userId }" >마이페이지</a>  |  <a class="smallerFonts"  href="${ pageContext.servletContext.contextPath }/logout.me">로그아웃</a> </div>
             </c:if>
         <br>
+        
+        <%-- onclick="location.href = 'myPage.me?userId=${ loginUser.userId }'" --%>
         
        <%--  <!-- 로그인 전 -->
                                 
@@ -178,7 +183,10 @@ a{ color : #000000;  text-decoration: none; }
                         <li><a href="vulnerable?suCategoryNo=5">취약계층</a></li>
                     </ul> 
                      -->
-                     
+                    <ul class="arrow_box">
+                    <li><a href="${ pageContext.servletContext.contextPath }/list.do">후원 프로젝트</a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/supportReviewList.me">후원 후기 게시판</a></li>
+                    </ul> 
                 </li>
                 <li class="greenfont" id="3"><a href="${ pageContext.servletContext.contextPath }/funding">펀딩 프로젝트</a>
                 <li class="greenfont" id="4"><a href="${ pageContext.servletContext.contextPath }/goods">구호 물품</a>

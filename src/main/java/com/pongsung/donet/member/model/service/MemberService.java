@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
@@ -72,6 +73,12 @@ public interface MemberService {
  //마이페이지 목록 관련
 	int selectSponsorListCount();
 
-	ArrayList<Sponsor> selectSponsorList(PageInfo pi);
+	ArrayList<Sponsor> selectSponsorList(String userId);
+	
+	int selectFundingSupporterListCount();
+	
+	ArrayList<FundingSupporter> selectFundingSuppoterList(String userId);
+
+	
 	
 }

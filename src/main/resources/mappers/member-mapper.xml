@@ -283,4 +283,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</update>
 	
+	<!-- 회원 목록 -->
+	<select id="selectSponsorListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM SPONSOR
+		WHERE USER_ID=#{userId}
+	</select>
+	
+	<select id="selectSponsorList" resultMap = "sponsorResultSet">
+		SELECT *
+		FROM SPONSOR
+		WHERE USER_ID=#{userId}
+		ORDER BY PAY_DATE DESC
+	</select>
+	
 </mapper>

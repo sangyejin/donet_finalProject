@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
@@ -203,12 +204,22 @@ public class MemberDao {
 // 마이페이지 목록 모음
 	public int selectSponsorListCount(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("memberMapper.");
+		return sqlSession.selectOne("memberMapper.selectSponsorListCount");
 	}
 
-	public ArrayList<Sponsor> selectSponsorList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Sponsor> selectSponsorList(SqlSessionTemplate sqlSession, String userId) {
 		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList)sqlSession.selectList("memberMapper.selectSponsorList", userId);
+	}
+	
+	public int selectFundingSupporterListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("fundingMapper.selectFundingSupporterListCount");
+	}
+	
+	public ArrayList<FundingSupporter> selectFundingSuppoterList(SqlSessionTemplate sqlSession, String userId) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("fundingMapper.selectFundingSuppoterList", userId);
 	}
 
 }
