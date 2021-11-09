@@ -562,8 +562,8 @@
 				
 				<div style="clear:both; display:none;"></div>
 			</div>
-
-			<c:if test="${loginUser.userId == funding.hostId  && nowDate < startDate}">
+			
+			<c:if test="${loginUser.userId == funding.hostId && nowDate < startDate}">
 				<div class="btnArea">
 					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,15 @@
 <link rel="icon"
 	href="${ pageContext.servletContext.contextPath }/resources/imgs/logoearth.png"
 	type="image/x-icon">
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 	
 
 <!-- CSS here -->
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
@@ -127,6 +137,21 @@ c {
 	font-weight: 800;
 }
 
+#registration {
+	cursor: pointer;
+	color: rgb(60, 179, 113);
+	font-size: 13px;
+	font-weight: 500;
+	background-color: white;
+	width: 80px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	float: right;
+	margin-right: 3%;
+	transition: all 0.5s;
+}
+
 </style>
 </head>
 <body id="pageTop">
@@ -138,9 +163,9 @@ c {
 		<span><c>커뮤니티 > 후원 후기</c></span>
 		<span></span>
 		<c:if
-			test="${loginUser.userRole eq 'B'||loginUser.userRole eq 'C'||loginUser.userRole eq 'D'}">
+			test="${loginUser.userRole eq 'A'||loginUser.userRole eq 'B'||loginUser.userRole eq 'C'}">
 		<span><button type="button" id="registration"
-				onclick="location.href='reist.do'">등록하기</button></span>
+				onclick="location.href='supportReviewWrite.me'">후기 작성</button></span>
 		</c:if>
 
 		<div id="greenLine"></div>
@@ -148,19 +173,20 @@ c {
 
 		<div class="content">
 			<c:if test="${!empty list}">
-				<c:forEach items="${ list }" var="s" varStatus="status">
+				<c:forEach items="${ list }" var="r" varStatus="status">
 					<div class="supportList"
-						onclick="location.href = 'detail.do?suNo=${s.suNo}'">
+						onclick="location.href = 'supportReviewDetail.me?reNo=${r.reNo}'">
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
-									src="${ pageContext.servletContext.contextPath}/resources/imgs/${s.thumbnailChange}">
+									src="${pageContext.request.contextPath}/resources/upload_files/${r.thumbnailChange}">
+									<%-- ${ pageContext.servletContext.contextPath}/resources/imgs/${r.imgChangeName} --%>
 							</div>
 							<div class="supportTitle">
-								<h3>${s.suTitle}</h3>
+								<h3>제목 : ${r.reTitle}</h3>
 							</div>
 							<div class="supportWriter">
-								<h6>${s.suWriter}</h6>
+								<h6>작성자 : ${r.userId}</h6>
 							</div>
 							<div class="participation">
 								<div>
@@ -168,36 +194,13 @@ c {
 										src="${ pageContext.servletContext.contextPath}/resources/imgs/donation/person.png">
 								</div>
 								<div id="total">
-									<h6>${s.total }명</h6>
+									<h6>${r.reCount }조회수</h6>
 								</div>
 							</div>
-							<div class="progressBar">
-								<c:choose>
-									<c:when test="${s.goal ne 0 }">
-										<c:set var="cul" value="${(s.totalamount/s.goal)*100 }" />
-										<c:choose>
-											<c:when test="${cul>=100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: 101%;"></span>
-												</span>
-											</c:when>
-											<c:when test="${cul<100 }">
-												<span class="progressbar"> <span class="gauge"
-													style="width: ${cul}%;"></span>
-												</span>
-											</c:when>
-										</c:choose>
-									</c:when>
-									<c:when test="${s.goal eq 0 }">
-										<span class="progressbar"> <span class="gauge"
-											style="width: 0%;"></span>
-										</span>
-									</c:when>
-								</c:choose>
-							</div>
+							
 							<div class="totalAmount">
 								<h3>
-									<b>누적 ${s.totalamount } 원</b>
+									<b>후기 작성일 ${r.reDate }</b>
 								</h3>
 							</div>
 						</span>
@@ -209,7 +212,7 @@ c {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
@@ -220,7 +223,7 @@ c {
 						<c:choose>
 							<c:when test="${ pi.currentPage ne p }">
 								<li class="page-item"><a class="page-link"
-									href="list.do?currentPage=${ p }">${ p }</a></li>
+									href="supportReviewList.me?currentPage=${ p }">${ p }</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -232,11 +235,11 @@ c {
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<li class="page-item"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link"
-								href="list.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+								href="supportReviewList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

@@ -123,6 +123,178 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY USER_ID DESC
 	</select>
 
-
+<!-- 일단 예비로 사용하는 후원 후기 맵퍼 -->
+	
+	<resultMap id="supportReviewResultSet" type="Review">
+		<id property="reNo" column="RE_NO" />
+		<result property="userId" column="USER_ID" />
+		<result property="reTitle" column="RE_TITLE" />
+		<result property="reSuTitle" column="RE_SU_TITLE" />
+		<result property="reContent" column="RE_CONTENT" />
+		<result property="reCount" column="RE_COUNT" />
+		<result property="reDate" column="RE_DATE" />
+		<result property="thumbnailOrigin" column="RE_IMG_ORIGINNAME" />
+		<result property="thumbnailChange" column="RE_IMG_CHANGENAME" />
+		<result property="reStatus" column="RE_STATUS" />		
+	</resultMap>
+	
+	<resultMap id="sponsorResultSet" type="Sponsor">
+		<id property="userId" column="USER_ID" />
+		<result property="suNo" column="SU_NO" />
+		<result property="payNo" column="PAY_NO" />
+		<result property="amount" column="PAY_AMOUNT" />
+		<result property="total" column="COUNT" />
+		<result property="sum" column="SUM" />
+		<result property="payDate" column="PAY_DATE" />
+	</resultMap>
+	
+	<resultMap id="supportResultSet" type="Support">
+		<id property="suNo" column="SU_NO" />
+		<result property="suTitle" column="SU_TITLE" />
+		<result property="suWriter" column="SU_WRITER" />
+		<result property="suStart" column="SU_START" />
+		<result property="suLast" column="SU_LAST" />
+		<result property="suDate" column="SU_DATE" />
+		<result property="content" column="SU_CONTENT" />
+		<result property="target" column="SU_TARGET" />
+		<result property="bstart" column="SU_BSTART" />
+		<result property="blast" column="SU_BLAST" />
+		<result property="thumbnailOrigin" column="THUMBNAILORIGIN" />
+		<result property="thumbnailChange" column="THUMBNAILCHANGE" />
+		<result property="categoryNo" column="SU_CATEGORY" />
+		<result property="status" column="SU_SATUTS" />
+		<result property="hits" column="HITS" />
+		<result property="ddate" column="DDAY" />
+		<result property="total" column="TOTAL" />
+		<result property="totalamount" column="TOTALAMOUNT" />
+		<result property="goal" column="GOAL" />
+	</resultMap>
+	
+	<resultMap id="supportReviewImageResultSet" type="ReviewImage">
+		<id column="IMG_NO" property="imgNo" />
+		<result column="RE_NO" property="reNo" />
+		<result column="IMG_ORIGIN_NAME" property="imgOriginName" />
+		<result column="IMG_CHANGE_NAME" property="imgChangeName" />
+	</resultMap>
+	
+	<resultMap id="supporReviewCommentResultSet" type="ReviewComment">
+		<id property="reNo" column="RE_NO" />
+		<result property="reContent" column="RE_CONTENT" />
+		<result property="reBno" column="RE_BNO" />
+		<result property="reWriter" column="RE_WRITER" />
+		<result property="reCreateDate" column="RE_CREATE_DATE" />
+		<result property="reSatuts" column="STATUS" />		
+	</resultMap>
+	
+	<select id="selectDonationReviewListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE RE_STATUS='Y'
+	</select>
+	
+	<select id="selectDonationReviewList" resultMap="supportReviewResultSet">
+		SELECT *
+		FROM REVIEW
+		WHERE RE_STATUS='Y'
+		ORDER BY USER_ID DESC 
+	</select>
+	
+	<select id="selectSupportList" resultMap="supportResultSet" parameterType="Support">
+		SELECT SP.SU_NO, SU.SU_TITLE, SU.SU_SATUTS
+		FROM SUPPORT SU 
+		JOIN
+		SPONSOR SP ON SU.SU_NO = SP.SU_NO
+		WHERE SU.SU_SATUTS='Y'
+		ORDER BY SU_NO DESC
+	</select>
+	
+	<insert id="insertReview" parameterType="Review">
+   		INSERT INTO REVIEW
+   		VALUES(SEQ_EV.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, #{thumbnailOrigin}, #{thumbnailChange},  DEFAULT)
+   </insert>
+	
+   <select id="selectReview" parameterType="_int" resultMap="supportReviewResultSet">
+    	SELECT *
+    	FROM REVIEW
+    	WHERE RE_NO=#{reNo} AND RE_STATUS = 'Y'
+   </select>
+	
+   <update id="increaseCount" parameterType="_int">
+		UPDATE REVIEW
+		SET RE_COUNT
+		= RE_COUNT+1
+		WHERE RE_NO=#{reNo} AND RE_STATUS='Y'
+   </update>
+	
+   <select id="selectReviewReplyList" resultMap="supporReviewCommentResultSet" parameterType="_int">
+		SELECT * 
+		FROM REVIEW_COMMENT 
+		WHERE RE_BNO = #{reNo}
+		AND STATUS='Y'
+		ORDER BY RE_CREATE_DATE DESC 
+   </select>	
+	
+   <insert id="insertReviewReply" parameterType="ReviewComment">
+		INSERT INTO REVIEW_COMMENT 
+		VALUES(SEQ_REVIEW_COMMENT.NEXTVAL, #{reContent}, #{reBno},#{reWriter}, SYSDATE, DEFAULT) 
+   </insert>
+	
+   <!-- attachment -->
+   <select id="selectReviewImage" parameterType="_int" resultMap="supportReviewImageResultSet">
+   		SELECT *
+    	FROM REVIEW_IMAGE
+    	WHERE RE_NO=#{reNo}
+   </select>
+  
+   <update id="deleteReviewReply" parameterType="_int">
+		UPDATE REVIEW_COMMENT
+		SET STATUS='N'
+		WHERE RE_NO=#{reNo}
+   </update>
+  	
+   <update id="updateReviewReply" parameterType="ReviewComment">
+		UPDATE REVIEW_COMMENT
+		SET RE_CONTENT=#{reContent}
+		WHERE RE_NO=#{reNo}
+   </update>
+	
+   <update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		SET RE_STATUS='N'
+		WHERE RE_NO=#{reNo}
+   </update>
+   
+   <update id="updateReview" parameterType="Review">
+		UPDATE REVIEW
+		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE, RE_IMG_ORIGINNAME=#{thumbnailOrigin}, RE_IMG_CHANGENAME=#{thumbnailChange}
+		WHERE RE_NO=#{reNo}
+   </update>
+	
+   <select id="reviewInfo" parameterType="Review" resultMap="supportReviewResultSet">
+		SELECT * FROM REVIEW 
+		WHERE RE_NO=#{reNo} and USER_ID=#{userId} and status='Y'
+   </select>
+	
+   <update id="updateReviewImage" parameterType="java.util.List">
+		UPDATE REVIEW_IMAGE
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+		SET IMG_ORIGIN_NAME=#{item.originName}, IMG_CHANGE_NAME=#{item.changeName}
+		WHERE IMG_NO=#{item.fileNo}
+		</foreach>
+	</update>
+	
+	<!-- 회원 목록 -->
+	<select id="selectSponsorListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM SPONSOR
+		WHERE USER_ID=#{userId}
+	</select>
+	
+	<select id="selectSponsorList" resultMap = "sponsorResultSet">
+		SELECT *
+		FROM SPONSOR
+		WHERE USER_ID=#{userId}
+		ORDER BY PAY_DATE DESC
+	</select>
 	
 </mapper>

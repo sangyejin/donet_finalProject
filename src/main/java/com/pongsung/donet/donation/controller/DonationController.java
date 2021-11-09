@@ -156,7 +156,7 @@ public class DonationController {
 	@ResponseBody
 	@RequestMapping(value = "list.re", produces = "application/json; charset=utf-8")
 	public String selectReplyList(int suNo) {
-
+		
 		ArrayList<SupporComment> commentList = donationService.selectReplyList(suNo);
 		System.out.println("commentList "+commentList);
 		

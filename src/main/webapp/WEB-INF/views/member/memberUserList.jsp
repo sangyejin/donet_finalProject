@@ -9,9 +9,15 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
-<!-- Custom Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
 <style>
 	#writeBtn {
@@ -77,13 +83,8 @@
                                              </tr>
                                         </thead>
                                         <tbody>
-                                        	<c:forEach items="${ empty list }" var="m">
-                                            <tr>
-                                                <td colspan="8">조회된 회원이 없습니다.</td>                                                
-                                            </tr>
-                                            </c:forEach>
-                                            
-                                            <c:forEach items="${ !empty list }" var="m">
+                                                                                
+                                            <c:forEach items="${list}" var="m" varStatus="status">
                                             <tr>
                                                 <td>${ m.userId }</td>
                                                 <td>${ m.userName }</td> 
@@ -103,7 +104,7 @@
 						                <ul class="pagination">
 						                	<c:choose>
 						                		<c:when test="${ pi.currentPage ne 1 }">
-						                			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+						                			<li class="page-item"><a class="page-link" href="userList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
 						                		</c:when>
 						                		<c:otherwise>
 						                			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
@@ -113,7 +114,7 @@
 						                    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 						                    	<c:choose>
 							                		<c:when test="${ pi.currentPage ne p }">
-						                    			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+						                    			<li class="page-item"><a class="page-link" href="userList.me?currentPage=${ p }">${ p }</a></li>
 							                		</c:when>
 							                		<c:otherwise>
 							                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -124,10 +125,10 @@
 						                    
 						                    <c:choose>
 						                		<c:when test="${ pi.currentPage ne pi.maxPage }">
-						                			<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+						                			<li class="page-item"><a class="page-link" href="userList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						                		</c:when>
 						                		<c:otherwise>
-						                			<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+						                			<li class="page-item disabled"><a class="page-link" href="userList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
 						                		</c:otherwise>
 						                	</c:choose>
 						                </ul>
