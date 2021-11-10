@@ -43,14 +43,14 @@
          
         }
         .active{
-            background-color: rgb(142, 211, 173);
+            background-color: rgb(66, 178, 115);
         }
         button, enrollBtn{
             transition:0.5s;
             cursor:pointer;
             margin-top: 18px;
             margin-right: 30px;
-            margin-left: 30px;
+            
             float: center;
             width: 400px;
             height: 40px;
@@ -118,7 +118,7 @@
           }
           
           .container_footer{
-              margin-right:220px;
+              margin-right: 10%;
               float:right;
               min-height:100px;
           }
@@ -190,12 +190,25 @@
             </div>
         </div>  
         <br>  
+        <hr>
+        <div class="header-left" style="float:right; margin-right:10%;">
+        	<div class="input-group icons">
+            	<form id="searchForm" class="form-inline" method="post" action="search.ev">
+                	<div class="input-group text-center mb-3">
+                     	<input name="keyword" type="search" class="form-control" placeholder="전체 이벤트 검색하기" aria-label="Search Dashboard">
+                       	<div class="input-group-append">
+                       		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
+                       	</div>
+                    </div>
+                </form>    
+            </div>
+        </div>
         <!-- ========================= 
             Paging Area 
         ========================= --> 
         
-        <div id="pagingArea" style="align:center">
-            <ul class="pagination">
+        <div id="pagingArea" align="center" >
+            <ul class="pagination" style="margin-left:35%;">
                 <c:choose>
                     <c:when test="${ pi.currentPage ne 1 }">
                         <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
@@ -229,41 +242,15 @@
         </div>
         
         <!-- Footer & Search Area -->
-        <div class="container_footer">
-            <div class="input-group icons">
-            
-           		<div class="header-left">
-                    <div class="input-group icons">
-                    <form id="searchForm" class="form-inline" method="post">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-                        </div>
-                        <div class="input-group text-center mb-3">
-                        	<input name="keyword" type="search" class="form-control" placeholder="게시글 검색하기" aria-label="Search Dashboard">
-                        	<div class="input-group-append">
-                        		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
-                        	</div>
-                        </div>
-                    </form>    
-                    </div>
-                </div>
-                    
-                    <div >
-                    	<!--<c:if test="${ loginUser.userRole eq 'D' }">
+                <div class="btn btnArea" style="display:inline-block;"> 
+                <!-- 계정권한이 'D'인 관리자유저만 생성버튼 활성화 -->	
+                <!--<c:if test="${ loginUser.userRole eq 'D' }">
                     		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
-                    	</c:if>-->
-                    	<br>
-                    	<br>
-                    	<br>
-                    	<br>
-                    	
-                    	<c:if test="${ !empty loginUser }">
-                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
-                    	</c:if>
-                    	
-                    </div>  
-            </div>
-        </div>
+                    </c:if>-->
+                    <c:if test="${ !empty loginUser }">
+                    	<span><a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a></span>
+					</c:if>
+                </div>      	
     </div>
 </div>
 	<script>

@@ -88,19 +88,26 @@
        			</tr>
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
-       				<td><input type="text" id="title" class="form-control" name="volTitle" value="${ vo.volTitle }" required></td>
+       				<td colspan="3"><input type="text" id="title" class="form-control" name="volTitle" value="${ vo.volTitle }" required></td>
+       			</tr>
+       			<tr>
+       				<td></td>
+       				<td></td>
+       				<td>원본 썸네일</td>
+       				<td>수정 후 썸네일 </td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="thum">썸네일 이미지</label></th>
-       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
-       				<td><img alt="" src="${ pageContext.servletContext.contextPath }/resources/upload_files/${vo.volChange}" id="thumImg" class="img" ></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file" onchange="loadImg(this)"></td>
+       				<td><img alt="" src="${ pageContext.servletContext.contextPath }/resources/upload_files/${vo.volChange}" id="thumImg" class="img" style="width:150px; height:150px"></td>
+       				<td><img id="thum" src="" style="width:150px; height:150px"></td>
        			</tr>
        			</table>
-       			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7">${vo.volContent}</textarea>
+       			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7" required>${vo.volContent}</textarea>
        		<script type="text/javascript">
 
 
-       			function loadImg(){
+       			function loadImg(inputFile){
        				if(inputFile.files.length == 1){
        					var reader = new FileReader();
        					

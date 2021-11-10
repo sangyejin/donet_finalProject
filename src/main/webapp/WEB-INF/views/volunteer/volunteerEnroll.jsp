@@ -88,24 +88,24 @@
        			</tr>
        			<tr class="form-group" >
        				<th><label for="writer">작성자</label></th>
-       				<td><input type="text" id="writer" class="form-control" name="volWriter" value="${ loginUser.userId }" readonly></td>
+       				<td><input type="text" id="writer" class="form-control" name="volWriter" value="${ loginUser.userId }" readonly required></td>
        			</tr>
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
-       				<td><input type="text" id="title" class="form-control" name="volTitle"></td>
+       				<td><input type="text" id="title" class="form-control" name="volTitle" required></td>
        			</tr>
        			<tr>
        				<th><labeL for="">썸네일 이미지</labeL>
-       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
-       				<td><img id="thum" src=""></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file" onchange="loadImg(this)" required></td>
+       				<td><img id="thum" src="" style="width:150px; height:150px"></td>
        			</tr>
        			</table>
-       			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7"></textarea>
+       			<textarea class="form-control" id="summernote" name="volContent" placeholder="content" maxlength="140" rows="7" required></textarea>
        			
        			<script type="text/javascript">
 
 
-       			function loadImg(){
+       			function loadImg(inputFile){
        				if(inputFile.files.length == 1){
        					var reader = new FileReader();
        					

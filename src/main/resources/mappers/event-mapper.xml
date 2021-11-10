@@ -26,29 +26,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- Event -->
 	<select id="selectEventListCount" resultType="_int">
+	<![CDATA[
 		SELECT COUNT(*)
 		FROM EVENT
-		WHERE EVENT_STATUS = 'Y'
+		WHERE EVENT_STATUS = 'Y' AND 
+		TO_CHAR(SYSDATE, 'MM/DD') <= TO_CHAR(EVENT_LAST_DATE, 'MM/DD')
+		]]>
 	</select>
 
 	<select id="afterListCount" resultType="_int">
+	<![CDATA[
 		SELECT COUNT(*)
 		FROM EVENT
-		WHERE EVENT_STATUS = 'D'
+		WHERE EVENT_STATUS = 'Y' AND 
+		TO_CHAR(SYSDATE, 'YYYYMMDD') >= TO_CHAR(EVENT_LAST_DATE, 'YYYYMMDD')
+		]]>
 	</select>
 
 	<select id="selectEventList" resultMap="eventResultMap">
+		<![CDATA[
 		SELECT *
 		FROM EVENT
-		WHERE EVENT_STATUS = 'Y' 
+		WHERE EVENT_STATUS = 'Y' AND 
+		TO_CHAR(SYSDATE, 'YYYYMMDD') <= TO_CHAR(EVENT_LAST_DATE, 'YYYYMMDD')
 		ORDER BY EVENT_NO DESC
+		]]>
 	</select>
 	
 	<select id="afterList" resultMap="eventResultMap">
+	<![CDATA[
 		SELECT *
 		FROM EVENT
-		WHERE EVENT_STATUS = 'D' 
+		WHERE EVENT_STATUS = 'Y' AND 
+		TO_CHAR(SYSDATE, 'YYYYMMDD') >= TO_CHAR(EVENT_LAST_DATE, 'YYYYMMDD')
 		ORDER BY EVENT_NO DESC
+		]]>
 	</select>
 
    <insert id="insertEvent" parameterType="Event">

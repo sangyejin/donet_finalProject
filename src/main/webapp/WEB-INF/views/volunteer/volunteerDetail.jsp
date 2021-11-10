@@ -35,12 +35,10 @@
             width: 80%;
            
         }
-        
-     
-        }
+       
         .statusBox{
             height: 80px;
-            width: 80%;
+            width: 88%;
             border: none;
             background-color:rgb(241, 241, 241);
          
@@ -162,14 +160,25 @@
           .contentArea{
           		min-height: 400px;
           }
-         
+         .btn_vol{
+         	transition:0.5s;
+            cursor:pointer;
+            float: right;
+            width: 150px;
+            height: 40px;
+            border: none;
+         }
+         .btn_vol:hover{
+          	transform: scale(1.05);
+            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+          }
     </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 
 	<div class="container mt-2 ">
-        <h1>이벤트</h1>
+        <h1 style="margin-left:20px; ">선행활동</h1>
         <br>
        <article class="vol_view_title"> 
        		
@@ -182,8 +191,7 @@
 		                <span style="font-size:15px; float:left; margin-left:23px">${ vo.volWriter } </span>
 		                <!-- 게시글 작성일 -->
 		                <span style="font-size:15px; float:left; margin-left:23px">${vo.volDate }</span>
-		                <!-- 게시글 추천 & 조회수 -->
-		                <span style="font-size:15px; float:right; margin-right:30px; padding-right:10px" class="likeP">추천 : 0 </span>
+		                <!-- 게시글 조회수 -->
 		                <span style="font-size:15px; float:right; margin-right:30px">조회수 : ${vo.volCount } </span>
             		</div>
         		</div>
@@ -199,36 +207,6 @@
 	                	</div>
 	                	<br>
                    
-                    <div class="view_info_hashtag">
-                        <!-- hashtag area-->
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <span style="padding-right: 10px;">#해쉬태그</span>
-                        <button class="w3-button w3-black w3-round" id="likeBtn">
-	                       	<i class="fa fa-heart" style="font-size:15px"></i>
-	                    </button>
-                        <!-- 
-                        <c:choose>
-                        	<c:when test="${ nLike == 0 }">
-	                        	<button class="w3-button w3-black w3-round" id="likeBtn">
-	                        	<i class="fa fa-heart-o" style="font-size:15px">&nbsp;</i>
-	                        	</button>
-	                        	<input type="hidden" id="likeCheck" value="${ nLike }" />
-                        	</c:when>
-                        	<c:when test="${ nLike == 1 }">
-                        		<button class="w3-button w3-black w3-round" id="likeBtn">
-	                        	<i class="fa fa-heart" style="font-size:15px">&nbsp;</i>
-	                        	</button>
-	                        	<input type="hidden" id="likeCheck" value="${ nLike }" />
-                        	</c:when>
-                        </c:choose>
-                         -->
-                        <br>
-                        <hr align="center">
-                    </div>
                 </div>
                
                 <br>
@@ -272,7 +250,6 @@
 		            	<form id="postForm" method="post" action="">
 	            			<input type="hidden" name="vno" value="${ vo.volNo }">
 	            			<input type="hidden" name="fileName" value="${ vo.volChange }"> 
-					
 						</form>
 						<script>
 	            		var post = $("#postForm");

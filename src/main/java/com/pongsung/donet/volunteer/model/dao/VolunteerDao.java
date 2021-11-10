@@ -105,4 +105,6 @@ public class VolunteerDao {
 		return (ArrayList)sqlSession.selectList("volunteerMapper.searchList", keyword);
 	}
 
+	
+
 }

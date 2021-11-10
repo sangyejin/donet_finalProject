@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,11 +104,7 @@
             transform: scale3d(1, 1, 1);
           }
           
-          .container_footer{
-              margin-right:220px;
-              float:right;
-              min-height:100px;
-          }
+        
          #icon-search{
              float:left;
              margin:10px ;
@@ -185,8 +182,8 @@
                     </div> 
                     <div class="card-body">
 	       	        	<p class="card-title mt-3 mb-3">${ vo.volTitle }</p>
-	                	<p class="card-user">${ vo.volWriter }</p>
-	                	<p class="card-data">조회수 : ${ vo.volCount } <span>좋아요 : 0 </span></p> 
+	                	<p class="card-user">작성자 : ${ vo.volWriter }</p>
+	                	<p class="card-data">작성일 : ${ vo.volDate } </p> 
                 	</div>
                 </div>
         	</c:forEach>
@@ -196,9 +193,9 @@
 	     <hr>
 	     <br>
          <!-- Footer Search Area -->
-        		<div class="header-left">
+        		<div class="header-left" style="float:right;">
                     <div class="input-group icons">
-                    <form id="searchForm" class="form-inline" method="post">
+                    <form id="searchForm" class="form-inline" method="post" action="search.vo">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
                         </div>
@@ -215,7 +212,7 @@
             Paging Area 
         ========================= --> 
          <div id="pagingArea" style="align:center">
-            <ul class="pagination">
+            <ul class="pagination" style="margin-left:35%;">
                 <c:choose>
                     <c:when test="${ pi.currentPage ne 1 }">
                         <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
