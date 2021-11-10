@@ -49,13 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	FROM VOLUNTEER
     	WHERE VOL_NO=#{vno} AND VOL_STATUS = 'Y'
    </select>
-   
+
    <update id="countVolunteer" parameterType="_int">
-   		UPDATE VOLUNTEER 
-   		SET	VOL_COUNT = VOL_COUNT+1
-   		WHERE VOL_NO = #{vno}
-   		
-   </update>
+		UPDATE VOLUNTEER
+		SET VOL_COUNT = VOL_COUNT+1
+		WHERE VOL_NO = #{vno}
+
+	</update>
    <select id="choseList" resultMap="volunteerResultMap">
    		SELECT *
 		FROM VOLUNTEER

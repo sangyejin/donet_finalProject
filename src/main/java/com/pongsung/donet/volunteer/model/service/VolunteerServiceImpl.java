@@ -48,8 +48,17 @@ public class VolunteerServiceImpl implements VolunteerService {
 	@Override
 	public Volunteer selectVolunteer(int vno) throws Exception{
 		// TODO Auto-generated method stub
+		Volunteer vo = null;
+		int result = volunteerDao.countVolunteer(sqlSession, vno);
 		
-		return volunteerDao.selectVolunteer(sqlSession, vno);
+		if(result > 0 ) {
+			vo = volunteerDao.selectVolunteer(sqlSession, vno);
+		}else {
+			throw new CommException("조회수 오류");
+			
+		}
+		
+		return vo;
 	}
 
 	@Override

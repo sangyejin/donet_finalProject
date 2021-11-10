@@ -148,7 +148,7 @@ public class VolunteerController {
 	@RequestMapping("detail.vo")
 	public String selectVolunteer( int vno, Model mv) throws Exception {
 		System.out.println("디테일 체크 : " + vno );
-		volunteerService.countVolunteer(vno);
+	
 		Volunteer vo = volunteerService.selectVolunteer(vno);
 		
 		mv.addAttribute("vo", vo);

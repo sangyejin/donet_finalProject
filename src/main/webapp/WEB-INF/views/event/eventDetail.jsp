@@ -26,33 +26,25 @@
 	    
     <style>
        *{
-        margin:0 auto;
-      }
+        	margin:0 auto;
+     	}
         body{
-          width: 100%;
-          height: 100%;
-          margin: 0 auto;
+        	width: 100%;
+          	height: 100%;
+          	margin: 0 auto;
         }
         .container{
-            width: 80%;
-           
+        	width: 100%;
         }
-        
         .eventBox{
-            height: 80px;
-            width: 80%;
+        	height: 80px;
+            width: 100%;
             border: 1px solid black;
-          
         }
         .event_view_wrap{
             height: 80px;
-            width: 80%;
+            width: 100%;
             border: none;
-            background-color:rgb(241, 241, 241);
-         
-        }
-        .active{
-            background-color: rgb(142, 211, 173);
         }
         button{
             transition:0.5s;
@@ -61,111 +53,71 @@
             width: 50px;
             height: 40px;
             border: none;
-            
         }
-       button:hover{
-            transform: scale(1.05);
+        button:hover{
+        	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
         }
-        img{
-            height:80%;
-            width:80%;
-          }
-          
-          div[class^="col-"]{
-            margin : 15px;
+        div[class^="col-"]{
+        	margin : 15px;
             padding: 0;
-          }
-          
-          .row{
-              display: table;
-              text-align: center;
-          }
-          [class*="col-"] {
-              
-              display: table-cell;
-              vertical-align: top;
-          }
-
-          .card{
-            transition:0.5s;
+        }
+        .row{
+        	display: table;
+            text-align: center;
+        }
+        [class*="col-"] {
+        	display: table-cell;
+            vertical-align: top;
+        }
+        .card{
+        	transition:0.5s;
             cursor:pointer;
-          }
-          .card-title{  
-            font-size:15px;
+        }
+        .card-title{  
+       	    font-size:15px;
             transition:1s;
             cursor:pointer;
-          }
-         
-          .card:hover{
-            transform: scale(1.05);
+        }
+        .event_view_info{
+        	min-width: 800px;
+            min-height: 800px;
+        }
+        .btn_event{
+        	float: right;
+            font-size: 15px;
+            width: 80px;
+            height: 40px;
+            border: none;
+            transition:0.5s;
+          	cursor:pointer;
+        }
+        .btn_event:hover{
+        	transform: scale(1.05);
             box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
-          .card-text{
-            height:80px;  
-          }
-          
-          .card::before, .card::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            transform: scale3d(0, 0, 1);
-            transition: transform .3s ease-out 0s;
-            background: rgba(255, 255, 255, 0.1);
-            content: '';
-            pointer-events: none;
-          }
-          .card::before {
-            transform-origin: left top;
-          }
-          .card::after {
-            transform-origin: right bottom;
-          }
-          .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
-            transform: scale3d(1, 1, 1);
-          }
-          .boardCard{
-            max-height:300px;
-            width:100%;
-          }
-          .event_view_info{
-              min-width: 800px;
-              min-height: 800px;
-              background-color: rgb(241, 241, 241);
-          }
-          .btn_event{
-              float: right;
-              font-size: 15px;
-              width: 80px;
-              height: 40px;
-              
-          }
-          .statusBox{
-          		text-align:left;
-          }
-          .event_view_info{
-          		text-align:center;
-          }
-          .event_view_title{
-	          height: 80px;
-	          width: 80%;
-	          border: none;
-	          background-color:rgb(241, 241, 241);
-          }
-          .dateArea{
-          		float:right;
-          		height:0 auto;
-          		padding-top: 15px;
-          		padding-right: 20px;
-          }
-          .titleBox{
-          		padding-top: 15px;
-          		padding-bottom: 30px;
-          		padding-left: 20px;
-          }
-         
+        }
+        .statusBox{
+        	text-align:left;
+        }
+        .event_view_info{
+        	text-align:center;
+        }
+        .event_view_title{
+	    	height: 80px;
+	        width: 100%;
+	        border: none;
+        }
+        .dateArea{
+        	float:right;
+          	height:0 auto;
+          	padding-top: 15px;
+          	padding-right: 20px;
+        }
+        .titleBox{
+        	padding-top: 15px;
+          	padding-bottom: 30px;
+          	padding-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -186,8 +138,7 @@
             <section class="event_view_wrap">
                 <div class="event_view_info">
 	                <div class="contentArea">
-	               	<p> ${ ev.eventContent } </p>
-	                	
+	               		${ ev.eventContent } 
 	                </div>
 	                <br>
                   	<br>
@@ -195,10 +146,10 @@
                 </div>
                 <br>
 				<section id="replyArea" class="reply-container">
-					<div id="reply-insert" class="container">
+					<div id="reply-insert" class="container" style="padding:0;">
 						<div id="reply-insert-info">
 							<c:if test="${not empty loginUser}">
-								<textarea type="text" id="replyContent" class="col-md-10"
+								<textarea type="text" id="replyContent" class="col-md-6"
 									placeholder="댓글을 입력하세요" style="resize: none;"></textarea>
 								<button type="button" id="addReply" class="btn-insert-reply" value="등록">등록</button>
 							</c:if>
@@ -224,6 +175,7 @@
 	            		<div>
 	            			<button class="btn btn-primary" onclick="updateForm();">수정</button>
 	            			<button class="btn btn-danger" onclick="deleteEvent();">삭제</button>
+	            			<button class="btn_event" type="button" onclick="location.href='list.ev'" style="float:right; margin-right:50px;">목록</button>
 	            		</div>
 		            	<form id="postForm" method="post" action="">
 	            			<input type="hidden" name="eno" value="${ ev.eventNo }">
@@ -267,7 +219,7 @@
 	            		</script>            		
 	            	</c:if>
 	            
-                <input class="btn_event" type="button" value="목록" onclick="location.href='list.ev'">
+               
             </div>
         </section>  
        

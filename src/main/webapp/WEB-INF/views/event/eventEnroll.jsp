@@ -80,23 +80,23 @@
        		<table align="center" >
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
-       				<td><input type="text" id="title" class="form-control" name="eventTitle"></td>
+       				<td><input type="text" id="title" class="form-control" name="eventTitle" required></td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="datepickerStart">이벤트 시작</label>
-       				<td><input type="text" id="datepickerStart" class="form-control" name="eventStart" autocomlete="off" readonly="readonly"></td>
+       				<td><input type="text" id="datepickerStart" class="form-control" name="eventStart" autocomlete="off" readonly="readonly" required></td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="datepickerLast">이벤트 종료</label>
-       				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly"></td>
+       				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly" required></td>
        			</tr>
        			<tr>
        				<th><labeL for="">썸네일 이미지</labeL>
-       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
-       				<td><img id="thum" src=""></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file" onchange="loadImg(this)" required></td>
+       				<td><img id="thum" src="" style="width:150px; height:150px"></td>
        			</tr>
        		</table>
-       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7"></textarea>
+       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7" required></textarea>
        				
        		<br>
        		<div class="submitBtn">

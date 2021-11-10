@@ -61,6 +61,10 @@
    		height: 150px;
    		margin: 10px;
    }
+   .note-editable p img{
+   		height: 700px;
+   		margin: 20px;
+   }
 </style>
 </head>
 <body>
@@ -76,23 +80,30 @@
        		<table align="center" >
        			<tr class="form-group" >
        				<th><label for="title">제목</label></th>
-       				<td><input type="text" id="title" class="form-control" name="eventTitle" value="${ ev.eventTitle }" required></td>
+       				<td colspan="3"><input type="text" id="title" class="form-control" name="eventTitle" value="${ ev.eventTitle }" required></td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="datepickerStart">이벤트 시작</label>
-       				<td><input type="text" id="datepickerStart" class="form-control" name="eventStart" autocomlete="off" readonly="readonly" value="${ ev.eventStart }"></td>
+       				<td colspan="3"><input type="text" id="datepickerStart" class="form-control" name="eventStart" autocomlete="off" readonly="readonly" value="${ ev.eventStart }" required></td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="datepickerLast">이벤트 종료</label>
-       				<td><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly" value="${ ev.eventLast }"></td>
+       				<td colspan="3"><input type="text" id="datepickerLast" class="form-control" name="eventLast" autocomlete="off" readonly="readonly" value="${ ev.eventLast }" required></td>
+       			</tr>
+       			<tr>
+       				<td></td>
+       				<td></td>
+       				<td>원본 썸네일</td>
+       				<td>수정 후 썸네일 </td>
        			</tr>
        			<tr class="form-group">
        				<th><label for="thum">썸네일 이미지</label></th>
-       				<td><input type="file" id="file" class="form-control-file" name="file"></td>
-       				<td><img id="thumImg" src="${pageContext.request.contextPath}/resources/upload_files/${ev.eventChange}"  alt="" class="content-img"></td>
+       				<td><input type="file" id="file" class="form-control-file" name="file" onchange="loadImg(this)"></td>
+       				<td><img id="thumImg" src="${pageContext.request.contextPath}/resources/upload_files/${ev.eventChange}"  alt="" class="content-img"  style="width:150px; height:150px" required></td>
+       				<td><img id="thum" src="" style="width:150px; height:150px"></td>
        			</tr>
        		</table>       		
-       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7">${ ev.eventContent }</textarea>
+       		<textarea class="form-control" id="summernote" name="eventContent" placeholder="content" maxlength="140" rows="7" required>${ ev.eventContent }</textarea>
        		<br>
        		<div class="submitBtn">
        			<button type="submit" class="btn btn-primary">등록하기</button>
@@ -105,7 +116,7 @@
  </div>
   <script>
 
-	function loadImg(){
+	function loadImg(inputFile){
 		if(inputFile.files.length == 1){
 			var reader = new FileReader();
 			

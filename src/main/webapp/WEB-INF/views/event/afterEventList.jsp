@@ -37,7 +37,7 @@
         }
         .statusBox{
             height: 80px;
-            width: 80%;
+            width: 100%;
             border: none;
             background-color:rgb(241, 241, 241);
          
@@ -50,7 +50,7 @@
             cursor:pointer;
             margin-top: 18px;
             margin-right: 30px;
-            margin-left: 30px;
+
             float: center;
             width: 400px;
             height: 40px;
@@ -162,7 +162,7 @@
             </div> 
             <br>
             <div class="statusBox">
-                <p style="text-align:left; margin-left:20px; font-size:30px">진행중인 이벤트</p>
+                <p style="text-align:left; margin-left:20px; font-size:30px">지난 이벤트</p>
             </div>  
         </div>
         <br>
@@ -173,7 +173,7 @@
         <div class="row">
             <div class="card-deck">
         	<c:forEach items="${ list }" var="list">
-                <div class="card col-md-4" id="eventCard">
+                <div class="card col-md-8" id="eventCard">
             	<p style="display:none" > ${ list.eventNo } </p>
                     <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img">
                     	<img src="${pageContext.request.contextPath}/resources/upload_files/${list.eventChange}"  alt="" class="content-img">
@@ -190,12 +190,27 @@
             </div>
         </div>  
         <br>  
+        <hr>
+         <!-- Footer & Search Area -->
+       
+           		<div class="header-left" style="float:right; margin-right:10%;">
+                    <div class="input-group icons">
+                    <form id="searchForm" class="form-inline" method="post" action="search.ev">
+                        <div class="input-group text-center mb-3">
+                        	<input name="keyword" type="search" class="form-control" placeholder="전체 이벤트 검색하기" aria-label="Search Dashboard">
+                        	<div class="input-group-append">
+                        		<input id="searchBtn" class="btn" type="submit" onclick="getSearchList()" value="검색">
+                        	</div>
+                        </div>
+                    </form>    
+                    </div>
+                </div>
         <!-- ========================= 
             Paging Area 
         ========================= --> 
         
         <div id="pagingArea" style="align:center">
-            <ul class="pagination">
+            <ul class="pagination" style="margin-left:35%;">
                 <c:choose>
                     <c:when test="${ pi.currentPage ne 1 }">
                         <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
@@ -228,37 +243,20 @@
             </ul>
         </div>
         
-        <!-- Footer & Search Area -->
-        <div class="container_footer">
-            <div class="input-group icons">
-            
-                <form id="searchBoardForm" class="form-inline">
-                    <div class="input-group text-center mb-3">
-                        <p class="icon-searchBox">
-                            <span id="icon-search" class="glyphicon glyphicon-search" ></span>
-                            <input name="findBoard" type="search" class="form-control" placeholder="이벤트 검색하기" aria-label="Search Dashboard" style="margin:0 auto"> 
-                        </p>
-                    </div>
-                    <br>
+       
                     
-                    <div >
+                    <div class="btn btnArea" style="display:inline-block;"> 
+                    	<!-- 계정권한이 'D'인 관리자유저만 생성버튼 활성화 -->
                     	<!--<c:if test="${ loginUser.userRole eq 'D' }">
                     		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>-->
-                    	<br>
-                    	<br>
-                    	<br>
-                    	<br>
                     	
                     	<c:if test="${ !empty loginUser }">
                     		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>
                     	
                     </div>  
-                                   
-                </form>    
-            </div>
-        </div>
+       
     </div>
 </div>
 	<script>
@@ -267,6 +265,21 @@
 				location.href="detail.ev?eno=" + $(this).children().eq(0).text();
 			});
 		});
+		function getSearchList(){
+	    	var search = $(this).val();
+	    	$.ajax({
+	    		type: "post",
+	    		url : "search.ev",
+	    		cache: false,
+	    		data: {"search":search},
+	    		success : function(data){
+	    			$("body").html(data);
+	    		},
+	    		error: function(data){
+	    			alert("error");
+	    		}
+	    	});
+	    }
 	</script>
 
     <jsp:include page="../common/footer.jsp" />

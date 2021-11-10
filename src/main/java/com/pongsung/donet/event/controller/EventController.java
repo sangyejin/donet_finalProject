@@ -31,7 +31,6 @@ import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.event.model.service.EventService;
-import com.pongsung.donet.event.model.vo.Attachment;
 import com.pongsung.donet.event.model.vo.Event;
 import com.pongsung.donet.event.model.vo.EventReply;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
@@ -199,7 +198,7 @@ public class EventController {
 			Model model, @RequestParam("keyword") String keyword) throws Exception {
 		
 		int listCount = eventService.selectEventListCount();
-		System.out.println("검색 listCount check : "+listCount); //페이지 카운트확인하기 
+		System.out.println("검색  check : "+keyword); //페이지 카운트확인하기 
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6 , 5);
 		
@@ -209,7 +208,7 @@ public class EventController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
-		return "volunteer/volunteerList";
+		return "event/eventList";
 	}
 	
 	
