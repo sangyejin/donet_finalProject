@@ -178,12 +178,20 @@
             	<p style="display:none" > ${ vo.volNo } </p>
                 <div class="card col-md-8" id="volCard">
                     <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img" >
-                    	<img src="${pageContext.request.contextPath}/resources/upload_files/${vo.volChange}"  alt="" class="content-img" >
-                    </div> 
+	                    <div style="position:absolute;">
+	                    	<div style="position:relative;left:200px;">	
+		                    	<c:if test="${ vo.volPoint > 0 }">
+			                		<img src="${pageContext.request.contextPath}/resources/imgs/full_logoearth.png" style="width:50px; height:50px;">
+			                	</c:if>
+		                	</div>
+		                </div>
+	                	<img src="${pageContext.request.contextPath}/resources/upload_files/${vo.volChange}"  alt="" class="content-img">
+                    </div>
                     <div class="card-body">
 	       	        	<p class="card-title mt-3 mb-3">${ vo.volTitle }</p>
 	                	<p class="card-user">작성자 : ${ vo.volWriter }</p>
 	                	<p class="card-data">작성일 : ${ vo.volDate } </p> 
+	                	
                 	</div>
                 </div>
         	</c:forEach>

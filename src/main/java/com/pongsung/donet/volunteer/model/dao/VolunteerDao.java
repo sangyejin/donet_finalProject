@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pongsung.donet.common.PageInfo;
-import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.pongsung.donet.volunteer.model.vo.VolunteerReply;
 @Repository
@@ -27,11 +26,6 @@ public class VolunteerDao {
 	}
 
 
-	public int insertVolunteerAttach(SqlSessionTemplate sqlSession, List<VolAttachment> attList) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("volunteerMapper.insertVolunteerAttach", attList);
-	}
-
 	public int insertVolunteer(SqlSessionTemplate sqlSession, Volunteer vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("volunteerMapper.insertVolunteer", vo);
@@ -42,10 +36,6 @@ public class VolunteerDao {
 		return sqlSession.selectOne("volunteerMapper.selectVolunteer", vno);
 	}
 
-	public List<VolAttachment> selectVolunteerAttachment(SqlSessionTemplate sqlSession, int vno) {
-		// TODO Auto-generated method stub
-		return  sqlSession.selectList("volunteerMapper.selectVolunteerAttachment", vno);
-	}
 
 	public int countVolunteer(SqlSessionTemplate sqlSession, int vno) {
 		return sqlSession.update("volunteerMapper.countVolunteer", vno);
@@ -103,6 +93,11 @@ public class VolunteerDao {
 	public ArrayList<Volunteer> searchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("volunteerMapper.searchList", keyword);
+	}
+
+	public int updatePoint(SqlSessionTemplate sqlSession, int vno) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("volunteerMapper.updatePoint", vno);
 	}
 
 	

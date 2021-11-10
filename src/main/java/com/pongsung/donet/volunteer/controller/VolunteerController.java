@@ -218,7 +218,12 @@ public class VolunteerController {
 		return "volunteer/volunteerList";
 	}
 	
-	
+	@RequestMapping("{vno}/addPoint.vo")
+	public String updatePoint (@PathVariable("vno") int vno) {
+		int result = volunteerService.updatePoint(vno);
+		
+		return String.valueOf(result);
+	}
 	/*
 	 * =========== Reply ==================
 	 */

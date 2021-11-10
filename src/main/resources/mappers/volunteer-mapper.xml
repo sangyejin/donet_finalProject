@@ -88,7 +88,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM VOLUNTEER
 		WHERE VOL_STATUS = 'Y' AND VOL_TITLE LIKE '%'||#{keyword}||'%' 
 	</select>
-	
+	<update id="updatePoint" parameterType="_int">
+		UPDATE VOLUNTEER
+		SET VOL_POINT = VOL_POINT + 1000
+		WHERE VOL_NO=#{vno}
+	</update>
 	<!-- Reply -->
 	<insert id="insertReply" parameterType="VolunteerReply">
 		INSERT INTO VOLUNTEER_REPLY

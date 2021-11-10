@@ -146,7 +146,7 @@
                 </div>
                 <br>
 				<section id="replyArea" class="reply-container">
-					<div id="reply-insert" class="container" style="padding:0;">
+					<div id="reply-insert" class="container" style="padding:0; margin:0;">
 						<div id="reply-insert-info">
 							<c:if test="${not empty loginUser}">
 								<textarea type="text" id="replyContent" class="col-md-6"

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.volunteer.model.dao.VolunteerDao;
-import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.pongsung.donet.volunteer.model.vo.VolunteerReply;
 @Service
@@ -59,12 +58,6 @@ public class VolunteerServiceImpl implements VolunteerService {
 		}
 		
 		return vo;
-	}
-
-	@Override
-	public List<VolAttachment> selectVolunteerAttachment(int vno) throws Exception {
-		// TODO Auto-generated method stub
-		return volunteerDao.selectVolunteerAttachment(sqlSession, vno);
 	}
 
 	@Override
@@ -147,6 +140,12 @@ public class VolunteerServiceImpl implements VolunteerService {
 	public ArrayList<Volunteer> searchList(PageInfo pi, String keyword) {
 		// TODO Auto-generated method stub
 		return  volunteerDao.searchList(sqlSession, pi, keyword);
+	}
+
+	@Override
+	public int updatePoint(int vno) {
+		// TODO Auto-generated method stub
+		return volunteerDao.updatePoint(sqlSession, vno);
 	}
 
 	
