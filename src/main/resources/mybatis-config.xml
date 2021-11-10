@@ -22,6 +22,10 @@
 		
 		<typeAlias type="com.pongsung.donet.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.pongsung.donet.attendance.model.vo.Attendance" alias="Attendance" />
+		<typeAlias type="com.pongsung.donet.member.model.vo.Review" alias="Review" />
+		<typeAlias type="com.pongsung.donet.member.model.vo.ReviewImage" alias="ReviewImage" />
+		<typeAlias type="com.pongsung.donet.member.model.vo.ReviewComment" alias="ReviewComment" />
+		
 		
 		<typeAlias type="com.pongsung.donet.member.model.vo.Bank" alias="Bank" />
 		<typeAlias type="com.pongsung.donet.member.model.vo.Payment" alias="Payment" />
@@ -53,6 +57,11 @@
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupporComment" alias="SupporComment" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportImage" alias="SupportImage" />
 		<typeAlias type="com.pongsung.donet.donation.model.vo.SupportFilter" alias="SupportFilter" />
+
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartGoal" alias="ChartGoal" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartSupport" alias="ChartSupport" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartSponsor" alias="ChartSponsor" />
+		<typeAlias type="com.pongsung.donet.introduce.model.vo.ChartFunding" alias="ChartFunding" />
 	</typeAliases>
 
 	<mappers>
@@ -64,6 +73,7 @@
 		<mapper resource="/mappers/support-mapper.xml" />		
 		<mapper resource="/mappers/volunteer-mapper.xml" />
 		<mapper resource="/mappers/attendance-mapper.xml" />
+		<mapper resource="/mappers/chart-mapper.xml" />
 	</mappers>
 
 

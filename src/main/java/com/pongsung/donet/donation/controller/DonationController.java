@@ -41,13 +41,17 @@ import com.pongsung.donet.donation.model.vo.SupportFilter;
 import com.pongsung.donet.donation.model.vo.SupportImage;
 import com.pongsung.donet.donation.model.vo.SupportUsePlan;
 import com.pongsung.donet.donation.model.vo.SupportUsePlanList;
+import com.pongsung.donet.funding.model.vo.Funding;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
+import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.vo.Member;
 
 @SessionAttributes("loginUser") 
 @Controller
 public class DonationController {
-
+	@Autowired
+	private MemberService memberService;
+	
 	@Autowired
 	private DonationService donationService;
 	
@@ -152,7 +156,7 @@ public class DonationController {
 	@ResponseBody
 	@RequestMapping(value = "list.re", produces = "application/json; charset=utf-8")
 	public String selectReplyList(int suNo) {
-
+		
 		ArrayList<SupporComment> commentList = donationService.selectReplyList(suNo);
 		System.out.println("commentList "+commentList);
 		
@@ -267,13 +271,22 @@ public class DonationController {
 			return "donation/pop";
 		}
 		
-		@ResponseBody
-		@RequestMapping("supportCharity")
-		public String insertSupportCharity(Sponsor s) {
-			int result = donationService.insertSupportCharity(s);
-			System.out.println("s "+s);
-			
-			return String.valueOf(result);
+
+		@RequestMapping(value="supportCharity")
+		public String insertSupportCharity(int suNo, Sponsor s, Model model) {
+			s.setUserId(((Member)model.getAttribute("loginUser")).getUserId());
+			s.setSuNo(suNo);
+			donationService.insertSupportCharity(s);
+			System.out.println("Sponsor "+s);
+			Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+			model.addAttribute("loginUser", loginUser);
+			return "redirect:/list.do";
+		}
+		
+		@RequestMapping(value="delete.do/{suNo}")
+		public String deleteFunding(@PathVariable("suNo")int suNo) {
+			donationService.deleteSupport(suNo);
+			return "redirect:/list.do";
 		}
 
 

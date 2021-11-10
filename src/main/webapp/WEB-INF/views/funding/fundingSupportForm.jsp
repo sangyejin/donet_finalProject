@@ -21,7 +21,14 @@
 	width: 1050px;
 	margin-bottom: 100px;
 }
-
+.addSupport-container p{
+	display:inline-block;
+	margin-right:10px;
+	
+}
+#message{
+	color:red;
+}
 #top-div {
 	clear:both;
 	padding:40px;
@@ -192,7 +199,7 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 			</div>
 			<hr>
-			<form id="insertForm" action="support/insert" method="post">
+			<form id="insertForm" action="support/insert" method="post" autocomplete="off">
 				<div class="content-container">
 					<label for="fundingGoods-container">선물 선택</label> <input
 						type="hidden" name="tempPrice" id="tempPrice" value="0" /> <input
@@ -282,6 +289,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					return;
 				}
 				else if(Number("${loginUser.point}")<Number($("#totalSupport").text())){
+					$("#message").text('잔여 포인트가 부족합니다.');
 					return;
 				}
 				else{

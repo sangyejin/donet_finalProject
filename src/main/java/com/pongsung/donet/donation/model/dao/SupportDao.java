@@ -133,8 +133,13 @@ public class SupportDao {
 		return sqlSession.insert("supportMapper.insertSupportCharity", s);
 	}
 
-	public int updatePoints(SqlSessionTemplate sqlSession, int points) {
-		return sqlSession.update("memberMapper.updatePoints",points);
+
+	public int supportAfterPoints(SqlSessionTemplate sqlSession, Sponsor s) {
+		return sqlSession.insert("supportMapper.supportAfterPoints",s);
+	}
+
+	public int deleteSupport(SqlSessionTemplate sqlSession, int suNo) {
+		return sqlSession.delete("supportMapper.deleteSupport",suNo);
 	}
 
 	public List<Support> selectTopDonationList(SqlSessionTemplate sqlSession) {

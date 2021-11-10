@@ -32,7 +32,7 @@
   width: 1280px;
   margin: auto;
   display: grid;
-  grid-template-columns: 700px 330px; /* 각 행(세로줄)의 길이 */
+  grid-template-columns: 700px 400px; /* 각 행(세로줄)의 길이 */
   grid-template-rows: 900px 200px; /* 각 열(가로줄)의 길이 */
   gap: 10px; /* 자식요소간의 간격 */
 }
@@ -65,6 +65,25 @@
   border: 1px solid #dee3eb;
 }
 
+#AdScroll {
+	overflow-y : scroll;
+	height : 150px;
+}
+
+#AdScroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+#AdScroll::-webkit-scrollbar-thumb{
+	background-color: #78c2ad;
+	border-radius:10px;
+}
+
+#AdScroll::-webkit-scrollbar-track{
+	background-color: #ffe6f2;
+	border-radius:10px;
+	box-shadow : inset 0px 0px 5px white;
+}
 
 </style>
 </head>
@@ -171,12 +190,11 @@
                 </div>
                 <br>
                 
-                <div class="btns" align="center">
-                	<a href="supportReply.me" class="text-primary">후원 후기 게시판</a> &nbsp;
+                <div class="btns" align="center">             	
                 	<c:if test="${ loginUser.userId eq 'admin' }">
-                	<a href="userList.me" class="text-primary">회원목록</a> &nbsp;
+                	<button href="userList.me" class="btn btn-primary">회원목록</button> 
                 	</c:if>
-                	<a href="calendar.at" class="text-primary">출석체크</a>
+                	<a href="calendar.at" class="btn btn-primary">출석체크</a>
                 	<button class="btn btn-primary"><a data-toggle="modal" data-target="#chagePwdModal">Pwd변경</a></button>
                     <button type="submit" class="btn btn-success">수정하기</button>
                     <%-- <a href="delete.me?userId=${ loginUser.userId }" class="btn btn-danger">탈퇴하기</a> --%>
@@ -195,15 +213,15 @@
 	<div id="pointView" class="card text-center bg-light mb-3 h-30 border-dee3eb"> 				
   			<div class="card-body">
     			<h4 class="card-title">&nbsp;&nbsp; <h3 class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;${ sessionScope.loginUser.userName } 님의 페이 포인트</h3> </h4> <br>   			   			
-    				<h4 class="text">${ sessionScope.loginUser.point } pt.</h4>    			
+    				<h4 class="text">${ sessionScope.loginUser.point } pt.</h4>  <a href="point.me" class="btn btn-primary " style="position: relative; left:120px; top:-30px;">포인트 충전</a>   			
     				<br>
-    				<div class="float-center">
-    					<a href="point.me" class="btn btn-primary">포인트 충전</a>
+    				<div class="">
+    					
   					</div>
   			</div>
 	  	<div class="card-footer text-muted">
-	    <a class="btn btn-success" href="list.do">후원 하기</a> &emsp; &emsp; 
-	    <a class="btn btn-success" href="list.ev">물품 후원</a> &emsp; &emsp; 
+	    <a class="btn btn-success" href="${ pageContext.servletContext.contextPath }/list.do">후원 하기</a> &emsp; &emsp; 
+	    <a class="btn btn-success" href="${ pageContext.servletContext.contextPath }/goods">물품 후원</a> &emsp; &emsp; 
 	    <a class="btn btn-success" href="${ pageContext.servletContext.contextPath }/funding">펀딩 후원</a>
 	  </div>
 	  <ul class="list-group list-group-flush">
@@ -215,46 +233,96 @@
 	
 	<div class="panel panel-default">
 	  <!-- Default panel contents -->
-	  <div class="panel-heading">Panel heading</div>
 	  <div class="panel-body">
-	    <p>...</p>
+	    <div class="row">               
+                    <div class="col-lg-10 mt-5" >
+                        <div class="card" style="width:400px; height:200px;">
+                            <div class="card-body" style="width:400px; height:200px;">
+                                <div class="card-title text-center">
+                                    <h5>후원 내역</h5>
+                                    		 <div class="table-responsive" id="AdScroll">
+                                    <table id="" class="table table-hover text-center">
+                                        <thead>
+                                            <tr>                                                
+                                                <th>아이디</th>
+                                                <th>결제 번호</th>
+                                                <th>후원 포인트</th>
+                                                <th>후원 날짜</th>                                              
+                                             </tr>
+                                        </thead>
+                                        <tbody>                                                                                
+                                            <c:forEach items="${sponsorList}" var="sp" varStatus="status">
+                                            
+                                            <tr>
+                                                <td>${ sp.userId }</td>
+                                                <td>${ sp.payNo }</td> 
+                                                <td>${ sp.amount }</td>
+                                                <td>${ sp.payDate }</td>                                                                             
+                                            </tr>
+                                            
+                                           </c:forEach> 
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                 </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>                    
+                 </div>
 	  </div>
 	
-	  <!-- Table -->
-	  <table class="table">
-	    ...
-	  </table>
-	</div>
-
-	<div class="gap-box"></div>
-
-	<div class="panel panel-default">
-	  <!-- Default panel contents -->
-	  <div class="panel-heading">Panel heading</div>
-	  <div class="panel-body">
-	    <p>...</p>
-	  </div>
-	
-	  <!-- Table -->
-	  <table class="table">
-	    ...
-	  </table>
 	</div>
 
 	<div class="gap-box"></div>
 
 		<div class="panel panel-default">
-	  <!-- Default panel contents -->
-	  <div class="panel-heading">Panel heading</div>
-	  <div class="panel-body">
-	    <p>...</p>
-	  </div>
-	
-	  <!-- Table -->
-	  <table class="table">
-	    ...
-	  </table>
+	  	
+	  	 <div class="row">               
+                    <div class="col-lg-10 mt-5" >
+                        <div class="card" style="width:400px; height:200px;">
+                            <div class="card-body" style="width:400px; height:200px;">
+                                <div class="card-title text-center">
+                                    <h5>펀딩 내역</h5>
+                                    		 <div class="table-responsive" id="AdScroll">
+                                    <table id="" class="table table-hover text-center">
+                                        <thead>
+                                            <tr>                                                
+                                                <th>아이디</th>
+                                                <th>프로젝트 번호</th>
+                                                <th>후원 포인트</th>
+                                                <th>후원 날짜</th>                                              
+                                             </tr>
+                                        </thead>
+                                        <tbody>                                                                                
+                                            <c:forEach items="${fundingSupporterList}" var="fp" varStatus="status">
+                                            
+                                            <tr>
+                                                <td>${ fp.fpSupporter }</td>
+                                                <td>${ fp.fpNo }</td> 
+                                                <td>${ fp.fpPrice }</td>
+                                                <td>${ fp.fpSupportDate }</td>                                                                             
+                                            </tr>
+                                            
+                                           </c:forEach> 
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                 </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>                    
+                 </div>
+	  	
 	</div>
+	  
+	  
+	</div>
+
+	
 
 
 
@@ -320,7 +388,9 @@
     <form action="delete.me" method="post" id="postForm">
     	<input type="hidden" name="userId" value="${ loginUser.userId }">
     </form>
+		
 
+		
     <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

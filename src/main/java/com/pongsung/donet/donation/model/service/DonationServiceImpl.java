@@ -199,16 +199,25 @@ public class DonationServiceImpl implements DonationService {
 		
 	}
 
+
 	@Override
-	public int updatePoints(int points) {
-		int result = supportDao.updatePoints(sqlSession,points);
+	public void supportAfterPoints(Sponsor s) {
+		int result=supportDao.supportAfterPoints(sqlSession,s);
 		if(result<0) {
-			throw new CommException("포인트 수정 실패");
+			throw new CommException("후원 실패");
 		}
-		return result;
 	}
 
 	@Override
+
+	public void deleteSupport(int suNo) {
+		int result=supportDao.deleteSupport(sqlSession,suNo);
+		if(result<0) {
+			throw new CommException("게시글 삭제 실패");
+		}
+	}
+
+
 	public List<Support> selectTopDonationList() {
 		// TODO Auto-generated method stub
 		return supportDao.selectTopDonationList(sqlSession);

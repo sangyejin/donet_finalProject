@@ -1,6 +1,7 @@
 package com.pongsung.donet.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,16 @@ import org.springframework.stereotype.Service;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
+import com.pongsung.donet.donation.model.vo.Sponsor;
+import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.dao.MemberDao;
 import com.pongsung.donet.member.model.vo.Bank;
 import com.pongsung.donet.member.model.vo.Member;
 import com.pongsung.donet.member.model.vo.Payment;
+import com.pongsung.donet.member.model.vo.Review;
+import com.pongsung.donet.member.model.vo.ReviewComment;
+import com.pongsung.donet.member.model.vo.ReviewImage;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -189,5 +196,173 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.selectUserList(sqlSession, pi);
 	}
+
+
+//=====================================================================
+	// 후원 후기
+	
+	@Override
+	public int seletDonationReviewListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectDonationReviewListCount(sqlSession);
+	}
+
+
+	@Override
+	public List<Support> selectDonationReviewList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return memberDao.selectDonationReviewList(sqlSession, pi);
+	}
+
+
+	@Override
+	public List<Sponsor> selectSupportList(Support support) {
+		// TODO Auto-generated method stub
+		return memberDao.selectSupportList(sqlSession, support);
+	}
+
+
+	@Override
+	public void insertReview(Review review) {
+		
+		int result = memberDao.insertReview(sqlSession, review);
+		
+		if(result <0) {
+			throw new CommException("후기 등록 실패");
+		}
+		
+	}
+
+	// 후기 상세 보기
+	@Override
+	public Review selectReview(int reNo) {
+
+		Review rv = null;
+		int result = memberDao.increaseCount(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("조회수 증가 실패");
+		}else {
+			rv = memberDao.selectReview(sqlSession, reNo);
+		}
+		
+		return rv;
+	}
+
+
+	@Override
+	public List<ReviewImage> selectReviewImage(int reNo) {
+		// TODO Auto-generated method stub
+		return memberDao.selectReviewImage(sqlSession, reNo);
+	}
+
+
+	@Override
+	public ArrayList<ReviewComment> selectReviewReplyList(int reNo) {
+		
+		System.out.println("후원 후기 댓글 리스트 서비스 임플 되는지 확인");
+		
+		return memberDao.selectReviewReplyList(sqlSession, reNo);
+	}
+
+
+	@Override
+	public int insertReviewReply(ReviewComment rc) {
+		int result = memberDao.insertReviewReply(sqlSession, rc);
+		
+		if(result < 0) {
+			throw new CommException("후기 댓글 작성 실패");
+		}
+
+		return result;
+	}
+
+
+	@Override
+	public int deleteReviewReply(int reNo) {
+
+		int result = memberDao.deleteReviewReply(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("댓글 삭제 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public int updateReviewReply(ReviewComment rc) {
+		
+		int result = memberDao.updateReviewReply(sqlSession, rc);
+		
+		if (result < 0) {
+			throw new CommException("댓글 수정 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public int deleteReview(int reNo) {
+		
+		int result = memberDao.deleteReview(sqlSession, reNo);
+		
+		if (result < 0) {
+			throw new CommException("후기 삭지 실패");
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public void updateReview(Review review) {
+		
+		int result = memberDao.updateReview(sqlSession, review);
+		
+		if (result < 0) {
+			throw new CommException("후기 수정 실패");
+		}
+		
+	}
+
+
+	@Override
+	public int selectSponsorListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectSponsorListCount(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Sponsor> selectSponsorList(String userId) {
+		// TODO Auto-generated method stub
+		return memberDao.selectSponsorList(sqlSession, userId);
+	}
+
+
+	@Override
+	public int selectFundingSupporterListCount() {
+		// TODO Auto-generated method stub
+		return memberDao.selectFundingSupporterListCount(sqlSession);
+	}
+	
+	
+	@Override
+	public ArrayList<FundingSupporter> selectFundingSuppoterList(String userId) {
+		// TODO Auto-generated method stub
+		return memberDao.selectFundingSuppoterList(sqlSession, userId);
+	}
+
+
+	
+
+
+	
+		
+		
+	
 	
 }

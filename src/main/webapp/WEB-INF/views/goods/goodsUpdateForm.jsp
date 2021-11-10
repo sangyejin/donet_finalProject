@@ -265,7 +265,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="main">
-		<form id="updateForm" action="update" method="post" enctype="multipart/form-data">
+		<form id="updateForm" action="update" method="post" enctype="multipart/form-data"  autocomplete="off">
 			<div class="div-content">
 				<div class="div-goodsName">
 					<label for="goodsName" style="display: block;" class="label-text">구호물품 이름</label> 
