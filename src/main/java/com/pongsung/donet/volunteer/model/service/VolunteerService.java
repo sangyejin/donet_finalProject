@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.event.model.vo.Event;
-import com.pongsung.donet.volunteer.model.vo.VolAttachment;
 import com.pongsung.donet.volunteer.model.vo.Volunteer;
 import com.pongsung.donet.volunteer.model.vo.VolunteerReply;
 
@@ -17,8 +16,6 @@ public interface VolunteerService {
 	ArrayList<Volunteer> selectVolunteerList(PageInfo pi) throws Exception;
 
 	Volunteer selectVolunteer(int vno) throws Exception;
-
-	List<VolAttachment> selectVolunteerAttachment(int vno) throws Exception;
 
 	void insertVolunteer(Volunteer vo) throws Exception;
 
@@ -43,6 +40,8 @@ public interface VolunteerService {
 	ArrayList<Volunteer> searchList(PageInfo pi, String keyword);
 
 	void countVolunteer(int vno);
+
+	int updatePoint(int vno);
 
 
 }
