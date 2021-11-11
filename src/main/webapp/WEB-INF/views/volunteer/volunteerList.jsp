@@ -174,9 +174,9 @@
         <br>
         <div class="row">
             <div class="card-deck" id="boardCard">
-            <c:forEach items="${ list }" var="vo">
-            	<p style="display:none" > ${ vo.volNo } </p>
+	        <c:forEach items="${ list }" var="vo">
                 <div class="card col-md-8" id="volCard">
+            	<p style="display:none" > ${ vo.volNo } </p>
                     <div class="card-img-top col-md-4 col-lg-3 col-xl-3" id="card-img" >
 	                    <div style="position:absolute;">
 	                    	<div style="position:relative;left:200px;">	
@@ -196,8 +196,8 @@
                 </div>
         	</c:forEach>
             </div>
+		</div>
             <br>
-	    </div>
 	     <hr>
 	     <br>
          <!-- Footer Search Area -->
@@ -333,7 +333,7 @@
       });
     
     $(function() {
-		$(".row #boardCard").click(function(){
+		$(".row #volCard").click(function(){
 			location.href="detail.vo?vno=" + $(this).children().eq(0).text();
 		});
 	});

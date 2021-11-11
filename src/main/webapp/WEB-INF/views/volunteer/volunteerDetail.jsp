@@ -141,16 +141,17 @@
 		                <p style="text-align:left; margin-left:20px; font-size:30px">${vo.volTitle }
 		                	<c:if test="${not empty loginUser}">
 			                	<span style="float:right; margin-right:40px;"> 
-					                <c:if test="${ vo.volPoint == 0 }">
+					                <c:if test="${ vo.volPoint == 0 && loginUser.userRole eq 'D'}">
 									    <button type="button" id="pointBtn" >포인트지급</button> 	
 									</c:if>
 								</span>
-								<span >
-								    <c:if test="${ vo.volPoint > 0 }">
-								      	<img src="${pageContext.request.contextPath}/resources/imgs/full_logoearth.png" style="width:30px; height:30px;">
-								    </c:if>
-						        </span>
+								
 						    </c:if>
+						    <span >
+								<c:if test="${ vo.volPoint > 0 }">
+								  	<img src="${pageContext.request.contextPath}/resources/imgs/full_logoearth.png" style="width:30px; height:30px;">
+								</c:if>
+						    </span>
 		                </p>
 		                <!-- 게시글 작성자 -->
 		                <span style="font-size:15px; float:left; margin-left:23px">${ vo.volWriter } </span>
@@ -200,70 +201,70 @@
          	<br>
          	
             <div class="btn_event_wrap">
-            	
-	            	<c:if test="${ !empty loginUser}">
-	            		<c:if test="${ vo.volPoint <= 0 || loginUser.userRole eq 'D'} ">
-	            		<div>
-	            			<button class="btn btn-primary" onclick="updateForm();">수정</button>
-	            			<button class="btn btn-danger" onclick="deleteVol();">삭제</button>
-	            			<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
-	            		</div>
-		            	<form id="postForm" method="post" action="">
-	            			<input type="hidden" name="vno" value="${ vo.volNo }">
-	            			<input type="hidden" name="fileName" value="${ vo.volChange }"> 
-	            			
-						</form>
-						<script>
-	            		var post = $("#postForm");
-	            		function updateForm(){
-	            			post.attr("action", "updateForm.vo");
-	            			post.submit();
-	            		}
-	            		function deleteVol(){
-	            			swal.fire({
-	        	                title: '확인', 
-	        	                text: "정말 게시글을 삭제하시겠습니까?", 
-	        	                type: 'warning', 
-	        	                confirmButtonText: '삭제', 
-	        	                showCancelButton: true,     
-	        	                cancelButtonText: '취소', 
-	        	                cancelButtonColor: "#f3969a",
-	        	                confirmButtonColor: "#3cb371"
-	        	            }).then(function(result) { 
-	        	                if(result.value) {             
-	        	                
-	        	                	post.attr("action", "delete.vo");
-	        						swal.fire(
-	        							{title: '삭제',
-	        							 text: '성공적으로 삭제되었습니다.',
-	        							 type: 'success',
-	        							 confirmButtonColor: "#78c2ad"}).then(function(result){
-	        			
-	        						$("#postForm").submit();
-	        					});
-	        	                
-	        	            } else if(result.dismiss === 'cancel') { 
-	        	                swal.fire('취소', '삭제가 취소되었습니다.', 'error');
-	        	         
-	        	            }
-	        	        });
-	            		}
-	            		</script>
-	            		</c:if>   
-	            		<c:if test="${ vo.volPoint > 0 }">
-	            			<button class="btn btn-danger" disabled>인증받은 글은 수정및 삭제가 불가능합니다.</button>
-	            			
+            	<c:choose>
+            		<c:when test="${loginUser.userId == vo.volWriter && vo.volPoint == 0}">
+            			<div>
+		            		<button class="btn btn-primary" onclick="updateForm();">수정</button>
+		            		<button class="btn btn-danger" onclick="deleteVol();">삭제</button>
 		            		<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
-            			</c:if>         		
-	            	</c:if>
-	            	
-                
+		            	</div>
+		            	<form id="postForm" method="post" action="">
+		            		<input type="hidden" name="vno" value="${ vo.volNo }">
+		            		<input type="hidden" name="fileName" value="${ vo.volChange }"> 
+						</form>
+            		</c:when>
+            		
+            		<c:when test="${loginUser.userId == vo.volWriter && vo.volPoint > 0}">
+            			<button class="btn btn-danger" disabled>인증받은 글은 수정및 삭제가 불가능합니다.</button>
+		            	<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
+            		</c:when>	
+            		<c:otherwise >
+            			<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
+            		</c:otherwise>	
+            	</c:choose>
+            
             </div>
         </section>  
        
     </div>
    
 <script>
+
+var post = $("#postForm");
+function updateForm(){
+	post.attr("action", "updateForm.vo");
+	post.submit();
+}
+function deleteVol(){
+	swal.fire({
+        title: '확인', 
+        text: "정말 게시글을 삭제하시겠습니까?", 
+        type: 'warning', 
+        confirmButtonText: '삭제', 
+        showCancelButton: true,     
+        cancelButtonText: '취소', 
+        cancelButtonColor: "#f3969a",
+        confirmButtonColor: "#3cb371"
+    }).then(function(result) { 
+        if(result.value) {             
+        
+        	post.attr("action", "delete.vo");
+			swal.fire(
+				{title: '삭제',
+				 text: '성공적으로 삭제되었습니다.',
+				 type: 'success',
+				 confirmButtonColor: "#78c2ad"}).then(function(result){
+
+			$("#postForm").submit();
+		});
+        
+    } else if(result.dismiss === 'cancel') { 
+        swal.fire('취소', '삭제가 취소되었습니다.', 'error');
+ 
+    }
+});
+}
+
 	$(function(){
 		$("#pointBtn").click(function(){
 			var vno = "${vo.volNo}";

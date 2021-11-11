@@ -29,12 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectVolunteerListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM VOLUNTEER
-		WHERE VOL_STATUS = 'Y'
+		WHERE VOL_STATUS IN('Y','B')
 	</select>
 	<select id="selectVolunteerList" resultMap="volunteerResultMap">
 		SELECT *
 		FROM VOLUNTEER
-		WHERE VOL_STATUS = 'Y' 
+		WHERE VOL_STATUS IN('Y','B')
 		ORDER BY VOL_NO DESC
 	</select>
 	 <insert id="insertVolunteer" parameterType="Volunteer">
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="selectVolunteer" parameterType="_int" resultMap="volunteerResultMap">
     	SELECT *
     	FROM VOLUNTEER
-    	WHERE VOL_NO=#{vno} AND VOL_STATUS = 'Y'
+    	WHERE VOL_NO=#{vno}
    </select>
 
    <update id="countVolunteer" parameterType="_int">
@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="updatePoint" parameterType="_int">
 		UPDATE VOLUNTEER
-		SET VOL_POINT = VOL_POINT + 1000
+		SET VOL_POINT = VOL_POINT + 1000 , VOL_STATUS = 'B'
 		WHERE VOL_NO=#{vno}
 	</update>
 	<!-- Reply -->

@@ -171,7 +171,7 @@
             <br>
             <div class="btn_event_wrap">
             	
-	            	<c:if test="${ !empty loginUser }">
+	            	<c:if test="${ loginUser.userRole eq 'D'  }">
 	            		<div>
 	            			<button class="btn btn-primary" onclick="updateForm();">수정</button>
 	            			<button class="btn btn-danger" onclick="deleteEvent();">삭제</button>
