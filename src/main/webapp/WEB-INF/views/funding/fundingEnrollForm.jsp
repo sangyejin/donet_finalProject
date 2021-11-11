@@ -27,10 +27,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 
-	<!-- datepicker -->    
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <!-- CDN 파일 summernote css/js --> 
 <!-- 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
