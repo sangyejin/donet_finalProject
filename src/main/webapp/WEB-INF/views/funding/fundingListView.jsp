@@ -290,7 +290,7 @@ select::-ms-expand {
 	<jsp:include page="../common/footer.jsp" />
 	<!-- Scroll Up -->
 	<div id="back-top">
-		<a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+		<a title="Go to Top" href="#"> <i class="fas" styler="font-size:30px; font-weight:700; color:white;">↑</i></a>
 	</div>
 	<script>
 	let pageInfo= {
@@ -417,12 +417,12 @@ select::-ms-expand {
 			if(pi.currentPage==1){
 				temp=`<li class="disabled page-item">
 				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous">
-				<i class="ti-angle-left"></i>
+				<i > < </i>
 				</a></li>`;
 			}else{
 				temp+=`<li class="page-item">
 					<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)-1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Previous"> 
-					<i class="ti-angle-left"></i>
+					<i > < </i>
 					</a></li>`;
 			}
 			for(let i= pi.startPage; i<=pi.endPage;i++){
@@ -433,19 +433,19 @@ select::-ms-expand {
 				}else{
 					temp+=`<li class="page-item">
 					<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+i+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link">`
-					+i+`</a></li>`;
+					+i+`</a> </li>`;
 				}
 			}
 			if(pi.currentPage==pi.maxPage){
 				temp+=`	<li class="disabled page-item">
 				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
-				<i class="ti-angle-right"></i>
+				<i >></i>
 				</a></li>`;
 			}
 			else{
 				temp+=`<li class="page-item">
 				<a onclick='selectFundingList(pageInfo.moveCurrentPage(`+(Number(pageInfo.currentPage)+1)+`),"`+categoryNo+`","`+period+`","`+order+`","`+search+`");' class="page-link" aria-label="Next">
-				<i class="ti-angle-right"></i></a></li>`;
+				<i >></i></a></li>`;
 			}
 			${currentPage}
 			$("#pagination").html(temp);
