@@ -234,7 +234,7 @@
 										<div class="active imgDiv" 
 											style="background-image:url(${pageContext.servletContext.contextPath}/resources/upload_files/donation/${list.thumbnailChange}?auto=compress,format);"
 											onclick="location.href='${pageContext.servletContext.contextPath}/detail.do?suNo=${list.suNo }';">
-											<div class="img-text"><p>${list.suTitle}</p></div>
+											<div class="img-text"><p style="text-shadow:-2px 0 #121212, 0 2px #121212, 2px 0 #121212, 0 -2px #121212;">${list.suTitle}</p></div>
 											</div>
 									</c:when>
 									<c:otherwise>

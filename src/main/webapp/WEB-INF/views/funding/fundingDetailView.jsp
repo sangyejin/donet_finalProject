@@ -160,7 +160,9 @@
 #content-container {
 	overflow:auto;
 }
-
+#content  img{
+	max-width:100%;
+}
 /*버튼 style*/
 #btn-funding {
 	width: 200px;
@@ -458,9 +460,7 @@
 						</c:when>
 						</c:choose>
 						</p>
-
 						<p>
-							
 							달성률 <span id="goalPersent" name="goalPersent">${goalPersent }</span>%
 						</p>
 					</div>
@@ -506,12 +506,12 @@
 				<div class="slides">
 				<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-							<c:when test="${status.begin==0}">
+							<c:when test="${status.index==0}">
 								<div class="active"
-									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName }?auto=compress,format);"></div>
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName}?auto=compress,format);"></div>
 							</c:when>
 							<c:otherwise>
-								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName }?auto=compress,format);"></div>
+								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/funding/${ImgList.imgChangeName}?auto=compress,format);"></div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -519,8 +519,7 @@
 				<div class="page-btns">
 					<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-							<c:when test="${status.begin==0}">
-
+							<c:when test="${status.index==0}">
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>

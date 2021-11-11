@@ -233,9 +233,7 @@ input[type="number"]::-webkit-inner-spin-button {
 				}
 				
 			});
-			function support() {
 
-			};
 
 			$("#btn-back").click(
 				function() {

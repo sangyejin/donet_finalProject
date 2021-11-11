@@ -27,16 +27,19 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/animated-headline.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css">
 
-
+	<!-- datepicker -->    
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- CDN 파일 summernote css/js --> 
 <!-- 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
  -->
 <!-- CDN 한글화 --> 
- <!-- 
+
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
- -->
+
 <!-- Summernote -->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
