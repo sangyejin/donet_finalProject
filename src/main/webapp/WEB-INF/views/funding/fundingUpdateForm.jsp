@@ -284,8 +284,8 @@ enctype="multipart/form-data" autocomplete="off">
 			</div>
 
 			<div class="btnArea">
-				<button type="submit" id="btn-update" class="btn btn-success">수정</button>
-				<button type="button" id="btn-delete" class="btn btn-default">삭제</button>
+				<button type="submit" id="btn-update" class="btn btn-success">수정하기</button>
+				<button type="button" id="btn-back" class="btn btn-default">목록으로 돌아가기</button>
 			</div>
 
 
@@ -348,9 +348,10 @@ enctype="multipart/form-data" autocomplete="off">
             });
             
             
-    		$("#btn-delete").click(function(){
-    			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/delete";
+    		$("#btn-back").click(function(){
+    			location.href="${pageContext.servletContext.contextPath}/funding/${funding.fpNo}";
     		});
+    		
     		$("#btn-update").click(function(){
     			if(! validate()){
     				return;

@@ -80,7 +80,7 @@ public class FundingDao {
 
 	public int deleteFundingReply(SqlSessionTemplate sqlSession, int replyNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("fundingMapper.deleteFundingReply",replyNo);
+		return sqlSession.delete("fundingMapper.deleteFundingReply",replyNo);
 	}
 
 	public int deleteFunding(SqlSessionTemplate sqlSession, int fpNo) {
