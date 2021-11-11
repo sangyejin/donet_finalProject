@@ -267,11 +267,11 @@ public class NoticeController {
 		// 게시글을 삭제한다=표시상태를 'N'으로 돌린다=언젠가 다시 보이게 하고싶을 수도 있으니 파일은 삭제 안할 심산...
 		NoService.deleteGo(noticeNo);
 		
-		//이전 게시글로 보내줌
+		/*이전 게시글로 안보내줌
 		Notice prevNote = NoService.selectPrevNotice(noticeNo);
+		*/
 
-
-		return "redirect:detail.no?noticeNo="+prevNote.getNoticeNo();
+		return "redirect:list.no";
 	}
 
 	
