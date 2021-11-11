@@ -519,9 +519,6 @@
 				<div class="page-btns">
 					<c:forEach items="${fundingImageList}" var="ImgList" varStatus="status" begin="0">
 						<c:choose>
-
-							<c:when test="${ status.begin==0 }">
-
 							<c:when test="${status.begin==0}">
 
 								<div class="active"></div>
@@ -563,9 +560,9 @@
 				<div style="clear:both; display:none;"></div>
 			</div>
 			
-			<c:if test="${loginUser.userId == funding.hostId && nowDate < startDate}">
+			<c:if test="${loginUser.userId == funding.hostId}">
 				<div class="btnArea">
-					<input type="button" onclick="location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';" id="btn-update" value="수정">
+					<input type="button" id="btn-update" value="수정">
 					<input type="button" id="btn-delete" value="삭제">
 				</div>
 			</c:if>
@@ -666,7 +663,6 @@
 			});
 		});
 		$("#btn-funding").click(function(){
-			console.log("${loginUser}");
 			if(${ nowDate<startDate || nowDate>closeDate } ){
 				alert("현재는 펀딩기간이 아닙니다.");
 				return;
@@ -679,6 +675,22 @@
 				return;
 			}
 
+		});
+		$("#btn-update").click(function(){
+	        if(${ nowDate >= startDate}){
+	        	alert("프로젝트를 수정할수 없는 기간입니다.");
+	        	return false;
+	        }
+	        location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/updateForm';
+		});
+		$("#btn-delete").click(function(){
+	        if(${ nowDate >= startDate}){
+	        	alert("프로젝트를 삭제할수 없는 기간입니다.");
+	        	return false;
+	        }
+			if(confirm("정말로 삭제하시겠습니까?")){
+				location.href='${pageContext.servletContext.contextPath}/funding/${funding.fpNo}/delete';
+			}
 		});
 		function deleteReply(fpNo, replyNo) {
 			if (confirm("댓글을 삭제하시겠습니까? 예: 삭제, 아니오:삭제 취소")) {
