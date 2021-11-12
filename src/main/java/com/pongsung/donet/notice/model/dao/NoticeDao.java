@@ -1,4 +1,4 @@
-package com.pongsung.donet.notice.model.dao;
+	package com.pongsung.donet.notice.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;

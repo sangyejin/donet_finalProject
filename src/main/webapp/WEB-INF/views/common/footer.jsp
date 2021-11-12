@@ -62,7 +62,7 @@
 <body>
 	<div id="All">
 	<div id="footer">
-		<div id="toleft" align="left"> <a href="#">회사소개</a> | <a
+		<div id="toleft" align="left"> <a href="${ pageContext.servletContext.contextPath }/resources/docs/pptx.pdf">회사소개</a> | <a
 			id="noVacancy">채용안내</a> | <a href="moral.fo">윤리경영</a> | <a
 			href="terms.fo">이용약관</a> | <a href="goAskForm.one">개선 의견 수렴</a> <br>
 			<br>

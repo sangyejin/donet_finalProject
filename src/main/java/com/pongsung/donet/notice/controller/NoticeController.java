@@ -491,9 +491,8 @@ public class NoticeController {
 		}
 		
 		// delete
-		//왜 삭제만 쥐랄이지?
 		@RequestMapping("delete.one")
-		public String deleteOne(int askNo, HttpServletRequest request) {
+		public String deleteOne(int askNo, HttpServletRequest request, Model model) {
 			
 			HttpSession session = request.getSession();
 
@@ -502,8 +501,7 @@ public class NoticeController {
 			NoService.deleteOne(askNo);
 			
 			session.setAttribute("msg", "문의 삭제 완료");
-
-
+			
 			return "redirect:list.one";
 		}
 		

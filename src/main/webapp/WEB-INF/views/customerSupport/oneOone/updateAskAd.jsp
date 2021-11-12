@@ -244,8 +244,7 @@
 			</form>
 			
 				<form id="deleteOne" method="post" action="delete.one">
-					<input type="text" id="askNo" name="askNo" value="${ask.askNo}"
-						hidden="true">
+					<input type="text" id="askNo" name="askNo" value="${ask.askNo}" hidden="true">
 					<button class="goRound" type="submit">삭제</button>
 				</form>
 				

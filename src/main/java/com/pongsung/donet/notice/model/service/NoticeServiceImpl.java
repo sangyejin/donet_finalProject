@@ -189,7 +189,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public void deleteOne(int askNo) {
-		int result = NoDao.deleteFaq(sqlSession, askNo);
+		int result = NoDao.deleteOne(sqlSession, askNo);
 		
 		if(result < 0) {
 			throw new CommException("문의 삭제 실패");
