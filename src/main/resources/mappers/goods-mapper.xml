@@ -177,7 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from(select GOODS_NO ,GOODS_NAME, GOODS_PRICE , THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME
 				from goods 
 				where status='Y'
-				order by hits
+				order by hits desc
 			) A
 		where ROWNUM <= 4
 	]]>

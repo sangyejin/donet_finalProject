@@ -90,10 +90,18 @@ END LOOP;
 END;
 /
 BEGIN
-FOR i in 100..116
+FOR i in 1..10
 LOOP
 insert into GOODS
-values (SEQ_GOODS.NEXTVAL,i||'밸런스 애견사료 3kg',5500,4,'보호소의 추운 겨울에 사료마저 부족어쩌구 <br> 밸런스 애견사료는 어쩌구저쩌구 <br> 보호소에 따뜻한 어쩌구가 되어주세요','12345678.jpg','12345678.jpg',default,default,default,TO_DATE('21-08-10','YY-MM-DD'));
+values (SEQ_GOODS.NEXTVAL,i||'유기견 사료 3kg',5500,4,'보호소의 추운 겨울에 사료마저 부족어쩌구 <br> 밸런스 애견사료는 어쩌구저쩌구 <br> 보호소에 따뜻한 어쩌구가 되어주세요','12345678.jpg','12345678.jpg',default,default,default,TO_DATE('21-08-10','YY-MM-DD'));
+END LOOP;
+END;
+/
+BEGIN
+FOR i in 11..18
+LOOP
+insert into GOODS
+values (SEQ_GOODS.NEXTVAL,i||'두툼한 이불',i||'1500',3,'<p>추운 겨울이 다가오고있습니다.</p><p>그들은 겨울이 두렵습니다.</p><p>찬바람에 얼어죽지않기위해서 옹기종기 모여앉아 추위를 이겨내려합니다.</p><p>그들에게 따뜻함을 기부해주세요.</p><p><img src="/donet/resources/upload_files/goods/b7810c29-b82f-49e8-9968-19a6529f3e37.jpg" style="width: 788.522px; height: 525.458px;"></p><p><br></p><p><br></p><p><br></p>','1636637882473_273930.jpg','1636637882473_273930.jpg',default,default,default,TO_DATE('21-11-10','YY-MM-DD'));
 END LOOP;
 END;
 /
@@ -107,7 +115,22 @@ values(seq_beneficiary.nextval,'동물협회'||i,'02-1234-3456','서울특별시
 END LOOP;
 END;
 /
-
+BEGIN
+FOR i in 1..5
+LOOP
+insert into beneficiary(BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION)
+values(seq_beneficiary.nextval,'아동복지'||i,'02-1234-3456','서울특별시','ddd@gmail.com',TO_DATE('21-10-30','YY-MM-DD'));
+END LOOP;
+END;
+/
+BEGIN
+FOR i in 1..5
+LOOP
+insert into beneficiary(BE_NO, BE_NAME, BE_TEL, BE_ADDRESS, BE_EMAIL, BE_REGISTRATION)
+values(seq_beneficiary.nextval,'난민지원'||i,'02-1234-3456','서울특별시','ddd@gmail.com',TO_DATE('21-10-30','YY-MM-DD'));
+END LOOP;
+END;
+/
 commit;
 
 select rownum,a.* from(select * from goods 

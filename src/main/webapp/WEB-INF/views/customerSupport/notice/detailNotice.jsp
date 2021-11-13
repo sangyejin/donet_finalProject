@@ -130,10 +130,10 @@
 
         td{  border-bottom: 1px solid gray;  height: 25px; }
 
-        .leftValue{width: 200px;}
-        .value{width: 100px;}
+        .leftValue{width: 400px;}
+        .value{width: 200px;}
 
-        .head{  text-align: center;  width: 50px; background-color: rgba(232, 240, 214, 0.5); }
+        .head{  text-align: center;  width: 100px; background-color: rgba(232, 240, 214, 0.5); }
 
         #yourContent{ margin-left: 25px;  font-size:12px; margin-right: 25px; }
  
@@ -205,18 +205,35 @@
 
             </tr>
             <tbody>
-            <tr class="thisDetail">
-                <td class="head">이전글</td>
-                <td hidden="true">${prevNote.noticeNo}</td>
-                <td class="theDetail" colspan="3"> ${prevNote.noticeTitle}</td>
+           
                
-            </tr>
+                	<c:if test="${ ! empty prevNote  }">
+                	 <tr class="thisDetail">
+                		<td class="head">이전글</td>
+		                <td hidden="true">${prevNote.noticeNo}</td>
+		                <td class="theDetail" colspan="3"> ${prevNote.noticeTitle}</td>
+		               </tr>
+               		</c:if>
+               		
+               		<!-- 이전글 없으면 -->
+               		<c:if test="${ empty prevNote  }">
+               		</c:if>
+               		
+           
             
-            <tr class="thisDetail">
-                <td class="head">다음글</td>
-                 <td hidden="true">${nextNote.noticeNo}</td>
-                <td class="theDetail" colspan="3"> ${nextNote.noticeTitle}</td>
-            </tr>
+           
+               <c:if test="${ ! empty nextNote  }">
+                 <tr class="thisDetail">
+                	<td class="head">다음글</td>
+		                 <td hidden="true">${nextNote.noticeNo}</td>
+		                 <td class="theDetail" colspan="3"> ${nextNote.noticeTitle}</td>
+	                 </tr>
+	                 </c:if>
+	                 
+	                <!-- 다음글 없으면 -->
+	                 <c:if test="${ ! empty nextNote  }">
+	                 </c:if>
+           
             </tbody>
 
 
@@ -247,7 +264,7 @@
     	function adminDelete(){ 
     		if(confirm("해당 게시글을 삭제합니다.")){
     			/* 삭제 하겠다고 하면 분부대로 처리해줌,,,,*/
-    			alert ("게시글 삭제가 완료되었습니다. 이전 게시글로 돌아갑니다.");
+    			alert ("게시글 삭제가 완료되었습니다.");
         		location.href="goDelete.no?noticeNo=" + ${no.noticeNo}; 
     		}else{
     			alert("삭제를 취소합니다.");

@@ -140,7 +140,7 @@ public class FundingController {
 		model.addAttribute("category", categoryList);
 		return "funding/fundingEnrollForm";
 	}
-
+	
 	// 펀딩프로젝트 게시글 등록
 	@RequestMapping("funding/insert")
 	public String insertFunding(Funding funding, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
@@ -156,14 +156,15 @@ public class FundingController {
 		
 		Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
 		for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
-			
+			logger.info("paramMap의 값: "+ paramMap );
 			List<MultipartFile> fileList=entry.getValue(); //multipartFile List
 			
 			logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
-			int cnt=1;
+
 			//파일을 저장, 파일이름 변경
 			for(int i=0; i<fileList.size();i++) {
 				String fileName=fileList.get(i).getOriginalFilename();
+				logger.info("files 확인용  :::"+ fileName );
 				if(fileName!="") { 
 					String originName = fileList.get(i).getOriginalFilename();
 					String changeName = saveFile(fileList.get(i),request);
@@ -222,6 +223,8 @@ public class FundingController {
 		String result = jsonObject.toString();
 		return result;
 	}
+	
+	
 	// 펀딩 디테일
 	@RequestMapping(value="funding/{fpNo}")
 	public String selectFundingDetail(@PathVariable("fpNo") int fpNo, Model model) throws Exception {

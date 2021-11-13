@@ -247,13 +247,13 @@
                     
                     <div class="btn btnArea" style="display:inline-block;"> 
                     	<!-- 계정권한이 'D'인 관리자유저만 생성버튼 활성화 -->
-                    	<!--<c:if test="${ loginUser.userRole eq 'D' }">
-                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
-                    	</c:if>-->
-                    	
-                    	<c:if test="${ !empty loginUser }">
+                    	<c:if test="${ loginUser.userRole eq 'D' }">
                     		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
                     	</c:if>
+                    	
+                    	<!--<c:if test="${ !empty loginUser }">
+                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
+                    	</c:if>-->
                     	
                     </div>  
        

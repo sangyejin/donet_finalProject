@@ -32,7 +32,7 @@
           margin: 0 auto;
         }
         .container{
-            width: 80%;
+            width: 100%;
            
         }
        
@@ -50,10 +50,9 @@
             transition:0.5s;
             cursor:pointer;
             float: center;
-            width: 50px;
             height: 40px;
             border: none;
-            
+            background-color: none;
         }
         button:hover{
             transform: scale(1.05);
@@ -79,53 +78,10 @@
               vertical-align: top;
           }
 
-          .card{
-            transition:0.5s;
-            cursor:pointer;
-          }
-          .card-title{  
-            font-size:15px;
-            transition:1s;
-            cursor:pointer;
-          }
-         
-          .card:hover{
-            transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
-          .card-text{
-            height:80px;  
-          }
-          
-          .card::before, .card::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            transform: scale3d(0, 0, 1);
-            transition: transform .3s ease-out 0s;
-            background: rgba(255, 255, 255, 0.1);
-            content: '';
-            pointer-events: none;
-          }
-          .card::before {
-            transform-origin: left top;
-          }
-          .card::after {
-            transform-origin: right bottom;
-          }
-          .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
-            transform: scale3d(1, 1, 1);
-          }
-          .boardCard{
-            max-height:300px;
-            width:100%;
-          }
           .event_view_info{
               min-width: 800px;
               min-height: 800px;
-              background-color: rgb(241, 241, 241);
+              
           }
           .btn_event{
               float: right;
@@ -144,7 +100,7 @@
 	          height: 80px;
 	          width: 80%;
 	          border: none;
-	          background-color:rgb(241, 241, 241);
+	          
           }
           .dateArea{
           		float:right;
@@ -161,17 +117,14 @@
           		min-height: 400px;
           }
          .btn_vol{
-         	transition:0.5s;
-            cursor:pointer;
+         	margin-right:150px;
             float: right;
-            width: 150px;
-            height: 40px;
-            border: none;
+            width: 100px;
          }
-         .btn_vol:hover{
-          	transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
+         #addPoint, #pointBtn{
+         	height: 30px;
+         }
+        
     </style>
 </head>
 <body>
@@ -181,12 +134,25 @@
         <h1 style="margin-left:20px; ">선행활동</h1>
         <br>
        <article class="vol_view_title"> 
-       		
         		<div class="vol_view_wrap">
         		<p style="display:none" > ${ vo.volNo } </p>
             		<div class="statusBox">
 		                <!-- 게시글 제목 -->
-		                <p style="text-align:left; margin-left:20px; font-size:30px">${vo.volTitle }</p>
+		                <p style="text-align:left; margin-left:20px; font-size:30px">${vo.volTitle }
+		                	<c:if test="${not empty loginUser}">
+			                	<span style="float:right; margin-right:40px;"> 
+					                <c:if test="${ vo.volPoint == 0 && loginUser.userRole eq 'D'}">
+									    <button type="button" id="pointBtn" >포인트지급</button> 	
+									</c:if>
+								</span>
+								
+						    </c:if>
+						    <span >
+								<c:if test="${ vo.volPoint > 0 }">
+								  	<img src="${pageContext.request.contextPath}/resources/imgs/full_logoearth.png" style="width:30px; height:30px;">
+								</c:if>
+						    </span>
+		                </p>
 		                <!-- 게시글 작성자 -->
 		                <span style="font-size:15px; float:left; margin-left:23px">${ vo.volWriter } </span>
 		                <!-- 게시글 작성일 -->
@@ -195,24 +161,18 @@
 		                <span style="font-size:15px; float:right; margin-right:30px">조회수 : ${vo.volCount } </span>
             		</div>
         		</div>
-        	
         </article>
             <br>
+           
             <br>
             <section class="vol_view_wrap">
                 <div class="vol_view_info">
-	                <div class="contentArea">
-	               		${vo.volContent }
-	                	
-	                	</div>
-	                	<br>
-                   
+	                <div class="contentArea"> ${vo.volContent }</div>
+	            <br>
                 </div>
-               
                 <br>
-         
             <section id="replyArea" class="reply-container">
-				<div id="reply-insert" class="container">
+				<div id="reply-insert" class="container" style="margin:0">
 					<div id="reply-insert-info">
 						<c:if test="${not empty loginUser}">
 							<textarea type="text" id="replyContent" class="col-md-10"
@@ -223,7 +183,7 @@
 						</c:if>
 						<c:if test="${ empty loginUser}">
 							<textarea type="text" id="replyContent" class="col-md-10"
-								placeholder="로그인한 유저만 사용할 수 있는 서비스 입니다." style="resize: none;"
+								placeholder="로그인한 유저만 사용할 수 있는 서비스 입니다." style="resize: none; margin-right:800px;"
 								disabled></textarea>
 						</c:if>
 					
@@ -241,62 +201,92 @@
          	<br>
          	
             <div class="btn_event_wrap">
-            	
-	            	<c:if test="${ !empty loginUser }">
-	            		<div>
-	            			<button class="btn btn-primary" onclick="updateForm();">수정</button>
-	            			<button class="btn btn-danger" onclick="deleteVol();">삭제</button>
-	            		</div>
+            	<c:choose>
+            		<c:when test="${loginUser.userId == vo.volWriter && vo.volPoint == 0}">
+            			<div>
+		            		<button class="btn btn-primary" onclick="updateForm();">수정</button>
+		            		<button class="btn btn-danger" onclick="deleteVol();">삭제</button>
+		            		<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
+		            	</div>
 		            	<form id="postForm" method="post" action="">
-	            			<input type="hidden" name="vno" value="${ vo.volNo }">
-	            			<input type="hidden" name="fileName" value="${ vo.volChange }"> 
+		            		<input type="hidden" name="vno" value="${ vo.volNo }">
+		            		<input type="hidden" name="fileName" value="${ vo.volChange }"> 
 						</form>
-						<script>
-	            		var post = $("#postForm");
-	            		function updateForm(){
-	            			post.attr("action", "updateForm.vo");
-	            			post.submit();
-	            		}
-	            		function deleteVol(){
-	            			swal.fire({
-	        	                title: '확인', 
-	        	                text: "정말 게시글을 삭제하시겠습니까?", 
-	        	                type: 'warning', 
-	        	                confirmButtonText: '삭제', 
-	        	                showCancelButton: true,     
-	        	                cancelButtonText: '취소', 
-	        	                cancelButtonColor: "#f3969a",
-	        	                confirmButtonColor: "#3cb371"
-	        	            }).then(function(result) { 
-	        	                if(result.value) {             
-	        	                
-	        	                	post.attr("action", "delete.vo");
-	        						swal.fire(
-	        							{title: '삭제',
-	        							 text: '성공적으로 삭제되었습니다.',
-	        							 type: 'success',
-	        							 confirmButtonColor: "#78c2ad"}).then(function(result){
-	        			
-	        						$("#postForm").submit();
-	        					});
-	        	                
-	        	            } else if(result.dismiss === 'cancel') { 
-	        	                swal.fire('취소', '삭제가 취소되었습니다.', 'error');
-	        	         
-	        	            }
-	        	        });
-	            		}
-	            		</script>            		
-	            	</c:if>
-	            	
-            	
-                <input class="btn_vol" type="button" value="목록" onclick="location.href='list.vo'">
+            		</c:when>
+            		
+            		<c:when test="${loginUser.userId == vo.volWriter && vo.volPoint > 0}">
+            			<button class="btn btn-danger" disabled>인증받은 글은 수정및 삭제가 불가능합니다.</button>
+		            	<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
+            		</c:when>	
+            		<c:otherwise >
+            			<button class="btn_vol" type="button" onclick="location.href='list.vo'">목록</button>
+            		</c:otherwise>	
+            	</c:choose>
+            
             </div>
         </section>  
        
     </div>
    
 <script>
+
+var post = $("#postForm");
+function updateForm(){
+	post.attr("action", "updateForm.vo");
+	post.submit();
+}
+function deleteVol(){
+	swal.fire({
+        title: '확인', 
+        text: "정말 게시글을 삭제하시겠습니까?", 
+        type: 'warning', 
+        confirmButtonText: '삭제', 
+        showCancelButton: true,     
+        cancelButtonText: '취소', 
+        cancelButtonColor: "#f3969a",
+        confirmButtonColor: "#3cb371"
+    }).then(function(result) { 
+        if(result.value) {             
+        
+        	post.attr("action", "delete.vo");
+			swal.fire(
+				{title: '삭제',
+				 text: '성공적으로 삭제되었습니다.',
+				 type: 'success',
+				 confirmButtonColor: "#78c2ad"}).then(function(result){
+
+			$("#postForm").submit();
+		});
+        
+    } else if(result.dismiss === 'cancel') { 
+        swal.fire('취소', '삭제가 취소되었습니다.', 'error');
+ 
+    }
+});
+}
+
+	$(function(){
+		$("#pointBtn").click(function(){
+			var vno = "${vo.volNo}";
+			var point = "${vo.volPoint}"
+			if(confirm('포인트를 지급하시겠습니까?')){
+				$.ajax({
+					url: vno + "/addPoint.vo",
+					type: "post",
+					data: {volPoint : point, volNo : vno},
+					success: function(result){
+						alert("포인트 지급이 완료되었습니다. 더이상 수정 및 삭제가 불가능합니다.");
+					},
+					error: function(){
+						alert("포인트 지급 실패 ");
+					}
+				});
+			}
+			
+		});
+	})
+
+	
 		$(function() {
 			selectReplyList();
 			

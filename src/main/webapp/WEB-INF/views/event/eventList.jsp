@@ -181,8 +181,8 @@
                     <div class="card-body">
                     	<p class="card-title mt-3 mb-3">${ list.eventTitle }</p>
                         <p class="card-text" style="margin:0 auto" >
-                        Start: ${ fn:substring(list.eventStart, 0,10) }  ~  
-                            Goal: ${ fn:substring(list.eventLast, 0,10) } 
+                         ${ fn:substring(list.eventStart, 0,10) }  ~  
+                             ${ fn:substring(list.eventLast, 0,10) } 
                         </p>
                     </div>
                 </div>
@@ -244,12 +244,12 @@
         <!-- Footer & Search Area -->
                 <div class="btn btnArea" style="display:inline-block;"> 
                 <!-- 계정권한이 'D'인 관리자유저만 생성버튼 활성화 -->	
-                <!--<c:if test="${ loginUser.userRole eq 'D' }">
-                    		<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
-                    </c:if>-->
-                    <c:if test="${ !empty loginUser }">
+                <c:if test="${ loginUser.userRole eq 'D' }">
+                	<a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a>
+                </c:if>
+                <!--    <c:if test="${ !empty loginUser }">
                     	<span><a class="btn btn-secondary" style="float:right" href="enroll.ev">이벤트 생성</a></span>
-					</c:if>
+					</c:if>-->
                 </div>      	
     </div>
 </div>

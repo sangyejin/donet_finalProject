@@ -80,12 +80,12 @@ a{ color : #000000;  text-decoration: none; }
 
 /*event*/
 #eventBox{z-index : 1; position : fixed}
-#eventLocation{ margin-left : 1200px; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
+#eventLocation{ margin-left : 1250px; margin-top : -30px; width : 50px; height : 50px; position : fixed;}
  
  .balloon {
         position: relative;
         display: inline-block;
-       margin-left : 1125px;
+       margin-left : 1175px;
        margin-top : -20px;
        display : none;
  }

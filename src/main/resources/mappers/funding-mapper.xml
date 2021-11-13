@@ -188,12 +188,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (SEQ_FUNDING_REPLY.NEXTVAL, #{writerId},#{refFundingNo},sysdate,#{replyContent},default)
 	</insert>
 	
-	<update id="deleteFundingReply" parameterType="_int">
+	<delete id="deleteFundingReply" parameterType="_int">
 		update FUNDING_REPLY
 		set STATUS='N'
 		where REPLY_NO=#{replyNo}
-	</update>
+	</delete>
 	
+	<delete id="deleteFunding" parameterType="_int">
+		update FUNDING_PROJECT
+		set STATUS='N'
+		where FP_NO=#{fpNo}
+	</delete>
 	<update id="updateFundingReply" parameterType="fundingReply">
 		update FUNDING_REPLY
 		set REPLY_CONTENT=#{replyContent}
@@ -220,7 +225,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from(select FP_NO ,FP_NAME, GOAL, RAISED, THUMBNAIL_CHANGE_NAME,THUMBNAIL_ORIGIN_NAME,START_DATE, CLOSING_DATE
 				from FUNDING_PROJECT
 				where status='Y'
-				order by hits
+				order by hits desc
 			) A
 		where ROWNUM <= 4
 	]]>
