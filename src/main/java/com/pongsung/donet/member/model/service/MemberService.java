@@ -53,7 +53,8 @@ public interface MemberService {
 
 	List<Sponsor> selectSupportList(Support support);
 
-	void insertReview(Review review);
+	//void insertReview(Review review);
+	void insertReview(Review review, List<ReviewImage> imgList) throws Exception;
 
 	Review selectReview(int reNo);
 
@@ -69,7 +70,7 @@ public interface MemberService {
 
 	int deleteReview(int reNo);
 
-	void updateReview(Review review);
+	void updateReview(Review review) throws Exception;
  //마이페이지 목록 관련
 	int selectSponsorListCount();
 
@@ -78,6 +79,10 @@ public interface MemberService {
 	int selectFundingSupporterListCount();
 	
 	ArrayList<FundingSupporter> selectFundingSuppoterList(String userId);
+
+	void updateNewReivewImageList(List<ReviewImage> imgList) throws Exception;
+
+	
 
 	
 	

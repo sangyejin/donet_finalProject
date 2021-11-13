@@ -169,17 +169,23 @@ c {
 		</c:if>
 
 		<div id="greenLine"></div>
+		<br><br><br><br><br>
 	</div>
 
 		<div class="content">
 			<c:if test="${!empty list}">
 				<c:forEach items="${ list }" var="r" varStatus="status">
-					<div class="supportList"
-						onclick="location.href = 'supportReviewDetail.me?reNo=${r.reNo}'">
+					 <div class="supportList"
+						onclick="location.href = 'supportReviewDetail.me?reNo=${r.reNo}'"> 
+						
+						<%-- <div class="supportList"
+						onclick="location.href='${pageContext.servletContext.contextPath}/member/`+reNo=${r.reNo}+`'">
+						 --%>
+						
 						<span class="supportOne">
 							<div class="thumbnailImg">
 								<img alt="" id="thumbnailImg"
-									src="${pageContext.request.contextPath}/resources/upload_files/${r.thumbnailChange}">
+									src="${pageContext.request.contextPath}/resources/upload_files/donationReview/${r.thumbnailChange}">
 									<%-- ${ pageContext.servletContext.contextPath}/resources/imgs/${r.imgChangeName} --%>
 							</div>
 							<div class="supportTitle">
