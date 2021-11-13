@@ -10,97 +10,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>도넷닷컴</title>
 <style>
-    .outer{
-        width: 1050px;
-        margin: auto;
-    }
-	c{
-		font-weight: 600;
-		font-size: 15px;
-		
-	}
-	.thumbnail{
-		width:350px; 
-		height:350px;
-		border: 1px solid grey;
-		border-radius: 20%;
-		text-align: center;
-		box-shadow: 10px 10px 10px;
-	}
-	#reviewList{
-		width:300px;
-		height:40px;
-	}
-	#files{
-		margin-left: 20%;
-		margin-top: 5%;
-	}
-	e{
-		font-weight: 600;
-		font-size: 15px;
-		margin-left:12%;
-	}
-	table{
-		width:800px;
-		height: 30px;
-		margin: auto;
-		margin-top: 1%;
-		border-top: 1px solid black;
-		border-bottom: 1px solid black;
-	}
-	th{
-		background-color: rgb(224, 224, 224);
-		border-top: 2px solid #808080;
-		border-bottom: 2px solid #808080;
-		height: 30px;
-	}
-	td{
-		border-top: 1px solid #808080;
-		border-bottom: 1px solid #808080;
-		height: 30px;		
-	}
-	#addRow {
-		cursor: pointer;
-		background-color: rgb(224, 224, 224);
-        width: 50px;
-        height: 28px;
-        border-radius: 5px;
-        border-color: rgb(224, 224, 224);
-        margin-left: 2%;
-	}
-	.btnDelete{
-        border-radius: 5px;
-        border-color: rgb(224, 224, 224);	
-	}
-	#submit{
-        width: 200px;
-        height: 40px;
-        border-radius: 5px;
-        border-color: rgb(60, 179, 113);
-        color: white;
-        font-weight: 600;
-        color: rgb(60, 179, 113);
-        background-color: white;
-        margin-left: 40%;
-        transition: all 0.5s;		
-	}
-	#submit:hover {
-	    width: 200px;
-        height: 40px;
-        border-radius: 5px;
-        border-color: rgb(60, 179, 113);
-        color: white;
-        font-weight: 600;
-        color: white;
-        background-color: rgb(60, 179, 113);
-        margin-left: 40%;
-	}
-.attachFileLoad{
-	width:170px;
-	margin-right:3.5%;
+.outer {
+	width: 1050px;
+	margin: auto;
 }
 
+c {
+	font-weight: 600;
+	font-size: 15px;
+}
 
+.thumbnail {
+	width: 350px;
+	height: 350px;
+	border: 1px solid grey;
+	border-radius: 20%;
+	text-align: center;
+	box-shadow: 10px 10px 10px;
+}
+
+#reviewList {
+	width: 300px;
+	height: 40px;
+}
+
+#files {
+	margin-left: 20%;
+	margin-top: 5%;
+}
+
+e {
+	font-weight: 600;
+	font-size: 15px;
+	margin-left: 12%;
+}
+
+table {
+	width: 800px;
+	height: 30px;
+	margin: auto;
+	margin-top: 1%;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+th {
+	background-color: rgb(224, 224, 224);
+	border-top: 2px solid #808080;
+	border-bottom: 2px solid #808080;
+	height: 30px;
+}
+
+td {
+	border-top: 1px solid #808080;
+	border-bottom: 1px solid #808080;
+	height: 30px;
+}
+
+#addRow {
+	cursor: pointer;
+	background-color: rgb(224, 224, 224);
+	width: 50px;
+	height: 28px;
+	border-radius: 5px;
+	border-color: rgb(224, 224, 224);
+	margin-left: 2%;
+}
+
+.btnDelete {
+	border-radius: 5px;
+	border-color: rgb(224, 224, 224);
+}
+
+#submit {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	color: white;
+	font-weight: 600;
+	color: rgb(60, 179, 113);
+	background-color: white;
+	margin-left: 40%;
+	transition: all 0.5s;
+}
+
+#submit:hover {
+	width: 200px;
+	height: 40px;
+	border-radius: 5px;
+	border-color: rgb(60, 179, 113);
+	color: white;
+	font-weight: 600;
+	color: white;
+	background-color: rgb(60, 179, 113);
+	margin-left: 40%;
+}
+
+.attachFileLoad {
+	width: 170px;
+	margin-right: 3.5%;
+}
+
+.attach {
+	width: 150px;
+	height: 150px;
+	border: 1px solid grey;
+	border-radius: 20%;
+	text-align: center;
+	box-shadow: 10px 10px 10px;
+	margin-top: 1%;
+	margin-left: 5%;
+	display: inline-block;
+}
+
+.thumbnail {
+	width: 350px;
+	height: 350px;
+	border: 1px solid grey;
+	border-radius: 20%;
+	text-align: center;
+	box-shadow: 10px 10px 10px;
+}
 </style>
 
 <link
@@ -139,9 +170,9 @@
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
-		<form id="insertForm" action="updateReview.me" method="post" enctype="multipart/form-data">
-			<div style="text-align: center;">
-			<input type="hidden" name="reNo" value="${ rv.reNo}">
+		<form id="insertForm" action="updateReview.me" method="post" enctype="multipart/form-data" autocomplete="off">
+			<div style="text-align: center;" >
+			<input type="hidden" name="reNo" value="${rv.reNo}">
 			<span style="float:right; margin-right:15%;">
 				<br><br>
 					<c>후원한 프로젝트 </c>
@@ -154,20 +185,105 @@
 			<c>후원 후기 제목</c>
 			<div><input type="text"  style="width:800px; height:40px; text-align:center; " id="reTitle" name="reTitle" value="${rv.reTitle}"></div><br><br><br>
 			
+			<span style="display:inline-block;">
 			<c>썸네일 이미지</c>
-       		<input type="file" id="file" class="form-control-file" name="file"></td>
-       		<img id="thum" src="">
-			
+			<div class="thumbnail">
+			<img id="image" style="width:340px; height:340px; border-radius:20%;" src="${ pageContext.servletContext.contextPath}/resources/upload_files/donationReview/${rv.thumbnailChange}" />
+			</div>
+			<br>
+       		<input type="file" id="thumbFile" name="thumbFile"/>
+       		</span>
+			<br><br>
 			</div></div><br><br><br>
 			<e>내  용</e>
 			
   				<textarea id="reContent" class="form-control" name="reContent" placeholder="content" maxlength="140" rows="7">${ rv.reContent }</textarea>    
+				
+				<br><br><br><br>
 							
-
+				<e>첨부 이미지</e><br>
+			<div style="text-align: center;">
+				<span class="attach" style="margin-left:0;">
+					<img id="img1" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img2" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img3" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<div  style="margin-top:2%; margin-left:11%; width:1000px;">
+					<input type="file" id="attach1" name="file1" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach2" name="file2" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach3" name="file3" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach4" name="file4" class="attachFileLoad" style=""/>
+				</div>
+			</div><br><br><br><br><br><br>	
+					
 				<br><br><br><br>	
 			<input type="submit" value="등록하기" id="submit">	
 		</form>
 	</div>
+	
+	
+		<script>
+	
+
+	
+	document.getElementById("thumbFile").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("image").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach1").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img1").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach2").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img2").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach3").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img3").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach4").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img4").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	</script>
 	
 	<!-- 이미지 업로드를 위한 콜백 함수  -->
 	<script>
@@ -208,14 +324,14 @@
 						$.ajax({
 							data : data,
 							type : "POST",
-							url : "imageFile.ev",
+							url : "${pageContext.request.contextPath}/member/contentFile",
 							cache : false,
 							contentType : false,
 							processData : false,
 							enctype : "multipart/form-data",
 							success : function(data){
 								console.log(data);
-								$(el).summernote('editor.insertImage', data.url);
+								$(el).summernote('editor.insertImage', '${pageContext.request.contextPath}/'+data.url);
 								
 							}
 						});

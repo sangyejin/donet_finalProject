@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +31,7 @@
 		width:300px;
 		height:40px;
 	}
-	#files{
+	#thumbFile{
 		margin-left: 20%;
 		margin-top: 5%;
 	}
@@ -100,6 +100,17 @@
 	margin-right:3.5%;
 }
 
+	.attach{
+		width:150px; 
+		height:150px;
+		border: 1px solid grey;
+		border-radius: 20%;
+		text-align: center;
+		box-shadow: 10px 10px 10px;
+		margin-top: 1%;
+		margin-left:5%;
+		display:inline-block;		
+	}
 
 </style>
 
@@ -130,6 +141,8 @@
 	<script src="${pageContext.request.contextPath}/resources/assets/js/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/summernote-lite.css"> 
 	
+	<!-- CDN 한글화 --> 
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	
 
 
@@ -139,7 +152,7 @@
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="outer">
-		<form id="insertForm" action="insertReview.me" method="post" enctype="multipart/form-data">
+		<form id="insertForm" action="insertReview.me" method="post" enctype="multipart/form-data" autocomplete="off">
 			<div style="text-align: center;">
 			
 			<span style="float:right; margin-right:15%;">
@@ -155,19 +168,46 @@
 			<c>후원 후기 제목</c>
 			<div><input type="text" placeholder=" 제목을 입력하세요" style="width:800px; height:40px" id="reTitle" name="reTitle"></div><br><br><br>
 			
+			<span style="display:inline-block;">
 			<c>썸네일 이미지</c>
-       		<input type="file" id="file" class="form-control-file" name="file"></td>
-       		<img id="thum" src="">
+			<div class="thumbnail">
+			<img id="image" style="width:340px; height:340px; border-radius:20%;"/>
+			</div>
+       		<input type="file" id="thumbFile" name="thumbFile"/>
+       		</span>
 			
 			</div></div><br><br><br>
-			<e>내  용</e>
+			<e></e>
 			
-  				<textarea id="summernote" class="form-control" name="reContent" placeholder="content" maxlength="140" rows="7"></textarea>    
+  				<textarea id="reContent" class="form-control" name="reContent" placeholder="content" maxlength="140" rows="7"></textarea>    
 						
 				
 				<input type="hidden" class="form-control" name="userId" value="${ loginUser.userId }" >
 				
-				<br><br><br><br>	
+				<br><br><br><br>
+				
+			<e>첨부 이미지</e><br>
+			<div style="text-align: center;">
+				<span class="attach" style="margin-left:0;">
+					<img id="img1" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img2" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img3" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<span class="attach">
+					<img id="img4" style="width:150px; height:150px;border-radius: 20%;"/>
+				</span>
+				<div  style="margin-top:2%; margin-left:11%; width:1000px;">
+					<input type="file" id="attach1" name="file1" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach2" name="file2" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach3" name="file3" class="attachFileLoad" style="float:left;"/>
+					<input type="file" id="attach4" name="file4" class="attachFileLoad" style=""/>
+				</div>
+			</div><br><br><br><br><br><br>
+					
 			<input type="submit" value="등록하기" id="submit">	
 		</form>
 	</div>
@@ -175,18 +215,9 @@
 	<!-- 이미지 업로드를 위한 콜백 함수  -->
 	<script>
 
-	function loadImg(){
-		if(inputFile.files.length == 1){
-			var reader = new FileReader();
-			
-			reader.onload = function(e){
-				$("#thum").attr("src", e.target.result);
-			}
-			reader.readAsDataURL(inputFile.files[0]);
-		}
-	}
+
 				
-				 $("#summernote").summernote({
+/* 				 $("#summernote").summernote({
 						height: 500, 
 						width: 1000,
 				    	minHeight: null,            
@@ -222,7 +253,102 @@
 								
 							}
 						});
+					} */
+				
+				
+				 $("#reContent").summernote({
+						height: 500, 
+						width: 1000,
+				    	minHeight: null,            
+				    	maxHeight: null,            
+				    	focus: true,           
+				    	disableResizeEditor: true,
+		   	   		callbacks: {
+				    		onImageUpload: function(files, editor, welEditable){
+					    		for(var i = files.length - 1; i>=0; i--){
+					    			sendFile(files[i],this);	  
+					    		}	
+				    		}
+		   	   			}
+					});
+				
+
+					
+				
+				function sendFile(file, el){
+						var data = new FormData();
+						data.append("file", file);	
+						$.ajax({
+							data : data,
+							type : "POST",
+							url : "${pageContext.request.contextPath}/member/contentFile",
+							cache : false,
+							contentType : false,
+							processData : false,
+							enctype : "multipart/form-data",
+							success : function(data){
+								$(el).summernote('editor.insertImage', '${pageContext.request.contextPath}/'+data.url);
+								console.log(data.url);
+							}
+						});
 					}
+				
+	</script>
+	
+	<script>
+	
+
+	
+	document.getElementById("thumbFile").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("image").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach1").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img1").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach2").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img2").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach3").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img3").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
+	document.getElementById("attach4").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        document.getElementById("img4").src = e.target.result;
+	    };
+
+	    reader.readAsDataURL(this.files[0]);
+	};
+	
 	</script>
 	
 	

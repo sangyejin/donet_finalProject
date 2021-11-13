@@ -140,9 +140,15 @@ public class MemberDao {
 		return (List)sqlSession.selectList("memberMapper.selectSupportList", support);
 	}
 
+//	public int insertReview(SqlSessionTemplate sqlSession, Review review) {
+//		// TODO Auto-generated method stub
+//		return sqlSession.insert("memberMapper.insertReview", review);
+//	}
+	
 	public int insertReview(SqlSessionTemplate sqlSession, Review review) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("memberMapper.insertReview", review);
+		sqlSession.insert("memberMapper.insertReview", review);
+		
+		return Integer.valueOf(String.valueOf(review.getReNo()));
 	}
 
 	public Review selectReview(SqlSessionTemplate sqlSession, int reNo) {
@@ -221,5 +227,17 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("fundingMapper.selectFundingSuppoterList", userId);
 	}
+
+	public int insertImgList(SqlSessionTemplate sqlSession, List<ReviewImage> imgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertImgList", imgList);
+	}
+
+	public int updateNewReivewImageList(SqlSessionTemplate sqlSession, List<ReviewImage> imgList) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateNewReivewImageList",imgList);
+	}
+
+	
 
 }

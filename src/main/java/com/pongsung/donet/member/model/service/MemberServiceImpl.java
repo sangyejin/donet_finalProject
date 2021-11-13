@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.exception.CommException;
@@ -222,12 +224,35 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+//	@Override
+//	public void insertReview(Review review) {
+//		
+//		int result = memberDao.insertReview(sqlSession, review);
+//		
+//		if(result <0) {
+//			throw new CommException("후기 등록 실패");
+//		}
+//		
+//	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
 	@Override
-	public void insertReview(Review review) {
+	public void insertReview(Review review, List<ReviewImage> imgList) throws Exception{
 		
-		int result = memberDao.insertReview(sqlSession, review);
+		int reNo = memberDao.insertReview(sqlSession, review);
 		
-		if(result <0) {
+		if(reNo > 0) {
+			if(!imgList.isEmpty()) {
+				for(ReviewImage fi: imgList) {
+					fi.setReNo(reNo);
+					System.out.println("임플 ri의 값 : " + fi);
+				}
+				int resultInsertImg = memberDao.insertImgList(sqlSession, imgList);
+				if(resultInsertImg < 0) {
+					throw new CommException("후기 이미지 첨부 등록 실패");
+				}
+			}
+		}else {
 			throw new CommException("후기 등록 실패");
 		}
 		
@@ -318,7 +343,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public void updateReview(Review review) {
+	public void updateReview(Review review) throws Exception{
 		
 		int result = memberDao.updateReview(sqlSession, review);
 		
@@ -355,6 +380,19 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.selectFundingSuppoterList(sqlSession, userId);
 	}
+
+
+	@Override
+	public void updateNewReivewImageList(List<ReviewImage> imgList) throws Exception {
+		int result=memberDao.updateNewReivewImageList(sqlSession, imgList);
+		if(result<0) {
+			throw new Exception("후원 후기 사진 update 실패");
+		}
+	}
+
+
+	
+
 
 
 	

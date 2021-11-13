@@ -26,7 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{userId} and user_pwd=#{userPwd} and status='Y'
 		-->
 		<!-- 암호화 후 -->
-		select * from member 
+		select USER_ID, USER_PWD, USER_NAME, USER_NICK, ADDRESS, EMAIL, PHONE, 
+		TO_CHAR(BIRTHDATE, 'yyyy-mm-dd') BIRTHDATE,
+		USER_ROLE, STATUS, USER_CREATE_DATE, MODIFY_DATE, POINT
+		from member 
 		where user_id=#{userId} and status='Y'
 		
 	</select>
@@ -208,10 +211,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY SU_NO DESC
 	</select>
 	
-	<insert id="insertReview" parameterType="Review">
+   <!-- <insert id="insertReview" parameterType="Review">
    		INSERT INTO REVIEW
    		VALUES(SEQ_EV.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, #{thumbnailOrigin}, #{thumbnailChange},  DEFAULT)
+   </insert> 
+   
+   <insert id="insertReviewImg" parameterType="ReviewImage">
+		INSERT INTO
+		REVIEW_IMAGE(RE_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select
+			#{item.reNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName}
+			from DUAL
+		</foreach>
+	</insert> -->
+     
+   <insert id="insertReview" parameterType="Review">
+   	<selectKey keyProperty="reNo" resultType="int" order="AFTER">
+			SELECT
+			SEQ_REVIEW.CURRVAL FROM DUAL
+	</selectKey>
+   		INSERT INTO REVIEW(RE_NO,USER_ID,RE_TITLE,RE_SU_TITLE,RE_CONTENT,RE_COUNT,RE_DATE,
+   		RE_IMG_ORIGINNAME,RE_IMG_CHANGENAME,RE_STATUS)
+   		VALUES(SEQ_REVIEW.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, #{thumbnailOrigin}, #{thumbnailChange},  DEFAULT)
    </insert>
+	
+   <insert id="insertImgList" parameterType="java.util.List">
+		INSERT INTO
+		REVIEW_IMAGE(RE_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
+		<foreach collection="list" item="item" separator=" UNION ALL ">
+			select
+			#{item.reNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName}
+			from DUAL
+		</foreach>
+	</insert>
 	
    <select id="selectReview" parameterType="_int" resultMap="supportReviewResultSet">
     	SELECT *
@@ -266,9 +299,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <update id="updateReview" parameterType="Review">
 		UPDATE REVIEW
-		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE, RE_IMG_ORIGINNAME=#{thumbnailOrigin}, RE_IMG_CHANGENAME=#{thumbnailChange}
+		SET RE_TITLE=#{reTitle} ,RE_CONTENT=#{reContent}, RE_DATE=SYSDATE		
+		<if test="thumbnailOrigin!=null">
+		,RE_IMG_ORIGINNAME=#{thumbnailOrigin}
+		,RE_IMG_CHANGENAME=#{thumbnailChange}
+		</if>
 		WHERE RE_NO=#{reNo}
    </update>
+	
+   <update id="updateNewReivewImageList"  parameterType="java.util.List">
+		MERGE INTO REVIEW_IMAGE A
+    	USING (
+    			<foreach  collection="list" item="item" open="" close="" separator="union">
+                    SELECT #{item.reNo} AS reNo
+                         , #{item.imgNo} AS imgNo
+                         , #{item.imgOriginName} AS imgOriginName
+                         , #{item.imgChangeName} AS imgChangeName
+                     FROM SYS.DUAL
+                </foreach>
+           ) B ON (A.IMG_NO=B.imgNo AND A.RE_NO=B.reNo)
+   		WHEN MATCHED THEN UPDATE 
+        <set>
+        A.IMG_ORIGIN_NAME=B.imgOriginName, A.IMG_CHANGE_NAME=B.imgChangeName
+        </set>
+    	WHEN NOT MATCHED THEN INSERT 
+    	<trim prefix="(" suffix=")" suffixOverrides="," > 
+        A.RE_NO, A.IMG_NO, A.IMG_ORIGIN_NAME, A.IMG_CHANGE_NAME
+        </trim>
+        <trim  prefix="values (" suffix=")" suffixOverrides=",">
+        B.reNo, B.imgNo, B.imgOriginName, B.imgChangeName
+        </trim>   	
+	</update>
 	
    <select id="reviewInfo" parameterType="Review" resultMap="supportReviewResultSet">
 		SELECT * FROM REVIEW 

@@ -43,10 +43,10 @@
 	
 	<div class="col-xs-12" style="width: 30%; float:none; margin:0 auto">
 	<div class="content">
-		    <div class="container-fluid">
+		    <div class="container-fluid" style="width:300px; height:400px;">
 			    <div class="form-group">			        
 			            <div class="row justify-content-center h-100">
-			                <div class="col-xl-8">
+			                <div  style="width:300px; height:400px;">
 			                    <div class="form-input-content">
 			                        <div class="card login-form mb-0 mt-5">
 			                            <div class="card-body pt-5">

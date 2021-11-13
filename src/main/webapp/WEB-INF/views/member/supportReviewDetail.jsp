@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -419,6 +420,13 @@ d {
 	float: center;
 }
 
+#info-container {
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+	display: flex;
+	margin-bottom:100px;
+}
 
 </style>
 </head>
@@ -444,7 +452,7 @@ d {
 		<div class="content">
 
 			<div class="detailInfo">
-			
+				
 				<div class="flaot-right" id="reCount" style="float:right;">
 					<d>조회수 : ${ rv.reCount }</d> 
 				</div>
@@ -462,13 +470,14 @@ d {
 				</div>
 						
 				<div class="title" id="reDate">
-					<span><d>후기 작성할 날짜 : ${ rv.reDate } </d></span>
-				
-			
+					<span><d>후기 작성할 날짜 : ${ rv.reDate } </d></span>											
 				</div>		
 				<c:if test="${ !empty loginUser }">
+					<%-- <span><button type="button" id="toEdit"
+						onclick="location.href='${pageContext.servletContext.contextPath}/member/${rv.reNo}/supportReviewUpdateForm';">수정하기</button></span>
+						 --%>
 					<span><button type="button" id="toEdit"
-						onclick='reviewInfoPost(1)'>수정하기</button></span>
+						onclick="location.href = 'supportReviewUpdateForm.me?reNo=${rv.reNo}'">수정하기</button></span>	
 				
 					<span><button type="button" id="reviewDelete"
 						onclick= 'deleteReview("${rv.reNo}")'>삭제하기</button></span>	
@@ -477,24 +486,14 @@ d {
 						<input type="hidden" name="reviewNum" value="${ rv.reNo }">
 					</form>	
 					
-					<script>
-					function reviewInfoPost(reNo){
-						var postForm = $("#postReviewInfo");
-																							
-						if(reNo == 1){
-							postForm.attr("action", "supportReviewUpdateForm.me?reNo=${rv.reNo}");
-						}
-						
-						postForm.submit();
-					}
-	            		</script>
+					
 								
 				</c:if>
 			</div>
-			<div class="description">
+			<div class="description" id="info-container">
 				
-				                <div class="event_view_info">
-	                <div class="contentArea">
+				<div class="event_view_info" style="float:center;">
+	                <div class="contentArea" >
 	               	<p> ${ rv.reContent} </p>
 	                	</div>
 	                	<br>
@@ -505,12 +504,52 @@ d {
 				
 			</div>
 
-
-
-
-
+			
 
 		</div>
+		
+					<c:if test="${fn:length(at) != 0}">
+			<div class="slider-1">
+				<div class="slides">
+				<c:forEach items="${at}" var="ImgList" varStatus="status" begin="0">
+						<c:choose>
+							<c:when test="${status.begin==0}">
+								<div class="active"
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:when>
+							<c:otherwise>
+								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/${ImgList.imgChangeName }?auto=compress,format);"></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</div>
+				<div class="page-btns">
+					<c:forEach items="${at}" var="ImgList" varStatus="status" begin="0">
+						<c:choose>
+
+							<c:when test="${status.begin==0 }">
+
+							
+
+								<div class="active"></div>
+							</c:when>
+							<c:otherwise>
+								<div></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</div>
+				<div class="side-btns">
+					<div>
+						<span class="fas"><</span>
+					</div>
+					<div>
+						<span class="fas">></span>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		
 		<div style="margin-top: 10%;">
 			<span><a id="comment" href="">댓글&nbsp;&nbsp; </a></span>
 			<div id="greenLine" style="margin-bottom: 5%;"></div>
@@ -763,7 +802,7 @@ d {
 	}
     
     
-    function fixReview(reNo){
+    /* function fixReview(reNo){
 		if (confirm("후기을 삭제하시겠습니까?(Y/N)")) {
 			$.ajax({
 				url : "Reviewdelete.me/"+reNo,
@@ -779,7 +818,7 @@ d {
 		} else {
 			alert("후기 삭제가 취소되었습니다");
 		}	
-	}
+	} */
     
     </script>
     

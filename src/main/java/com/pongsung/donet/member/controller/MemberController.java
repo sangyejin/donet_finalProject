@@ -2,14 +2,19 @@ package com.pongsung.donet.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -28,11 +34,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.pongsung.donet.common.PageInfo;
 import com.pongsung.donet.common.Pagination;
 import com.pongsung.donet.common.exception.CommException;
 import com.pongsung.donet.donation.model.vo.Sponsor;
 import com.pongsung.donet.donation.model.vo.Support;
+import com.pongsung.donet.funding.model.vo.FundingImage;
 import com.pongsung.donet.funding.model.vo.FundingSupporter;
 import com.pongsung.donet.member.model.service.MemberService;
 import com.pongsung.donet.member.model.service.MemberServiceImpl;
@@ -136,10 +144,10 @@ public class MemberController {
 		}	
 		
 		@RequestMapping("delete.me")
-		public String deleteMember(String userId) {
+		public String deleteMember(String userId, HttpSession session) {
 			
 			memberService.deleteMember(userId);
-			
+			session.setAttribute("msg", "회원 탈퇴가 완료되었습니다.");
 			return "redirect:logout.me";
 		}
 		
@@ -164,7 +172,7 @@ public class MemberController {
 			
 			System.out.println("addAttribute Model의 값 : " + model);
 			
-			return "member/myPage";
+			return "redirect:/";
 			
 			}
 		
@@ -188,7 +196,7 @@ public class MemberController {
 			if(userInfo != null) {
 				model.addAttribute("msg", "비밀번호가 변경되었습니다.");
 				model.addAttribute("loginUser", userInfo);
-				status.isComplete(); 
+				status.setComplete(); 
 				return "member/memberLogin";
 			}else {
 				model.addAttribute("msg", "비밀번호 변경에 실패했습니다.");
@@ -430,7 +438,7 @@ public class MemberController {
 			return "member/supportReviewWrite";
 		}
 		
-		// 후원 후기 상세보기로 이동
+		// 후원 후기 상세보기로 이동 supportReviewDetail.me
 		@RequestMapping("supportReviewDetail.me")
 			public ModelAndView supportReviewDetail(int reNo,  ModelAndView mv) {
 				System.out.println("선택한 후기 번호" + reNo);
@@ -473,27 +481,89 @@ public class MemberController {
 		}
 
 		
-		@RequestMapping(value="insertReview.me")
-		public String insertReview(Review review, MultipartHttpServletRequest request,
-				@RequestParam(name="file", required=false) MultipartFile file) {
+
+		
+//		@RequestMapping(value="insertReview.me")
+//		public String insertReview(Review review, MultipartHttpServletRequest request,
+//				 @RequestParam(name="file", required=false) MultipartFile file) {
+//			
+//			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+//			System.out.println("작성된 후기를 등록중입니다.");
+//			
+//			if(!file.getOriginalFilename().equals("")) {
+//				String changeName = saveFile(file, request);
+//				if(changeName != null) {
+//					review.setThumbnailOrigin(file.getOriginalFilename());
+//					review.setThumbnailChange(changeName);
+//				}
+//			}
+//			
+//			memberService.insertReview(review);
+//			
+//			return "redirect:supportReviewList.me";
+//			
+//		}
+		
+		@RequestMapping("insertReview.me")
+		public String insertReview(Review review, HttpServletRequest request, MultipartHttpServletRequest multipartRequest,
+				 Model model)throws Exception {
 			
-			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+			//review.setReContent((review.getReContent()).replace("\n", "<br>"));
 			System.out.println("작성된 후기를 등록중입니다.");
+			System.out.println("reivew의 값 : " + review );
 			
-			if(!file.getOriginalFilename().equals("")) {
-				String changeName = saveFile(file, request);
-				if(changeName != null) {
-					review.setThumbnailOrigin(file.getOriginalFilename());
-					review.setThumbnailChange(changeName);
+			
+			Map<String, MultipartFile> mMap = multipartRequest.getFileMap();
+			List<ReviewImage> imgList = new ArrayList<>();
+			
+//			logger.info("mMap의 값: "+ mMap );
+//			logger.info("multipartRequest.getFileMap()의 값: "+ multipartRequest.getFileMap() );
+			
+			Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
+			for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
+//				logger.info("paramMap의 값: "+ paramMap );
+				
+				List<MultipartFile> fileList = entry.getValue();
+				
+//				System.out.println("fileList 의 값 : " + fileList);
+				
+//				logger.info("paramMap의 값: "+ paramMap );
+//				logger.info("fileList 의 값: "+fileList);
+//				logger.info("fileList.size() 의 값: "+fileList.size());
+				
+				for(int i = 0; i < fileList.size(); i++) {
+					String fileName=fileList.get(i).getOriginalFilename();
+					logger.info("fileName의 값: "+ fileName );
+					if(fileName != "") {
+						String originName = fileList.get(i).getOriginalFilename();
+						String changeName = saveFile(fileList.get(i), request);
+						System.out.println("changeName 의 값 : " + changeName);
+						if((entry.getKey()).equals("thumbFile")) { //썸네일 들어오는 곳
+							review.setThumbnailOrigin(originName);
+							review.setThumbnailChange(changeName);
+						}
+							else if(!(entry.getKey()).equals("files")){
+							ReviewImage img = new ReviewImage();
+							img.setImgChangeName(changeName);
+							img.setImgOriginName(originName);
+							System.out.println("img의 값 : " + img);
+							img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+							logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1) );
+							System.out.println("에러나는 img 의 값 " + img);
+							imgList.add(img);	
+						}											
 				}
+				
 			}
-			
-			memberService.insertReview(review);
+		}
+			logger.info("review :: imgList :: "+ imgList);
+			memberService.insertReview(review, imgList);
 			
 			return "redirect:supportReviewList.me";
 			
 		}
 		
+				
 		// 후원 후기 댓글 목록
 		@ResponseBody
 		@RequestMapping(value = "rvList.me", headers="Accept=*/*" , produces = "application/json; charset=utf-8")
@@ -544,32 +614,90 @@ public class MemberController {
 			
 		}
 		
+//		@RequestMapping("updateReview.me")
+//		public ModelAndView updateReview(Review review, ModelAndView mv, MultipartHttpServletRequest request, 
+//				@RequestParam(value="file", required=false) MultipartFile file) {
+//			
+//			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+//			System.out.println("작성된 후기를 수정중입니다.");
+//			
+//			if(!file.getOriginalFilename().equals("")) {
+//				
+//				if(review.getThumbnailChange() != null) {
+//					deleteFile(review.getThumbnailChange(), request);
+//				}
+//				
+//				String changeName = saveFile(file, request);
+//				review.setThumbnailOrigin(file.getOriginalFilename());
+//				review.setThumbnailChange(changeName);
+//			}
+//			
+//			memberService.updateReview(review);
+//			System.out.println("update 중입니다. 리뷰 객체를 확인 : " + review);
+//			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail.me");
+//			System.out.println("후기 업데이트 mv의 값 : " + mv);
+//			return mv;
+//			
+//		}
+		
 		@RequestMapping("updateReview.me")
-		public ModelAndView updateReview(Review review, ModelAndView mv, MultipartHttpServletRequest request, 
-				@RequestParam(value="file", required=false) MultipartFile file) {
+		public String updateReview(int reNo, Review review, Model model, HttpServletRequest request, 
+				MultipartHttpServletRequest multipartRequest)  throws Exception {
 			
-			review.setReContent((review.getReContent()).replace("\n", "<br>"));
+			logger.info("updateReview::: " + review);
+			//review.setReContent((review.getReContent()).replace("\n", "<br>"));
 			System.out.println("작성된 후기를 수정중입니다.");
 			
-			if(!file.getOriginalFilename().equals("")) {
+			Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); // key : tag name, value: multipartFile list
+			List<ReviewImage> imgList = new ArrayList<>(); // 후기 수정 추가 img 저장하는 리스트
+			
+			Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
+			for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
+			
+				List<MultipartFile> fileList=entry.getValue(); //multipartFile List
+				logger.info("현재 태그 name: "+entry.getKey()+fileList.size());
 				
-				if(review.getThumbnailChange() != null) {
-					deleteFile(review.getThumbnailChange(), request);
+				for(int i = 0; i < fileList.size(); i++) {
+					String fileName=fileList.get(i).getOriginalFilename();
+					logger.info("fileName의 값: "+ fileName );
+					if(fileName != "") {
+						String originName = fileList.get(i).getOriginalFilename();
+						String changeName = saveFile(fileList.get(i), request);
+						logger.info("updateReivew:::::: "+ originName+"   "+changeName);
+						if((entry.getKey()).equals("thumbFile")) { //썸네일 들어오는 곳
+							review.setThumbnailOrigin(originName);
+							review.setThumbnailChange(changeName);
+						}
+							else if(!(entry.getKey()).equals("files")){
+							ReviewImage img = new ReviewImage();
+							img.setReNo(reNo);
+							img.setImgChangeName(changeName);
+							img.setImgOriginName(originName);
+							System.out.println("img의 값 : " + img);
+							img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+							logger.info("현재 태그 imgNo: "+ (entry.getKey()).substring((entry.getKey()).length()-1) );
+							System.out.println("에러나는 img 의 값 " + img);
+							imgList.add(img);	
+						}											
+					}
+				
 				}
-				
-				String changeName = saveFile(file, request);
-				review.setThumbnailOrigin(file.getOriginalFilename());
-				review.setThumbnailChange(changeName);
 			}
 			
+						
 			memberService.updateReview(review);
 			System.out.println("update 중입니다. 리뷰 객체를 확인 : " + review);
-			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail.me");
-			System.out.println("후기 업데이트 mv의 값 : " + mv);
-			return mv;
+			
+			if(!imgList.isEmpty()) {
+				memberService.updateNewReivewImageList(imgList);
+			}
+		
+			return "redirect:supportReviewList.me";
 			
 		}
-				
+
+		
+		// 후원 후기 업데이트 폼으로 이동
 		@RequestMapping("supportReviewUpdateForm.me")
 		public ModelAndView supportReviewUpdate(int reNo, ModelAndView mv) {
 			// 수정하는 페이지로 이동하는 코드
@@ -588,29 +716,67 @@ public class MemberController {
 			return mv;
 		}
 		
+		// 게시글 content내에 있는 이미지 저장
+		@RequestMapping(value="/member/contentFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String uploadFundingSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+			JsonObject jsonObject = new JsonObject();
+			String resources = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = resources  + "/upload_files/donationReview/";
+			
+		
+			String originalFileName = multipartFile.getOriginalFilename();
+			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String saveFileName = UUID.randomUUID()+extension;
+			System.out.println("resources : "+resources+"   "+"resources/upload_files/donationReview/" + saveFileName);
+				
+			File targetFile = new File(savePath+saveFileName);
+			
+			try {
+				InputStream fileStream = multipartFile.getInputStream();
+				FileUtils.copyInputStreamToFile(fileStream, targetFile);
+				jsonObject.addProperty("url", "resources/upload_files/donationReview/" + saveFileName);
+				jsonObject.addProperty("responseCode", "succcess");
+			} catch(IOException e) {
+				FileUtils.deleteQuietly(targetFile);
+				jsonObject.addProperty("responseCode", "error");
+				e.printStackTrace();
+			}	
+
+			String result = jsonObject.toString();
+			return result;
+		}
+		
 		private String saveFile(MultipartFile file, HttpServletRequest request) {
 			
 			String resources = request.getSession().getServletContext().getRealPath("/resources");
-			String savePath = resources  + "/upload_files/";
-			String originName = file.getOriginalFilename();
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String ext = originName.substring(originName.lastIndexOf("."));
-			String changeName = currentTime + ext;
+			String savePath = resources  + "/upload_files/donationReview/";
 			
+			System.out.println("savePath"+savePath);
+			
+			String originName = file.getOriginalFilename();
+			String ext = originName.substring(originName.lastIndexOf("."));
+			String changeName =System.currentTimeMillis() + "_" + (int)( Math.random() * 10000000) + ext;
+
+			System.out.println("saveFile 메소드 changeName : "+changeName);
 				try {
 					file.transferTo(new File(savePath+changeName));
 				} catch (IllegalStateException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					throw new CommException("file upload error");
+					throw new CommException("파일 업로드 실패");
 				}
 			return changeName;
 		}
 		
 		private void deleteFile(String fileName, HttpServletRequest request) {
-			String resources = request.getSession().getServletContext().getRealPath("/resources");
-			String savePath = resources + "/upload_files/" + "event/";
-			File deleteFile = new File(savePath + fileName);
+			// TODO Auto-generated method stub
+			String resources=request.getSession().getServletContext().getRealPath("resources");
+			String savePath=resources+"/upload_files/donationReview/";
+			System.out.println("savePath"+savePath);
+			
+			File deleteFile= new File(savePath+fileName);
 			deleteFile.delete();
 			
 		}

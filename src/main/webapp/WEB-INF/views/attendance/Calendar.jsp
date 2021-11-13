@@ -12,6 +12,11 @@
  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'rel='stylesheet'/>
  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
 	
+<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 </head>
 
@@ -30,16 +35,37 @@
 	  </head>
 	  <body>
 	
+	<div class="card text-center">
+  <div class="card-header" style="background-color:#E7FDEA;">
+     도넷 닷컴에 오신걸 환영합니다.
+  </div>
+  <div class="card-body">
+  	
+    <h5 class="card-title" style="color:#F36FB5;">
+    	출석체크 버튼을 눌러주세요!!
+    </h5>
+    <p class="card-text">
+    	출석이 완료됨과 동시에 <span style="color:red">1500포인트</span>가 적립됩니다.
+    </p>
+    <c:set value="y" var="y"/>
+    <c:if test="${attCheck ne 'y' }">
+    	<button id="ckbtn11" type="button" class="btn btn-success" name="attCheck" value="y" style="display: inline; width:100px; height:40px; font-size:20px;">출석체크</button>
+ 	</c:if>
+  	
+  	<c:if test="${attCheck eq y }">
+    	<button id="ckbtn22" type="button" class="btnCheck2" style="display: inline">출석완료</button>
+	</c:if>
+
+  </div>
+  <div class="card-footer text-muted" style="background-color:#E7FDEA;" >
+    
+  </div>
+</div>
+	
+	
 	<div id="external-events">
 	
-		<c:set value="y" var="y"/>
-		<c:if test="${attCheck ne 'y' }">
-    	<button id="ckbtn11" type="button" class="btnCheck1" name="attCheck" value="y" style="display: inline">출석체크</button>
- 		</c:if>
- 		<c:if test="${attCheck eq 'y' }">
-    	<button id="ckbtn22" type="button" class="btnCheck2" style="display: inline">출석완료</button>
-		</c:if>
-		
+				
 	    <input type="hidden" id="userId" class="memberUserId" name="userId" value="${loginUser.userId}">
 	    	
 	    <!--1.출석체크 -->	
@@ -49,9 +75,7 @@
 	    </c:forEach>
 	    <!--  -->
 	 
-	  <p>　</p>
-	  <p>출석체크 버튼을 눌러야 </p>
-	  <p> 출석이 완료됩니다.</p>
+	  <br><br><br><br><br><br>
 	</div>
 	
 	<!-- <div class="container row" style="float: none; margin:100 auto;">
@@ -63,8 +87,10 @@
 	</div>
 	 -->
 	 <div class="container calendar-container">
-			<div id="calendar" style="max-width:900px; margin:40px auto; width: 50%; height: 50%;"></div>
+			<div id="calendar" style="max-width:900px; margin:auto; width: 100%; height: 100%;"></div>
 		</div>
+	
+	
 	
 	<script>
 	      
@@ -77,7 +103,7 @@
 			type: "POST",
 			data:{
 				userId: $(".memberUserId").val(),
-				attCheck: $(".btnCheck1").val(),
+				attCheck: $("#ckbtn11").val(),
 				attDate: currentDate
 			},
 			success: function(data){
@@ -116,13 +142,13 @@
 			var dateC = {};
 			dateC.start = $(this).val();
 			dateC.end = $(this).val();
-			dateC.color="";
+			dateC.color ="#5EE891";		
+			dateC.title = "===== 출석완료 =====";	
 			dateC.className="test";
-			dateC.title= "출석완료";
 			check.push(dateC);
 			
 		});
-	    
+		
 	    // initialize the calendar
 	    // -----------------------------------------------------------------
 
@@ -131,9 +157,11 @@
 	        left: 'prev,next today',
 	        center: 'title',
 	        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+	        
 	      },
 	      editable: false,
 	      droppable: true, // this allows things to be dropped onto the calendar
+	      
 	      drop: function(info) {
 	        // is the "remove after drop" checkbox checked?
 	        if (checkbox.checked) {
@@ -143,8 +171,10 @@
 	      },
 	      locale: 'ko',
 	      events: check,
+	      
+    
 	    });
-
+	    
 	    calendar.render();
 	  });
 
