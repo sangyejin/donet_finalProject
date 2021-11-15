@@ -217,44 +217,6 @@
 
 
 				
-/* 				 $("#summernote").summernote({
-						height: 500, 
-						width: 1000,
-				    	minHeight: null,            
-				    	maxHeight: null,            
-				    	focus: true,           
-				    	disableResizeEditor: true,
-		   	   		callbacks: {
-				    		onImageUpload: function(files, editor, welEditable){
-					    		for(var i = files.length - 1; i>=0; i--){
-					    			sendFile(files[i],this);	  
-					    		}	
-				    		}
-		   	   			}
-					});
-				
-
-					
-				
-				function sendFile(file, el){
-						var data = new FormData();
-						data.append("file", file);	
-						$.ajax({
-							data : data,
-							type : "POST",
-							url : "imageFile.ev",
-							cache : false,
-							contentType : false,
-							processData : false,
-							enctype : "multipart/form-data",
-							success : function(data){
-								console.log(data);
-								$(el).summernote('editor.insertImage', data.url);
-								
-							}
-						});
-					} */
-				
 				
 				 $("#reContent").summernote({
 						height: 500, 

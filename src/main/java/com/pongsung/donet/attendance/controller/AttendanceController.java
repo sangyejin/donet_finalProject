@@ -69,11 +69,7 @@ public class AttendanceController {
 		
 	}
 	
-	//출석체크
-//	@GetMapping("checkInsert")
-//	public void checkInsert() throws Exception {
-//			
-//	}
+
 	
 	@ResponseBody
 	@PostMapping("checkInsert")

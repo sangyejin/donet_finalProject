@@ -134,36 +134,7 @@
     </div>
 	
 	
-
 	
-		<script>
-    	//==============================================
-    	// 입력 확인
-    	//==============================================
-		/* function loginValidate(){
-			if($("#userId").val().trim().length == 0){
-				swal.fire({
-					text: '아이디를 입력하세요.',
-					icon: 'warning',
-					confirmButtonColor: "#78c2ad"
-				});
-				$("#userId").focus();
-				return false;
-			}
-			if($("#userPwd").val().trim().length == 0){
-				swal.fire({
-					text: '비밀번호를 입력하세요.',
-					icon: 'warning',
-					confirmButtonColor: "#78c2ad"
-				});
-				$("#userPwd").focus();
-				return false;
-			}
-			
-			return true;
-		} */
-		
-		</script>
 	
      <jsp:include page="../common/footer.jsp"/>
 </body>

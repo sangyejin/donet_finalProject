@@ -105,11 +105,6 @@ public class MemberController {
 			return "member/memberEnrollForm";
 		}
 		
-		// 마이 페이지로 이동
-//		@RequestMapping("myPage.me")
-//		public String myPage() {
-//			return "member/myPage";
-//		}
 		
 		// 출석 체크용 달력으로 이동
 		@RequestMapping("calendar.me")
@@ -417,14 +412,7 @@ public class MemberController {
 		}
 		
 //===========================================================================
-		// 후원 후기로 이동
-//		@RequestMapping("supportReviewList.me")
-//			public String supportReviewList() {
-//			
-//			return "member/supportReviewList";
-//		}
-		
-		//후원 후기 작성하기로 이동
+
 		@RequestMapping("supportReviewWrite.me")
 			public String supportReviewWrite(Support support, Model model) {
 					
@@ -482,55 +470,26 @@ public class MemberController {
 
 		
 
-		
-//		@RequestMapping(value="insertReview.me")
-//		public String insertReview(Review review, MultipartHttpServletRequest request,
-//				 @RequestParam(name="file", required=false) MultipartFile file) {
-//			
-//			review.setReContent((review.getReContent()).replace("\n", "<br>"));
-//			System.out.println("작성된 후기를 등록중입니다.");
-//			
-//			if(!file.getOriginalFilename().equals("")) {
-//				String changeName = saveFile(file, request);
-//				if(changeName != null) {
-//					review.setThumbnailOrigin(file.getOriginalFilename());
-//					review.setThumbnailChange(changeName);
-//				}
-//			}
-//			
-//			memberService.insertReview(review);
-//			
-//			return "redirect:supportReviewList.me";
-//			
-//		}
+	
 		
 		@RequestMapping("insertReview.me")
 		public String insertReview(Review review, HttpServletRequest request, MultipartHttpServletRequest multipartRequest,
 				 Model model)throws Exception {
-			
-			//review.setReContent((review.getReContent()).replace("\n", "<br>"));
+
 			System.out.println("작성된 후기를 등록중입니다.");
 			System.out.println("reivew의 값 : " + review );
 			
 			
 			Map<String, MultipartFile> mMap = multipartRequest.getFileMap();
 			List<ReviewImage> imgList = new ArrayList<>();
-			
-//			logger.info("mMap의 값: "+ mMap );
-//			logger.info("multipartRequest.getFileMap()의 값: "+ multipartRequest.getFileMap() );
-			
+					
 			Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
 			for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
-//				logger.info("paramMap의 값: "+ paramMap );
+
 				
 				List<MultipartFile> fileList = entry.getValue();
 				
-//				System.out.println("fileList 의 값 : " + fileList);
-				
-//				logger.info("paramMap의 값: "+ paramMap );
-//				logger.info("fileList 의 값: "+fileList);
-//				logger.info("fileList.size() 의 값: "+fileList.size());
-				
+
 				for(int i = 0; i < fileList.size(); i++) {
 					String fileName=fileList.get(i).getOriginalFilename();
 					logger.info("fileName의 값: "+ fileName );
@@ -574,6 +533,7 @@ public class MemberController {
 			
 			return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(reviewCommentList);
 		}
+
 		
 		@ResponseBody
 		@RequestMapping("insertReComent.me")
@@ -614,31 +574,6 @@ public class MemberController {
 			
 		}
 		
-//		@RequestMapping("updateReview.me")
-//		public ModelAndView updateReview(Review review, ModelAndView mv, MultipartHttpServletRequest request, 
-//				@RequestParam(value="file", required=false) MultipartFile file) {
-//			
-//			review.setReContent((review.getReContent()).replace("\n", "<br>"));
-//			System.out.println("작성된 후기를 수정중입니다.");
-//			
-//			if(!file.getOriginalFilename().equals("")) {
-//				
-//				if(review.getThumbnailChange() != null) {
-//					deleteFile(review.getThumbnailChange(), request);
-//				}
-//				
-//				String changeName = saveFile(file, request);
-//				review.setThumbnailOrigin(file.getOriginalFilename());
-//				review.setThumbnailChange(changeName);
-//			}
-//			
-//			memberService.updateReview(review);
-//			System.out.println("update 중입니다. 리뷰 객체를 확인 : " + review);
-//			mv.addObject("reNo", review.getReNo()).setViewName("redirect:supportReviewDetail.me");
-//			System.out.println("후기 업데이트 mv의 값 : " + mv);
-//			return mv;
-//			
-//		}
 		
 		@RequestMapping("updateReview.me")
 		public String updateReview(int reNo, Review review, Model model, HttpServletRequest request, 

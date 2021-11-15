@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 
 <!-- favicon -->
 <link rel="icon"
@@ -515,10 +515,10 @@ d {
 						<c:choose>
 							<c:when test="${status.begin==0}">
 								<div class="active"
-									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/${ImgList.imgChangeName }?auto=compress,format);"></div>
+									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donationReview/${ImgList.imgChangeName }?auto=compress,format);"></div>
 							</c:when>
 							<c:otherwise>
-								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/${ImgList.imgChangeName }?auto=compress,format);"></div>
+								<div style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donationReview/${ImgList.imgChangeName }?auto=compress,format);"></div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -675,9 +675,9 @@ d {
 			$.ajax({
 						url : "rvList.me",
 						dataType : "json",
-						contentType: "application/json; charset=utf-8",
+						contentType: "application/json; charset=utf-8",						
 						headers: { 
-						    Accept : "application/json"
+						    Accept : "application/json, text/html, text/troff" 						   
 						},
 						data : {reNo : reNo},
 						type : "get",
@@ -801,24 +801,7 @@ d {
 		}	
 	}
     
-    
-    /* function fixReview(reNo){
-		if (confirm("후기을 삭제하시겠습니까?(Y/N)")) {
-			$.ajax({
-				url : "Reviewdelete.me/"+reNo,
-				type : "get",
-				success : function() {
-					alert("후기가 삭제되었습니다");
-					location.href="supportReviewList.me";
-				},
-				error : function() {
-					console.log("댓글 리스트조회용 ajax 통신 실패");
-				}
-			});
-		} else {
-			alert("후기 삭제가 취소되었습니다");
-		}	
-	} */
+     	
     
     </script>
     

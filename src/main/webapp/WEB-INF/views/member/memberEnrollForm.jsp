@@ -106,19 +106,7 @@
 				
 				<!-- jQuery와 Postcodify를 로딩한다. -->
 				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-				<!-- <script>
-					// 검색 단추를 누르면 팝업 레이어가 열리도록 설정한다.
-					$(function(){
-						$("#postcodify_search_button").postcodifyPopUp();
-					});
-				</script>
-                    <label for=""> &nbsp; Gender : </label> &nbsp;&nbsp;
-                    <input type="radio" name="gender" id="Male" value="M">
-                    <label for="Male">남자</label> &nbsp;&nbsp;
-                    <input type="radio" name="gender" id="Female" value="F">
-                    <label for="Female">여자</label><br> -->
-                    
-                <!-- 생년월일 선택 함수 -->    
+				  
                 <script>
              
                 	$(document).ready(function(){            

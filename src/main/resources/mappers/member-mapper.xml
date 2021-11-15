@@ -211,20 +211,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY SU_NO DESC
 	</select>
 	
-   <!-- <insert id="insertReview" parameterType="Review">
-   		INSERT INTO REVIEW
-   		VALUES(SEQ_EV.NEXTVAL, #{userId}, #{reTitle}, #{reSuTitle}, #{reContent}, DEFAULT, SYSDATE, #{thumbnailOrigin}, #{thumbnailChange},  DEFAULT)
-   </insert> 
-   
-   <insert id="insertReviewImg" parameterType="ReviewImage">
-		INSERT INTO
-		REVIEW_IMAGE(RE_NO,IMG_NO,IMG_ORIGIN_NAME,IMG_CHANGE_NAME)
-		<foreach collection="list" item="item" separator=" UNION ALL ">
-			select
-			#{item.reNo},#{item.imgNo},#{item.imgOriginName},#{item.imgChangeName}
-			from DUAL
-		</foreach>
-	</insert> -->
      
    <insert id="insertReview" parameterType="Review">
    	<selectKey keyProperty="reNo" resultType="int" order="AFTER">
