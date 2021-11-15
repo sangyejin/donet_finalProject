@@ -77,7 +77,7 @@ public class DonationController {
 		model.addAttribute("pi", pi);
 		
 		System.out.println("model "+model);
-		
+		//
 		return "donation/donationMain";
 	}
 	
