@@ -307,7 +307,7 @@ select::-ms-expand {
 		}
 	};
 	let categoryNo="${categoryNo}";
-	let order="";
+	let order=$("#order").val();
 	let search="";
 	let period="";
 	selectFundingList(pageInfo,categoryNo,period,order,search);

@@ -87,7 +87,7 @@ public class FundingController {
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
 			,Model model) {
 		
-		FundingFilterOrder filterOrder= new FundingFilterOrder(0,null,"FP_WRITE_DATE",null);
+		FundingFilterOrder filterOrder= new FundingFilterOrder(0,null,"FP_WRITE_DATE DESC",null);
 		
 		logger.info("selectFundingList :: filterOrder ::"+ filterOrder);
 		
@@ -109,7 +109,7 @@ public class FundingController {
 		return "funding/fundingListView";
 	}
 
-	//구호물품 리스트 불러오기
+	//펀딩 리스트 불러오기
 	@ResponseBody
 	@RequestMapping(value="funding/list",produces="application/json;charset=utf-8")
 	public String selectFundingList(PageInfo pi, FundingFilterOrder fundingFilterOrder) {
@@ -245,9 +245,6 @@ public class FundingController {
 	@RequestMapping(value="funding/{fpNo}/reply",produces="application/json;charset=utf-8")
 	public String selectReplyList(@PathVariable("fpNo")int fpNo) {
 		List<FundingReply> fundingReplyList = fundingService.selectFundingReplyList(fpNo);
-		
-		//System.out.println(list.get(0).getCreateDate().toString());
-		
 		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(fundingReplyList);
 	}
 	
