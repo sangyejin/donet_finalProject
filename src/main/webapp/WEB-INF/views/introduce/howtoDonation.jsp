@@ -24,7 +24,7 @@
 	#title{
 		font-size: 18px;
 		font-weight: 600;
-		margin-left: 9.5%;
+		margin-left: 3%;
 		color: black;
 	}
 	#greenLine{
@@ -32,11 +32,13 @@
         width: 800px;
         height: 3px;
         float: right;
+        margin-right:8%;
 	}
 	#content{
 		text-align: center;
 		width: 800px;
 		float: right;
+		margin-right:8%;
 	}
 </style>
 </style>
@@ -105,7 +107,7 @@
 					도넷닷컴의 회원이 되어주세요! <br>
 
 					포인트는 마이페이지에서 직접 포인트를 충전 할 수 있습니다.<br><br>
-				</p>
+				</p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	
 				
 			</div>

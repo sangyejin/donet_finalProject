@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="selectDonation" resultMap="chartSupportResultSet">
-		SELECT * FROM SUPPORT ORDER BY GOAL DESC
+		SELECT * FROM SUPPORT WHERE SU_SATUTS='Y' ORDER BY GOAL DESC
 	</select>
 	
 	<select id="selectSponsor" resultMap="chartfundingResultSet">

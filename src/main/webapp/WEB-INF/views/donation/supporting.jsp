@@ -137,7 +137,7 @@
 			<div style="margin-left:25%;">
 				<div class="content-container">
 					<label for="addSupport-container" class="labelAdd">후원하기</label>
-						<input name="addPrice" id="addPrice" type="number" placeHolder="0"> 	<label class="labelAdd">원</label>
+						<input name="addPrice" id="addPrice" type="number" placeHolder="0" min="1"> 	<label class="labelAdd">원</label>
 						<input type="button" value="입력" name="addBtn" id="addBtn">
 				</div>
 				<div style="margin-left:18%; margin-top:1%;">
@@ -219,14 +219,15 @@
 			
 			$("#supportBtn").click(function(){
 				if($("#agree").is(":checked")==true){
-					if($("#addPrice").val()!=0){
+					var amount = $("#addPrice").val();
+					if(amount!=0){
 						
-						if(${loginUser.point<num}){
+						if(Number("${loginUser.point}")<Number($("#addPrice").val())){
 							alert("포인트 충전 후 후원이 가능합니다.");
 							location.href="point.me";
 						}else {
 								var suNo = "${p.suNo}";
-								var amount = $("#addPrice").val();
+								
 
 									$.ajax({
 										url : "supportCharity?suNo="+suNo,
