@@ -29,18 +29,18 @@ BEGIN
 FOR i in 1..20
 LOOP
 insert into funding_project 
-values (SEQ_FUNDING_PROJECT.NEXTVAL,i||'유기견을 향한 마음','admin',1000000,2400000,
-        to_date('2021-11-22'),to_date('2021-11-30'),'유기견을 보호하기위한 어쩌구 내용 캠페인 어쩌구', sysdate,
-        3,default,default,'github.png'
-        ,'github.png',default,sysdate);
+values (SEQ_FUNDING_PROJECT.NEXTVAL,i||'유기묘를 향한 마음, 따뜻한 겨울 보내기 프로젝트','admin',i||'1000'||i||'000',i||'200000',
+         To_DATE('21-09-'||i), To_DATE('21-11-'||i),'유기묘를 보호하기 위한 펀딩 프로젝트입니다. <br> 겨울철 간단하게 설치할 수 있는 숨숨집을 준비해보았습니다. 데운 물병을 오랫동안 따뜻함을 유지시켜줄 파우치도 계획했습니다. <br> 겨울에 우리의 잊혀진 이웃들이 함께 따뜻한 겨울을 보낼 수 있도록 도와주세요. ',
+        1,default,default,'github.png'
+        ,'github.png',default, To_DATE('21-08-'||i));
 END LOOP;
 END;
 /
 BEGIN
-FOR i in 1..20
+FOR i in 7..20
 LOOP
 insert into FUNDING_GOODS(FP_NO, FG_NO, FG_NAME, FG_CONTENT, FG_PRICE)
-values (i,1,'엽서','엽서 2장 및 강아지 간식', 2000);
+values (i,3,'파우치, 담요 스티로폼 숨숨집','스티로폼 숨숨집과 숨숨집을 따뜻하게 해줄 담요, 데운 물병을 오랫동안 유지시켜줄 파우치', i||'000');
 END LOOP;
 END;
 /
@@ -168,5 +168,13 @@ values(SEQ_EV.nextval, '이벤트제목 3','이벤트 내용입니다 <br> 이�
 delete from support;
 insert into support
 values(seq_support.nextval,'후원프로젝트2','admin',sysdate,sysdate,sysdate,'후원프로젝트내용입니다2','사업대상',sysdate,sysdate,'1636036915241_9063796.jpg','1636036915241_9063796.jpg',1,default,default,default,default,'30000');
+select FP_NO, FP_NAME, B.USER_NAME, GOAL,RAISED, START_DATE, CLOSING_DATE,A.FP_WRITE_DATE
+    		, A.CATEGORY_NO, HITS, THUMBNAIL_ORIGIN_NAME
+    		, THUMBNAIL_CHANGE_NAME, C.FUNDING_CATEGORY_NAME,CLOSING_DATE-START_DATE AS "D_Day"
+		from FUNDING_PROJECT A
+			join MEMBER B on A.HOST_ID=B.USER_ID
+			join FUNDING_CATEGORY C on A.CATEGORY_NO = C.FUNDING_CATEGORY_NO
+            where A.STATUS='Y'
+            ORDER BY FP_WRITE_DATE DESC;
 
 commit;
