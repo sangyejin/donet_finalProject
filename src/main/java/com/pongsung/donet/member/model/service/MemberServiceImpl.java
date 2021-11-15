@@ -224,16 +224,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-//	@Override
-//	public void insertReview(Review review) {
-//		
-//		int result = memberDao.insertReview(sqlSession, review);
-//		
-//		if(result <0) {
-//			throw new CommException("후기 등록 실패");
-//		}
-//		
-//	}
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class,CommException.class})
 	@Override

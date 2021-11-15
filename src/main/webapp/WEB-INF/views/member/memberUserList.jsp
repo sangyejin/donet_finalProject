@@ -135,9 +135,7 @@
 						            </div>
                                 </div>
                              	<div class="general-button" align="right">
-                             		<%--<% if(loginUser != null){ --%>
-                            		<%--<button id="따로 버튼이 필요하지 않음" onclick="location.href='<%= contextPath %>/enrollForm.ca'"  class="btn mb-1 btn-primary">게시판 생성하기</button>
-									<% } --%>
+                             		
 								</div>
                             </div>
                         </div>

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +75,7 @@
 }
 
 #AdScroll::-webkit-scrollbar-thumb{
-	background-color: #8B8B8B;
+	background-color: #78c2ad;
 	border-radius:10px;
 }
 
@@ -124,6 +123,7 @@
                     
                     <label for="birthdate"> &nbsp; 생년월일 :</label>
                     <input type="text" class="form-control" id="birthdate" name="birthdate" value="${ loginUser.birthdate }"><br>
+                    
                     <label for="address"> &nbsp; - 주소 - </label><br>
                   <%-- <input type="text" class="form-control" id="address" name="address" value="${ loginUser.address }"><br>--%>
                  
@@ -165,8 +165,20 @@
 				</script>
 				
 					<br><br>
-					
-                   
+					<label for=""> &nbsp; 역할 :</label>  &nbsp;&nbsp;
+                    <%-- <input type="text" class="form-control" id="userRole" name="userRole" value="${ loginUser.userRole }"><br> --%>
+                    <c:if test="${loginUser.userRole eq 'A' }">
+                    <input type="radio" name="userRole" id="personal" value="A">
+                    <label for="personal">개인</label> &nbsp;&nbsp;
+                    </c:if>
+                    <c:if test="${loginUser.userRole eq 'B' }">                                        
+                    <input type="radio" name="userRole" id="group" value="B">
+                    <label for="group">단체</label> &nbsp;&nbsp;
+                    </c:if>
+                    <c:if test="${loginUser.userRole eq 'C' }">                   
+                    <input type="radio" name="userRole" id="Enterprise" value="C">
+                    <label for="Enterprise">기업</label> <br>
+                    </c:if>
                     
                     <script>
                     	$(function(){
@@ -185,7 +197,7 @@
                 
                 <div class="btns" align="center">             	
                 	<c:if test="${ loginUser.userId eq 'admin' }">
-                	<a href="userList.me" class="btn btn-primary">회원목록</a> 
+                	<button href="userList.me" class="btn btn-primary">회원목록</button> 
                 	</c:if>
                 	<a href="calendar.at" class="btn btn-primary">출석체크</a>
                 	<button class="btn btn-primary"><a data-toggle="modal" data-target="#chagePwdModal">Pwd변경</a></button>
@@ -218,9 +230,7 @@
 	    <a class="btn btn-success" href="${ pageContext.servletContext.contextPath }/funding">펀딩 후원</a>
 	  </div>
 	  <ul class="list-group list-group-flush">
-	  <a href="list.vo">
-    	<li class="list-group-item"><button class="btn btn-secondary w-100" >선행 활동 실천하기</button></li>
-   	  </a>
+    	<li class="list-group-item"><button class="btn btn-secondary w-100" href="">포인트 상세내역</button></li>
    	  </ul>
 	</div>
 	
@@ -313,16 +323,11 @@
                  </div>
 	  	
 	</div>
-	  
-	  
+	  	  
 	</div>
 
-	
-
-
-
 </div>
-	
+		
 </div>
     
     <!-- 비밀번호 변경 클릭 시 뜨는 모달  -->
