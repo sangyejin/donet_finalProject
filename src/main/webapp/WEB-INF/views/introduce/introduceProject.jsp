@@ -25,7 +25,7 @@
 	#title{
 		font-size: 18px;
 		font-weight: 600;
-		margin-left: 9.5%;
+		margin-left: 3%;
 		color: black;
 	}
 	#greenLine{
@@ -33,11 +33,13 @@
         width: 800px;
         height: 3px;
         float: right;
+        margin-right:8%;
 	}
 	#content{
 		text-align: center;
 		width: 800px;
 		float: right;
+		margin-right:8%;
 	}
 	.thumbnail, .chart{
 		width: 500px;
@@ -148,7 +150,8 @@
 					<br><br><br><br><br><br><br><br>
 					<h3>이 외에도 더 다양한 이유가 분명 있을 것입니다.</h3><br><br><br><br><br> 
 						
-					<b style="font-weigth:600; font-size:18px; color:black;">당신의 따스한 온기가<br><br>저희 donet.com과 함께 하기를 바랍니다.</b><br><br> 
+					<b style="font-weigth:600; font-size:18px; color:black;">당신의 따스한 온기가<br><br>저희 donet.com과 함께 하기를 바랍니다.</b><br><br>
+					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> 
 			</div>
 		</span>
 	</div>

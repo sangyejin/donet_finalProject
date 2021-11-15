@@ -69,8 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectDonationList" resultType="_int">
 		SELECT COUNT(*)
-		FROM
-		SUPPORT
+		FROM SUPPORT
 		WHERE SU_SATUTS='Y'
 	</select>
 
@@ -283,7 +282,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="insertSupportCharity" parameterType="Sponsor">
-		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, NVL((SELECT MAX(PAY_NO) FROM SPONSOR WHERE SU_NO=${suNo}),0)+1, ${amount}, DEFAULT)
+		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, ${amount}, DEFAULT)
 	</insert>
 	<insert id="supportAfterPoints" parameterType="Sponsor">
 		INSERT INTO SPONSOR VALUES(#{userId}, ${suNo}, NVL((SELECT MAX(PAY_NO) FROM SPONSOR WHERE SU_NO=${suNo}),0)+1, ${amount}, DEFAULT)

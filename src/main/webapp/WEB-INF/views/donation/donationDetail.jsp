@@ -350,7 +350,6 @@ c {
 	font-weight: 600;
 	color: white;
 	background-color: rgb(60, 179, 113);
-	margin-left: 3%;
 	margin-bottom: 0.5%;
 	transition: all 0.5s;
 }
@@ -363,7 +362,6 @@ c {
 	font-weight: 600;
 	color: rgb(60, 179, 113);
 	background-color: white;
-	margin-left: 3%;
 	margin-bottom: 0.5%;
 }
 
@@ -570,9 +568,9 @@ ${s.content}
 
 			<div class="slider-1">
 				<div class="slides">
-					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status" begin="0">
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
 						<c:choose>
-							<c:when test="${ status.begin==0 }">
+							<c:when test="${ status.index==0 }">
 								<div class="active"
 									style="background-image:url(${ pageContext.servletContext.contextPath}/resources/upload_files/donation/${ImgList.imgChangeName }?auto=compress,format);"></div>
 							</c:when>
@@ -585,9 +583,9 @@ ${s.content}
 					</c:forEach>
 				</div>
 				<div class="page-btns">
-					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status" begin="0">
+					<c:forEach items="${ ImgList }" var="ImgList" varStatus="status">
 						<c:choose>
-							<c:when test="${ status.begin==0 }">
+							<c:when test="${ status.index==0 }">
 								<div class="active"></div>
 							</c:when>
 							<c:otherwise>

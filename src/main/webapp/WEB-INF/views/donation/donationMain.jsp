@@ -204,7 +204,7 @@
 				</c:forEach>
 			</c:if>
 			<div class="pageOuter">
-				<ul class="pagination" style="margin-left:38%;">
+				<ul class="pagination" style="margin-left:40%;">
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
