@@ -227,20 +227,20 @@ input[type="number"]::-webkit-inner-spin-button {
 					<label for="addSupport-container">받는이 정보</label>
 					<div class="addSupport-container">
 						<div class="inputArea">
-							<label for="takeName"></label><input name="takeName" type="text"
-								 class="rounded-pill inputText" placeHolder="이름을 입력해주세요.">
+							<label for="takeName"></label><input name="takeName" type="text" id="takeName"
+								 class="rounded-pill inputText" placeHolder="이름을 입력해주세요." required>
 						</div>
 						<div class="inputArea">
-							<label for="takePostCode"></label><input name="takePostCode"
-								type="text" class="rounded-pill inputText"  placeHolder="우편번호를 입력해주세요">
+							<label for="takePostCode"></label><input name="takePostCode" id="takePostCode"
+								type="text" class="rounded-pill inputText"  placeHolder="우편번호를 입력해주세요" required>
 						</div>
 						<div class="inputArea">
-							<label for="takeAddress"></label><input name="takeAddress"
-								type="text" class="rounded-pill inputText"  placeHolder="주소를 입력해주세요.">
+							<label for="takeAddress"></label><input name="takeAddress" id="takeAddress"
+								type="text" class="rounded-pill inputText"  placeHolder="주소를 입력해주세요." required>
 						</div>
 						<div class="inputArea">
-							<label for="takePhone"></label><input name="takePhone"
-								type="text"  class="rounded-pill inputText" placeHolder="전화번호를 입력해주세요.">
+							<label for="takePhone"></label><input name="takePhone" id="takePhone" 
+								type="text"  class="rounded-pill inputText" placeHolder="전화번호를 입력해주세요." required>
 						</div>
 					</div>
 				</div>
@@ -280,7 +280,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		$("#hiddenPrice").val(Number(temp)+Number(addPrice));
 	};
 		$(function(){
-
 			$("#btn-support").click(function(){
 				console.log($("#totalSupport").text());
 				console.log(Number("${loginUser.point}"),Number($("#totalSupport").text()),Number("${loginUser.point}")<Number($("#totalSupport").text()));
@@ -293,6 +292,10 @@ input[type="number"]::-webkit-inner-spin-button {
 					return;
 				}
 				else{
+					if($("#takeName").val()=="" || $("takePostCode").val()=="" ||  $("takePhone").val()=="" ||  $("takeAddress").val()=="" ){
+						alert("칸이 비어있습니다.");	
+						return;
+					}
 				$("#insertForm").submit();
 				}
 			});

@@ -220,11 +220,11 @@ public class GoodsController {
 			 , Model model) throws Exception{
 		List<RequiredGoods> oldBeneficiaryList= goodsService.selectRequiredGoodsListByGoodsNo(goodsNo);
 		List<RequiredGoods> newBeneficiaryList= rgList.getRequiredGoods();
-		
+		if(!newBeneficiaryList.isEmpty()) {
 		for(int i=0; i<newBeneficiaryList.size();i++) {
 			newBeneficiaryList.get(i).setGoodsNo(goodsNo);
 		}
-
+		}
 		
 		//후원처 변경 
 		List<RequiredGoods> temp= new ArrayList<>();
