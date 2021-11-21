@@ -108,6 +108,9 @@ ERD
   
 코드리뷰_상예진
 ---
+
+[![코드리뷰 및 시연 영상_상예진](https://i9.ytimg.com/vi_webp/-goBmRarZyI/hqdefault.webp?v=619aad45&sqp=CMjY6owG&rs=AOn4CLAbNKaSKTR3z0jF-KzqutSZLqwtsw)](https://youtu.be/-goBmRarZyI?t=0s) 
+
 __코드 리뷰에 앞서.. 제가 담당한 파트는..?__
 
 - 후원 프로젝트 목록 조회
@@ -124,7 +127,6 @@ __코드 리뷰에 앞서.. 제가 담당한 파트는..?__
 	- 5-1. 구글차트 API 활용
 
 ---
-[![코드리뷰 및 시연 영상_상예진](https://i9.ytimg.com/vi_webp/-goBmRarZyI/hqdefault.webp?v=619aad45&sqp=CMjY6owG&rs=AOn4CLAbNKaSKTR3z0jF-KzqutSZLqwtsw)](https://youtu.be/-goBmRarZyI?t=0s) 
 
 __1-1. 후원 프로젝트 목록 조회__
 
@@ -809,6 +811,7 @@ __4. 후원 프로젝트 작성/삭제__
    </script>
 ```
 
+- 프로젝트 삭제는 댓글 삭제와 동일한 방식으로 해당 게시글의 status를 'Y'에서 'N'으로 변경하도록 ajax처리 해주었습니다.
 ---
 
 __5. 통계조회(구글차트 API 활용)__
