@@ -584,10 +584,89 @@ function selectReplyList() {
 ```
 
 - 댓글 조회는 해당 프로젝트의 댓글의 status가 'Y'인 값만 가져오도록 했습니다. 따라서 댓글 삭제는 해당 댓글의 status를 'Y'에서 'N'으로 변경하여 댓글 조회 할 수 없도록 하였습니다.
-
+```
+//Controller
+	@ResponseBody
+	@RequestMapping(value="delete.re/{replyNo}")
+	public String deleteReply(@PathVariable("replyNo")int replyNo) {
+		int result = donationService.deleteReply(replyNo);
+		System.out.println(replyNo);
+		System.out.println(result);
+		
+		return String.valueOf(result);
+	}
+	
+//support-mapper
+	<update id="deleteReply" parameterType="_int">
+		UPDATE SUPPORT_COMMENT
+		SET SC_STATUS='N'
+		WHERE SC_NO=#{replyNo}
+	</update>
+```
 ---
 
 __3. 후원하기__
+
+프로젝트 상세조회 시 해당 프로젝트를 후원할 수 있습니다. 후원하기는 로그인한 유저만 이용가능하며 로그인하지 않은 회원은 로그인 페이지로 화면이 전환됩니다. 또한, 후원기간이 만료된 프로젝트는 후원하기 버튼이 비활성화되도록 구현하였습니다.
+
+- 후원하기는 0원 이상의 후원금액을 입력하고 약관동의에 체크를 한 경우만 후원이 가능합니다. 이 때, 입력한 후원금액이 보유한 포인트보다 적은 경우는 포인트 충전 페이지로 화면이 전환됩니다. 
+```
+			$("#supportBtn").click(function(){
+				if($("#agree").is(":checked")==true){
+					var amount = $("#addPrice").val();
+					if(amount!=0){
+						
+						if(Number("${loginUser.point}")<Number($("#addPrice").val())){
+							alert("포인트 충전 후 후원이 가능합니다.");
+							location.href="point.me";
+						}else {
+								var suNo = "${p.suNo}";
+								
+
+									$.ajax({
+										url : "supportCharity?suNo="+suNo,
+										type : "post",
+										data : {
+											amount : amount,
+											suNo : suNo,
+											userId : "${loginUser.userId}"
+										},
+										success : function(result) {
+												alert("후원 성공!!");
+												location.href="list.do";
+												
+										},
+										error : function() {
+											console.log("댓글 작성 ajax 통신 실패");
+										}
+									});
+
+
+						}
+					}else{
+						alert("후원금액을 입력해주세요.");
+					}
+				}else{
+					alert("유료이용약관에 동의해주세요.");					
+				}
+			});
+```
+
+- 무사히 후원을 한 후에는 sponsor(후원자테이블)에 해당 유저를 insert 처리하고 해당 프로젝트의 후원자목록과 후원자수, 누적후원금을 업데이트 합니다.(Trigger, 위에서 설명) 또한, 세션에 반영해주어 로그인 유저의 보유포인트에서 해당 후원금액만큼 차감해주었습니다. 
+```
+		@SessionAttributes("loginUser") 
+		
+		@RequestMapping(value="supportCharity")
+		public String insertSupportCharity(int suNo, Sponsor s, Model model) {
+			s.setUserId(((Member)model.getAttribute("loginUser")).getUserId());
+			s.setSuNo(suNo);
+			donationService.insertSupportCharity(s);
+			
+			Member loginUser = memberService.selectThisUser((Member)model.getAttribute("loginUser"));
+			model.addAttribute("loginUser", loginUser);
+			return "redirect:/list.do";
+		}
+```
 
 ---
 
@@ -596,7 +675,76 @@ __4. 후원 프로젝트 작성/삭제__
 ---
 
 __5. 통계조회(구글차트 API 활용)__
+
+구글차트API를 활용하여 받아온 데이터를 JSON형태로 변경하여 저장하고 차트옵션을 지정하여 마크업한 부분에 draw해주었습니다.
+```
+<!-- google chart -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawMultSeries1);
+google.charts.setOnLoadCallback(drawMultSeries2);
+google.charts.setOnLoadCallback(drawMultSeries3);
+google.charts.setOnLoadCallback(drawMultSeries4);
+ 
+function drawMultSeries1() {
+
+	 var data = google.visualization.arrayToDataTable([
+	 		["title", "누적금액","목표금액" ],
+	    	
+	 		<c:forEach items="${s}" var="list" varStatus="status"> 
+		 		["${list.suTitle}",Number("${list.totalamount}"), Number("${list.goal}")],
+		 		
+		 		<c:if test="${status.end}">
+		 			["${list.suTitle}",Number("${list.totalamount}"), Number("${list.goal}")]
+		 		</c:if>
+			</c:forEach>
+	]);
 	
+	var view = new google.visualization.DataView(data);
+	view.setColumns([0,1,2]);
+
+	var options = {
+	  title: "후원 프로젝트 별 누적금액 차트",
+	  colors: ['GoldenRod','ForestGreen']
+	};
+	
+	var chart = new google.visualization.BarChart(document.getElementById("column_chart_div1"));
+	chart.draw(view, options);
+}
+
+ 
+function drawMultSeries2() {
+    
+	var data = google.visualization.arrayToDataTable([
+		["title","달성률"],
+		<c:forEach items="${s}" var="list" varStatus="status">  
+ 			["${list.suTitle}",Number("${list.totalamount/list.goal}")],
+ 			
+ 			<c:if test="${status.end}">
+ 				["${list.suTitle}",Number("${list.totalamount/list.goal}")]
+ 			</c:if>
+		</c:forEach>
+	]);
+ 
+	var options = {
+        title: '후원프로젝트 별 달성률 차트',
+        hAxis: {
+          title: '달성률',
+          minValue: 0
+        },
+        vAxis: {
+          title: '후원 프로젝트'
+        },
+        colors: ['ForestGreen']
+      };
+ 
+	var chart = new google.visualization.ColumnChart(document.getElementById('column_chart_div2'));
+	chart.draw(data, options);
+}	
+```
+
 ---
 
 
