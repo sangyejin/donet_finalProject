@@ -14,8 +14,8 @@
 
 프로젝트 소개 및 기획의도
 ---
-![image](https://user-images.githubusercontent.com/84160329/142773930-18e7d16d-354b-4cbd-9135-d1d30cbfcc14.png)
-
+![image](https://user-images.githubusercontent.com/84160329/142774405-76bddc60-d379-4666-8c9d-7e4d41d424a5.png)
+> https://www.hankookilbo.com/News/Read/201912221551392334 한국일보 "기부하지 않는 이유 못 믿어서 크게 늘었다."
 
 기부는 선의의 좋은 행동이다라는 것은 모두 인지하고 있지만 기부를 습관처럼 하는 사람은 보기 힘듭니다. 좋은 기부를 왜 안 할까요?
 설문조사에 따르면 경제적 여력이 없음을 제외하고 대부분의 사람들이 기부를 하지 않는 이유는 후원단체에 신뢰가 가지 않아서, 기부하는 방법을 몰라서, 기부에 관심이 없어서 등 기부에 대한 무지와 관심에 대한 부재에 의해 파생되었습니다.
@@ -72,7 +72,7 @@ ERD
 개발일정 및 개발환경
 ---
 - 개발일정
-![image](https://user-images.githubusercontent.com/84160329/142772892-1ca382af-1b3f-412a-ad8a-2b81f22c4d78.png)
+![image](https://user-images.githubusercontent.com/84160329/142773930-18e7d16d-354b-4cbd-9135-d1d30cbfcc14.png)
 
 - 개발환경
     - 운영체제 : Window 10
