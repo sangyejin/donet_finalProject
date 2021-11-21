@@ -672,6 +672,141 @@ __3. 후원하기__
 
 __4. 후원 프로젝트 작성/삭제__
 
+관리자로 로그인하면 프로젝트 등록과 삭제하기 버튼이 활성화 됩니다.
+
+- 프로젝트 등록 시, 첨부한 이미지파일이 썸네일일 경우는 해당 프로젝트의 support객체에 저장하여 목록에서 볼 수 있게 하고, 그 외에 첨부한 이미지들은 supportImage객체에 저장하여 이미지 슬라이더로 상세보기 시 조회 가능하도록 구현하였습니다.
+```
+	@RequestMapping("insert.bo")
+	public String insertBoard(Support support, HttpServletRequest request, MultipartHttpServletRequest multipartRequest
+			,@ModelAttribute SupportUsePlanList supportUsePlan, Model model)
+			throws Exception {
+		List<SupportUsePlan> list= supportUsePlan.getSupportUsePlan();
+		
+		Map<String, MultipartFile> mMap= multipartRequest.getFileMap(); 
+		List<SupportImage> imgList = new ArrayList<>(); 
+		
+		Map<String, List<MultipartFile>> paramMap = multipartRequest.getMultiFileMap();
+		for (Entry<String, List<MultipartFile>> entry : paramMap.entrySet()) {
+			
+			List<MultipartFile> fileList=entry.getValue(); 
+			
+			for(int i=0; i<fileList.size();i++) {
+				String fileName=fileList.get(i).getOriginalFilename();
+				if(fileName!="") { 
+					String originName = fileList.get(i).getOriginalFilename();
+					String changeName = saveFile(fileList.get(i),request);
+					System.out.println("change "+changeName);
+					if( (entry.getKey()).equals("thumbFile")) { 
+						support.setThumbnailOrigin(originName);
+						support.setThumbnailChange(changeName);
+					}
+					else { 
+						SupportImage img=new SupportImage();
+						img.setImgChangeName(changeName);
+						img.setImgOriginName(originName); 
+						img.setImgNo(Integer.valueOf( (entry.getKey()).substring((entry.getKey()).length()-1)));
+						imgList.add(img);
+					}
+				}
+			}
+			
+		}
+		
+		
+		donationService.insertBoard(support,imgList,list);
+		
+		return "redirect:/list.do";
+	}
+		private String saveFile(MultipartFile file, HttpServletRequest request) {
+			String resources = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = resources+"/upload_files/donation/";
+
+			String originName = file.getOriginalFilename();
+			String ext = originName.substring(originName.lastIndexOf("."));
+			String changeName =System.currentTimeMillis() + "_" + (int)( Math.random() * 10000000) + ext;
+			try {
+				file.transferTo(new File(savePath+changeName));
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new CommException("파일 업로드 실패");
+			}
+			return changeName;
+		}
+```
+
+- 프로젝트 등록 시 기부사용계획서의 행을 추가/삭제하여 해당 객체를 여러 개 등록 할 수 있습니다.(따라서, 위의 controller에 기부사용계획서의 객체를 list로 받아주고 있습니다.)
+```
+<script type="text/javascript">
+        $('#addRow').click(function () {
+            const table = document.getElementById('useplan');
+            const totalRowCnt = table.rows.length;
+            const len = String(table.tBodies[0].rows.length + 1);
+           	
+            var html = `<tr>
+            			<td name='tdUpNo' style='vertical-align:middle'>`+len+`<input class='useplanTd' type='hidden' name='upNo' value=`+len+`>
+            			</td><td><input class='useplanTd' type='text' name='division' placeholder='구분' required></td>
+                    	<td><input class='useplanTd' type='text' name='content' placeholder='상세내용' required></td>
+                    	<td><input class='useplanTd' type='number' name='amount' min='1000' step='100' placeholder='사용금액' required></td>
+                    	<td><button class='btnDelete'  name='btnDelete'>삭제</button></td>
+                		</tr>`;
+              
+            $("#useplan tbody").append(html);
+            
+        });
+	 	
+	    
+	    //삭제 버튼
+	    $(document).on("click","button[name=btnDelete]",function(){
+	        
+	        var trHtml = $(this).parent().parent();
+	        
+	        trHtml.remove();
+	        
+	    });
+	    
+	    $("#submit").click(function(){
+		$("#useplan tbody tr").each( function (index) {
+	        $(this).find("input[name=upNo]").attr("name", "supportUsePlan[" + index + "].upNo");
+	        $(this).find("input[name=division]").attr("name", "supportUsePlan[" + index + "].division");
+	        $(this).find("input[name=content]").attr("name", "supportUsePlan[" + index + "].content");
+	        $(this).find("input[name=amount]").attr("name", "supportUsePlan[" + index + "].amount");
+	        console.log(index);
+	    });
+		$("#insertForm").submit();
+	});
+</script>
+```
+
+- 후원기간과 사업기간 입력 시, 마감일은 시작일보다 이전 날짜는 선택할 수 없도록 구현하였습니다.
+```
+    <script>
+	    var start1 = document.getElementById('start');
+	    var end1 = document.getElementById('end');
+	
+	    start1.addEventListener('change', function() {
+	        if (start1.value)
+	            end1.min = start1.value;
+	    }, false);
+	    end1.addEventLiseter('change', function() {
+	        if (end1.value)
+	            start1.max = end1.value;
+	    }, false);
+
+	    var start2 = document.getElementById('bstart');
+	    var end2 = document.getElementById('bend');
+	
+	    start2.addEventListener('change', function() {
+	        if (start2.value)
+	            end2.min = start2.value;
+	    }, false);
+	    end2.addEventLiseter('change', function() {
+	        if (end2.value)
+	            start2.max = end2.value;
+	    }, false);
+   </script>
+```
+
 ---
 
 __5. 통계조회(구글차트 API 활용)__
@@ -748,7 +883,9 @@ function drawMultSeries2() {
 ---
 
 
-
 소감
 ---
 
+가장 기본적인 CRUD를 위주로 게시판을 만드는 것이지만 실제로 사이트가 쓰이게 된다면 어떨지 고민하면서 구현을 하다보니까 이것저것 신경 쓸 것이 더 많았던거 같습니다. 프로젝트를 하면서 학원에서 배운 것이 어떻게 쓰이게 될지, 취업을 한다면 어떤 식으로 개발을 하게 될지 고민할 점이 많아지는 프로젝트였습니다.
+아쉬운 부분이 있다면, 프로젝트 정렬 시 셀렉트박스의 value를 submit한 후 내용이 초기화 되어 무사히 정렬은 적용되지만 어떻게 정렬한 것인지 알 수 없어 사용자가 헷갈릴 수 있다는 점입니다. 이는 해당 value를 submit처리하는 것이 아니라 onchange처리하고 목록의 내용을 ajax로 받아오면 해결할 수 있을 거 같아 다음에 꼭 적용해 보고 싶습니다. 그리고 부트스트랩 사용이 익숙하지 않아 공통 템플릿을 정해 놓고도 전체 UI를 통일하지 못한 점이 아쉬웠습니다.
+팀원들과 모르는 문제를 소통하면서 함께 해결하고 무언가 다같이 만들어간다는 소속감이 정말 만족스러웠습니다. 다음에는 더욱 완성도 있는 프로젝트를 만들고 싶은 좋은 자극제가 되었습니다.
