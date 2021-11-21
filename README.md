@@ -124,7 +124,7 @@ __코드 리뷰에 앞서.. 제가 담당한 파트는..?__
 	- 5-1. 구글차트 API 활용
 
 ---
-[![코드리뷰 및 시연 영상_상예진](https://img.youtube.com/vi/-goBmRarZyI/0.jpg)](https://youtu.be/-goBmRarZyI?t=0s) 
+[![코드리뷰 및 시연 영상_상예진](https://i9.ytimg.com/vi_webp/-goBmRarZyI/hqdefault.webp?v=619aad45&sqp=CMjY6owG&rs=AOn4CLAbNKaSKTR3z0jF-KzqutSZLqwtsw)](https://youtu.be/-goBmRarZyI?t=0s) 
 
 __1-1. 후원 프로젝트 목록 조회__
 
