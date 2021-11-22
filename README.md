@@ -109,7 +109,7 @@ ERD
 코드리뷰_상예진
 ---
 
-[![코드리뷰 및 시연 영상_상예진](https://i9.ytimg.com/vi_webp/-goBmRarZyI/hqdefault.webp?v=619aad45&sqp=CMjY6owG&rs=AOn4CLAbNKaSKTR3z0jF-KzqutSZLqwtsw)](https://youtu.be/-goBmRarZyI?t=0s) 
+[![코드리뷰 및 시연 영상_상예진](https://img.youtube.com/vi/-goBmRarZyI/0.jpg)](https://youtu.be/-goBmRarZyI?t=0s) 
 
 __코드 리뷰에 앞서.. 제가 담당한 파트는..?__
 
